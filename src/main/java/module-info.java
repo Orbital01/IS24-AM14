@@ -7,5 +7,5 @@ module it.polimi.ingsw.is24am14 {
     requires org.kordamp.bootstrapfx.core;
 
     opens it.polimi.ingsw.is24am14 to javafx.fxml;
-    exports it.polimi.ingsw.is24am14;
+    exports it.polimi.ingsw.is24am14.server;
 }

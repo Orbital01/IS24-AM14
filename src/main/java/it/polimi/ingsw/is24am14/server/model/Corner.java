@@ -1,4 +1,11 @@
-package it.polimi.ingsw.is24am14.model.cardRelated;
+package it.polimi.ingsw.is24am14.server.model;
+
+/**
+ * This class represents a corner of a card.
+ * Each corner has a type and can be overlapped by another card.
+ * The type of a corner is defined by the CornerEnum enumeration.
+ * The overlapping card is represented by a Card object.
+ */
 
 public class Corner {
     private final CornerEnum type;
@@ -12,6 +19,10 @@ public Corner(CornerEnum type) {
         return overlappingCard;
     }
 
+    /**
+     * Sets the overlapping card.
+     * @param overlappingCard the card that overlaps the corner
+     */
     public void setOverlappingCard(Card overlappingCard) {
         this.overlappingCard = overlappingCard;
     }
