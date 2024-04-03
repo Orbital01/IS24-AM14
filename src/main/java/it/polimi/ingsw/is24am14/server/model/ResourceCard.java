@@ -1,13 +1,18 @@
-package it.polimi.ingsw.is24am14.model.cardRelated;
+package it.polimi.ingsw.is24am14.server.model;
 import java.util.ArrayList;
+
+/**
+ * This class represents a resource card.
+ * A resource card has a number of points and a resource.
+ */
 
 public class ResourceCard extends Card{
 
     private final int points;
     private final CornerEnum.ResourceEnum resource;
 
-    public ResourceCard(int points, CornerEnum.ResourceEnum resource, ArrayList<Corner> frontCorners, ArrayList<Corner> backCorners, EnumSide enumSide) {
-        super(frontCorners, backCorners, enumSide);
+    public ResourceCard(int points, CornerEnum.ResourceEnum resource, ArrayList<Corner> frontCorners, ArrayList<Corner> backCorners) {
+        super(frontCorners, backCorners);
         this.points = points;
         this.resource = resource;
     }

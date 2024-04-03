@@ -1,4 +1,4 @@
-package it.polimi.ingsw.is24am14.model.cardRelated;
+package it.polimi.ingsw.is24am14.server.model;
 
 import java.util.ArrayList;
 import java.util.Collections;

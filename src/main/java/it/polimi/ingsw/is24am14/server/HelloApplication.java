@@ -1,4 +1,4 @@
-package it.polimi.ingsw.is24am14;
+package it.polimi.ingsw.is24am14.server;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

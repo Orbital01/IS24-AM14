@@ -1,4 +1,9 @@
-package it.polimi.ingsw.is24am14.model.cardRelated;
+package it.polimi.ingsw.is24am14.server.model;
+
+/**
+ * This interface is used to define the possible types of corners that a card can have.
+ * It is used in the Card class to define the corners of the card.
+ */
 
 public interface CornerEnum {
     OthersEnum HIDDEN = OthersEnum.HIDDEN;

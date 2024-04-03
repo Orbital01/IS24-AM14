@@ -1,4 +1,4 @@
-package it.polimi.ingsw.is24am14.model.cardRelated;
+package it.polimi.ingsw.is24am14.server.model;
 
 public class CornerIndex {
     public static int NORTH_WEST = 0;

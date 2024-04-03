@@ -1,5 +1,11 @@
-package it.polimi.ingsw.is24am14.model.cardRelated;
+package it.polimi.ingsw.is24am14.server.model;
 import java.util.ArrayList;
+
+/**
+ * This class represents a Gold Card.
+ * A Gold Card is a card that gives points based on a condition or a resource.
+ * It also has a condition that must be satisfied in order to place it on the board.
+ */
 
 public class GoldCard extends Card {
     private final int points;
@@ -8,8 +14,8 @@ public class GoldCard extends Card {
 
     private final Condition placementCondition;
 
-    public GoldCard(int points, Condition pointCondition, CornerEnum.ResourceEnum resource, Condition placementCondition, ArrayList<Corner> frontCorners, ArrayList<Corner> backCorners, EnumSide enumSide) {
-        super(frontCorners, backCorners, enumSide);
+    public GoldCard(int points, Condition pointCondition, CornerEnum.ResourceEnum resource, Condition placementCondition, ArrayList<Corner> frontCorners, ArrayList<Corner> backCorners) {
+        super(frontCorners, backCorners);
         this.points = points;
         this.pointCondition = pointCondition;
         this.resource = resource;
