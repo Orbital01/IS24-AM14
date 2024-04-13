@@ -50,13 +50,13 @@ public class Coordinates {
      * @return The updated Coordinates (Where a new card will be placed)
      */
     public static Coordinates newCoordinates(Coordinates oldCoordinates, int cornerIndex) {
-        if (cornerIndex == CornerIndex.NORTH_WEST) {
+        if (cornerIndex == CornerIndex.TOP_LEFT) {
             oldCoordinates.setRow(oldCoordinates.getRow() + 1);
             oldCoordinates.setColumn(oldCoordinates.getColumn() - 1);
-        } else if (cornerIndex == CornerIndex.NORTH_EAST) {
+        } else if (cornerIndex == CornerIndex.TOP_RIGHT) {
             oldCoordinates.setRow(oldCoordinates.getRow() + 1);
             oldCoordinates.setColumn(oldCoordinates.getColumn() + 1);
-        } else if (cornerIndex == CornerIndex.SOUTH_EAST) {
+        } else if (cornerIndex == CornerIndex.BOTTOM_RIGHT) {
             oldCoordinates.setRow(oldCoordinates.getRow() - 1);
             oldCoordinates.setColumn(oldCoordinates.getColumn() + 1);
         } else {
@@ -64,5 +64,20 @@ public class Coordinates {
             oldCoordinates.setColumn(oldCoordinates.getColumn() - 1);
         }
         return oldCoordinates;
+    }
+
+    
+    /**
+     * Sums row and column indexes of two coordinates
+     * @param baseCoordinate First term of the addition
+     * @param addedCoordinate Second term of the addition
+     * @return The sum of the two coordinates
+     */
+    public static Coordinates add(Coordinates baseCoordinate, Coordinates addedCoordinate){
+        int baseRow = baseCoordinate.getRow();
+        int baseColumn = baseCoordinate.getColumn();
+        int addedRow = addedCoordinate.getRow();
+        int addedColumn = addedCoordinate.getColumn();
+        return new Coordinates(baseRow+addedRow, baseColumn+addedColumn);
     }
 }
