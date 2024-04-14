@@ -1,10 +1,13 @@
 package it.polimi.ingsw.is24am14.model.cardRelated;
 
+import it.polimi.ingsw.is24am14.server.model.card.Card;
+import it.polimi.ingsw.is24am14.server.model.card.CornerEnum;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CardCondition implements Condition {
+public class CardCondition<Coordinates> implements Condition {
     HashMap<Coordinates, CornerEnum.ResourceEnum> listCard;
 
     public CardCondition() {
@@ -18,7 +21,7 @@ public class CardCondition implements Condition {
     public boolean isSatisfied(HashMap<Coordinates, Card> board) {
         int listCardIndex = 0;
 
-        for (Map.Entry<Coordinates, Card> entry : board) {
+        for (Map.Entry<Coordinates, Card> entry : board.entrySet()) {
             //  if the board-card type is the same as the listCard type
             //  look at the next card of the condition
             CornerEnum.ResourceEnum type = new ArrayList<CornerEnum.ResourceEnum>(listCard.values()).get(listCardIndex);

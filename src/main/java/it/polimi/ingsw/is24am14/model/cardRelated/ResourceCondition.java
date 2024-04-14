@@ -1,10 +1,15 @@
 package it.polimi.ingsw.is24am14.model.cardRelated;
 
+import it.polimi.ingsw.is24am14.server.model.card.Card;
+import it.polimi.ingsw.is24am14.server.model.card.Corner;
+import it.polimi.ingsw.is24am14.server.model.card.CornerEnum;
+import it.polimi.ingsw.is24am14.server.model.card.EnumSide;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ResourceCondition implements Condition {
+public class ResourceCondition<Coordinates> implements Condition {
     ArrayList<CornerEnum.ResourceEnum> listResource;
 
     public ResourceCondition () {
@@ -16,7 +21,7 @@ public class ResourceCondition implements Condition {
     }
     @Override
     public boolean isSatisfied(HashMap<Coordinates, Card> board) {
-        ArrayList<CornerEnum.ResourceEnum> toFind = new ArrayList<>(listObject);
+        ArrayList<CornerEnum.ResourceEnum> toFind = new ArrayList<>(listResource);
 
         //  for each card on the board
         for (Map.Entry<Coordinates, Card> entry : board)
