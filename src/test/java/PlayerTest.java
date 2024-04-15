@@ -1,12 +1,13 @@
-package is24am14;
-
 import org.junit.jupiter.api.Test;
 
+import it.polimi.ingsw.is24am14.server.model.card.*;
+import it.polimi.ingsw.is24am14.server.model.player.*;
+
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.Random;
+
+
 
 class PlayerTest {
     @Test

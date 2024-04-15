@@ -1,7 +1,11 @@
-package is24am14;
+package it.polimi.ingsw.is24am14.server.model.player;
+
+
+import it.polimi.ingsw.is24am14.server.model.card.*;
+import it.polimi.ingsw.is24am14.server.model.game.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 public class Player {
     private String nickname;

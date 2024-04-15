@@ -1,4 +1,9 @@
-package it.polimi.ingsw.is24am14;
+package it.polimi.ingsw.is24am14.server.model.game;
+
+import it.polimi.ingsw.is24am14.server.model.game.exceptions.MaximumNumberOfFaceUpCardsReachedException;
+import it.polimi.ingsw.is24am14.server.model.game.exceptions.MaximumNumberOfPlayersReachedException;
+import it.polimi.ingsw.is24am14.server.model.player.Player;
+import it.polimi.ingsw.is24am14.server.model.card.*;
 
 import java.util.ArrayList;
 

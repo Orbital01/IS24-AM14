@@ -1,4 +1,4 @@
-package it.polimi.ingsw.is24am14.model.cardRelated;
+package it.polimi.ingsw.is24am14.server.model.card;
 
 import it.polimi.ingsw.is24am14.server.model.card.Card;
 import it.polimi.ingsw.is24am14.server.model.card.CornerEnum;

@@ -1,8 +1,4 @@
-package it.polimi.ingsw.is24am14.model.cardRelated;
-
-import it.polimi.ingsw.is24am14.model.cardRelated.Condition;
-import it.polimi.ingsw.is24am14.server.model.card.Card;
-import it.polimi.ingsw.is24am14.server.model.card.CornerEnum;
+package it.polimi.ingsw.is24am14.server.model.card;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -85,7 +81,7 @@ public class ObjectCondition<GameArea, Coordinates> implements Condition {
      */
     public ArrayList<CornerEnum> getCornerEnums(Card card) {
         ArrayList<CornerEnum> items = new ArrayList<>();
-        ArrayList<Corner> corners = card.getSide() == EnumSide.FRONT ? card.getFrontCorners() : card.getBackCorners();
+        ArrayList<Corner> corners = card.getCorners();
 
         for (int i = 0; i < 5; i++) {
             items.add(corners.get(i).getType());

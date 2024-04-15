@@ -1,6 +1,4 @@
-package it.polimi.ingsw.is24am14.model.cardRelated;
-
-import it.polimi.ingsw.is24am14.server.model.card.Card;
+package it.polimi.ingsw.is24am14.server.model.card;
 
 import java.util.HashMap;
 
