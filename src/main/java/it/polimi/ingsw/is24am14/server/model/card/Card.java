@@ -26,9 +26,10 @@ public abstract class Card {
      * Constructor
      *
      * @param frontCorners the corners of the front side of the card
+     *
      * @param backCorners  the corners of the back side of the card
      * @throws IllegalArgumentException if the number of corners is greater than 4
-     *                                  it is always created in the front side
+     * it is always created in the front side
      */
 
     public Card(ArrayList<Corner> frontCorners, ArrayList<Corner> backCorners, String frontImage, String backImage) {
@@ -49,18 +50,35 @@ public abstract class Card {
         }
     }
 
-    public ArrayList<Corner> getFrontCorners() {
-        return frontCorners;
+    /**
+     * This method returns the corners of the card based on the side
+     * If the side is FRONT, it returns the front corners, otherwise it returns the back corners
+     *
+     * @return the corners of the card
+     */
+    public ArrayList<Corner> getCorners() {
+        if (enumSide == EnumSide.FRONT) {
+            return frontCorners;
+        } else {
+            return backCorners;
+        }
     }
 
-    public ArrayList<Corner> getBackCorners() {
-        return backCorners;
-    }
-
+    /**
+     * This method returns the side of the card
+     *
+     * @return the side of the card
+     */
     public EnumSide getSide() {
         return enumSide;
     }
 
+    /**
+     * This method returns the image of the card
+     *
+     * @return the image of the card
+     */
+  
     public Image getImage() {
         if (enumSide == EnumSide.FRONT) {
             return frontImage;
