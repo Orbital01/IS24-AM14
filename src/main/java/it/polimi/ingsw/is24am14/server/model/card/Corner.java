@@ -14,6 +14,7 @@ public Corner(CornerEnum type) {
         this.type = type;
     }
 
+
     /**
      * Returns the type of the corner.
      * @return the type of the corner

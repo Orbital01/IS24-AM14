@@ -37,7 +37,6 @@ public abstract class Card {
         if (frontCorners.size() > 4 || backCorners.size() > 4) {
             throw new IllegalArgumentException("Each side of the card can have a maximum of 4 corners");
         }
-        //
 
         this.frontCorners = frontCorners;
         this.backCorners = backCorners;
@@ -79,6 +78,7 @@ public abstract class Card {
      *
      * @return the image of the card
      */
+  
     public Image getImage() {
         if (enumSide == EnumSide.FRONT) {
             return frontImage;
