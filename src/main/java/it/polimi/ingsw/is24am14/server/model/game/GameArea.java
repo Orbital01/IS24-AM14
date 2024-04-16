@@ -89,7 +89,16 @@ public class GameArea {
         if (getCard(newCardCoordinates) != null) throw new IllegalStateException("Illegal move. Cannot put a card on another card");
 
         board.put(newCardCoordinates, newCard);
+        playedCard.getCorners().get(cornerIndex).overlap();
     }
 
+    /**
+     * Adds starter card to player's game area
+     * @param starterCard The starterCard
+     */
+    void placeStarterCard(Card starterCard){
+        Coordinates startingCoordinates = new Coordinates(0,0);
+        board.put(startingCoordinates, starterCard);
+    }
 
 }
