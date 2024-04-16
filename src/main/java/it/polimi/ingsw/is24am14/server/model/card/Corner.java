@@ -9,18 +9,26 @@ package it.polimi.ingsw.is24am14.server.model.card;
 
 public class Corner {
     private final CornerEnum type;
+    private boolean isOverlapped;
 
-public Corner(CornerEnum type) {
+    public Corner(CornerEnum type) {
         this.type = type;
+        isOverlapped = false;
     }
-
-
     /**
      * Returns the type of the corner.
      * @return the type of the corner
      */
+
     public CornerEnum getType() {
         return type;
     }
 
+    public void overlap() {
+        isOverlapped = true;
+    }
+
+    public boolean isOverlapped() {
+        return isOverlapped;
+    }
 }
