@@ -44,9 +44,9 @@ public class CardCondition implements Condition {
             Coordinates coordinates;
 
             while (listCardIndex < listCard.size() && isSameType(entry.getValue(), type) && cardToCheck != null) {
-                listCardIndex = listCardIndex + 1;
                 coordinates = new ArrayList<>(listCard.keySet()).get(listCardIndex);
                 cardToCheck = board.board.get(Coordinates.add(entry.getKey(), coordinates));
+                listCardIndex = listCardIndex + 1;
             }
 
             if (listCardIndex >= listCard.size()) return true;
