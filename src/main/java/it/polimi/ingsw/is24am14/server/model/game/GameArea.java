@@ -2,10 +2,9 @@ package it.polimi.ingsw.is24am14.server.model.game;
 
 import it.polimi.ingsw.is24am14.server.model.card.*;
 
+import static it.polimi.ingsw.is24am14.server.model.card.Coordinates.newCoordinates;
 
 import java.util.*;
-
-import static it.polimi.ingsw.is24am14.server.model.card.Coordinates.newCoordinates;
 
 
 /**
@@ -91,5 +90,6 @@ public class GameArea {
 
         board.put(newCardCoordinates, newCard);
     }
+
 
 }
