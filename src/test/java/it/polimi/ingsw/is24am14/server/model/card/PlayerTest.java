@@ -1,6 +1,7 @@
+package it.polimi.ingsw.is24am14.server.model.card;
+
 import org.junit.jupiter.api.Test;
 
-import it.polimi.ingsw.is24am14.server.model.card.*;
 import it.polimi.ingsw.is24am14.server.model.player.*;
 
 import java.util.ArrayList;

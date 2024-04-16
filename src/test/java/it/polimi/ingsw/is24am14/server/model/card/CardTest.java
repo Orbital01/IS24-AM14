@@ -1,6 +1,8 @@
+package it.polimi.ingsw.is24am14.server.model.card;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import it.polimi.ingsw.is24am14.server.model.card.* ;
+
 import java.util.ArrayList;
 
 public class CardTest {

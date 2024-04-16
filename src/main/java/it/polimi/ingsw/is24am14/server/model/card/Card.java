@@ -1,9 +1,6 @@
 package it.polimi.ingsw.is24am14.server.model.card;
 
 import java.util.ArrayList;
-import javafx.scene.image.Image;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 /**
  * This class represents a card in the game. Each card has a front and a back side, each side has a maximum of 4 corners.
@@ -18,8 +15,8 @@ public abstract class Card {
     private final ArrayList<Corner> frontCorners;
     private final ArrayList<Corner> backCorners;
     private EnumSide enumSide;
-    private Image frontImage;
-    private Image backImage;
+    private final String frontImage;
+    private final String backImage;
 
 
     /**
@@ -42,12 +39,9 @@ public abstract class Card {
         this.backCorners = backCorners;
         this.enumSide = EnumSide.FRONT;
 
-        try {
-            this.frontImage = new Image(new FileInputStream(frontImage));
-            this.backImage = new Image(new FileInputStream(backImage));
-        } catch (FileNotFoundException e) {
-            System.out.println("Missing image");
-        }
+        this.frontImage = frontImage;
+        this.backImage = backImage;
+
     }
 
     /**
@@ -79,7 +73,7 @@ public abstract class Card {
      * @return the image of the card
      */
   
-    public Image getImage() {
+    public String getImage() {
         if (enumSide == EnumSide.FRONT) {
             return frontImage;
         } else {
