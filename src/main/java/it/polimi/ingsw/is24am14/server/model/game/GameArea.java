@@ -57,12 +57,18 @@ public class GameArea {
     }
 
       /**
-     * Retrieves a card given its coordinates
+     * Retrieves a card given its coordinates, compares Row and Column with board entries
      * @param coordinates The coordinates to check
      * @return The card at the given coordinates or null if empty
      */
     public Card getCard(Coordinates coordinates) {
-        return board.getOrDefault(coordinates, null);
+        int Row = coordinates.getRow();
+        int Column = coordinates.getColumn();
+        for(Map.Entry<Coordinates, Card> entry : board.entrySet()){
+            if(entry.getKey().getRow()==Row && entry.getKey().getColumn()==Column)
+                return entry.getValue();
+        }
+        return null;
     }
 
     /**
