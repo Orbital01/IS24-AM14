@@ -1,7 +1,6 @@
 package it.polimi.ingsw.is24am14.server.model.card;
 
-import java.util.HashMap;
-
+import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 /**
  *  The Condition interface serves as an abstraction for all conditions within the game.
  *  Conditions represent various states or criteria that affect gameplay, progression, or outcomes.
@@ -11,5 +10,5 @@ import java.util.HashMap;
  *  as well as any additional functionality necessary for managing or updating the condition state.
  */
 public interface Condition {
-    <Coordinates> boolean isSatisfied(HashMap<Coordinates, Card> board);
+    boolean isSatisfied(GameArea board);
 }

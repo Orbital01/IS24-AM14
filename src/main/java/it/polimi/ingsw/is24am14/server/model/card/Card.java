@@ -46,7 +46,7 @@ public abstract class Card {
             this.frontImage = new Image(new FileInputStream(frontImage));
             this.backImage = new Image(new FileInputStream(backImage));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Missing image");
         }
     }
 
@@ -96,5 +96,19 @@ public abstract class Card {
         } else {
             enumSide = EnumSide.FRONT;
         }
+    }
+
+    public ArrayList<CornerEnum> getCornerEnums() {
+        ArrayList<CornerEnum> items = new ArrayList<>();
+        ArrayList<Corner> corners = getCorners();
+
+        for (int i = 0; i < 4; i++) {
+            items.add(corners.get(i).getType());
+        }
+        return items;
+    }
+
+    public CornerEnum.ResourceEnum getResource() {
+        return null;
     }
 }

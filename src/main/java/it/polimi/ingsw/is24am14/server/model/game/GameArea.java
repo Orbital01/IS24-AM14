@@ -5,6 +5,8 @@ import it.polimi.ingsw.is24am14.server.model.card.*;
 
 import java.util.*;
 
+import static it.polimi.ingsw.is24am14.server.model.card.Coordinates.newCoordinates;
+
 
 /**
  * Represents the game area where cards will be placed during the game
@@ -73,8 +75,7 @@ public class GameArea {
     public void addCard(Card playedCard, Card newCard, int cornerIndex) throws IllegalStateException {
         ArrayList<Corner> playedCardCorners = playedCard.getCorners();
 
-        //qua c'è un problema, non ho ben capito cosa volevate fare...
-        Coordinates newCardCoordinates = new Coordinates(getCoordinates(playedCard), cornerIndex);
+        Coordinates newCardCoordinates = newCoordinates(getCoordinates(playedCard), cornerIndex);
 
         //  Cannot put a card on a hidden corner
         if (playedCardCorners.get(cornerIndex).getType() == CornerEnum.HIDDEN) throw new IllegalStateException("Illegal move. Cannot put a card on a hidden corner");
@@ -84,6 +85,5 @@ public class GameArea {
 
         board.put(newCardCoordinates, newCard);
     }
-
 
 }

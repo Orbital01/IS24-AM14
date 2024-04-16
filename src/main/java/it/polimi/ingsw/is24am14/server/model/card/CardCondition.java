@@ -1,37 +1,52 @@
 package it.polimi.ingsw.is24am14.server.model.card;
 
-import it.polimi.ingsw.is24am14.server.model.card.Card;
-import it.polimi.ingsw.is24am14.server.model.card.CornerEnum;
+import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CardCondition<Coordinates> implements Condition {
-    HashMap<Coordinates, CornerEnum.ResourceEnum> listCard;
+/**
+ *  A condition implementation to check whether the player has a certain pattern of cards in their game board.
+ *  Implements the {@link Condition} interface.
+ */
+public class CardCondition implements Condition {
+    private final HashMap<Coordinates, CornerEnum.ResourceEnum> listCard;
 
     public CardCondition() {
-        listCard = new HashMap<Coordinates, CornerEnum.ResourceEnum>();
+        listCard = new HashMap<>();
     }
 
-    public void addClause(Coordinates clauseCoordinates, CornerEnum.ResourceEnum clauseResource) {
+    /**
+     * @param clauseCoordinates the position of the card in the pattern.
+     * @param clauseResource the type of the card in the pattern.
+     */
+    public void addClause(Coordinates clauseCoordinates, CornerEnum.ResourceEnum clauseResource) throws NullPointerException {
+        if (clauseCoordinates == null || clauseResource == null) throw new NullPointerException();
         listCard.put(clauseCoordinates, clauseResource);
     }
+
+    /**
+     * Checks if the player's game board meets the condition by having the required pattern of cards.
+     * @param board the player's game board that is being checked
+     * @return {@code true} if the player's game board has the required pattern of cards, otherwise {@code false}
+     */
+    //  Not working
     @Override
-    public boolean isSatisfied(HashMap<Coordinates, Card> board) {
+    public boolean isSatisfied(GameArea board) {
         int listCardIndex = 0;
 
-        for (Map.Entry<Coordinates, Card> entry : board.entrySet()) {
+        for (Map.Entry<Coordinates, Card> entry : board.board.entrySet()) {
             //  if the board-card type is the same as the listCard type
             //  look at the next card of the condition
-            CornerEnum.ResourceEnum type = new ArrayList<CornerEnum.ResourceEnum>(listCard.values()).get(listCardIndex);
+            CornerEnum.ResourceEnum type = new ArrayList<>(listCard.values()).get(listCardIndex);
             Card cardToCheck = entry.getValue();
-            Coordinates coordinates = new ArrayList<Coordinates>(listCard.keySet()).get(listCardIndex);
+            Coordinates coordinates;
 
-            while (listCardIndex < listCard.size() && isSameType(cardToCheck, type) && cardToCheck != null) {
+            while (listCardIndex < listCard.size() && isSameType(entry.getValue(), type) && cardToCheck != null) {
+                coordinates = new ArrayList<>(listCard.keySet()).get(listCardIndex);
+                cardToCheck = board.board.get(Coordinates.add(entry.getKey(), coordinates));
                 listCardIndex = listCardIndex + 1;
-                coordinates = new ArrayList<Coordinates>(listCard.keySet()).get(listCardIndex);
-                cardToCheck = board.get(Coordinates.add(entry.getKey(), coordinates));
             }
 
             if (listCardIndex >= listCard.size()) return true;
@@ -40,14 +55,13 @@ public class CardCondition<Coordinates> implements Condition {
         return false;
     }
 
+    /**
+     * Checks the type of the card
+     * @param boardCard card to be checked
+     * @param type type to be checked
+     * @return {@code true} if the card is typeof type, otherwise {@code false}
+     */
     private boolean isSameType (Card boardCard, CornerEnum.ResourceEnum type) {
-        return false;
-    }
-    private boolean isSameType (ResourceCard boardCard, CornerEnum.ResourceEnum type) {
-        return boardCard.getResource() == type;
-    }
-
-    private boolean isSameType (GoldCard boardCard, CornerEnum.ResourceEnum type) {
         return boardCard.getResource() == type;
     }
 }
