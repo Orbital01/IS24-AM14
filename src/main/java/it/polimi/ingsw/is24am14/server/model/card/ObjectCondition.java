@@ -44,7 +44,7 @@ public class ObjectCondition implements Condition {
             for (int i = 0; i < 4; i++) {
                 //  if there is an overlapped card do nothing
                 //  else check for condition
-                if (board.getCard(Coordinates.newCoordinates(entry.getKey(), i)) == null) {
+                if (!entry.getValue().getCorners().get(i).isOverlapped()) {
                     toFind.remove(entry.getValue().getCornerEnums().get(i));
                 }
             }
@@ -68,7 +68,7 @@ public class ObjectCondition implements Condition {
             for (int i = 0; i < 4; i++) {
                 //  if there is an overlapped card do nothing
                 //  else check for condition
-                if (board.getCard(Coordinates.newCoordinates(entry.getKey(), i)) == null) {
+                if (!entry.getValue().getCorners().get(i).isOverlapped() && entry.getValue().getCorners().get(i).getType() == toFind) {
                     objectsFound++;
                 }
             }
