@@ -86,9 +86,4 @@ public class GameArea {
         board.put(newCardCoordinates, newCard);
     }
 
-    void stocazzo() {
-        Coordinates a = new Coordinates(0, 0);
-        Coordinates b = new Coordinates(0, 0);
-    }
-
 }
