@@ -1,65 +1,55 @@
 package it.polimi.ingsw.is24am14.server.model.card;
 
-import it.polimi.ingsw.is24am14.server.model.card.Card;
-import it.polimi.ingsw.is24am14.server.model.card.Corner;
-import it.polimi.ingsw.is24am14.server.model.card.CornerEnum;
-import it.polimi.ingsw.is24am14.server.model.card.EnumSide;
+import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
-public class ResourceCondition<Coordinates> implements Condition {
-    ArrayList<CornerEnum.ResourceEnum> listResource;
+/**
+ *  A condition implementation to check whether the player has a certain amount of resources in their game board.
+ *  Implements the {@link Condition} interface.
+ */
+public class ResourceCondition implements Condition {
+    private ArrayList<CornerEnum.ResourceEnum> listResource;
 
     public ResourceCondition () {
         listResource = new ArrayList<>();
     }
 
-    public void addClause (CornerEnum.ResourceEnum clause) {
+    /**
+     * @param clause the resource that is added to the list
+     * Adds a clause (resource in this case) to the list of clauses (resource)
+     * that a player must have on his game-board to satisfy the condition
+     */
+    public void addClause (CornerEnum.ResourceEnum clause) throws NullPointerException {
+        if (clause == null) throw new NullPointerException();
         listResource.add(clause);
     }
+
+    /**
+     * Checks if the player's game board meets the condition by having the required number of resources.
+     * @param board the player's game board that is being checked
+     * @return {@code true} if the player's game board has the required number of resources, otherwise {@code false}
+     */
     @Override
-    public boolean isSatisfied(HashMap<Coordinates, Card> board) {
+    public boolean isSatisfied(GameArea board) {
         ArrayList<CornerEnum.ResourceEnum> toFind = new ArrayList<>(listResource);
 
         //  for each card on the board
-        for (Map.Entry<Coordinates, Card> entry : board)
+        for (Map.Entry<Coordinates, Card> entry : board.board.entrySet())
         {
             //  for each corner of the card
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 4; i++) {
                 //  if there is an overlapped card do nothing
                 //  else check for condition
-                if (!board.containsKey(Coordinates.newCoordinates(entry.getKey(), i))) {
-                    toFind.remove(getCornerEnums(entry.getValue()).get(i));
+                if (board.getCard(Coordinates.newCoordinates(entry.getKey(), i)) == null) {
+                    toFind.remove(entry.getValue().getCornerEnums().get(i));
                 }
             }
             //  if resource card
-            if (getCornerEnums(entry.getValue()).size() > 4) toFind.remove(getCornerEnums(entry.getValue()).get(5));
+            if (entry.getValue().getCornerEnums().size() > 3) toFind.remove(entry.getValue().getCornerEnums().get(4));
         }
 
         return toFind.isEmpty();
-    }
-
-    public ArrayList<CornerEnum> getCornerEnums(Card card) {
-        ArrayList<CornerEnum> items = new ArrayList<>();
-        ArrayList<Corner> corners = card.getSide() == EnumSide.FRONT ? card.getFrontCorners() : card.getBackCorners();
-
-        for (int i = 0; i < 5; i++) {
-            items.add(corners.get(i).getType());
-        }
-        return items;
-    }
-    public ArrayList<CornerEnum> getCornerEnums(ResourceCard card) {
-        ArrayList<CornerEnum> items = new ArrayList<>();
-        ArrayList<Corner> corners = card.getSide() == EnumSide.FRONT ? card.getFrontCorners() : card.getBackCorners();
-
-        for (int i = 0; i < 5; i++) {
-            items.add(corners.get(i).getType());
-        }
-
-        if (card.getSide() == EnumSide.FRONT) items.add(card.getResource());
-
-        return items;
     }
 }

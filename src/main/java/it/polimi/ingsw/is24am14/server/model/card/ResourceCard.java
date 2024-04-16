@@ -19,6 +19,19 @@ public class ResourceCard extends Card {
         this.resource = resource;
     }
 
+    public ArrayList<CornerEnum> getCornerEnums() {
+        ArrayList<CornerEnum> items = new ArrayList<>();
+        ArrayList<Corner> corners = getCorners();
+
+        for (int i = 0; i < 4; i++) {
+            items.add(corners.get(i).getType());
+        }
+
+        if (getSide() == EnumSide.FRONT) items.add(getResource());
+
+        return items;
+    }
+
     public int getPoints() {
         return points;
     }

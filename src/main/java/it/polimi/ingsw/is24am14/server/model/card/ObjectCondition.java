@@ -1,7 +1,8 @@
 package it.polimi.ingsw.is24am14.server.model.card;
 
+import it.polimi.ingsw.is24am14.server.model.game.GameArea;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -9,8 +10,8 @@ import java.util.Map;
  *  A condition implementation to check whether the player has a certain amount of objects in their game board.
  *  Implements the {@link Condition} interface.
  */
-public class ObjectCondition<GameArea, Coordinates> implements Condition {
-    ArrayList<CornerEnum.ObjectEnum> listObject;
+public class ObjectCondition implements Condition {
+    private final ArrayList<CornerEnum.ObjectEnum> listObject;
 
     public ObjectCondition() {
         listObject = new ArrayList<>();
@@ -21,7 +22,8 @@ public class ObjectCondition<GameArea, Coordinates> implements Condition {
      * Adds a clause (object in this case) to the list of clauses (object)
      * that a player must have on his game-board to satisfy the condition
      */
-    public void addClause(CornerEnum.ObjectEnum clause) {
+    public void addClause(CornerEnum.ObjectEnum clause) throws NullPointerException {
+        if (clause == null) {throw new NullPointerException(); }
         listObject.add(clause);
     }
 
@@ -31,19 +33,19 @@ public class ObjectCondition<GameArea, Coordinates> implements Condition {
      * @return {@code true} if the player's game board has the required number of objects, otherwise {@code false}
      */
     @Override
-    public <Coordinates> boolean isSatisfied(HashMap<Coordinates, Card> board) {
-
+    public boolean isSatisfied(GameArea board) throws NullPointerException {
+        if (board == null) {throw new NullPointerException(); }
         ArrayList<CornerEnum.ObjectEnum> toFind = new ArrayList<>(listObject);
 
         //  for each card on the board
-        for (Map.Entry<Coordinates, Card> entry : board.entrySet())
+        for (Map.Entry<Coordinates, Card> entry : board.board.entrySet())
         {
             //  for each corner of the card
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 4; i++) {
                 //  if there is an overlapped card do nothing
                 //  else check for condition
-                if (!board.containsKey(Coordinates.newCoordinates(entry.getKey(), i))) {
-                    toFind.remove(getCornerEnums(entry.getValue()).get(i));
+                if (board.getCard(Coordinates.newCoordinates(entry.getKey(), i)) == null) {
+                    toFind.remove(entry.getValue().getCornerEnums().get(i));
                 }
             }
         }
@@ -60,13 +62,13 @@ public class ObjectCondition<GameArea, Coordinates> implements Condition {
         int objectsFound = 0;
 
         //  for each card on the board
-        for (Map.Entry<Coordinates, Card> entry : board)
+        for (Map.Entry<Coordinates, Card> entry : board.board.entrySet())
         {
             //  for each corner of the card
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 4; i++) {
                 //  if there is an overlapped card do nothing
                 //  else check for condition
-                if (!board.containsKey(Coordinates.newCoordinates(entry.getKey(), i))) {
+                if (board.getCard(Coordinates.newCoordinates(entry.getKey(), i)) == null) {
                     objectsFound++;
                 }
             }
@@ -75,17 +77,4 @@ public class ObjectCondition<GameArea, Coordinates> implements Condition {
         return objectsFound;
     }
 
-    /**
-     * @param card the card whose corners-elements are getting returned
-     * @return each CornerEnums of the corners
-     */
-    public ArrayList<CornerEnum> getCornerEnums(Card card) {
-        ArrayList<CornerEnum> items = new ArrayList<>();
-        ArrayList<Corner> corners = card.getCorners();
-
-        for (int i = 0; i < 5; i++) {
-            items.add(corners.get(i).getType());
-        }
-        return items;
-    }
 }

@@ -50,20 +50,21 @@ public class Coordinates {
      * @return The updated Coordinates (Where a new card will be placed)
      */
     public static Coordinates newCoordinates(Coordinates oldCoordinates, int cornerIndex) {
+        Coordinates result = new Coordinates(oldCoordinates.getRow(), oldCoordinates.getColumn());
         if (cornerIndex == CornerIndex.TOP_LEFT) {
-            oldCoordinates.setRow(oldCoordinates.getRow() + 1);
-            oldCoordinates.setColumn(oldCoordinates.getColumn() - 1);
+            result.setRow(oldCoordinates.getRow() + 1);
+            result.setColumn(oldCoordinates.getColumn() - 1);
         } else if (cornerIndex == CornerIndex.TOP_RIGHT) {
-            oldCoordinates.setRow(oldCoordinates.getRow() + 1);
-            oldCoordinates.setColumn(oldCoordinates.getColumn() + 1);
+            result.setRow(oldCoordinates.getRow() + 1);
+            result.setColumn(oldCoordinates.getColumn() + 1);
         } else if (cornerIndex == CornerIndex.BOTTOM_RIGHT) {
-            oldCoordinates.setRow(oldCoordinates.getRow() - 1);
-            oldCoordinates.setColumn(oldCoordinates.getColumn() + 1);
+            result.setRow(oldCoordinates.getRow() - 1);
+            result.setColumn(oldCoordinates.getColumn() + 1);
         } else {
-            oldCoordinates.setRow(oldCoordinates.getRow() - 1);
-            oldCoordinates.setColumn(oldCoordinates.getColumn() - 1);
+            result.setRow(oldCoordinates.getRow() - 1);
+            result.setColumn(oldCoordinates.getColumn() - 1);
         }
-        return oldCoordinates;
+        return result;
     }
 
     
