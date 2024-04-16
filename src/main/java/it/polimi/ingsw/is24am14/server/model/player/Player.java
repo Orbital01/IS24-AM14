@@ -114,8 +114,8 @@ public class Player {
      * @param index The index of the card in the player's hand that is going to be removed.
      */
     public void removeCardFromHand(int index) throws IllegalArgumentException, IllegalStateException {
-        if (index < 0 || index > this.playerHand.size()) throw new IllegalArgumentException("The index is out of bounds.");
         if (this.playerHand.isEmpty()) throw new IllegalStateException("The player's hand is empty, therefore it is not possible to remove a card from it.");
+        if (index < 0 || index >= this.playerHand.size()) throw new IllegalArgumentException("The index is out of bounds.");
         this.playerHand.remove(index);
     }
 
