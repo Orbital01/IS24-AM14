@@ -52,6 +52,10 @@ public class CardTest {
         assertEquals(frontCorners, card.getCorners());
         card.flipSide();
         assertEquals(backCorners, card.getCorners());
+
+        //checking if the corners are still the same after flipping the card twice
+        card.flipSide();
+        assertEquals(frontCorners, card.getCorners());
     }
 
     // this test is to check if the card throws an exception when the number of corners is greater than 4
@@ -65,6 +69,43 @@ public class CardTest {
         corners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
 
         assertThrows(IllegalArgumentException.class, () -> new TestCard(corners, corners, "front.jpg", "back.jpg"));
+    }
+
+    //test to check if the card correctly returns the image
+    @Test
+    void testGetImage() {
+        ArrayList<Corner> corners = new ArrayList<>();
+        corners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+        corners.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
+        corners.add(new Corner(CornerEnum.EMPTY));
+        corners.add(new Corner(CornerEnum.HIDDEN));
+
+        TestCard card = new TestCard(corners, corners, "front.jpg", "back.jpg");
+
+        assertEquals("front.jpg", card.getImage());
+        card.flipSide();
+        assertEquals("back.jpg", card.getImage());
+    }
+
+
+
+    @Test
+    void testGetCornerEnums() {
+        ArrayList<Corner> corners = new ArrayList<>();
+        corners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+        corners.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
+        corners.add(new Corner(CornerEnum.EMPTY));
+        corners.add(new Corner(CornerEnum.HIDDEN));
+
+        TestCard card = new TestCard(corners, corners, "front.jpg", "back.jpg");
+
+        ArrayList<CornerEnum> cornerEnums = card.getCornerEnums();
+
+        assertEquals(4, cornerEnums.size());
+        assertEquals(CornerEnum.ResourceEnum.INSECT, cornerEnums.get(0));
+        assertEquals(CornerEnum.ObjectEnum.INKWELL, cornerEnums.get(1));
+        assertEquals(CornerEnum.EMPTY, cornerEnums.get(2));
+        assertEquals(CornerEnum.HIDDEN, cornerEnums.get(3));
     }
 
 }
