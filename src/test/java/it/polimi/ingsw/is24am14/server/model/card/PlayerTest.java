@@ -1,6 +1,6 @@
 package it.polimi.ingsw.is24am14.server.model.card;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import it.polimi.ingsw.is24am14.server.model.player.*;
 
@@ -8,9 +8,13 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.Random;
 
-
-
+/**
+ * This class is used to test the Player class methods.
+ */
 class PlayerTest {
+    /**
+     * This test checks if the removeCardFromHand method throws an exception when the player's hand is empty.
+     */
     @Test
     void emptyHandTest(){
         Player player = new Player("TestPlayer", TokenColour.GREEN);
@@ -34,14 +38,63 @@ class PlayerTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
+    /**
+     * This test checks if the removeCardFromHand method throws an exception when the index is negative.
+     */
     @Test
-    void illegalIndexForHandTest() {
+    void negativeIndexForHandTest() {
+        //Creating a player
         Player player = new Player("TestPlayer", TokenColour.GREEN);
         ArrayList<Card> playerHand = new ArrayList<>();
         playerHand = player.getPlayerHand();
 
+        //Generating a test card to add to the player's hand
+        ArrayList<Corner> corners = new ArrayList<>();
+        corners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+        corners.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
+        corners.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
+        corners.add(new Corner(CornerEnum.HIDDEN));
+
+        ResourceCard testCard = new ResourceCard(1, CornerEnum.ResourceEnum.ANIMAL,corners, corners, "front.jpg", "back.jpg");
+
+        //Adding the test card to the player's hand
+        player.addCardToHand(testCard);
+
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             player.removeCardFromHand(-1);
+        });
+
+        String expectedMessage = "The index is out of bounds.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    /**
+     * This test checks if the removeCardFromHand method throws an exception when the index is bigger than the size of the player's hand.
+     */
+    @Test
+    void outOfBoundsIndexForHandTest() {
+        //Creating a player
+        Player player = new Player("TestPlayer", TokenColour.GREEN);
+        ArrayList<Card> playerHand = new ArrayList<>();
+        playerHand = player.getPlayerHand();
+
+        //Generating a test card to add to the player's hand
+        ArrayList<Corner> corners = new ArrayList<>();
+        corners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+        corners.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
+        corners.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
+        corners.add(new Corner(CornerEnum.HIDDEN));
+
+        ResourceCard testCard = new ResourceCard(1, CornerEnum.ResourceEnum.ANIMAL,corners, corners, "front.jpg", "back.jpg");
+
+        //Adding the test card to the player's hand
+        player.addCardToHand(testCard);
+        int playerHandSize = playerHand.size();
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            player.removeCardFromHand(playerHandSize + 1);
         });
 
         String expectedMessage = "The index is out of bounds.";
