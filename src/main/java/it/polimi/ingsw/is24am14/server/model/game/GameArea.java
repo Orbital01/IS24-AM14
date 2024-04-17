@@ -11,12 +11,20 @@ import java.util.*;
  * Represents the game area where cards will be placed during the game
  */
 public class GameArea {
-    public HashMap<Coordinates, Card> board;
+    private final HashMap<Coordinates, Card> board;
     /**
      * Constructs a new empty GameArea
      */
     public GameArea() {
         board = new HashMap<>();
+    }
+
+    /**
+     * Board getter
+     * @return The board
+     */
+    public HashMap<Coordinates, Card> getBoard() {
+        return board;
     }
 
     /**
@@ -96,7 +104,7 @@ public class GameArea {
      * Adds starter card to player's game area
      * @param starterCard The starterCard
      */
-    void placeStarterCard(Card starterCard){
+    public void placeStarterCard(StarterCard starterCard){
         Coordinates startingCoordinates = new Coordinates(0,0);
         board.put(startingCoordinates, starterCard);
     }

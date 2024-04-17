@@ -38,7 +38,7 @@ public class ObjectCondition implements Condition {
         ArrayList<CornerEnum.ObjectEnum> toFind = new ArrayList<>(listObject);
 
         //  for each card on the board
-        for (Map.Entry<Coordinates, Card> entry : board.board.entrySet())
+        for (Map.Entry<Coordinates, Card> entry : board.getBoard().entrySet())
         {
             //  for each corner of the card
             for (int i = 0; i < 4; i++) {
@@ -62,7 +62,7 @@ public class ObjectCondition implements Condition {
         int objectsFound = 0;
 
         //  for each card on the board
-        for (Map.Entry<Coordinates, Card> entry : board.board.entrySet())
+        for (Map.Entry<Coordinates, Card> entry : board.getBoard().entrySet())
         {
             //  for each corner of the card
             for (int i = 0; i < 4; i++) {
