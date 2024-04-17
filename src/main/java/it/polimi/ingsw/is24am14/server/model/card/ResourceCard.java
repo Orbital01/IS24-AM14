@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * A resource card has a number of points and a resource.
  */
 
-public class ResourceCard extends Card {
+public class ResourceCard extends Card implements PlayableCard {
 
     private final int points;
     private final CornerEnum.ResourceEnum resource;

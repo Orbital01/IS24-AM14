@@ -102,7 +102,4 @@ public abstract class Card {
         return items;
     }
 
-    public CornerEnum.ResourceEnum getResource() {
-        return null;
-    }
 }
