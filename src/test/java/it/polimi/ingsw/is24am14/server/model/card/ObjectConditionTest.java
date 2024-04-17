@@ -111,7 +111,6 @@ class ObjectConditionTest {
         assertTrue(testingCondition.isSatisfied(gameBoard));
     }
 
-    //  Not passed. There is an error in GameArea.getCard(Coordinates)
     @Test
     void isOneObjectOverlappedCardNotSatisfied() {
         ObjectCondition testingCondition = new ObjectCondition();
@@ -125,6 +124,7 @@ class ObjectConditionTest {
         corners1.add(new Corner(CornerEnum.HIDDEN));
 
         ResourceCard testCard1 = new ResourceCard(1, CornerEnum.ResourceEnum.ANIMAL, corners1, corners1, "front.jpg", "back.jpg");
+        corners1.get(1).overlap();
 
         ArrayList<Corner> corners2 = new ArrayList<>();
         corners2.add(new Corner(CornerEnum.ResourceEnum.INSECT));
@@ -252,6 +252,7 @@ class ObjectConditionTest {
         corners1.add(new Corner(CornerEnum.HIDDEN));
 
         ResourceCard testCard1 = new ResourceCard(1, CornerEnum.ResourceEnum.ANIMAL, corners1, corners1, "front.jpg", "back.jpg");
+        testCard1.getCorners().get(1).overlap();
 
         ArrayList<Corner> corners2 = new ArrayList<>();
         corners2.add(new Corner(CornerEnum.ResourceEnum.INSECT));
