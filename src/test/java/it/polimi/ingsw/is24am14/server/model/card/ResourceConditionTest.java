@@ -23,7 +23,7 @@ class ResourceConditionTest {
 
         ResourceCard testCard = new ResourceCard(1, CornerEnum.ResourceEnum.ANIMAL, corners, corners, "", "");
 
-        gameBoard.board.put(new Coordinates(0, 0), testCard);
+        gameBoard.getBoard().put(new Coordinates(0, 0), testCard);
 
         assertTrue(testingCondition.isSatisfied(gameBoard));
     }

@@ -36,7 +36,7 @@ public class CardCondition implements Condition {
     public boolean isSatisfied(GameArea board) {
         int listCardIndex = 0;
 
-        for (Map.Entry<Coordinates, Card> entry : board.board.entrySet()) {
+        for (Map.Entry<Coordinates, Card> entry : board.getBoard().entrySet()) {
             //  if the board-card type is the same as the listCard type
             //  look at the next card of the condition
             CornerEnum.ResourceEnum type = new ArrayList<>(listCard.values()).get(listCardIndex);
@@ -45,7 +45,7 @@ public class CardCondition implements Condition {
 
             while (listCardIndex < listCard.size() && isSameType(entry.getValue(), type) && cardToCheck != null) {
                 coordinates = new ArrayList<>(listCard.keySet()).get(listCardIndex);
-                cardToCheck = board.board.get(Coordinates.add(entry.getKey(), coordinates));
+                cardToCheck = board.getBoard().get(Coordinates.add(entry.getKey(), coordinates));
                 listCardIndex = listCardIndex + 1;
             }
 

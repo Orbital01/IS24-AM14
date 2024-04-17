@@ -10,7 +10,7 @@ import java.util.Map;
  *  Implements the {@link Condition} interface.
  */
 public class ResourceCondition implements Condition {
-    private ArrayList<CornerEnum.ResourceEnum> listResource;
+    private final ArrayList<CornerEnum.ResourceEnum> listResource;
 
     public ResourceCondition () {
         listResource = new ArrayList<>();
@@ -36,7 +36,7 @@ public class ResourceCondition implements Condition {
         ArrayList<CornerEnum.ResourceEnum> toFind = new ArrayList<>(listResource);
 
         //  for each card on the board
-        for (Map.Entry<Coordinates, Card> entry : board.board.entrySet())
+        for (Map.Entry<Coordinates, Card> entry : board.getBoard().entrySet())
         {
             //  for each corner of the card
             for (int i = 0; i < 4; i++) {

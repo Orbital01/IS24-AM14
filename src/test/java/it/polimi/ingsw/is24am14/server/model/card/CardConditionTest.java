@@ -47,7 +47,7 @@ class CardConditionTest {
 
         ResourceCard testCard = new ResourceCard(1, CornerEnum.ResourceEnum.PLANT,corners, corners, "front.jpg", "back.jpg");
 
-        gameBoard.board.put(new Coordinates(0, 0), testCard);
+        gameBoard.getBoard().put(new Coordinates(0, 0), testCard);
 
         assertTrue(testingCondition.isSatisfied(gameBoard));
     }
@@ -74,8 +74,8 @@ class CardConditionTest {
 
         ResourceCard testCard2 = new ResourceCard(1, CornerEnum.ResourceEnum.PLANT,corners2, corners2, "front.jpg", "back.jpg");
 
-        gameBoard.board.put(new Coordinates(0, 0), testCard1);
-        gameBoard.board.put(new Coordinates(1, 1), testCard2);
+        gameBoard.getBoard().put(new Coordinates(0, 0), testCard1);
+        gameBoard.getBoard().put(new Coordinates(1, 1), testCard2);
 
         assertTrue(testingCondition.isSatisfied(gameBoard));
     }
@@ -103,8 +103,8 @@ class CardConditionTest {
 
         ResourceCard testCard2 = new ResourceCard(1, CornerEnum.ResourceEnum.PLANT,corners2, corners2, "front.jpg", "back.jpg");
 
-        gameBoard.board.put(new Coordinates(0, 0), testCard1);
-        gameBoard.board.put(new Coordinates(1, 1), testCard2);
+        gameBoard.getBoard().put(new Coordinates(0, 0), testCard1);
+        gameBoard.getBoard().put(new Coordinates(1, 1), testCard2);
 
         assertTrue(testingCondition.isSatisfied(gameBoard));
     }
