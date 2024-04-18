@@ -13,6 +13,7 @@ public class LobbyContext {
     private LobbyState state;
     private int numberOfPlayers;
     private ArrayList<Player> players; //da sostituire poi con il client che si connette
+    private Boolean isPlayerReady;
 
     //altri attributi che possono servire
 
@@ -48,6 +49,14 @@ public class LobbyContext {
 
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    public void setPlayerReady(Boolean isPlayerReady) {
+        this.isPlayerReady = isPlayerReady;
+    }
+
+    public Boolean isPlayerReady() {
+        return isPlayerReady;
     }
 
 }

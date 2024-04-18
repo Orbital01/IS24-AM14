@@ -9,9 +9,7 @@ public class AllPlayersConnectedState implements LobbyState {
     }
 
     public void handle() {
-
-        //TODO
-
+        context.setPlayerReady(true);
         //mandare un messaggio a tutti i giocatori che la partita sta per iniziare
     }
 
