@@ -8,9 +8,8 @@ import it.polimi.ingsw.is24am14.server.model.card.*;
 import java.util.ArrayList;
 
 public class Game {
-    public Game(int numPlayers, int indexActivePlayer) {
+    public Game(int numPlayers) {
         this.numPlayers = numPlayers;
-        this.indexActivePlayer = indexActivePlayer;
     }
     private ArrayList<Player> players;
     private int numPlayers;
@@ -51,5 +50,13 @@ public class Game {
     }
     public void changeActivePlayer() {
         indexActivePlayer = (indexActivePlayer + 1) % numPlayers;
+    }
+
+    public boolean isEndGame() {
+        return isEndGame;
+    }
+
+    public void setEndGame() {
+        isEndGame = true;
     }
 }
