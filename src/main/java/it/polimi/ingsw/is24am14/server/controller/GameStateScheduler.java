@@ -26,30 +26,30 @@ public class GameStateScheduler {
         while (!context.game.isEndGame()) {
             //  for each player
             for (int i = 0; i < context.game.getNumPlayers(); i++) {
-                context.setGameState(new playState(context.game));
+                context.setGameState(new PlayState(context));
                 context.executeState();
 
-                context.setGameState(new drawState(context.game));
+                context.setGameState(new DrawState(context));
                 context.executeState();
 
-                context.setGameState(new endTurnState(context.game));
+                context.setGameState(new EndTurnState(context));
                 context.executeState();
             }
         }
 
         //  last round when in end game
         for (int i = 0; i < context.game.getNumPlayers(); i++) {
-            context.setGameState(new playState(context.game));
+            context.setGameState(new PlayState(context));
             context.executeState();
 
-            context.setGameState(new drawState(context.game));
+            context.setGameState(new DrawState(context));
             context.executeState();
 
-            context.setGameState(new endTurnState(context.game));
+            context.setGameState(new EndTurnState(context));
             context.executeState();
         }
 
-        context.setGameState(new endGameState(context.game));
+        context.setGameState(new EndGameState(context));
         context.executeState();
     }
 }
