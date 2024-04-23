@@ -72,6 +72,21 @@ public class Player {
     }
 
     /**
+     * Retrieves the player's secret objective card.
+     *
+     * @return The secret objective card of the player.
+     */
+    public ObjectiveCard getSecretObjective() {
+        return this.secretObjective;
+    }
+
+    public GameArea getPlayerBoard() {
+        return this.playerBoard;
+    }
+
+
+
+    /**
      * Sets the player's nickname.
      *
      * @param nickname The new nickname of the player.
@@ -128,6 +143,17 @@ public class Player {
      */
     public void placeCard(Card cardToOverlap, Card cardToPlace, int cornerIndex) {
         playerBoard.addCard(cardToOverlap, cardToPlace, cornerIndex);
+    }
+
+    /**
+     * Retrieves the player's secret objective card.
+     */
+    public void setSecretObjective(ObjectiveCard secretObjective) {
+        this.secretObjective = secretObjective;
+    }
+
+    public void setGameArea(GameArea playerBoard) {
+        this.playerBoard = playerBoard;
     }
 
 

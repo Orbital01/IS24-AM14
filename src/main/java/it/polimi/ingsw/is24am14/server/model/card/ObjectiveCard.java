@@ -10,13 +10,18 @@ import java.util.ArrayList;
 
 public class ObjectiveCard extends Card {
     private final Condition condition;
+    private int points;
 
-    public ObjectiveCard(Condition condition, ArrayList<Corner> frontCorners, ArrayList<Corner> backCorners, String frontImage, String backImage) {
+    public ObjectiveCard(Condition condition, ArrayList<Corner> frontCorners, ArrayList<Corner> backCorners,
+                         String frontImage, String backImage, int points) {
         super(frontCorners, backCorners, frontImage, backImage);
         this.condition = condition;
+        this.points = points;
     }
 
     public Condition getCondition() {
         return condition;
     }
+
+    public int getPoints() {return points;}
 }

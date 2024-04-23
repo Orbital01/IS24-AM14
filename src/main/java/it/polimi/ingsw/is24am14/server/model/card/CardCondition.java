@@ -61,7 +61,7 @@ public class CardCondition implements Condition {
      * @param type type to be checked
      * @return {@code true} if the card is typeof type, otherwise {@code false}
      */
-    private boolean isSameType (Card boardCard, CornerEnum.ResourceEnum type) {
+    private boolean isSameType (PlayableCard boardCard, CornerEnum.ResourceEnum type) {
         return boardCard.getResource() == type;
     }
 }

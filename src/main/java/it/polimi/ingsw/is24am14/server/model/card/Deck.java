@@ -6,15 +6,15 @@ import java.util.Collections;
 /**
  * This class represents the deck of cards used in the game. It contains a list of cards and methods to manipulate them.
  */
-public class Deck {
-    private ArrayList<Card> content;
+public class Deck<T extends Card> {
+    private ArrayList<T> content;
 
 
     /**
      * Creates a deck with the given cards
      * @param cards the cards to be added to the deck
      */
-    public Deck(ArrayList<Card> cards) {
+    public Deck(ArrayList<T> cards) {
         content = new ArrayList<>(cards);
     }
 
@@ -30,7 +30,7 @@ public class Deck {
      * @return Card
      */
 
-    public Card removeTop(){
+    public T removeTop(){
         //launch an exception if the deck is empty
         if (content.isEmpty()) {
             throw new IllegalStateException("The deck is empty");
