@@ -97,16 +97,40 @@ public class GameArea {
         if (getCard(newCardCoordinates) != null) throw new IllegalStateException("Illegal move. Cannot put a card on another card");
 
         board.put(newCardCoordinates, newCard);
-        playedCard.getCorners().get(cornerIndex).overlap();
+        overlapCorners(playedCard);
     }
 
     /**
      * Adds starter card to player's game area
      * @param starterCard The starterCard
      */
-    public void placeStarterCard(StarterCard starterCard){
-        Coordinates startingCoordinates = new Coordinates(0,0);
+    public void placeStarterCard(StarterCard starterCard) {
+        Coordinates startingCoordinates = new Coordinates(0, 0);
         board.put(startingCoordinates, starterCard);
+    }
+
+    /**
+     * Overlaps all 4 neighboring corners when playing a card
+     * @param playedCard The played card
+     */
+    public void overlapCorners(Card playedCard){
+        Coordinates cardCoordinates = getCoordinates(playedCard);
+        int Row = cardCoordinates.getRow();
+        int Column = cardCoordinates.getColumn();
+
+        Coordinates TopLeftCard = new Coordinates (Row++, Column--);
+        Coordinates TopRightCard = new Coordinates(Row++, Column++);
+        Coordinates BottomLeftCard = new Coordinates(Row--, Column--);
+        Coordinates BottomRightCard = new Coordinates(Row--, Column++);
+
+        if(getCard(TopLeftCard)!=null)
+            getCard(TopLeftCard).getCorners().get(CornerIndex.BOTTOM_RIGHT).overlap();
+        if(getCard(TopRightCard)!=null)
+            getCard(TopRightCard).getCorners().get(CornerIndex.BOTTOM_LEFT).overlap();
+        if(getCard(BottomLeftCard)!=null)
+            getCard(BottomLeftCard).getCorners().get(CornerIndex.TOP_RIGHT).overlap();
+        if(getCard(BottomRightCard)!=null)
+            getCard(BottomRightCard).getCorners().get(CornerIndex.TOP_LEFT).overlap();
     }
 
 }

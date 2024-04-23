@@ -11,8 +11,8 @@ public class Player {
     private String nickname;
     private int points;
     private final TokenColour colour;
-    private Card starterCard;
-    private ArrayList<Card> playerHand;
+    private StarterCard starterCard;
+    private ArrayList<PlayableCard> playerHand;
     private ObjectiveCard secretObjective;
     private GameArea playerBoard;
 
@@ -29,7 +29,7 @@ public class Player {
         this.nickname = nickname;
         this.points = 0;
         this.colour = colour;
-        this.playerHand = new ArrayList<Card>();
+        this.playerHand = new ArrayList<PlayableCard>();
         this.secretObjective = null;
         this.playerBoard = new GameArea();
     }
@@ -67,7 +67,7 @@ public class Player {
      *
      * @return The hand of cards of the player.
      */
-    public ArrayList<Card> getPlayerHand() {
+    public ArrayList<PlayableCard> getPlayerHand() {
         return this.playerHand;
     }
 
@@ -109,7 +109,7 @@ public class Player {
      *
      * @param starterCard The (new) starter card of the player.
      */
-    public void setStarterCard(Card starterCard) {
+    public void setStarterCard(StarterCard starterCard) {
         this.starterCard = starterCard;
     }
 
@@ -119,7 +119,7 @@ public class Player {
      *
      * @param card The card that is going to be added to the player's hand.
      */
-    public void addCardToHand(Card card) {
+    public void addCardToHand(PlayableCard card) {
         this.playerHand.add(card);
     }
 
