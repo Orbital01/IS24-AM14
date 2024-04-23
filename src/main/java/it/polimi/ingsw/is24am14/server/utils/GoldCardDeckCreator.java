@@ -16,7 +16,7 @@ public class GoldCardDeckCreator {
         Deck<GoldCard> goldCardDeck = new Deck<>(content);
 
         // placeholders
-        Condition cornerCondition = new Condition();
+        CornerCondition cornerCondition = new CornerCondition();
         Condition noCondition = null;
 
         ObjectCondition quillCondition = new ObjectCondition();

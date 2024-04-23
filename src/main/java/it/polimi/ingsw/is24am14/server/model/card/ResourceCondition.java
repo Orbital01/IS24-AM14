@@ -58,4 +58,9 @@ public class ResourceCondition implements Condition {
     public ArrayList<CornerEnum.ResourceEnum> getListResource() {
         return listResource;
     }
+
+    @Override
+    public int numSatisfied(GameArea board) {
+        return isSatisfied(board) ? 1 : 0;
+    }
 }
