@@ -16,15 +16,24 @@ public class GoldCard extends Card implements PlayableCard {
     private final Condition placementCondition;
 
     public GoldCard(int points, Condition pointCondition, CornerEnum.ResourceEnum resource,
-                    Condition placementCondition, ArrayList<Corner> frontCorners, ArrayList<Corner> backCorners,
+                    Condition placementCondition, ArrayList<Corner> frontCorners,
                     String frontImage, String backImage) {
 
-        super(frontCorners, backCorners, frontImage, backImage);
+        super(frontCorners, createBackCorners(), frontImage, backImage);
         this.points = points;
         this.pointCondition = pointCondition;
         this.resource = resource;
         this.placementCondition = placementCondition;
 
+    }
+
+    public static ArrayList<Corner> createBackCorners() {
+        ArrayList<Corner> backCorners = new ArrayList<>();
+        backCorners.add(new Corner(CornerEnum.EMPTY));
+        backCorners.add(new Corner(CornerEnum.EMPTY));
+        backCorners.add(new Corner(CornerEnum.EMPTY));
+        backCorners.add(new Corner(CornerEnum.EMPTY));
+        return backCorners;
     }
 
     public int getPoints() {
@@ -42,4 +51,6 @@ public class GoldCard extends Card implements PlayableCard {
     public Condition getPlacementCondition() {
         return placementCondition;
     }
+
+
 }
