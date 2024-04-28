@@ -1,0 +1,86 @@
+[
+  {
+    "points": 1,
+    "resource": "ANIMAL",
+    "frontCorners": [
+      {
+        "type": "HIDDEN",
+        "isOverlapped": false
+      },
+      {
+        "type": "ANIMAL",
+        "isOverlapped": false
+      },
+      {
+        "type": "FUNGI",
+        "isOverlapped": false
+      },
+      {
+        "type": "MANUSCRIPT",
+        "isOverlapped": false
+      }
+    ],
+    "backCorners": [
+      {
+        "type": "EMPTY",
+        "isOverlapped": false
+      },
+      {
+        "type": "HIDDEN",
+        "isOverlapped": false
+      },
+      {
+        "type": "HIDDEN",
+        "isOverlapped": false
+      },
+      {
+        "type": "EMPTY",
+        "isOverlapped": false
+      }
+    ],
+    "frontImage": "frontImage",
+    "backImage": "backImage"
+  },
+  {
+    "points": 2,
+    "resource": "PLANT",
+    "frontCorners": [
+      {
+        "type": "HIDDEN",
+        "isOverlapped": false
+      },
+      {
+        "type": "ANIMAL",
+        "isOverlapped": false
+      },
+      {
+        "type": "FUNGI",
+        "isOverlapped": false
+      },
+      {
+        "type": "MANUSCRIPT",
+        "isOverlapped": false
+      }
+    ],
+    "backCorners": [
+      {
+        "type": "EMPTY",
+        "isOverlapped": false
+      },
+      {
+        "type": "HIDDEN",
+        "isOverlapped": false
+      },
+      {
+        "type": "HIDDEN",
+        "isOverlapped": false
+      },
+      {
+        "type": "EMPTY",
+        "isOverlapped": false
+      }
+    ],
+    "frontImage": "frontImage",
+    "backImage": "backImage"
+  }
+]
