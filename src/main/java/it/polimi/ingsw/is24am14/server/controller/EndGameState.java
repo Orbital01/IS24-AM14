@@ -4,9 +4,9 @@ import it.polimi.ingsw.is24am14.server.model.card.*;
 import it.polimi.ingsw.is24am14.server.model.game.Game;
 import it.polimi.ingsw.is24am14.server.model.player.*;
 
-public class EndGameState implements GameState {
+public class EndGameState /*implements GameState*/ {
 
-        private GameContext context;
+     /*   private GameContext context;
 
         public EndGameState(GameContext context) {
             this.context = context;
@@ -50,4 +50,6 @@ public class EndGameState implements GameState {
 
 
         }
+        */
+
 }

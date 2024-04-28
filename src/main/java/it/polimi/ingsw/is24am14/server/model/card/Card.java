@@ -102,4 +102,14 @@ public abstract class Card {
         return items;
     }
 
+    /**
+     * these methods are implemented in order to be able to serialize the card
+     * they should not be used in the model or controller
+     */
+    //getters
+    public ArrayList<Corner> getFrontCorners() {return frontCorners;}
+    public ArrayList<Corner> getBackCorners() {return backCorners;}
+    public String getFrontImage() {return frontImage;}
+    public String getBackImage() {return backImage;}
+
 }
