@@ -52,4 +52,9 @@ public class ResourceCondition implements Condition {
 
         return toFind.isEmpty();
     }
+
+    @Override
+    public int numSatisfied(GameArea board) {
+        return isSatisfied(board) ? 1 : 0;
+    }
 }

@@ -57,7 +57,7 @@ public class ObjectCondition implements Condition {
      * @param board the player's game board that is being checked
      * @return the number of objects on the game-board that satisfies the condition
      */
-    public int numObjects(GameArea board) {
+    public int numSatisfied(GameArea board) {
         CornerEnum.ObjectEnum toFind = listObject.getFirst();
         int objectsFound = 0;
 
