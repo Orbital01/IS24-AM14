@@ -6,7 +6,10 @@ import it.polimi.ingsw.is24am14.server.model.game.*;
 
 import java.util.ArrayList;
 
-
+/**
+ * Represents a player in the game.
+ * Each player has a nickname, a score, a token color, a starter card, a hand of cards, a secret objective card, and a game area.
+ */
 public class Player {
     private String nickname;
     private int points;
@@ -29,7 +32,7 @@ public class Player {
         this.nickname = nickname;
         this.points = 0;
         this.colour = colour;
-        this.playerHand = new ArrayList<PlayableCard>();
+        this.playerHand = new ArrayList<Card>();
         this.secretObjective = null;
         this.playerBoard = new GameArea();
     }
@@ -67,7 +70,7 @@ public class Player {
      *
      * @return The hand of cards of the player.
      */
-    public ArrayList<PlayableCard> getPlayerHand() {
+    public ArrayList<Card> getPlayerHand() {
         return this.playerHand;
     }
 
@@ -109,7 +112,7 @@ public class Player {
      *
      * @param starterCard The (new) starter card of the player.
      */
-    public void setStarterCard(StarterCard starterCard) {
+    public void setStarterCard(Card starterCard) {
         this.starterCard = starterCard;
     }
 
@@ -119,7 +122,7 @@ public class Player {
      *
      * @param card The card that is going to be added to the player's hand.
      */
-    public void addCardToHand(PlayableCard card) {
+    public void addCardToHand(Card card) {
         this.playerHand.add(card);
     }
 

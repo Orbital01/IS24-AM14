@@ -5,6 +5,10 @@ import it.polimi.ingsw.is24am14.server.model.card.*;
 import java.util.*;
 import java.util.Random;
 
+/**
+ * Represents the initial game state.
+ * This class is responsible for setting up the game, including shuffling and dealing cards, assigning player colors, and setting the first player.
+ */
 public class InitGameState implements GameState{
     private GameContext context;
     private List<TokenColour> TokenColours;
@@ -13,20 +17,21 @@ public class InitGameState implements GameState{
     private Deck resourceDeck;
     private Deck objectiveDeck; //must be assigned by Matteo's parser
     private ArrayList<Card> faceUpCards;
-    public InitGameState(GameContext context){
-        //Initialize all decks
-        List<TokenColour> TokenColours = Arrays.asList(TokenColour.values());
-        Deck starterCards = new Deck(new ArrayList<StarterCard>()); //must be assigned by Matteo's parser
-        Deck goldDeck = new Deck(new ArrayList<GoldCard>()); //must be assigned by Matteo's parser
-        Deck resourceDeck = new Deck(new ArrayList<ResourceCard>()); //must be assigned by Matteo's parser
-        Deck objectiveDeck = new Deck(new ArrayList<ObjectiveCard>()); //must be assigned by Matteo's parser
-        ArrayList<Card> faceUpCards = new ArrayList<Card>();
 
-        //Get all decks from parser
-        starterCards = parser.getStarterDeck(); //must be assigned by Matteo's parser
-        goldDeck = parser.getGoldDeck(); //must be assigned by Matteo's parser
-        resourceDeck = parser.getResourceDeck(); //must be assigned by Matteo's parser
-        objectiveDeck = parser.getObjectiveDeck(); //objectiveDeck must be declared as ArrayList<Card> or as Deck?
+    /**
+     * Constructor for the InitGameState class.
+     * Initializes all decks and sets them to the game class.
+     *
+     * @param context The game context.
+     */
+    public InitGameState(GameContext context){
+        //Initialize all decks & get them from parser
+        List<TokenColour> TokenColours = Arrays.asList(TokenColour.values());
+        Deck<StarterCard> starterCards = new StarterCardDeckDeparser().deparse();
+        Deck<GoldCard> goldDeck = new GoldCardDeckDeparser().deparse();
+        Deck<ResourceCard> resourceDeck = new ResourceCardDeckDeparser().deparse();
+        Deck<ObjectiveCard> objectiveDeck = new ObjectiveCardDeckDeparser().deparse();
+        ArrayList<Card> faceUpCards = new ArrayList<Card>();
 
         //Set all decks to Game class
         context.getGame().setGoldDeck(goldDeck);
@@ -35,6 +40,11 @@ public class InitGameState implements GameState{
         context.getGame().setFaceUpCards(faceUpCards);
 
     }
+
+    /**
+     * Executes the initial game state.
+     * Shuffles all decks, assigns cards to players, and sets the first player.
+     */
     public void execute(){
         //Shuffle all decks
         starterCards.shuffle();
@@ -54,11 +64,11 @@ public class InitGameState implements GameState{
         for (Player player : context.getGame().getPlayers()){
             //Initialize player's board, hand and starter card
             player.setPlayerBoard(new GameArea());
-            player.setPlayerHand(new ArrayList<Card>());
+            player.setPlayerHand(new ArrayList<PlayableCard>());
             player.setStarterCard(starterCards.removeTop()); //POLYMORPHISM ERROR: to be fixed by Matteo by introducing Java generics types
             player.getPlayerBoard().placeStarterCard(player.getStarterCard());
             //Let each player choose his colour
-            chooseAndRemoveColour(player, /* chosenColourIndex that will be passed as a parameter by VIEW */);
+            chooseAndRemoveColour(player, chosenColourIndex(player));
             //Let each player have his hand of cards
             player.addCardToHand(resourceDeck.removeTop());
             player.addCardToHand(resourceDeck.removeTop());
@@ -73,7 +83,7 @@ public class InitGameState implements GameState{
 
         //Let each player choose his secret objective (handled out from the first for-loop in order to keep the right order of rules)
         for (Player player : context.getGame().getPlayers()){
-            chooseSecretObjective(player, /* chosenSecretIndex that will be passed as a parameter by VIEW */);
+            chooseSecretObjective(player, chosenSecretIndex(player));
         }
 
         //First player is randomly chosen; after first player is chosen, he will have black token as well
@@ -82,17 +92,48 @@ public class InitGameState implements GameState{
         context.getGame().getPlayers().get(firstPlayerIndex).setFirstPlayer(true); //--> the VIEW will graphically assign the black token to the first player
     }
 
+    /**
+     * Allows a player to choose a secret objective.
+     *
+     * @param player The player who is choosing the secret objective.
+     * @param chosenSecretIndex The index of the chosen secret objective.
+     */
     public void chooseSecretObjective(Player player, int chosenSecretIndex){
         ArrayList<ObjectiveCard> chooseSecret = new ArrayList<ObjectiveCard>();
         for (int i = 0; i < 2; i++){
             chooseSecret.add(objectiveDeck.removeTop()); //POLYMORPHISM ERROR: to be fixed by Matteo by introducing Java generics types
         }
-        player.setObjectiveCard(chooseSecret.get(chosenSecretIndex));
+        player.setSecretObjective(chooseSecret.get(chosenSecretIndex));
     }
 
+    /**
+     * Allows a player to choose and remove a color.
+     *
+     * @param player The player who is choosing the color.
+     * @param chosenColourIndex The index of the chosen color.
+     */
     public void chooseAndRemoveColour(Player player, int chosenColourIndex){
         TokenColour chosenColour = TokenColours.get(chosenColourIndex);
         TokenColours.remove(chosenColour);
         player.setColour(chosenColour);
+    }
+
+    /**
+     * Placeholder method (currently waiting for VIEW) for choosing a color index.
+     *
+     * @param player The player who is choosing the color.
+     * @return The index of the chosen color.
+     */
+    public int chosenColourIndex(Player player){
+        return 4; //--> this is just a placeholder, the VIEW will graphically assign the colour to the player
+    }
+    /**
+     * Placeholder method (currently waiting for VIEW) for choosing a secret index.
+     *
+     * @param player The player who is choosing the secret objective.
+     * @return The index of the chosen secret objective.
+     */
+    public int chosenSecretIndex(Player player){
+        return 2; //--> this is just a placeholder, the VIEW will graphically assign the colour to the player
     }
 }
