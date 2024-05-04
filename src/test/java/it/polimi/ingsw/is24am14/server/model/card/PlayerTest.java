@@ -18,7 +18,7 @@ class PlayerTest {
     @Test
     void emptyHandTest(){
         Player player = new Player("TestPlayer", TokenColour.GREEN);
-        ArrayList<Card> playerHand = new ArrayList<>();
+        ArrayList<PlayableCard> playerHand = new ArrayList<>();
         playerHand = player.getPlayerHand();
 
         //Emptying the hand
@@ -45,7 +45,7 @@ class PlayerTest {
     void negativeIndexForHandTest() {
         //Creating a player
         Player player = new Player("TestPlayer", TokenColour.GREEN);
-        ArrayList<Card> playerHand = new ArrayList<>();
+        ArrayList<PlayableCard> playerHand = new ArrayList<>();
         playerHand = player.getPlayerHand();
 
         //Generating a test card to add to the player's hand
@@ -77,7 +77,7 @@ class PlayerTest {
     void outOfBoundsIndexForHandTest() {
         //Creating a player
         Player player = new Player("TestPlayer", TokenColour.GREEN);
-        ArrayList<Card> playerHand = new ArrayList<>();
+        ArrayList<PlayableCard> playerHand = new ArrayList<>();
         playerHand = player.getPlayerHand();
 
         //Generating a test card to add to the player's hand
