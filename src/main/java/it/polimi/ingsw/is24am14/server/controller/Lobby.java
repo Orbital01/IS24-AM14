@@ -25,6 +25,11 @@ public class Lobby {
 
     }
 
+    //aggiungo un player che vuole connettersi a questa lobby
+    public void addPlayer(Player player) {
+        context.addPlayer(player);
+    }
+
     public ArrayList<Player> getPlayers() {
         return context.getPlayers();
     }
