@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * It also has a condition that must be satisfied in order to place it on the board.
  */
 
-public class GoldCard extends Card implements PlayableCard {
+public class GoldCard extends PlayableCard {
     private final int points;
     private final Condition pointCondition;
     private final CornerEnum.ResourceEnum resource;

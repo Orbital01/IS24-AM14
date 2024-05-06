@@ -12,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class ObejcticeCardDeckDeparser implements DeckDeparser{
+public class ObjectiveCardDeckDeparser implements DeckDeparser{
 
     @Override
     public Deck<ObjectiveCard> deparse() {
