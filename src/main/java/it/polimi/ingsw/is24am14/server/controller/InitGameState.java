@@ -1,9 +1,11 @@
-package it.polimi.ingsw.is24am14.server.controller.state;
+package it.polimi.ingsw.is24am14.server.controller;
+
 import it.polimi.ingsw.is24am14.server.model.game.*;
 import it.polimi.ingsw.is24am14.server.model.player.*;
 import it.polimi.ingsw.is24am14.server.model.card.*;
 import java.util.*;
 import java.util.Random;
+import it.polimi.ingsw.is24am14.server.utils.ser_deser.*;
 
 /**
  * Represents the initial game state.
@@ -13,8 +15,8 @@ public class InitGameState implements GameState{
     private GameContext context;
     private List<TokenColour> TokenColours;
     private Deck starterCards; //must be assigned by Matteo's parser
-    private Deck goldDeck; //must be assigned by Matteo's parser
-    private Deck resourceDeck;
+    private Deck<PlayableCard> goldDeck; //must be assigned by Matteo's parser
+    private Deck<PlayableCard> resourceDeck;
     private Deck objectiveDeck; //must be assigned by Matteo's parser
     private ArrayList<Card> faceUpCards;
 
