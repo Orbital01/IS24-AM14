@@ -13,10 +13,10 @@ public class Game {
     }
     private ArrayList<Player> players;
     private int numPlayers;
-    private Deck resourceDeck;
-    private Deck goldDeck;
+    private Deck<ResourceCard> resourceDeck;
+    private Deck<GoldCard> goldDeck;
     private ArrayList<PlayableCard> faceUpCards; //modificato da Card a PlayableCard
-    private ArrayList<ObjectiveCard> objectiveCards; //modificato da Card a ObjectiveCard
+    private Deck<ObjectiveCard> objectiveDeck; //modificato da Card a ObjectiveCard
     private boolean isEndGame;
     private int indexActivePlayer;
 
@@ -66,7 +66,27 @@ public class Game {
     public void setEndGame() {
         isEndGame = true;
     }
-    public ArrayList<ObjectiveCard> getObjectiveCards() {
-        return objectiveCards;
+    public Deck<ObjectiveCard> getObjectiveDeck() {
+        return objectiveDeck;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
+
+    public void setGoldDeck(Deck<GoldCard> goldDeck) {
+        this.goldDeck = goldDeck;
+    }
+
+    public void setResourceDeck(Deck<ResourceCard> resourceDeck) {
+        this.resourceDeck = resourceDeck;
+    }
+
+    public void setObjectiveDeck(Deck<ObjectiveCard> objectiveDeck) {
+        this.objectiveDeck = objectiveDeck;
+    }
+
+    public void setFaceUpCards(ArrayList<PlayableCard> faceUpCards) {
+        this.faceUpCards = faceUpCards;
     }
 }
