@@ -20,6 +20,14 @@ public class Lobby {
     public boolean isAllPlayersConnected() {
         return context.getState().equals(new AllPlayersConnectedState(context));
         //anche questo è da testare ASAP!!!
+
+        //a questo punto lancio il gioco
+
+    }
+
+    //aggiungo un player che vuole connettersi a questa lobby
+    public void addPlayer(Player player) {
+        context.addPlayer(player);
     }
 
     public ArrayList<Player> getPlayers() {
@@ -30,5 +38,8 @@ public class Lobby {
         return context.getNumberOfPlayers();
     }
 
+    public LobbyContext getContext() {
+        return context;
+    }
 
 }

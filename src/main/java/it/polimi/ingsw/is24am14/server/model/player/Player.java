@@ -6,11 +6,14 @@ import it.polimi.ingsw.is24am14.server.model.game.*;
 
 import java.util.ArrayList;
 
-
+/**
+ * Represents a player in the game.
+ * Each player has a nickname, a score, a token color, a starter card, a hand of cards, a secret objective card, and a game area.
+ */
 public class Player {
     private String nickname;
     private int points;
-    private final TokenColour colour;
+    private TokenColour colour;
     private StarterCard starterCard;
     private ArrayList<PlayableCard> playerHand;
     private ObjectiveCard secretObjective;
@@ -58,7 +61,7 @@ public class Player {
      *
      * @return The starter card of the player.
      */
-    public Card getStarterCard() {
+    public StarterCard getStarterCard() {
         return this.starterCard;
     }
 
@@ -80,11 +83,23 @@ public class Player {
         return this.secretObjective;
     }
 
+    /**
+     * Retrieves the player's game area.
+     *
+     * @return The game area of the player.
+     */
     public GameArea getPlayerBoard() {
         return this.playerBoard;
     }
 
-
+    /**
+     * Retrieves the player's token color.
+     *
+     * @return The token color of the player.
+     */
+    public TokenColour getColour() {
+        return this.colour;
+    }
 
     /**
      * Sets the player's nickname.
@@ -111,6 +126,15 @@ public class Player {
      */
     public void setStarterCard(StarterCard starterCard) {
         this.starterCard = starterCard;
+    }
+
+    /**
+     * Sets the player's hand of cards.
+     *
+     * @param playerHand The new hand of cards of the player.
+     */
+    public void setPlayerHand(ArrayList<PlayableCard> playerHand) {
+        this.playerHand = playerHand;
     }
 
     //Methods
@@ -152,8 +176,31 @@ public class Player {
         this.secretObjective = secretObjective;
     }
 
-    public void setGameArea(GameArea playerBoard) {
+    /**
+     * Sets the player's game area.
+     *
+     * @param playerBoard The new game area of the player.
+     */
+    public void setPlayerBoard(GameArea playerBoard) {
         this.playerBoard = playerBoard;
+    }
+
+    /**
+     * Sets the player's secret objective card.
+     *
+     * @param objectiveCard The new secret objective card of the player.
+     */
+    public void setObjectiveCard(ObjectiveCard objectiveCard) {
+        this.secretObjective = objectiveCard;
+    }
+
+    /**
+     * Sets the player's token color.
+     *
+     * @param colour The new token color of the player.
+     */
+    public void setColour(TokenColour colour) {
+        this.colour = colour;
     }
 
 

@@ -30,4 +30,33 @@ public interface CornerEnum {
         HIDDEN, EMPTY
     }
 
+    /**
+     * this method is used to get the CornerEnum value from a string
+     * IT IS ONLY USED TO DESERIALIZE THE OBJECT
+     */
+
+    public static CornerEnum valueOf(String name) {
+        String trimmedName = name.trim();
+
+        for (ResourceEnum value : ResourceEnum.values()) {
+            if (value.name().equalsIgnoreCase(trimmedName)) {
+                return value;
+            }
+        }
+
+        for (ObjectEnum value : ObjectEnum.values()) {
+            if (value.name().equalsIgnoreCase(trimmedName)) {
+                return value;
+            }
+        }
+
+        for (OthersEnum value : OthersEnum.values()) {
+            if (value.name().equalsIgnoreCase(trimmedName)) {
+                return value;
+            }
+        }
+
+        throw new IllegalArgumentException("Invalid CornerEnum name");
+    }
+
 }

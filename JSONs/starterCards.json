@@ -1,0 +1,88 @@
+[
+  {
+    "frontCorners": [
+      {
+        "type": "EMPTY",
+        "isOverlapped": false
+      },
+      {
+        "type": "PLANT",
+        "isOverlapped": false
+      },
+      {
+        "type": "INSECT",
+        "isOverlapped": false
+      },
+      {
+        "type": "EMPTY",
+        "isOverlapped": false
+      }
+    ],
+    "backCorners": [
+      {
+        "type": "FUNGI",
+        "isOverlapped": false
+      },
+      {
+        "type": "PLANT",
+        "isOverlapped": false
+      },
+      {
+        "type": "INSECT",
+        "isOverlapped": false
+      },
+      {
+        "type": "ANIMAL",
+        "isOverlapped": false
+      }
+    ],
+    "frontImage": "src/main/resources/images/cards/starter_cards/starter_fronts/page_81.png",
+    "backImage": "src/main/resources/images/cards/starter_cards/starter_backs/page_81.png",
+    "resources": [
+      "INSECT"
+    ]
+  },
+  {
+    "frontCorners": [
+      {
+        "type": "ANIMAL",
+        "isOverlapped": false
+      },
+      {
+        "type": "EMPTY",
+        "isOverlapped": false
+      },
+      {
+        "type": "EMPTY",
+        "isOverlapped": false
+      },
+      {
+        "type": "FUNGI",
+        "isOverlapped": false
+      }
+    ],
+    "backCorners": [
+      {
+        "type": "PLANT",
+        "isOverlapped": false
+      },
+      {
+        "type": "ANIMAL",
+        "isOverlapped": false
+      },
+      {
+        "type": "FUNGI",
+        "isOverlapped": false
+      },
+      {
+        "type": "INSECT",
+        "isOverlapped": false
+      }
+    ],
+    "frontImage": "src/main/resources/images/cards/starter_cards/starter_fronts/page_82.png",
+    "backImage": "src/main/resources/images/cards/starter_cards/starter_backs/page_82.png",
+    "resources": [
+      "FUNGI"
+    ]
+  }
+]

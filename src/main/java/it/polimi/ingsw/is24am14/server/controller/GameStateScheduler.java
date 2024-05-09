@@ -6,6 +6,7 @@ import it.polimi.ingsw.is24am14.server.model.player.Player;
 import java.util.ArrayList;
 
 public class GameStateScheduler {
+    /*
     GameContext context;
 
     public GameStateScheduler(int numPlayer, ArrayList<String> nickNames) {
@@ -52,4 +53,5 @@ public class GameStateScheduler {
         context.setGameState(new EndGameState(context));
         context.executeState();
     }
+    */
 }

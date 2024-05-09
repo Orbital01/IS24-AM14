@@ -11,7 +11,7 @@ import java.util.Map;
  *  Implements the {@link Condition} interface.
  */
 public class CardCondition implements Condition {
-    private final HashMap<Coordinates, CornerEnum.ResourceEnum> listCard;
+    private HashMap<Coordinates, CornerEnum.ResourceEnum> listCard;
 
     public CardCondition() {
         listCard = new HashMap<>();
@@ -42,12 +42,13 @@ public class CardCondition implements Condition {
             CornerEnum.ResourceEnum type = new ArrayList<>(listCard.values()).get(listCardIndex);
             Card cardToCheck = entry.getValue();
             Coordinates coordinates;
-
+/*
             while (listCardIndex < listCard.size() && isSameType(entry.getValue(), type) && cardToCheck != null) {
                 coordinates = new ArrayList<>(listCard.keySet()).get(listCardIndex);
                 cardToCheck = board.getBoard().get(Coordinates.add(entry.getKey(), coordinates));
                 listCardIndex = listCardIndex + 1;
             }
+            */
 
             if (listCardIndex >= listCard.size()) return true;
         }
@@ -63,5 +64,12 @@ public class CardCondition implements Condition {
      */
     private boolean isSameType (PlayableCard boardCard, CornerEnum.ResourceEnum type) {
         return boardCard.getResource() == type;
+    }
+
+    /**
+     * these methods are ONLY used for Serializing the CardCondition object
+     */
+    public HashMap<Coordinates, CornerEnum.ResourceEnum> getListCard() {
+        return listCard;
     }
 }

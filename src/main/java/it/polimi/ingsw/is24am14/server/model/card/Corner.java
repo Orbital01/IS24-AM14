@@ -8,7 +8,7 @@ package it.polimi.ingsw.is24am14.server.model.card;
  */
 
 public class Corner {
-    private final CornerEnum type;
+    private CornerEnum type;
     private boolean isOverlapped;
 
     public Corner(CornerEnum type) {
@@ -30,5 +30,14 @@ public class Corner {
 
     public boolean isOverlapped() {
         return isOverlapped;
+    }
+
+    /**
+     * these methods are used ONLY to serialize the object
+     * they are not used in the game
+     */
+    //setters
+    public void setType(CornerEnum type) {
+        this.type = type;
     }
 }

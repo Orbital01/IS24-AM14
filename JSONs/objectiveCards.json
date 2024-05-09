@@ -1,0 +1,85 @@
+[
+  {
+    "condition": {
+      "listCard": {
+        "it.polimi.ingsw.is24am14.server.model.card.Coordinates@c4437c4": "FUNGI",
+        "it.polimi.ingsw.is24am14.server.model.card.Coordinates@6193b845": "FUNGI",
+        "it.polimi.ingsw.is24am14.server.model.card.Coordinates@4d405ef7": "ANIMAL",
+        "it.polimi.ingsw.is24am14.server.model.card.Coordinates@2e817b38": "ANIMAL"
+      }
+    },
+    "frontCorners": [
+      {
+        "type": "HIDDEN",
+        "isOverlapped": false
+      },
+      {
+        "type": "ANIMAL",
+        "isOverlapped": false
+      },
+      {
+        "type": "FUNGI",
+        "isOverlapped": false
+      },
+      {
+        "type": "MANUSCRIPT",
+        "isOverlapped": false
+      }
+    ],
+    "frontImage": "frontImage",
+    "backImage": "backImage",
+    "points": 5
+  },
+  {
+    "condition": {
+      "listObject": []
+    },
+    "frontCorners": [
+      {
+        "type": "HIDDEN",
+        "isOverlapped": false
+      },
+      {
+        "type": "ANIMAL",
+        "isOverlapped": false
+      },
+      {
+        "type": "FUNGI",
+        "isOverlapped": false
+      },
+      {
+        "type": "MANUSCRIPT",
+        "isOverlapped": false
+      }
+    ],
+    "frontImage": "frontImage",
+    "backImage": "backImage",
+    "points": 5
+  },
+  {
+    "condition": {
+      "listResource": []
+    },
+    "frontCorners": [
+      {
+        "type": "HIDDEN",
+        "isOverlapped": false
+      },
+      {
+        "type": "ANIMAL",
+        "isOverlapped": false
+      },
+      {
+        "type": "FUNGI",
+        "isOverlapped": false
+      },
+      {
+        "type": "MANUSCRIPT",
+        "isOverlapped": false
+      }
+    ],
+    "frontImage": "frontImage",
+    "backImage": "backImage",
+    "points": 5
+  }
+]
