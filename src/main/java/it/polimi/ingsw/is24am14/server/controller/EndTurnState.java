@@ -17,7 +17,6 @@ public class EndTurnState implements GameState{
 
     public boolean isEndGame;
 
-    //Not necessary if they get passed from TurnState
     public EndTurnState(GameContext context){
         this.lastPlayedCard = context.lastPlayedCard;
         this.game = context.game;
@@ -50,13 +49,13 @@ public class EndTurnState implements GameState{
         Condition pointsCondition = lastPlayedCard.getPointCondition();
         int earnedPoints;
         if(lastPlayedCard.getPointCondition()!=null)
-            earnedPoints = lastPlayedCard.getPoints() * lastPlayedCard.getPointCondition().numSatisfied();
+            earnedPoints = lastPlayedCard.getPoints() * lastPlayedCard.getPointCondition().numSatisfied(currentPlayer.getPlayerBoard());
         else
             earnedPoints = lastPlayedCard.getPoints();
         //Sets player score to his old score + the points given by the satisfied condition on the gold card
         currentPlayer.setScore(currentPlayer.getScore()+ earnedPoints);
     }
-
+    
     void updateScore(PlayableCard lastPlayedCard, Player currentPlayer){};
 }
 
