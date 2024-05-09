@@ -12,6 +12,7 @@ import java.util.ArrayList;
  */
 public class Player {
     private String nickname;
+    private boolean isFirstPlayer;
     private int points;
     private TokenColour colour;
     private StarterCard starterCard;
@@ -31,8 +32,10 @@ public class Player {
     public Player(String nickname, TokenColour colour) {
         this.nickname = nickname;
         this.points = 0;
+        this.isFirstPlayer = false;
         this.colour = colour;
         this.playerHand = new ArrayList<PlayableCard>();
+        this.starterCard = null;
         this.secretObjective = null;
         this.playerBoard = new GameArea();
     }
@@ -99,6 +102,15 @@ public class Player {
      */
     public TokenColour getColour() {
         return this.colour;
+    }
+
+    /**
+     * Checks if the player is the first player.
+     *
+     * @return True if the player is the first player, false otherwise.
+     */
+    public boolean isFirstPlayer() {
+        return this.isFirstPlayer;
     }
 
     /**
@@ -203,5 +215,12 @@ public class Player {
         this.colour = colour;
     }
 
-
+    /**
+     * Sets the player's first player status.
+     *
+     * @param firstPlayer The new first player status of the player.
+     */
+    public void setFirstPlayer(boolean firstPlayer) {
+        this.isFirstPlayer = firstPlayer;
+    }
 }
