@@ -1,6 +1,6 @@
 package it.polimi.ingsw.is24am14.server.controller;
 
-import it.polimi.ingsw.is24am14.server.controller.state.InitGameState;
+import it.polimi.ingsw.is24am14.server.controller.InitGameState;
 import it.polimi.ingsw.is24am14.server.model.game.*;
 import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 import org.junit.jupiter.api.*;

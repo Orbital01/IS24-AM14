@@ -1,11 +1,11 @@
 package it.polimi.ingsw.is24am14.server.controller;
-
 import it.polimi.ingsw.is24am14.server.model.game.*;
+import it.polimi.ingsw.is24am14.server.model.game.exceptions.MaximumNumberOfFaceUpCardsReachedException;
 import it.polimi.ingsw.is24am14.server.model.player.*;
 import it.polimi.ingsw.is24am14.server.model.card.*;
+import it.polimi.ingsw.is24am14.server.utils.ser_deser.*;
 import java.util.*;
 import java.util.Random;
-import it.polimi.ingsw.is24am14.server.utils.ser_deser.*;
 
 /**
  * Represents the initial game state.
@@ -17,8 +17,8 @@ public class InitGameState implements GameState{
     private Deck<StarterCard> starterCards; //must be assigned by Matteo's parser
     private Deck<PlayableCard> goldDeck; //must be assigned by Matteo's parser
     private Deck<PlayableCard> resourceDeck;
-    private Deck objectiveDeck; //must be assigned by Matteo's parser
-    private ArrayList<Card> faceUpCards;
+    private Deck<ObjectiveCard> objectiveDeck; //must be assigned by Matteo's parser
+    private ArrayList<PlayableCard> faceUpCards;
 
     /**
      * Constructor for the InitGameState class.
@@ -33,7 +33,7 @@ public class InitGameState implements GameState{
         Deck<GoldCard> goldDeck = new GoldCardDeckDeparser().deparse();
         Deck<ResourceCard> resourceDeck = new ResourceCardDeckDeparser().deparse();
         Deck<ObjectiveCard> objectiveDeck = new ObjectiveCardDeckDeparser().deparse();
-        ArrayList<Card> faceUpCards = new ArrayList<Card>();
+        ArrayList<PlayableCard> faceUpCards = new ArrayList<PlayableCard>();
 
         //Set all decks to Game class
         context.getGame().setGoldDeck(goldDeck);
@@ -56,10 +56,18 @@ public class InitGameState implements GameState{
 
         //FaceUpCards assignment: we need to take two cards from resourceDeck and two from goldDeck and insert them in the faceUpCards array list
         for (int i = 0; i < 2; i++){
-            context.getGame().addFaceUpCard(resourceDeck.removeTop());
+            try {
+                context.getGame().addFaceUpCard(resourceDeck.removeTop());
+            } catch (MaximumNumberOfFaceUpCardsReachedException e) {
+                e.printStackTrace();
+            }
         }
         for (int i = 0; i < 2; i++){
-            context.getGame().addFaceUpCard(goldDeck.removeTop());
+            try {
+                context.getGame().addFaceUpCard(goldDeck.removeTop());
+            } catch (MaximumNumberOfFaceUpCardsReachedException e) {
+                e.printStackTrace();
+            }
         }
 
         //For each player in game, assign a player board, a player hand, a starter card, two resource cards and a gold card
