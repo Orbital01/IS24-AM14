@@ -8,16 +8,15 @@ import it.polimi.ingsw.is24am14.server.model.card.*;
 import java.util.ArrayList;
 
 public class Game {
-    public Game(int numPlayers, int indexActivePlayer) {
+    public Game(int numPlayers) {
         this.numPlayers = numPlayers;
-        this.indexActivePlayer = indexActivePlayer;
     }
     private ArrayList<Player> players;
     private int numPlayers;
     private Deck resourceDeck;
     private Deck goldDeck;
-    private ArrayList<Card> faceUpCards;
-    private ArrayList<Card> objectiveCards;
+    private ArrayList<PlayableCard> faceUpCards; //modificato da Card a PlayableCard
+    private ArrayList<ObjectiveCard> objectiveCards; //modificato da Card a ObjectiveCard
     private boolean isEndGame;
     private int indexActivePlayer;
 
@@ -32,12 +31,18 @@ public class Game {
     public int getNumPlayers() {
         return this.numPlayers;
     }
+
     public void setNumPlayers(int numPlayers) throws IllegalArgumentException {
         if (numPlayers > 4) throw new IllegalArgumentException("The number of players must be less or equal to 4");
         if (numPlayers < 0) throw new IllegalArgumentException("The number of players must be greater than 0");
         this.numPlayers = numPlayers;
     }
-    public void addFaceUpCard(Card newCard) throws MaximumNumberOfFaceUpCardsReachedException {
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public void addFaceUpCard(PlayableCard newCard) throws MaximumNumberOfFaceUpCardsReachedException {
         if (newCard == null) throw new IllegalArgumentException("The parameter must be not null");
         if (faceUpCards.size() == 4) throw new MaximumNumberOfFaceUpCardsReachedException();
         faceUpCards.add(newCard);
@@ -49,7 +54,19 @@ public class Game {
     public int getIndexActivePlayer() {
         return indexActivePlayer;
     }
+
     public void changeActivePlayer() {
         indexActivePlayer = (indexActivePlayer + 1) % numPlayers;
+    }
+
+    public boolean isEndGame() {
+        return isEndGame;
+    }
+
+    public void setEndGame() {
+        isEndGame = true;
+    }
+    public ArrayList<ObjectiveCard> getObjectiveCards() {
+        return objectiveCards;
     }
 }
