@@ -14,7 +14,7 @@ import it.polimi.ingsw.is24am14.server.utils.ser_deser.*;
 public class InitGameState implements GameState{
     private GameContext context;
     private List<TokenColour> TokenColours;
-    private Deck starterCards; //must be assigned by Matteo's parser
+    private Deck<StarterCard> starterCards; //must be assigned by Matteo's parser
     private Deck<PlayableCard> goldDeck; //must be assigned by Matteo's parser
     private Deck<PlayableCard> resourceDeck;
     private Deck objectiveDeck; //must be assigned by Matteo's parser
