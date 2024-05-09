@@ -10,12 +10,12 @@ public class ServerLauncher {
         ArrayList<ServerConnection> servers = new ArrayList<>();
         try {
             RMIServer RMIserver = new RMIServer(servers);
-            TCPServer TCPserver = new TCPServer(12346, servers);
+            TCPServer TCPserver = new TCPServer(servers);
 
             RMIserver.startServer();
             TCPserver.startServer();
 
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
