@@ -34,6 +34,7 @@ public class DrawState implements GameState{
      * After Player chooses where to draw from, perform draw from the right source
      * @param drawDeckIndex Auxiliary index (0 for Resource Deck, 1 for Gold, 2 for FaceUp)
      */
+    //  da sistemare
     void drawAction(int drawDeckIndex){
         if(drawDeckIndex==0) {
             if (resourceDeck.isEmpty())

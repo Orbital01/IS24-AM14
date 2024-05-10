@@ -20,6 +20,11 @@ public class TCPClient implements ClientConnection {
 
     }
 
+    @Override
+    public int sendInt() throws Exception {
+        return 0;
+    }
+
     public void receive() throws Exception {
         BufferedReader in =
                 new BufferedReader(
@@ -36,7 +41,10 @@ public class TCPClient implements ClientConnection {
     }
 
     public void execute() throws Exception {
-        //  TODO
+        this.connect("127.0.0.1", 12346);
+        this.send("Messaggino");
+        System.out.println("aspetto...");
+        this.receive();
     }
 
 }
