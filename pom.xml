@@ -70,6 +70,11 @@
             <version>5.11.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>net.fellbaum</groupId>
+            <artifactId>jemoji</artifactId>
+            <version>1.4.0</version>
+        </dependency>
     </dependencies>
 
 

@@ -20,10 +20,11 @@ public class GameContext {
         return gameState;
     }
 
+    //questi due metodi non servono
     public Game getGame() {
         return game;
     }
-
+    //questi due metodi non servono
     public void setGame(Game game) {
         this.game = game;
     }

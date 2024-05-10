@@ -3,6 +3,7 @@ package it.polimi.ingsw.is24am14.server.model.player;
 
 import it.polimi.ingsw.is24am14.server.model.card.*;
 import it.polimi.ingsw.is24am14.server.model.game.*;
+import it.polimi.ingsw.is24am14.server.network.ServerConnection;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,8 @@ public class Player {
     private ObjectiveCard secretObjective;
     private GameArea playerBoard;
 
+    private ServerConnection connection;
+
     //Constructor
     /**
      * Constructs a Player object with the given nickname and colour.
@@ -27,17 +30,17 @@ public class Player {
      * their secret objective to null, and their game area to a new GameArea.
      *
      * @param nickname The nickname of the player.
-     * @param colour The colour of the player's token.
      */
-    public Player(String nickname, TokenColour colour) {
+    public Player(String nickname, ServerConnection connection) {
         this.nickname = nickname;
         this.points = 0;
         this.isFirstPlayer = false;
-        this.colour = colour;
         this.playerHand = new ArrayList<PlayableCard>();
         this.starterCard = null;
         this.secretObjective = null;
         this.playerBoard = new GameArea();
+
+        this.connection = connection;
     }
 
     //Getters
@@ -223,4 +226,11 @@ public class Player {
     public void setFirstPlayer(boolean firstPlayer) {
         this.isFirstPlayer = firstPlayer;
     }
+
+    /**
+     * Retrieves the player's connection.
+     *
+     * @return The connection of the player.
+     */
+    public ServerConnection getConnection() {return this.connection;}
 }
