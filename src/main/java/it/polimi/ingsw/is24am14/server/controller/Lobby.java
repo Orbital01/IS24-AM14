@@ -1,45 +1,43 @@
 package it.polimi.ingsw.is24am14.server.controller;
 
+import it.polimi.ingsw.is24am14.server.model.game.Game;
+import it.polimi.ingsw.is24am14.server.model.game.exceptions.MaximumNumberOfPlayersReachedException;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
+import it.polimi.ingsw.is24am14.server.network.ServerConnection;
 
 import java.util.ArrayList;
 
 public class Lobby {
+    ArrayList<ServerConnection> players;
+    int maxPlayers;
 
-    private LobbyContext context;
-
-    public Lobby() {
-        context = new LobbyContext();
+    public Lobby(int maxPlayers, ArrayList<ServerConnection> players) {
+        this.maxPlayers = maxPlayers;
+        this.players = players;
     }
 
-    public void firstPlayerConnected() {
-        context.setState(new FirstConnectionState(context));
-        context.getState().handle();
+    public void addPlayer(ServerConnection player) {
+        players.add(player);
     }
 
-    public boolean isAllPlayersConnected() {
-        return context.getState().equals(new AllPlayersConnectedState(context));
-        //anche questo è da testare ASAP!!!
-
-        //a questo punto lancio il gioco
-
-    }
-
-    //aggiungo un player che vuole connettersi a questa lobby
-    public void addPlayer(Player player) {
-        context.addPlayer(player);
-    }
-
-    public ArrayList<Player> getPlayers() {
-        return context.getPlayers();
-    }
-
-    public int getNumberOfPlayers() {
-        return context.getNumberOfPlayers();
-    }
-
-    public LobbyContext getContext() {
-        return context;
+    public void startGame() {
+        //questo metodo avvia la partita chiamando il pattern state del game
+        Game game = new Game(maxPlayers);
+        //creo n players in base al numero impostato dall'utente
+        // e li associo a dei player
+        for (ServerConnection player : players) {
+            Player newPlayer = new Player(players.getClientNickname(), player);
+            //va aggiunto questo metodo al server TCP RMI
+            try {
+                game.addPlayer(newPlayer);
+            } catch (MaximumNumberOfPlayersReachedException e) {
+                System.out.println("Maximum number of players reached, returning to start") // ma dove finjisco??
+            }
+        }
+        //creo il contesto del gioco e setto lo stato iniziale
+        GameContext context = new GameContext(game);
+        context.setGameState(new InitGameState(context));
+        context.executeState(); // lancio il gioco
     }
 
 }
