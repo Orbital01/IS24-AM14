@@ -33,6 +33,16 @@ public class RMIClient extends UnicastRemoteObject implements ClientConnection {
             System.out.println("Select a card to flip");
             int cardToFlip = in.nextInt();
             server.flipCard(cardToFlip);
+        } else if (choice == 1) {
+            //  Da mettere input utente poi
+            //  choose a card from the hand
+            int handIndex = 0;
+            //  choose a card on the board
+            Coordinates boardCoordinates = new Coordinates(0, 0);
+            //  choose a corner index
+            int cornerIndex = 0;
+
+            server.playCard(server.getPlayerHand().get(handIndex), server.getGameBoard().get(boardCoordinates), cornerIndex);
         }
     }
 

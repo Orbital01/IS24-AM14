@@ -36,12 +36,7 @@ public class PlayState implements GameState{
 
     @Override
     public void execute(){
-        //  playedCard = chooseCardFromHand();
-        //  alreadyPlacedCard = alreadyPlacedCard();
-        //  cornerIndex = getCornerIndex();
-        playCard(playedCard, alreadyPlacedCard, cornerIndex);
-        //set playedCard in GameContext
-        context.setLastPlayedCard(playedCard);
+        //  askForMove();
     }
 
     /**
@@ -52,24 +47,24 @@ public class PlayState implements GameState{
      * @param alreadyPlacedCard The card already in the board
      * @param cornerIndex       The corner the new card will overlap
      */
-    boolean playCard(GoldCard playedCard, Card alreadyPlacedCard, int cornerIndex) {
+    public static boolean playCard(GoldCard playedCard, Card alreadyPlacedCard, int cornerIndex, Player player) {
         // Fetches the placementCondition and checks if it's satisfied, throws exception if it isn't
         Condition placementCondition = playedCard.getPlacementCondition();
-        boolean isLegal = placementCondition.isSatisfied(gameArea);
+        boolean isLegal = placementCondition.isSatisfied(player.getPlayerBoard());
         if (!isLegal)
             return false;
-        gameArea.addCard(playedCard, alreadyPlacedCard, cornerIndex);
-        currentPlayer.getPlayerHand().remove(cardIndex);
+        player.getPlayerBoard().addCard(playedCard, alreadyPlacedCard, cornerIndex);
+        player.getPlayerHand().remove(playedCard);
         return true;
     }
 
-    boolean playCard(ResourceCard playedCard, Card alreadyPlacedCard, int cornerIndex) {
-        gameArea.addCard(playedCard, alreadyPlacedCard, cornerIndex);
-        currentPlayer.getPlayerHand().remove(cardIndex);
+    public static boolean playCard(ResourceCard playedCard, Card alreadyPlacedCard, int cornerIndex, Player player) {
+        player.getPlayerBoard().addCard(playedCard, alreadyPlacedCard, cornerIndex);
+        player.getPlayerHand().remove(playedCard);
         return true;
     }
 
-    boolean playCard(PlayableCard playedCard, Card alreadyPlacedCard, int cornerIndex) {
+    public static boolean playCard(PlayableCard playedCard, Card alreadyPlacedCard, int cornerIndex, Player player) {
         return false;
     }
 
