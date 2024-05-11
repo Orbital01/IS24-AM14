@@ -10,4 +10,5 @@ import it.polimi.ingsw.is24am14.server.model.game.*;
 public interface ServerConnection extends Remote {
     void askForMove() throws Exception;
     void flipCard(int cardIndex) throws Exception;
+    String getClientNickname() throws Exception;
 }

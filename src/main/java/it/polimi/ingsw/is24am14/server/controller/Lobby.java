@@ -26,12 +26,18 @@ public class Lobby {
         //creo n players in base al numero impostato dall'utente
         // e li associo a dei player
         for (ServerConnection player : players) {
-            Player newPlayer = new Player(players.getClientNickname(), player);
+            Player newPlayer = null;
+            try {
+                newPlayer = new Player(player.getClientNickname(), player);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             //va aggiunto questo metodo al server TCP RMI
             try {
                 game.addPlayer(newPlayer);
             } catch (MaximumNumberOfPlayersReachedException e) {
-                System.out.println("Maximum number of players reached, returning to start") // ma dove finjisco??
+                System.out.println("Maximum number of players reached, returning to start"); // ma dove finjisco??
+                break;
             }
         }
         //creo il contesto del gioco e setto lo stato iniziale
