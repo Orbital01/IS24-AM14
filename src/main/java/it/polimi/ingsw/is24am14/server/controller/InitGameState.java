@@ -78,7 +78,11 @@ public class InitGameState implements GameState{
             player.setStarterCard(starterCards.removeTop()); //POLYMORPHISM ERROR: to be fixed by Matteo by introducing Java generics types
             player.getPlayerBoard().placeStarterCard(player.getStarterCard());
             //Let each player choose his colour
-            chooseAndRemoveColour(player, chosenColourIndex(player));
+            try {
+                player.getConnection().assignColor(TokenColours, player);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             //Let each player have his hand of cards
             player.addCardToHand(resourceDeck.removeTop());
             player.addCardToHand(resourceDeck.removeTop());
@@ -93,7 +97,11 @@ public class InitGameState implements GameState{
 
         //Let each player choose his secret objective (handled out from the first for-loop in order to keep the right order of rules)
         for (Player player : context.getGame().getPlayers()){
-            chooseSecretObjective(player, chosenSecretIndex(player));
+            try {
+                player.getConnection().chooseSecretObjective(player, objectiveDeck);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
 
         //First player is randomly chosen; after first player is chosen, he will have black token as well

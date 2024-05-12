@@ -1,13 +1,19 @@
 package it.polimi.ingsw.is24am14.client;
 
 import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
+import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
 import it.polimi.ingsw.is24am14.server.model.card.PlayableCard;
 import it.polimi.ingsw.is24am14.server.model.game.Game;
+import it.polimi.ingsw.is24am14.server.model.player.Player;
+import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 import it.polimi.ingsw.is24am14.server.network.RMIServer;
 
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class RMIClient extends UnicastRemoteObject implements ClientConnection {
@@ -52,10 +58,50 @@ public class RMIClient extends UnicastRemoteObject implements ClientConnection {
         return in.nextInt();
     }
 
+    @Override
+    public void chooseColor(List<TokenColour> colors, Player player) throws Exception {
+        int color_index = 0;
+        player.setColour(colors.get(color_index));
+        colors.remove(color_index);
+    }
+
+    @Override
+    public void pickObjective(ArrayList<ObjectiveCard> secrets, Player player) throws Exception {
+        int secret_index = 0;
+        player.setSecretObjective(secrets.get(secret_index));
+    }
+
+    @Override
+    public void drawCard() throws Exception {
+        int drawDeckIndex;
+        Scanner in = new Scanner(System.in);
+        drawDeckIndex = in.nextInt();
+        if(drawDeckIndex==0) {
+            server.drawResourceCard();
+        }
+        if(drawDeckIndex==1){
+            server.drawGoldCard();
+        }
+
+        if(drawDeckIndex==2){
+            int faceUpIndex = 0;
+            server.drawFromFaceUp(faceUpIndex);
+        }
+    }
+
 
     @Override
     public void execute() throws Exception {
-        //  TODO
+        Registry registry;
+        registry = LocateRegistry.getRegistry("127.0.0.1", 12345);
+
+        this.server = (RMIServer) registry.lookup("RMIServer");
+        server.acceptConnection(this);
+        System.out.println("Client connected");
+
+        while (true) {
+            //  quello che verrà fatto durante tutta la partita
+        }
     }
 
     @Override

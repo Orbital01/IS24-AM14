@@ -6,21 +6,15 @@ import it.polimi.ingsw.is24am14.server.model.player.Player;
 import java.util.ArrayList;
 
 public class GameStateScheduler {
-    /*
+
     GameContext context;
 
     public GameStateScheduler(int numPlayer, ArrayList<String> nickNames) {
-        Game newGame = new Game(numPlayer);
 
-        for (int i = 0; i < numPlayer; i++) {
-            newGame.addPlayer(new Player(nickNames.get(i)));
-        }
-
-        context = new GameContext(newGame);
     }
 
     public void run() {
-        context.setGameState(new initGameState(context.game));
+        context.setGameState(new InitGameState(context));
         context.executeState();
 
         //  while it's not endGame
@@ -53,5 +47,4 @@ public class GameStateScheduler {
         context.setGameState(new EndGameState(context));
         context.executeState();
     }
-    */
 }

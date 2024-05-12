@@ -49,7 +49,8 @@ public class EndTurnState implements GameState{
         Condition pointsCondition = lastPlayedCard.getPointCondition();
         int earnedPoints;
         if(lastPlayedCard.getPointCondition()!=null)
-            earnedPoints = lastPlayedCard.getPoints() * lastPlayedCard.getPointCondition().numSatisfied(currentPlayer.getPlayerBoard());
+            //earnedPoints = lastPlayedCard.getPoints() * lastPlayedCard.getPointCondition().numSatisfied(currentPlayer.getPlayerBoard()); da rimettere con le conditions
+            earnedPoints = 0;
         else
             earnedPoints = lastPlayedCard.getPoints();
         //Sets player score to his old score + the points given by the satisfied condition on the gold card

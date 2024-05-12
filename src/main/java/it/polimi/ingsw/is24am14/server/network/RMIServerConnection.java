@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface RMIServerConnection extends ServerConnection, Remote {
-    public void playCard(PlayableCard playedCard, Card alreadyPlacedCard, int cornerIndex) throws Exception;
-    public ArrayList<PlayableCard> getPlayerHand() throws Exception;
-    public HashMap<Coordinates, Card> getGameBoard() throws Exception;
+    void playCard(PlayableCard playedCard, Card alreadyPlacedCard, int cornerIndex) throws Exception;
+    ArrayList<PlayableCard> getPlayerHand() throws Exception;
+    HashMap<Coordinates, Card> getGameBoard() throws Exception;
+
 }

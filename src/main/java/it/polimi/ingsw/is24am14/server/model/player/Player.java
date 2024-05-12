@@ -233,4 +233,8 @@ public class Player {
      * @return The connection of the player.
      */
     public ServerConnection getConnection() {return this.connection;}
+
+    public void addToHand(PlayableCard card) {
+        this.playerHand.addLast(card);
+    }
 }
