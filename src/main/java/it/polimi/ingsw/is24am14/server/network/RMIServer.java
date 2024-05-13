@@ -6,7 +6,6 @@ import it.polimi.ingsw.is24am14.server.controller.Lobby;
 import it.polimi.ingsw.is24am14.server.controller.LobbyList;
 import it.polimi.ingsw.is24am14.server.controller.PlayState;
 import it.polimi.ingsw.is24am14.server.model.card.*;
-import it.polimi.ingsw.is24am14.server.model.game.Game;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 
@@ -17,15 +16,16 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class RMIServer extends UnicastRemoteObject implements RMIServerConnection {
     private GameContext context;
-    ClientConnection client;
-    ArrayList<ServerConnection> serverList;
+    private ClientConnection client;
+    private final ArrayList<ServerConnection> serverList;
+    private final LobbyList lobbies;
 
-    public RMIServer(ArrayList<ServerConnection> servers) throws RemoteException {
+    public RMIServer(ArrayList<ServerConnection> servers, LobbyList lobbies) throws RemoteException {
         this.serverList = servers;
+        this.lobbies = lobbies;
     }
 
     public void setContext(GameContext context) {
@@ -64,7 +64,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerConnectio
         for (int i = 0; i < 2; i++){
             chooseSecret.add(objectiveDeck.removeTop()); //POLYMORPHISM ERROR: to be fixed by Matteo by introducing Java generics types
         }
-        // client.pickObjective(chooseSecrets, player);
+        client.pickObjective(chooseSecret, player);
     }
 
     @Override
@@ -92,8 +92,8 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerConnectio
 
 
     @Override
-    public void askStartingOption(LobbyList lobby) throws Exception {
-        this.client.joinLobby(lobby);
+    public void askStartingOption() throws Exception {
+        this.client.joinLobby(this.lobbies);
     }
 
     @Override
@@ -102,12 +102,15 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerConnectio
     }
 
     @Override
-    public void joinNewLobby(LobbyList lobby, int numPlayers) throws Exception {
+    public void joinNewLobby(int numPlayers) throws Exception {
         Lobby newLobby = new Lobby(numPlayers, new ArrayList<>());
+        this.lobbies.createLobby(newLobby);
+        System.out.println("Nuova lobby creata con successo");
         newLobby.joinLobby(this);
-        lobby.createLobby(newLobby);
+        System.out.println("Il gioco inizierà quando ci saranno " + numPlayers + " giocatori");
     }
 
+    @Override
     public ArrayList<PlayableCard> getPlayerHand() throws Exception {
         return new ArrayList<>(context.getGame().getPlayers().get(context.getGame().getIndexActivePlayer()).getPlayerHand());
     }
@@ -127,11 +130,11 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerConnectio
         System.out.println("RMI server started");
     }
 
-    public void acceptConnection(ClientConnection client) throws RemoteException {
+    public void acceptConnection(ClientConnection client) throws Exception {
         this.client = client;
         System.out.println("RMI client connected");
         serverList.add(this);
-
+        this.askStartingOption();
     }
 
     public String getClientNickname() throws RemoteException{

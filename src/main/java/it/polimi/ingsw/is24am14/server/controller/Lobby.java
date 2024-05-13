@@ -45,6 +45,7 @@ public class Lobby {
         }
         //creo il contesto del gioco e setto lo stato iniziale
         GameContext context = new GameContext(game);
+        context.setGame(game);
         GameStateScheduler scheduler = new GameStateScheduler(context);
         scheduler.run();
     }

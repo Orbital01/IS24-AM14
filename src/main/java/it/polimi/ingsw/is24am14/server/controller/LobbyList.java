@@ -1,9 +1,11 @@
 package it.polimi.ingsw.is24am14.server.controller;
 
 import it.polimi.ingsw.is24am14.server.network.ServerConnection;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class LobbyList {
+public class LobbyList implements Serializable {
   ArrayList<ServerConnection> clients;
   ArrayList<Lobby> lobbies;
 

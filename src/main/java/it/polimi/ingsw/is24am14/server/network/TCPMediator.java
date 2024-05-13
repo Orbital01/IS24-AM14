@@ -2,11 +2,8 @@ package it.polimi.ingsw.is24am14.server.network;
 
 import it.polimi.ingsw.is24am14.server.controller.Lobby;
 import it.polimi.ingsw.is24am14.server.controller.LobbyList;
-import it.polimi.ingsw.is24am14.server.model.card.Card;
 import it.polimi.ingsw.is24am14.server.model.card.Deck;
 import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
-import it.polimi.ingsw.is24am14.server.model.card.PlayableCard;
-import it.polimi.ingsw.is24am14.server.model.game.Game;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 
@@ -61,7 +58,7 @@ public class TCPMediator implements ServerConnection {
     }
 
     @Override
-    public void askStartingOption(LobbyList lobby) throws Exception {
+    public void askStartingOption() throws Exception {
 
     }
 
@@ -71,7 +68,7 @@ public class TCPMediator implements ServerConnection {
     }
 
     @Override
-    public void joinNewLobby(LobbyList lobby, int numPlayers) throws Exception {
+    public void joinNewLobby(int numPlayers) throws Exception {
 
     }
 }

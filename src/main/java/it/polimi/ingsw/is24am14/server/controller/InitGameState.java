@@ -3,10 +3,6 @@ import it.polimi.ingsw.is24am14.server.model.game.*;
 import it.polimi.ingsw.is24am14.server.model.game.exceptions.MaximumNumberOfFaceUpCardsReachedException;
 import it.polimi.ingsw.is24am14.server.model.player.*;
 import it.polimi.ingsw.is24am14.server.model.card.*;
-import it.polimi.ingsw.is24am14.server.utils.ser_deser.*;
-import it.polimi.ingsw.is24am14.server.utils.ser_deser.goldCard.GoldCardDeckDeparser;
-import it.polimi.ingsw.is24am14.server.utils.ser_deser.resourceCard.ResourceCardDeckDeparser;
-import it.polimi.ingsw.is24am14.server.utils.ser_deser.starterCards.StarterCardDeckDeparser;
 
 import java.util.*;
 import java.util.Random;
@@ -18,11 +14,11 @@ import java.util.Random;
 public class InitGameState implements GameState{
     private GameContext context;
     private List<TokenColour> TokenColours;
-    private Deck<StarterCard> starterCards; //must be assigned by Matteo's parser
-    private Deck<PlayableCard> goldDeck; //must be assigned by Matteo's parser
-    private Deck<PlayableCard> resourceDeck;
+    private final Deck<StarterCard> starterCards; //must be assigned by Matteo's parser
+    private final Deck<GoldCard> goldDeck; //must be assigned by Matteo's parser
+    private final Deck<ResourceCard> resourceDeck;
     private Deck<ObjectiveCard> objectiveDeck; //must be assigned by Matteo's parser
-    private ArrayList<PlayableCard> faceUpCards;
+    private final ArrayList<PlayableCard> faceUpCards;
 
     /**
      * Constructor for the InitGameState class.
@@ -33,17 +29,18 @@ public class InitGameState implements GameState{
     public InitGameState(GameContext context){
         //Initialize all decks & get them from parser
         List<TokenColour> TokenColours = Arrays.asList(TokenColour.values());
-        Deck<StarterCard> starterCards = new StarterCardDeckDeparser().deparse();
-        Deck<GoldCard> goldDeck = new GoldCardDeckDeparser().deparse();
-        Deck<ResourceCard> resourceDeck = new ResourceCardDeckDeparser().deparse();
-        Deck<ObjectiveCard> objectiveDeck = new ObjectiveCardDeckDeparser().deparse();
-        ArrayList<PlayableCard> faceUpCards = new ArrayList<PlayableCard>();
+
+        this.starterCards = new Deck<>(new ArrayList<>());
+        this.goldDeck = new Deck<>(new ArrayList<>());
+        this.resourceDeck = new Deck<>(new ArrayList<>());
+
+        this.faceUpCards = new ArrayList<>();
 
         //Set all decks to Game class
-        context.getGame().setGoldDeck(goldDeck);
-        context.getGame().setResourceDeck(resourceDeck);
-        context.getGame().setObjectiveDeck(objectiveDeck);
-        context.getGame().setFaceUpCards(faceUpCards);
+        context.getGame().setGoldDeck(this.goldDeck);
+        context.getGame().setResourceDeck(this.resourceDeck);
+        context.getGame().setObjectiveDeck(this.objectiveDeck);
+        context.getGame().setFaceUpCards(this.faceUpCards);
 
     }
 
@@ -53,10 +50,10 @@ public class InitGameState implements GameState{
      */
     public void execute(){
         //Shuffle all decks
-        starterCards.shuffle();
-        goldDeck.shuffle();
-        resourceDeck.shuffle();
-        objectiveDeck.shuffle();
+        this.starterCards.shuffle();
+        this.goldDeck.shuffle();
+        this.resourceDeck.shuffle();
+        this.objectiveDeck.shuffle();
 
         //FaceUpCards assignment: we need to take two cards from resourceDeck and two from goldDeck and insert them in the faceUpCards array list
         for (int i = 0; i < 2; i++){
