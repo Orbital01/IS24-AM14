@@ -16,8 +16,11 @@ public class Lobby {
         this.players = players;
     }
 
-    public void addPlayer(ServerConnection player) {
+    public void joinLobby(ServerConnection player) {
         players.add(player);
+        if(players.size() == maxPlayers){
+            startGame();
+        }
     }
 
     public void startGame() {
@@ -42,8 +45,8 @@ public class Lobby {
         }
         //creo il contesto del gioco e setto lo stato iniziale
         GameContext context = new GameContext(game);
-        context.setGameState(new InitGameState(context));
-        context.executeState(); // lancio il gioco
+        GameStateScheduler scheduler = new GameStateScheduler(context);
+        scheduler.run();
     }
 
 }

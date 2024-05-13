@@ -7,9 +7,10 @@ import java.util.ArrayList;
 
 public class GameStateScheduler {
 
-    GameContext context;
+    private GameContext context;
 
-    public GameStateScheduler(int numPlayer, ArrayList<String> nickNames) {
+    public GameStateScheduler(GameContext context) {
+        this.context = context;
 
     }
 
