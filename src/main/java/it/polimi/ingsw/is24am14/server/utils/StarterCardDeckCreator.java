@@ -29,7 +29,7 @@ public class StarterCardDeckCreator {
         backCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
         backCorners.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
         resources.add(CornerEnum.ResourceEnum.INSECT);
-        content.addFirst(new StarterCard(frontCorners, backCorners, resources, "src/main/resources/images/cards/starter_cards/starter_fronts/page_81.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_81.png"));
+        content.add(new StarterCard(frontCorners, backCorners, resources, "src/main/resources/images/cards/starter_cards/starter_fronts/page_81.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_81.png"));
 
         frontCorners.clear();
         backCorners.clear();
@@ -46,7 +46,7 @@ public class StarterCardDeckCreator {
         backCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
         backCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
         resources.add(CornerEnum.ResourceEnum.FUNGI);
-        content.addFirst(new StarterCard(frontCorners, backCorners, resources, "src/main/resources/images/cards/starter_cards/starter_fronts/page_82.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_82.png"));
+        content.add(new StarterCard(frontCorners, backCorners, resources, "src/main/resources/images/cards/starter_cards/starter_fronts/page_82.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_82.png"));
 
         frontCorners.clear();
         backCorners.clear();
@@ -64,7 +64,7 @@ public class StarterCardDeckCreator {
         backCorners.add(new Corner(CornerEnum.ResourceEnum.PLANT));
         resources.add(CornerEnum.ResourceEnum.PLANT);
         resources.add(CornerEnum.ResourceEnum.FUNGI);
-        content.addFirst(new StarterCard(frontCorners, backCorners, resources, "src/main/resources/images/cards/starter_cards/starter_fronts/page_83.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_83.png"));
+        content.add(new StarterCard(frontCorners, backCorners, resources, "src/main/resources/images/cards/starter_cards/starter_fronts/page_83.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_83.png"));
 
         frontCorners.clear();
         backCorners.clear();
@@ -82,7 +82,7 @@ public class StarterCardDeckCreator {
         backCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
         resources.add(CornerEnum.ResourceEnum.ANIMAL);
         resources.add(CornerEnum.ResourceEnum.INSECT);
-        content.addFirst(new StarterCard(frontCorners, backCorners, resources, "src/main/resources/images/cards/starter_cards/starter_fronts/page_84.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_84.png"));
+        content.add(new StarterCard(frontCorners, backCorners, resources, "src/main/resources/images/cards/starter_cards/starter_fronts/page_84.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_84.png"));
 
         frontCorners.clear();
         backCorners.clear();
@@ -101,7 +101,7 @@ public class StarterCardDeckCreator {
         resources.add(CornerEnum.ResourceEnum.ANIMAL);
         resources.add(CornerEnum.ResourceEnum.INSECT);
         resources.add(CornerEnum.ResourceEnum.PLANT);
-        content.addFirst(new StarterCard(frontCorners, backCorners, resources, "src/main/resources/images/cards/starter_cards/starter_fronts/page_85.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_85.png"));
+        content.add(new StarterCard(frontCorners, backCorners, resources, "src/main/resources/images/cards/starter_cards/starter_fronts/page_85.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_85.png"));
 
         frontCorners.clear();
         backCorners.clear();
@@ -120,7 +120,7 @@ public class StarterCardDeckCreator {
         resources.add(CornerEnum.ResourceEnum.PLANT);
         resources.add(CornerEnum.ResourceEnum.ANIMAL);
         resources.add(CornerEnum.ResourceEnum.FUNGI);
-        content.addFirst(new StarterCard(frontCorners, backCorners, resources, "src/main/resources/images/cards/starter_cards/starter_fronts/page_86.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_86.png"));
+        content.add(new StarterCard(frontCorners, backCorners, resources, "src/main/resources/images/cards/starter_cards/starter_fronts/page_86.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_86.png"));
 
         frontCorners.clear();
         backCorners.clear();
