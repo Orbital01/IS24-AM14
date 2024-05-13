@@ -12,7 +12,7 @@ public class LobbyList {
         this.lobbies = new ArrayList<>();
     }
 
-    public void addLobby(Lobby lobby) {
+    public void createLobby(Lobby lobby) {
         lobbies.add(lobby);
     }
 
