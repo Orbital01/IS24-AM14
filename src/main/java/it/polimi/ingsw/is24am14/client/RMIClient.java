@@ -3,11 +3,9 @@ package it.polimi.ingsw.is24am14.client;
 import it.polimi.ingsw.is24am14.server.controller.LobbyList;
 import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
 import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
-import it.polimi.ingsw.is24am14.server.model.card.PlayableCard;
-import it.polimi.ingsw.is24am14.server.model.game.Game;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
-import it.polimi.ingsw.is24am14.server.network.RMIServer;
+import it.polimi.ingsw.is24am14.server.network.RMIServerConnection;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -18,7 +16,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class RMIClient extends UnicastRemoteObject implements ClientConnection {
-    private RMIServer server;
+    private RMIServerConnection server;
 
     protected RMIClient() throws RemoteException {
     }
@@ -92,12 +90,19 @@ public class RMIClient extends UnicastRemoteObject implements ClientConnection {
 
     @Override
     public void joinLobby(LobbyList lobby) throws Exception {
-        int option = 1;
-        int lobby_index = 0;
+        int option, lobby_index, num_players;
+        System.out.println("Digita: \n0 per unirti ad una lobby già esistente\n1 per creare una nuova lobby");
+        Scanner in = new Scanner(System.in);
+        option = in.nextInt();
         if (option == 0) {
+            System.out.println("Scegli l'indice della lobby");
+            lobby_index = in.nextInt();
             server.joinExistingLobby(lobby.getLobbies().get(lobby_index));
         } else if (option == 1) {
-            server.joinNewLobby(lobby, 0);
+            System.out.println("Hai scelto di creare una nuova lobby");
+            System.out.println("Scegli un numero di giocatori (metti tra 0 o 4, non c'è ancora il check se è legale)");
+            num_players = in.nextInt();
+            server.joinNewLobby(num_players);
         }
     }
 
@@ -107,13 +112,9 @@ public class RMIClient extends UnicastRemoteObject implements ClientConnection {
         Registry registry;
         registry = LocateRegistry.getRegistry("127.0.0.1", 12345);
 
-        this.server = (RMIServer) registry.lookup("RMIServer");
-        server.acceptConnection(this);
+        this.server = (RMIServerConnection) registry.lookup("RMIServer");
+        this.server.acceptConnection(this);
         System.out.println("Client connected");
-
-        while (true) {
-            //  quello che verrà fatto durante tutta la partita
-        }
     }
 
     @Override
