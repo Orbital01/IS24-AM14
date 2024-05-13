@@ -77,4 +77,9 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerConnectio
         System.out.println("RMI client connected");
         serverList.add(this);
     }
+
+    public String getClientNickname() throws RemoteException{
+        return null;
+        //TODO: implement this method
+    }
 }

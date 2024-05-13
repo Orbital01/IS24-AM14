@@ -12,11 +12,10 @@ public class GoldCard extends PlayableCard {
     private final int points;
     private final Condition pointCondition;
     private final CornerEnum.ResourceEnum resource;
-
-    private final Condition placementCondition;
+    private final ResourceCondition placementCondition;
 
     public GoldCard(int points, Condition pointCondition, CornerEnum.ResourceEnum resource,
-                    Condition placementCondition, ArrayList<Corner> frontCorners,
+                    ResourceCondition placementCondition, ArrayList<Corner> frontCorners,
                     String frontImage, String backImage) {
 
         super(frontCorners, createBackCorners(), frontImage, backImage);

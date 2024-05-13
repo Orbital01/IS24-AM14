@@ -36,7 +36,7 @@ public class Lobby {
             try {
                 game.addPlayer(newPlayer);
             } catch (MaximumNumberOfPlayersReachedException e) {
-                System.out.println("Maximum number of players reached, returning to start"); // ma dove finjisco??
+                System.out.println("Maximum number of players reached, returning to start"); // ma dove finisco??
                 break;
             }
         }

@@ -4,6 +4,10 @@ import it.polimi.ingsw.is24am14.server.model.game.exceptions.MaximumNumberOfFace
 import it.polimi.ingsw.is24am14.server.model.player.*;
 import it.polimi.ingsw.is24am14.server.model.card.*;
 import it.polimi.ingsw.is24am14.server.utils.ser_deser.*;
+import it.polimi.ingsw.is24am14.server.utils.ser_deser.goldCard.GoldCardDeckDeparser;
+import it.polimi.ingsw.is24am14.server.utils.ser_deser.resourceCard.ResourceCardDeckDeparser;
+import it.polimi.ingsw.is24am14.server.utils.ser_deser.starterCards.StarterCardDeckDeparser;
+
 import java.util.*;
 import java.util.Random;
 

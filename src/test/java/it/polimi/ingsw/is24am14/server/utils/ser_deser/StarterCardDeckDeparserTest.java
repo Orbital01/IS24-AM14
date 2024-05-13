@@ -1,9 +1,9 @@
 package it.polimi.ingsw.is24am14.server.utils.ser_deser;
 
 import it.polimi.ingsw.is24am14.server.model.card.*;
+import it.polimi.ingsw.is24am14.server.utils.ser_deser.starterCards.StarterCardDeckDeparser;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;

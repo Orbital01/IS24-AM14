@@ -13,4 +13,6 @@ public interface RMIServerConnection extends ServerConnection, Remote {
     public void playCard(PlayableCard playedCard, Card alreadyPlacedCard, int cornerIndex) throws Exception;
     public ArrayList<PlayableCard> getPlayerHand() throws Exception;
     public HashMap<Coordinates, Card> getGameBoard() throws Exception;
+
+    public String getClientNickname() throws RemoteException;
 }

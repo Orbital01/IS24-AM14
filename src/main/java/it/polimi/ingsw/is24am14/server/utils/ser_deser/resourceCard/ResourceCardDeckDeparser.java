@@ -1,4 +1,4 @@
-package it.polimi.ingsw.is24am14.server.utils.ser_deser;
+package it.polimi.ingsw.is24am14.server.utils.ser_deser.resourceCard;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

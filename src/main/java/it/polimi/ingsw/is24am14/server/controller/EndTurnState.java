@@ -25,7 +25,7 @@ public class EndTurnState implements GameState{
 
     @Override
     public void execute(){
-        updateScore(lastPlayedCard, currentPlayer);
+        //updateScore(lastPlayedCard, currentPlayer);
     }
 
 
@@ -45,17 +45,17 @@ public class EndTurnState implements GameState{
      * @param lastPlayedCard The played gold card
      * @param currentPlayer The player who just played the card
      */
-    void updateScore(GoldCard lastPlayedCard, Player currentPlayer){
+    /*void updateScore(GoldCard lastPlayedCard, Player currentPlayer){
         Condition pointsCondition = lastPlayedCard.getPointCondition();
         int earnedPoints;
         if(lastPlayedCard.getPointCondition()!=null)
-            earnedPoints = lastPlayedCard.getPoints() * lastPlayedCard.getPointCondition().numSatisfied(currentPlayer.getPlayerBoard());
+            earnedPoints = lastPlayedCard.getPoints() * lastPlayedCard.getPointCondition().isSatisfied(currentPlayer.getPlayerBoard());
         else
             earnedPoints = lastPlayedCard.getPoints();
         //Sets player score to his old score + the points given by the satisfied condition on the gold card
         currentPlayer.setScore(currentPlayer.getScore()+ earnedPoints);
     }
-    
-    void updateScore(PlayableCard lastPlayedCard, Player currentPlayer){};
+
+    void updateScore(PlayableCard lastPlayedCard, Player currentPlayer){};*/
 }
 
