@@ -1,5 +1,6 @@
 package it.polimi.ingsw.is24am14.client;
 
+import it.polimi.ingsw.is24am14.server.controller.LobbyList;
 import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
 import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
 import it.polimi.ingsw.is24am14.server.model.card.PlayableCard;
@@ -86,6 +87,17 @@ public class RMIClient extends UnicastRemoteObject implements ClientConnection {
         if(drawDeckIndex==2){
             int faceUpIndex = 0;
             server.drawFromFaceUp(faceUpIndex);
+        }
+    }
+
+    @Override
+    public void joinLobby(LobbyList lobby) throws Exception {
+        int option = 1;
+        int lobby_index = 0;
+        if (option == 0) {
+            server.joinExistingLobby(lobby.getLobbies().get(lobby_index));
+        } else if (option == 1) {
+            server.joinNewLobby(lobby, 0);
         }
     }
 
