@@ -28,7 +28,6 @@ public class ResourceCard extends PlayableCard {
         }
 
         if (getSide() == EnumSide.FRONT) items.add(getResource());
-
         return items;
     }
 
