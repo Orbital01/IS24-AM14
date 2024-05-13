@@ -1,4 +1,4 @@
-package it.polimi.ingsw.is24am14.server.utils.ser_deser;
+package it.polimi.ingsw.is24am14.server.utils.ser_deser.objectiveCard;
 
 import com.google.gson.GsonBuilder;
 import it.polimi.ingsw.is24am14.server.model.card.*;
@@ -17,7 +17,7 @@ public class SerializeObjectiveCard {
             .setPrettyPrinting()
             .create();
 
-    public void serializeStarterCards(ArrayList<ObjectiveCard> cards, String filePath) {
+    public void serializeObjectiveCards(ArrayList<ObjectiveCard> cards, String filePath) {
         try (Writer writer = new FileWriter(filePath)) {
             gson.toJson(cards, writer);
         } catch (IOException e) {
@@ -30,7 +30,6 @@ public class SerializeObjectiveCard {
         //creo una prima carta doppia per capire come scrive JSON,
         //le altre le scrivo a mano nel JSON
         ArrayList<Corner> frontCorners = new ArrayList<>();
-        ArrayList<Corner> backCorners = new ArrayList<>();
 
         frontCorners.add(new Corner(CornerEnum.HIDDEN));
         frontCorners.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
@@ -40,18 +39,19 @@ public class SerializeObjectiveCard {
         //le objective card hanno 4 corner frontali e nessun corner posteriore
 
         int points = 5;
-        Condition cardCondition = new CardCondition();
-        ((CardCondition) cardCondition).addClause(new Coordinates(0, 0), CornerEnum.ResourceEnum.ANIMAL);
-        ((CardCondition) cardCondition).addClause(new Coordinates(0, 1), CornerEnum.ResourceEnum.FUNGI);
-        ((CardCondition) cardCondition).addClause(new Coordinates(1, 0), CornerEnum.ResourceEnum.ANIMAL);
-        ((CardCondition) cardCondition).addClause(new Coordinates(1, 1), CornerEnum.ResourceEnum.FUNGI);
+        CardCondition cardCondition = new CardCondition();
+            cardCondition.addClause(new Coordinates(0, 0), CornerEnum.ResourceEnum.ANIMAL);
+            cardCondition.addClause(new Coordinates(0, 1), CornerEnum.ResourceEnum.FUNGI);
+            cardCondition.addClause(new Coordinates(1, 0), CornerEnum.ResourceEnum.ANIMAL);
+            cardCondition.addClause(new Coordinates(1, 1), CornerEnum.ResourceEnum.FUNGI);
 
         ObjectiveCard card1 = new ObjectiveCard(cardCondition, frontCorners, "frontImage", "backImage", points);
 
         ArrayList<CornerEnum.ObjectEnum> objects = new ArrayList<>();
         objects.add(CornerEnum.ObjectEnum.MANUSCRIPT);
         objects.add(CornerEnum.ObjectEnum.INKWELL);
-        Condition objectCondition = new ObjectCondition();
+
+        ObjectCondition objectCondition = new ObjectCondition();
 
         ObjectiveCard card2 = new ObjectiveCard(objectCondition, frontCorners, "frontImage", "backImage", points);
 
@@ -59,7 +59,7 @@ public class SerializeObjectiveCard {
         resources.add(CornerEnum.ResourceEnum.ANIMAL);
         resources.add(CornerEnum.ResourceEnum.FUNGI);
 
-        Condition resourceCondition = new ResourceCondition();
+        ResourceCondition resourceCondition = new ResourceCondition();
 
         ObjectiveCard card3 = new ObjectiveCard(resourceCondition, frontCorners, "frontImage", "backImage", points);
 
@@ -67,9 +67,10 @@ public class SerializeObjectiveCard {
         cards.add(card1);
         cards.add(card2);
         cards.add(card3);
+
         //provo a creare il Json da questo array
         SerializeObjectiveCard serializeObjectiveCard = new SerializeObjectiveCard();
-        serializeObjectiveCard.serializeStarterCards(cards, "objectiveCards.json");
+        serializeObjectiveCard.serializeObjectiveCards(cards, "objectiveCards.json");
     }
 
 }

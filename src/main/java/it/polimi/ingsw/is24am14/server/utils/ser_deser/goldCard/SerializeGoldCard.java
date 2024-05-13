@@ -1,4 +1,4 @@
-package it.polimi.ingsw.is24am14.server.utils.ser_deser;
+package it.polimi.ingsw.is24am14.server.utils.ser_deser.goldCard;
 
 import com.google.gson.GsonBuilder;
 import it.polimi.ingsw.is24am14.server.model.card.*;
@@ -39,16 +39,34 @@ public class SerializeGoldCard {
 
         int points = 6;
 
-        //da mettere qua le ipotesi con le diverse condition, parlare con Bog
+        //la placement condition è un ResourceCondition
+        ResourceCondition placementCondition = new ResourceCondition();
+        placementCondition.addClause(CornerEnum.ResourceEnum.ANIMAL);
+        placementCondition.addClause(CornerEnum.ResourceEnum.FUNGI);
+        placementCondition.addClause(CornerEnum.ResourceEnum.PLANT);
 
-        GoldCard goldCard = new GoldCard(points, null, CornerEnum.ResourceEnum.ANIMAL,
-                null, frontCorners, "frontImage", "backImage");
+        //caso 1 -> object condition
+        ObjectCondition pointCondition = new ObjectCondition();
+        pointCondition.addClause(CornerEnum.ObjectEnum.MANUSCRIPT);
+        pointCondition.addClause(CornerEnum.ObjectEnum.INKWELL);
+
+        //caso2 -> card condition
+        CardCondition pointCondition2 = new CardCondition();
+        pointCondition2.addClause(new Coordinates(1, 2), CornerEnum.ResourceEnum.ANIMAL);
+        pointCondition2.addClause(new Coordinates(3, 4), CornerEnum.ResourceEnum.FUNGI);
+
+
+        //sono due card identiche, con qualche modifica per distinguerle nel JSON
+        GoldCard goldCard = new GoldCard(points, pointCondition, CornerEnum.ResourceEnum.ANIMAL,
+                placementCondition, frontCorners, "frontImage", "backImage");
+        GoldCard goldCard2 = new GoldCard(points, pointCondition2, CornerEnum.ResourceEnum.PLANT,
+                placementCondition, frontCorners, "frontImage", "backImage");
 
         ArrayList<GoldCard> cards = new ArrayList<>();
         cards.add(goldCard);
+        cards.add(goldCard2);
 
-
-        //provo a creare il Json do questo array
+        //provo a creare il Json di questo array
         SerializeGoldCard serializeGoldCard = new SerializeGoldCard();
         serializeGoldCard.serializeGoldCards(cards, "goldCards.json");
     }

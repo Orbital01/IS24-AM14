@@ -20,6 +20,11 @@ public class TCPMediator implements ServerConnection {
 
     @Override
     public void flipCard(int cardIndex) throws Exception {
+        //TODO: implement this method
+    }
 
+    public String getClientNickname() {
+        //TODO: implement this method
+        return null;
     }
 }

@@ -1,10 +1,12 @@
-package it.polimi.ingsw.is24am14.server.utils.ser_deser;
+package it.polimi.ingsw.is24am14.server.utils.ser_deser.starterCards;
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.is24am14.server.model.card.*;
 import com.google.gson.reflect.TypeToken;
+import it.polimi.ingsw.is24am14.server.utils.ser_deser.CornerTypeAdapter;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
