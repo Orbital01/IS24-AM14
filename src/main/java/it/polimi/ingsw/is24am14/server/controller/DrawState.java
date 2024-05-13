@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class DrawState implements GameState{
     private Game game;
-    private final int playerIndex = game.getIndexActivePlayer();
-    private final Player currentPlayer = game.getPlayers().get(playerIndex);
+    private final int playerIndex;
+    private final Player currentPlayer;
 
     public boolean isEndGame;
 
@@ -22,20 +22,20 @@ public class DrawState implements GameState{
     //Obtain player, their gameArea, initialize isEndGame as false
     public DrawState(GameContext context) {
         this.game = context.game;
-
+        this.playerIndex = game.getIndexActivePlayer();
+        currentPlayer = game.getPlayers().get(playerIndex);
     }
 
     @Override
     public void execute(){
-        drawAction(drawDeckIndex);
+        drawAction();
     }
     int drawDeckIndex;
     /**
      * After Player chooses where to draw from, perform draw from the right source
-     * @param drawDeckIndex Auxiliary index (0 for Resource Deck, 1 for Gold, 2 for FaceUp)
      */
     //  da sistemare
-    void drawAction(int drawDeckIndex){
+    void drawAction(){
         if(drawDeckIndex==0) {
             if (resourceDeck.isEmpty())
                 throw new IllegalStateException("The chosen deck is empty!");
@@ -52,11 +52,10 @@ public class DrawState implements GameState{
         }
     }
 
-
     /**
      * Draws card from Resource Deck, adding it to player's hand and removing it from the top of the deck
      */
-    void drawResourceCard() {
+    public void drawResourceCard() {
         currentPlayer.getPlayerHand().addLast(resourceDeck.removeTop());
         isEndGame = (resourceDeck.isEmpty() && goldDeck.isEmpty());
     }
@@ -68,10 +67,6 @@ public class DrawState implements GameState{
         currentPlayer.getPlayerHand().addLast(goldDeck.removeTop());
         isEndGame = (resourceDeck.isEmpty() && goldDeck.isEmpty());
     }
-
-
-
-
 
     //Method to be replaced with player input
     int chooseFaceUpCard(){
@@ -101,6 +96,3 @@ public class DrawState implements GameState{
         faceUpCards.add(cardIndex, resourceDeck.removeTop());
     }
 }
-
-
-

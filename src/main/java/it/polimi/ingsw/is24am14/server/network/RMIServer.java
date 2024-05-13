@@ -3,12 +3,10 @@ package it.polimi.ingsw.is24am14.server.network;
 import it.polimi.ingsw.is24am14.client.ClientConnection;
 import it.polimi.ingsw.is24am14.server.controller.GameContext;
 import it.polimi.ingsw.is24am14.server.controller.PlayState;
-import it.polimi.ingsw.is24am14.server.model.card.Card;
-import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
-import it.polimi.ingsw.is24am14.server.model.card.GoldCard;
-import it.polimi.ingsw.is24am14.server.model.card.PlayableCard;
+import it.polimi.ingsw.is24am14.server.model.card.*;
 import it.polimi.ingsw.is24am14.server.model.game.Game;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
+import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -16,6 +14,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RMIServer extends UnicastRemoteObject implements RMIServerConnection {
@@ -44,13 +43,54 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerConnectio
         }
         client.makeMove();
     }
-    
+
+    @Override
+    public String getClientNickname() throws Exception {
+        return "";
+    }
+
+    @Override
+    public void assignColor(List<TokenColour> colors, Player player) throws Exception {
+        client.chooseColor(colors, player);
+    }
+
     public void playCard(PlayableCard playedCard, Card alreadyPlacedCard, int cornerIndex) throws Exception {
         boolean success = PlayState.playCard(playedCard, alreadyPlacedCard, cornerIndex, context.getGame().getPlayers().get(context.getGame().getIndexActivePlayer()));
         if (!success) {
             client.makeMove();
         }
         context.setLastPlayedCard(playedCard);
+    }
+
+    public void chooseSecretObjective(Player player, Deck<ObjectiveCard> objectiveDeck) throws Exception {
+        ArrayList<ObjectiveCard> chooseSecret = new ArrayList<>();
+        for (int i = 0; i < 2; i++){
+            chooseSecret.add(objectiveDeck.removeTop()); //POLYMORPHISM ERROR: to be fixed by Matteo by introducing Java generics types
+        }
+        // client.pickObjective(chooseSecrets, player);
+    }
+
+    @Override
+    public void drawGoldCard() throws Exception {
+        Player currentPlayer = context.getGame().getPlayers().get(context.getGame().getIndexActivePlayer());
+        currentPlayer.addCardToHand(context.getGame().popGoldDeck());
+        if (context.getGame().areDecksEmpty()) context.getGame().setEndGame();
+    }
+
+    //  Non viene gestito il caso in cui se il gold deck è vuoto pesco dal resource
+    @Override
+    public void drawResourceCard() throws Exception {
+        Player currentPlayer = context.getGame().getPlayers().get(context.getGame().getIndexActivePlayer());
+        currentPlayer.addCardToHand(context.getGame().popResourceDeck());
+        if (context.getGame().areDecksEmpty()) context.getGame().setEndGame();
+    }
+
+    //  Non viene gestito il caso in cui se il resource deck è vuoto pesco dal gold
+    @Override
+    public void drawFromFaceUp(int faceUpIndex) throws Exception {
+        Player currentPlayer = context.getGame().getPlayers().get(context.getGame().getIndexActivePlayer());
+        currentPlayer.addCardToHand(context.getGame().removeFaceUpCard(faceUpIndex));
+        if (context.getGame().areDecksEmpty()) context.getGame().setEndGame();
     }
 
     public ArrayList<PlayableCard> getPlayerHand() throws Exception {

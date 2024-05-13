@@ -29,14 +29,14 @@ public class PlayState implements GameState{
         return playedCard;
     }
 
-    int cardIndex;
-    Card alreadyPlacedCard;
-    int cornerIndex;
-
-
     @Override
     public void execute(){
         //  askForMove();
+        try {
+            currentPlayer.getConnection().askForMove();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

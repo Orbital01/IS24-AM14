@@ -38,6 +38,18 @@ public class Game {
         this.numPlayers = numPlayers;
     }
 
+    public GoldCard popGoldDeck() {
+        return goldDeck.removeTop();
+    }
+
+    public ResourceCard popResourceDeck() {
+        return resourceDeck.removeTop();
+    }
+
+    public boolean areDecksEmpty() {
+        return resourceDeck.isEmpty() && goldDeck.isEmpty();
+    }
+
     public ArrayList<Player> getPlayers() {
         return players;
     }
@@ -47,8 +59,8 @@ public class Game {
         if (faceUpCards.size() == 4) throw new MaximumNumberOfFaceUpCardsReachedException();
         faceUpCards.add(newCard);
     }
-    public void removeFaceUpCard(int indexCard) {
-        faceUpCards.remove(indexCard);
+    public PlayableCard removeFaceUpCard(int indexCard) {
+        return faceUpCards.remove(indexCard);
     }
 
     public int getIndexActivePlayer() {
