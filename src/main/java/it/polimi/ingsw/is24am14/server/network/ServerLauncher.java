@@ -12,13 +12,13 @@ public class ServerLauncher {
         ArrayList<ServerConnection> servers = new ArrayList<>();
 
         try {
-            RMIServer RMIserver = new RMIServer(servers);
+            LobbyList lobbyList = new LobbyList(servers);
+
+            RMIServer RMIserver = new RMIServer(servers, lobbyList);
             TCPServer TCPserver = new TCPServer(servers);
 
             RMIserver.startServer();
             TCPserver.startServer();
-
-            LobbyList lobbyList = new LobbyList(servers);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

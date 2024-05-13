@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class Game {
     public Game(int numPlayers) {
+        this.players = new ArrayList<>();
         this.numPlayers = numPlayers;
     }
     private ArrayList<Player> players;

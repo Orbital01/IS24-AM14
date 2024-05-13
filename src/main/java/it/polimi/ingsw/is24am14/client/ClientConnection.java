@@ -5,10 +5,11 @@ import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 
+import java.rmi.Remote;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface ClientConnection {
+public interface ClientConnection extends Remote {
     void execute() throws Exception;
     void send(String message) throws Exception; //    message send by the client to the server
     void makeMove() throws Exception;
