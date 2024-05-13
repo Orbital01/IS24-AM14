@@ -2,6 +2,8 @@ package it.polimi.ingsw.is24am14.server.network;
 
 import it.polimi.ingsw.is24am14.client.ClientConnection;
 import it.polimi.ingsw.is24am14.server.controller.GameContext;
+import it.polimi.ingsw.is24am14.server.controller.Lobby;
+import it.polimi.ingsw.is24am14.server.controller.LobbyList;
 import it.polimi.ingsw.is24am14.server.controller.PlayState;
 import it.polimi.ingsw.is24am14.server.model.card.*;
 import it.polimi.ingsw.is24am14.server.model.game.Game;
@@ -42,11 +44,6 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerConnectio
             playerHand.get(cardIndex).flipSide();
         }
         client.makeMove();
-    }
-
-    @Override
-    public String getClientNickname() throws Exception {
-        return "";
     }
 
     @Override
@@ -93,6 +90,24 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerConnectio
         if (context.getGame().areDecksEmpty()) context.getGame().setEndGame();
     }
 
+
+    @Override
+    public void askStartingOption(LobbyList lobby) throws Exception {
+        this.client.joinLobby(lobby);
+    }
+
+    @Override
+    public void joinExistingLobby(Lobby lobby) throws Exception {
+        lobby.joinLobby(this);
+    }
+
+    @Override
+    public void joinNewLobby(LobbyList lobby, int numPlayers) throws Exception {
+        Lobby newLobby = new Lobby(numPlayers, new ArrayList<>());
+        newLobby.joinLobby(this);
+        lobby.createLobby(newLobby);
+    }
+
     public ArrayList<PlayableCard> getPlayerHand() throws Exception {
         return new ArrayList<>(context.getGame().getPlayers().get(context.getGame().getIndexActivePlayer()).getPlayerHand());
     }
@@ -116,6 +131,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerConnectio
         this.client = client;
         System.out.println("RMI client connected");
         serverList.add(this);
+
     }
 
     public String getClientNickname() throws RemoteException{

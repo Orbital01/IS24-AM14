@@ -1,9 +1,16 @@
 package it.polimi.ingsw.is24am14.client;
 
+import it.polimi.ingsw.is24am14.server.controller.LobbyList;
+import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
+import it.polimi.ingsw.is24am14.server.model.player.Player;
+import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TCPClient implements ClientConnection {
     private Socket socket;
@@ -23,6 +30,26 @@ public class TCPClient implements ClientConnection {
     @Override
     public int sendInt() throws Exception {
         return 0;
+    }
+
+    @Override
+    public void chooseColor(List<TokenColour> colors, Player player) throws Exception {
+
+    }
+
+    @Override
+    public void pickObjective(ArrayList<ObjectiveCard> secrets, Player player) throws Exception {
+
+    }
+
+    @Override
+    public void drawCard() throws Exception {
+
+    }
+
+    @Override
+    public void joinLobby(LobbyList lobby) throws Exception {
+
     }
 
     public void receive() throws Exception {
