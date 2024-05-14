@@ -112,4 +112,8 @@ public abstract class Card {
     public String getFrontImage() {return frontImage;}
     public String getBackImage() {return backImage;}
 
+    public ArrayList<String> drawCard() {
+        return new ArrayList<>();
+    }
+
 }

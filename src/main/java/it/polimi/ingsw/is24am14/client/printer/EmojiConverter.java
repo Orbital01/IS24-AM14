@@ -249,7 +249,7 @@ public class EmojiConverter {
         Emoji resource;
         int i = 0;
         ArrayList<Emoji> resourceEmojis = new ArrayList<Emoji>();
-        for (i = 0; i < card.getCorners().size(); i++) {
+        for (i = 0; i < card.getResources().size(); i++) {
             switch (card.getResources().get(i)) {
                 case CornerEnum.ResourceEnum.FUNGI:
                     Emoji fungi = Emojis.MUSHROOM;
