@@ -16,115 +16,114 @@ public class StarterCardDeckCreator {
         // Create each one of the 6 starter cards
         ArrayList<StarterCard> content = new ArrayList<>();
         Deck<StarterCard> starterCardDeck = new Deck<>(content);
-        ArrayList<Corner> frontCorners = new ArrayList<>();
-        ArrayList<Corner> backCorners = new ArrayList<>();
-        ArrayList<CornerEnum.ResourceEnum> resources = new ArrayList<>();
-
-        frontCorners.add(new Corner(CornerEnum.EMPTY));
-        frontCorners.add(new Corner(CornerEnum.ResourceEnum.PLANT));
-        frontCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
-        frontCorners.add(new Corner(CornerEnum.EMPTY));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.PLANT));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
-        resources.add(CornerEnum.ResourceEnum.INSECT);
-        content.add(new StarterCard(frontCorners, backCorners, resources, "src/main/resources/images/cards/starter_cards/starter_fronts/page_81.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_81.png"));
-
-        frontCorners.clear();
-        backCorners.clear();
-        resources.clear();
 
 
+        ArrayList<Corner> empPlaInsEmp = new ArrayList<>();
+        empPlaInsEmp.add(new Corner(CornerEnum.EMPTY));
+        empPlaInsEmp.add(new Corner(CornerEnum.ResourceEnum.PLANT));
+        empPlaInsEmp.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+        empPlaInsEmp.add(new Corner(CornerEnum.EMPTY));
 
-        frontCorners.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
-        frontCorners.add(new Corner(CornerEnum.EMPTY));
-        frontCorners.add(new Corner(CornerEnum.EMPTY));
-        frontCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.PLANT));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
-        resources.add(CornerEnum.ResourceEnum.FUNGI);
-        content.add(new StarterCard(frontCorners, backCorners, resources, "src/main/resources/images/cards/starter_cards/starter_fronts/page_82.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_82.png"));
+        ArrayList<Corner> funPlaInsAni = new ArrayList<>();
+        funPlaInsAni.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+        funPlaInsAni.add(new Corner(CornerEnum.ResourceEnum.PLANT));
+        funPlaInsAni.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+        funPlaInsAni.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
 
-        frontCorners.clear();
-        backCorners.clear();
-        resources.clear();
+        ArrayList<CornerEnum.ResourceEnum> insect = new ArrayList<>();
+        insect.add(CornerEnum.ResourceEnum.INSECT);
+
+        content.add(new StarterCard(empPlaInsEmp, funPlaInsAni, insect, "src/main/resources/images/cards/starter_cards/starter_fronts/page_81.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_81.png"));
 
 
 
-        frontCorners.add(new Corner(CornerEnum.EMPTY));
-        frontCorners.add(new Corner(CornerEnum.EMPTY));
-        frontCorners.add(new Corner(CornerEnum.EMPTY));
-        frontCorners.add(new Corner(CornerEnum.EMPTY));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.PLANT));
-        resources.add(CornerEnum.ResourceEnum.PLANT);
-        resources.add(CornerEnum.ResourceEnum.FUNGI);
-        content.add(new StarterCard(frontCorners, backCorners, resources, "src/main/resources/images/cards/starter_cards/starter_fronts/page_83.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_83.png"));
 
-        frontCorners.clear();
-        backCorners.clear();
-        resources.clear();
+        ArrayList<Corner> aniEmpEmpFun = new ArrayList<>();
+        aniEmpEmpFun.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
+        aniEmpEmpFun.add(new Corner(CornerEnum.EMPTY));
+        aniEmpEmpFun.add(new Corner(CornerEnum.EMPTY));
+        aniEmpEmpFun.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
 
+        ArrayList<Corner> plaAniFunIns = new ArrayList<>();
+        plaAniFunIns.add(new Corner(CornerEnum.ResourceEnum.PLANT));
+        plaAniFunIns.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
+        plaAniFunIns.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+        plaAniFunIns.add(new Corner(CornerEnum.ResourceEnum.INSECT));
 
+        ArrayList<CornerEnum.ResourceEnum> fungi = new ArrayList<>();
+        fungi.add(CornerEnum.ResourceEnum.FUNGI);
 
-        frontCorners.add(new Corner(CornerEnum.EMPTY));
-        frontCorners.add(new Corner(CornerEnum.EMPTY));
-        frontCorners.add(new Corner(CornerEnum.EMPTY));
-        frontCorners.add(new Corner(CornerEnum.EMPTY));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.PLANT));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
-        resources.add(CornerEnum.ResourceEnum.ANIMAL);
-        resources.add(CornerEnum.ResourceEnum.INSECT);
-        content.add(new StarterCard(frontCorners, backCorners, resources, "src/main/resources/images/cards/starter_cards/starter_fronts/page_84.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_84.png"));
-
-        frontCorners.clear();
-        backCorners.clear();
-        resources.clear();
+        content.add(new StarterCard(aniEmpEmpFun, plaAniFunIns, fungi, "src/main/resources/images/cards/starter_cards/starter_fronts/page_82.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_82.png"));
 
 
 
-        frontCorners.add(new Corner(CornerEnum.EMPTY));
-        frontCorners.add(new Corner(CornerEnum.EMPTY));
-        frontCorners.add(new Corner(CornerEnum.HIDDEN));
-        frontCorners.add(new Corner(CornerEnum.HIDDEN));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.PLANT));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
-        resources.add(CornerEnum.ResourceEnum.ANIMAL);
-        resources.add(CornerEnum.ResourceEnum.INSECT);
-        resources.add(CornerEnum.ResourceEnum.PLANT);
-        content.add(new StarterCard(frontCorners, backCorners, resources, "src/main/resources/images/cards/starter_cards/starter_fronts/page_85.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_85.png"));
 
-        frontCorners.clear();
-        backCorners.clear();
-        resources.clear();
+        ArrayList<Corner> empEmpEmpEmp = new ArrayList<>();
+        empEmpEmpEmp.add(new Corner(CornerEnum.EMPTY));
+        empEmpEmpEmp.add(new Corner(CornerEnum.EMPTY));
+        empEmpEmpEmp.add(new Corner(CornerEnum.EMPTY));
+        empEmpEmpEmp.add(new Corner(CornerEnum.EMPTY));
+        ArrayList<Corner> insAniFunPlan = new ArrayList<>();
+        insAniFunPlan.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+        insAniFunPlan.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
+        insAniFunPlan.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+        insAniFunPlan.add(new Corner(CornerEnum.ResourceEnum.PLANT));
+
+        ArrayList<CornerEnum.ResourceEnum> plaFun = new ArrayList<>();
+        plaFun.add(CornerEnum.ResourceEnum.PLANT);
+        plaFun.add(CornerEnum.ResourceEnum.FUNGI);
+        content.add(new StarterCard(empEmpEmpEmp, insAniFunPlan, plaFun, "src/main/resources/images/cards/starter_cards/starter_fronts/page_83.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_83.png"));
 
 
 
-        frontCorners.add(new Corner(CornerEnum.EMPTY));
-        frontCorners.add(new Corner(CornerEnum.EMPTY));
-        frontCorners.add(new Corner(CornerEnum.HIDDEN));
-        frontCorners.add(new Corner(CornerEnum.HIDDEN));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.PLANT));
-        backCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
-        resources.add(CornerEnum.ResourceEnum.PLANT);
-        resources.add(CornerEnum.ResourceEnum.ANIMAL);
-        resources.add(CornerEnum.ResourceEnum.FUNGI);
-        content.add(new StarterCard(frontCorners, backCorners, resources, "src/main/resources/images/cards/starter_cards/starter_fronts/page_86.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_86.png"));
 
-        frontCorners.clear();
-        backCorners.clear();
-        resources.clear();
+
+        ArrayList<Corner> plaInsAniFun = new ArrayList<>();
+        plaInsAniFun.add(new Corner(CornerEnum.ResourceEnum.PLANT));
+        plaInsAniFun.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+        plaInsAniFun.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
+        plaInsAniFun.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+
+        ArrayList<CornerEnum.ResourceEnum> aniIns = new ArrayList<>();
+        aniIns.add(CornerEnum.ResourceEnum.ANIMAL);
+        aniIns.add(CornerEnum.ResourceEnum.INSECT);
+        content.add(new StarterCard(empEmpEmpEmp, plaInsAniFun, aniIns, "src/main/resources/images/cards/starter_cards/starter_fronts/page_84.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_84.png"));
+
+
+
+
+        ArrayList<Corner> empEmpHidHid = new ArrayList<>();
+        empEmpHidHid.add(new Corner(CornerEnum.EMPTY));
+        empEmpHidHid.add(new Corner(CornerEnum.EMPTY));
+        empEmpHidHid.add(new Corner(CornerEnum.HIDDEN));
+        empEmpHidHid.add(new Corner(CornerEnum.HIDDEN));
+
+        ArrayList<Corner> insFunPlaAni = new ArrayList<>();
+        insFunPlaAni.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+        insFunPlaAni.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+        insFunPlaAni.add(new Corner(CornerEnum.ResourceEnum.PLANT));
+        insFunPlaAni.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
+
+        ArrayList<CornerEnum.ResourceEnum> aniInsPLa = new ArrayList<>();
+        aniInsPLa.add(CornerEnum.ResourceEnum.ANIMAL);
+        aniInsPLa.add(CornerEnum.ResourceEnum.INSECT);
+        aniInsPLa.add(CornerEnum.ResourceEnum.PLANT);
+        content.add(new StarterCard(empEmpHidHid, insFunPlaAni, aniInsPLa, "src/main/resources/images/cards/starter_cards/starter_fronts/page_85.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_85.png"));
+
+
+
+
+        ArrayList<Corner> funAniPlaIns = new ArrayList<>();
+        funAniPlaIns.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+        funAniPlaIns.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
+        funAniPlaIns.add(new Corner(CornerEnum.ResourceEnum.PLANT));
+        funAniPlaIns.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+
+        ArrayList<CornerEnum.ResourceEnum> plaAniFun = new ArrayList<>();
+        plaAniFun.add(CornerEnum.ResourceEnum.PLANT);
+        plaAniFun.add(CornerEnum.ResourceEnum.ANIMAL);
+        plaAniFun.add(CornerEnum.ResourceEnum.FUNGI);
+        content.add(new StarterCard(empEmpHidHid, funAniPlaIns, plaAniFun, "src/main/resources/images/cards/starter_cards/starter_fronts/page_86.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_86.png"));
 
 
         return starterCardDeck;
