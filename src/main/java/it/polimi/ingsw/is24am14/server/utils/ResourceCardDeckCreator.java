@@ -16,7 +16,6 @@ public class ResourceCardDeckCreator {
         Deck<ResourceCard> resourceCardDeck = new Deck<>(content);
         ArrayList<Corner> backCorners = new ArrayList<>();
         CornerEnum.ResourceEnum resource = CornerEnum.ResourceEnum.FUNGI;
-        int points=0;
         backCorners.add(new Corner(CornerEnum.EMPTY));
         backCorners.add(new Corner(CornerEnum.EMPTY));
         backCorners.add(new Corner(CornerEnum.EMPTY));
@@ -31,7 +30,7 @@ public class ResourceCardDeckCreator {
         funEmpFunHid.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
         funEmpFunHid.add(new Corner(CornerEnum.HIDDEN));
 
-        content.add(new ResourceCard(points, resource, funEmpFunHid, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_1.png", "src/main/resources/images/cards/resource_cards/red_backs/page_1.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, funEmpFunHid, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_1.png", "src/main/resources/images/cards/resource_cards/red_backs/page_1.png"));
 
         
 
@@ -41,7 +40,7 @@ public class ResourceCardDeckCreator {
         funFunHidEmp.add(new Corner(CornerEnum.HIDDEN));
         funFunHidEmp.add(new Corner(CornerEnum.EMPTY));
 
-        content.add(new ResourceCard(points, resource, funFunHidEmp, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_2.png", "src/main/resources/images/cards/resource_cards/red_backs/page_2.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, funFunHidEmp, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_2.png", "src/main/resources/images/cards/resource_cards/red_backs/page_2.png"));
 
         
 
@@ -51,7 +50,7 @@ public class ResourceCardDeckCreator {
         empHidFunFun.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
         empHidFunFun.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
 
-        content.add(new ResourceCard(points, resource, empHidFunFun, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_3.png", "src/main/resources/images/cards/resource_cards/red_backs/page_3.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, empHidFunFun, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_3.png", "src/main/resources/images/cards/resource_cards/red_backs/page_3.png"));
 
         
 
@@ -61,7 +60,7 @@ public class ResourceCardDeckCreator {
         empFunEmpFun.add(new Corner(CornerEnum.EMPTY));
         empFunEmpFun.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
 
-        content.add(new ResourceCard(points, resource, empFunEmpFun, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_4.png", "src/main/resources/images/cards/resource_cards/red_backs/page_4.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, empFunEmpFun, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_4.png", "src/main/resources/images/cards/resource_cards/red_backs/page_4.png"));
 
         
 
@@ -71,7 +70,7 @@ public class ResourceCardDeckCreator {
         empQuiPlaFun.add(new Corner(CornerEnum.ResourceEnum.PLANT));
         empQuiPlaFun.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
 
-        content.add(new ResourceCard(points, resource, empQuiPlaFun, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_5.png", "src/main/resources/images/cards/resource_cards/red_backs/page_5.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, empQuiPlaFun, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_5.png", "src/main/resources/images/cards/resource_cards/red_backs/page_5.png"));
 
         
 
@@ -81,7 +80,7 @@ public class ResourceCardDeckCreator {
         inkFunHidAni.add(new Corner(CornerEnum.HIDDEN));
         inkFunHidAni.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
 
-        content.add(new ResourceCard(points, resource, inkFunHidAni, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_6.png", "src/main/resources/images/cards/resource_cards/red_backs/page_6.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, inkFunHidAni, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_6.png", "src/main/resources/images/cards/resource_cards/red_backs/page_6.png"));
 
         
 
@@ -92,13 +91,13 @@ public class ResourceCardDeckCreator {
         funInsManHid.add(new Corner(CornerEnum.ObjectEnum.MANUSCRIPT));
         funInsManHid.add(new Corner(CornerEnum.HIDDEN));
 
-        content.add(new ResourceCard(points, resource, funInsManHid, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_7.png", "src/main/resources/images/cards/resource_cards/red_backs/page_7.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, funInsManHid, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_7.png", "src/main/resources/images/cards/resource_cards/red_backs/page_7.png"));
 
         
 
 
 
-        points=1;
+        
 
         ArrayList<Corner> empFunEmpHid = new ArrayList<>();
         empFunEmpHid.add(new Corner(CornerEnum.EMPTY));
@@ -106,7 +105,7 @@ public class ResourceCardDeckCreator {
         empFunEmpHid.add(new Corner(CornerEnum.EMPTY));
         empFunEmpHid.add(new Corner(CornerEnum.HIDDEN));
 
-        content.add(new ResourceCard(points, resource, empFunEmpHid, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_8.png", "src/main/resources/images/cards/resource_cards/red_backs/page_8.png"));
+        content.add(new ResourceCard(1, CornerEnum.ResourceEnum.FUNGI, empFunEmpHid, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_8.png", "src/main/resources/images/cards/resource_cards/red_backs/page_8.png"));
 
         
 
@@ -118,7 +117,7 @@ public class ResourceCardDeckCreator {
         funHidEmpEmp.add(new Corner(CornerEnum.EMPTY));
         funHidEmpEmp.add(new Corner(CornerEnum.EMPTY));
 
-        content.add(new ResourceCard(points, resource, funHidEmpEmp, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_9.png", "src/main/resources/images/cards/resource_cards/red_backs/page_9.png"));
+        content.add(new ResourceCard(1, CornerEnum.ResourceEnum.FUNGI, funHidEmpEmp, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_9.png", "src/main/resources/images/cards/resource_cards/red_backs/page_9.png"));
 
         
 
@@ -128,13 +127,13 @@ public class ResourceCardDeckCreator {
         hidEmpFunEmp.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
         hidEmpFunEmp.add(new Corner(CornerEnum.EMPTY));
 
-        content.add(new ResourceCard(points, resource, hidEmpFunEmp, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_10.png", "src/main/resources/images/cards/resource_cards/red_backs/page_10.png"));
+        content.add(new ResourceCard(1, CornerEnum.ResourceEnum.FUNGI, hidEmpFunEmp, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_10.png", "src/main/resources/images/cards/resource_cards/red_backs/page_10.png"));
 
 
 
     // Green Cards
 
-        points=0;
+
         resource= CornerEnum.ResourceEnum.PLANT;
 
         ArrayList<Corner> plaEmpPlaHid = new ArrayList<>();
@@ -143,7 +142,7 @@ public class ResourceCardDeckCreator {
         plaEmpPlaHid.add(new Corner(CornerEnum.ResourceEnum.PLANT));
         plaEmpPlaHid.add(new Corner(CornerEnum.HIDDEN));
 
-        content.add(new ResourceCard(points, resource, plaEmpPlaHid, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_11.png", "src/main/resources/images/cards/resource_cards/green_backs/page_11.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.PLANT, plaEmpPlaHid, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_11.png", "src/main/resources/images/cards/resource_cards/green_backs/page_11.png"));
 
 
 
@@ -153,7 +152,7 @@ public class ResourceCardDeckCreator {
         plaPlaHidEmp.add(new Corner(CornerEnum.HIDDEN));
         plaPlaHidEmp.add(new Corner(CornerEnum.EMPTY));
 
-        content.add(new ResourceCard(points, resource, plaPlaHidEmp, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_12.png", "src/main/resources/images/cards/resource_cards/green_backs/page_12.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.PLANT, plaPlaHidEmp, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_12.png", "src/main/resources/images/cards/resource_cards/green_backs/page_12.png"));
 
 
 
@@ -163,7 +162,7 @@ public class ResourceCardDeckCreator {
         empHidPlaPla.add(new Corner(CornerEnum.ResourceEnum.PLANT));
         empHidPlaPla.add(new Corner(CornerEnum.ResourceEnum.PLANT));
 
-        content.add(new ResourceCard(points, resource, empHidPlaPla, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_13.png", "src/main/resources/images/cards/resource_cards/green_backs/page_13.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.PLANT, empHidPlaPla, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_13.png", "src/main/resources/images/cards/resource_cards/green_backs/page_13.png"));
 
 
 
@@ -173,7 +172,7 @@ public class ResourceCardDeckCreator {
         hidPlaEmpPla.add(new Corner(CornerEnum.EMPTY));
         hidPlaEmpPla.add(new Corner(CornerEnum.ResourceEnum.PLANT));
 
-        content.add(new ResourceCard(points, resource, hidPlaEmpPla, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_14.png", "src/main/resources/images/cards/resource_cards/green_backs/page_14.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.PLANT, hidPlaEmpPla, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_14.png", "src/main/resources/images/cards/resource_cards/green_backs/page_14.png"));
 
 
 
@@ -183,7 +182,7 @@ public class ResourceCardDeckCreator {
         hidInsQuiPla.add(new Corner(CornerEnum.ObjectEnum.QUILL));
         hidInsQuiPla.add(new Corner(CornerEnum.ResourceEnum.PLANT));
 
-        content.add(new ResourceCard(points, resource, hidInsQuiPla, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_15.png", "src/main/resources/images/cards/resource_cards/green_backs/page_15.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.PLANT, hidInsQuiPla, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_15.png", "src/main/resources/images/cards/resource_cards/green_backs/page_15.png"));
 
 
 
@@ -193,7 +192,7 @@ public class ResourceCardDeckCreator {
         funPlaHidInk.add(new Corner(CornerEnum.HIDDEN));
         funPlaHidInk.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
 
-        content.add(new ResourceCard(points, resource, funPlaHidInk, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_16.png", "src/main/resources/images/cards/resource_cards/green_backs/page_16.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.PLANT, funPlaHidInk, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_16.png", "src/main/resources/images/cards/resource_cards/green_backs/page_16.png"));
 
 
 
@@ -203,18 +202,18 @@ public class ResourceCardDeckCreator {
         manHidPlaAni.add(new Corner(CornerEnum.ResourceEnum.PLANT));
         manHidPlaAni.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
 
-        content.add(new ResourceCard(points, resource, manHidPlaAni, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_17.png", "src/main/resources/images/cards/resource_cards/green_backs/page_17.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.PLANT, manHidPlaAni, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_17.png", "src/main/resources/images/cards/resource_cards/green_backs/page_17.png"));
 
         
 
-        points=1;
+        
         ArrayList<Corner> empEmpPlaHid = new ArrayList<>();
         empEmpPlaHid.add(new Corner(CornerEnum.EMPTY));
         empEmpPlaHid.add(new Corner(CornerEnum.EMPTY));
         empEmpPlaHid.add(new Corner(CornerEnum.ResourceEnum.PLANT));
         empEmpPlaHid.add(new Corner(CornerEnum.HIDDEN));
 
-        content.add(new ResourceCard(points, resource, empEmpPlaHid, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_18.png", "src/main/resources/images/cards/resource_cards/green_backs/page_18.png"));
+        content.add(new ResourceCard(1, CornerEnum.ResourceEnum.PLANT, empEmpPlaHid, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_18.png", "src/main/resources/images/cards/resource_cards/green_backs/page_18.png"));
 
 
 
@@ -224,7 +223,7 @@ public class ResourceCardDeckCreator {
         empEmpHidPla.add(new Corner(CornerEnum.HIDDEN));
         empEmpHidPla.add(new Corner(CornerEnum.ResourceEnum.PLANT));
 
-        content.add(new ResourceCard(points, resource, empEmpHidPla, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_19.png", "src/main/resources/images/cards/resource_cards/green_backs/page_19.png"));
+        content.add(new ResourceCard(1, CornerEnum.ResourceEnum.PLANT, empEmpHidPla, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_19.png", "src/main/resources/images/cards/resource_cards/green_backs/page_19.png"));
 
 
 
@@ -234,13 +233,13 @@ public class ResourceCardDeckCreator {
         hidPlaEmpEmp.add(new Corner(CornerEnum.EMPTY));
         hidPlaEmpEmp.add(new Corner(CornerEnum.EMPTY));
 
-        content.add(new ResourceCard(points, resource, hidPlaEmpEmp, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_20.png", "src/main/resources/images/cards/resource_cards/green_backs/page_20.png"));
+        content.add(new ResourceCard(1, CornerEnum.ResourceEnum.PLANT, hidPlaEmpEmp, backCorners, "src/main/resources/images/cards/resource_cards/green_fronts/page_20.png", "src/main/resources/images/cards/resource_cards/green_backs/page_20.png"));
 
         
 
         // Blue Cards
 
-        points=0;
+
         resource= CornerEnum.ResourceEnum.ANIMAL;
         ArrayList<Corner> aniAniEmpHid = new ArrayList<>();
         aniAniEmpHid.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
@@ -248,7 +247,7 @@ public class ResourceCardDeckCreator {
         aniAniEmpHid.add(new Corner(CornerEnum.EMPTY));
         aniAniEmpHid.add(new Corner(CornerEnum.HIDDEN));
 
-        content.add(new ResourceCard(points, resource, aniAniEmpHid, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_21.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_21.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.ANIMAL, aniAniEmpHid, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_21.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_21.png"));
 
 
 
@@ -258,7 +257,7 @@ public class ResourceCardDeckCreator {
         hidEmpAniAni.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
         hidEmpAniAni.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
 
-        content.add(new ResourceCard(points, resource, hidEmpAniAni, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_22.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_22.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.ANIMAL, hidEmpAniAni, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_22.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_22.png"));
 
 
 
@@ -268,7 +267,7 @@ public class ResourceCardDeckCreator {
         aniHidAniEmp.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
         aniHidAniEmp.add(new Corner(CornerEnum.ResourceEnum.EMPTY));
 
-        content.add(new ResourceCard(points, resource, aniHidAniEmp, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_23.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_23.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.ANIMAL, aniHidAniEmp, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_23.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_23.png"));
 
 
         ArrayList<Corner> empAniHidAni = new ArrayList<>();
@@ -277,7 +276,7 @@ public class ResourceCardDeckCreator {
         empAniHidAni.add(new Corner(CornerEnum.HIDDEN));
         empAniHidAni.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
 
-        content.add(new ResourceCard(points, resource, empAniHidAni, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_24.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_24.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.ANIMAL, empAniHidAni, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_24.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_24.png"));
 
 
         ArrayList<Corner> hidInsInkAni = new ArrayList<>();
@@ -286,7 +285,7 @@ public class ResourceCardDeckCreator {
         hidInsInkAni.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
         hidInsInkAni.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
 
-        content.add(new ResourceCard(points, resource, hidInsInkAni, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_25.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_25.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.ANIMAL, hidInsInkAni, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_25.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_25.png"));
 
 
         ArrayList<Corner> plaAniHidMan = new ArrayList<>();
@@ -295,7 +294,7 @@ public class ResourceCardDeckCreator {
         plaAniHidMan.add(new Corner(CornerEnum.HIDDEN));
         plaAniHidMan.add(new Corner(CornerEnum.ObjectEnum.MANUSCRIPT));
 
-        content.add(new ResourceCard(points, resource, plaAniHidMan, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_26.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_26.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.ANIMAL, plaAniHidMan, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_26.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_26.png"));
 
 
         ArrayList<Corner> quiHidAniFun = new ArrayList<>();
@@ -304,18 +303,18 @@ public class ResourceCardDeckCreator {
         quiHidAniFun.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
         quiHidAniFun.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
 
-        content.add(new ResourceCard(points, resource, quiHidAniFun, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_27.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_27.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.ANIMAL, quiHidAniFun, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_27.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_27.png"));
 
         
 
-        points=1;
+        
         ArrayList<Corner> hidEmpAniEmp = new ArrayList<>();
         hidEmpAniEmp.add(new Corner(CornerEnum.HIDDEN));
         hidEmpAniEmp.add(new Corner(CornerEnum.EMPTY));
         hidEmpAniEmp.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
         hidEmpAniEmp.add(new Corner(CornerEnum.ResourceEnum.EMPTY));
 
-        content.add(new ResourceCard(points, resource, hidEmpAniEmp, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_28.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_28.png"));
+        content.add(new ResourceCard(1, CornerEnum.ResourceEnum.ANIMAL, hidEmpAniEmp, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_28.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_28.png"));
 
 
         ArrayList<Corner> empHidEmpAni = new ArrayList<>();
@@ -324,7 +323,7 @@ public class ResourceCardDeckCreator {
         empHidEmpAni.add(new Corner(CornerEnum.EMPTY));
         empHidEmpAni.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
 
-        content.add(new ResourceCard(points, resource, empHidEmpAni, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_29.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_29.png"));
+        content.add(new ResourceCard(1, CornerEnum.ResourceEnum.ANIMAL, empHidEmpAni, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_29.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_29.png"));
 
 
         ArrayList<Corner> empAniEmpHid = new ArrayList<>();
@@ -333,21 +332,21 @@ public class ResourceCardDeckCreator {
         empAniEmpHid.add(new Corner(CornerEnum.EMPTY));
         empAniEmpHid.add(new Corner(CornerEnum.HIDDEN));
 
-        content.add(new ResourceCard(points, resource, empAniEmpHid, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_30.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_30.png"));
+        content.add(new ResourceCard(1, CornerEnum.ResourceEnum.ANIMAL, empAniEmpHid, backCorners, "src/main/resources/images/cards/resource_cards/blue_fronts/page_30.png", "src/main/resources/images/cards/resource_cards/blue_backs/page_30.png"));
 
         
 
     // Purple Cards
 
         resource = CornerEnum.ResourceEnum.INSECT;
-        points =0;
+
         ArrayList<Corner> insInsEmpHid = new ArrayList<>();
         insInsEmpHid.add(new Corner(CornerEnum.ResourceEnum.INSECT));
         insInsEmpHid.add(new Corner(CornerEnum.ResourceEnum.INSECT));
         insInsEmpHid.add(new Corner(CornerEnum.EMPTY));
         insInsEmpHid.add(new Corner(CornerEnum.HIDDEN));
 
-        content.add(new ResourceCard(points, resource, insInsEmpHid, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_31.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_31.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.INSECT, insInsEmpHid, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_31.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_31.png"));
 
 
 
@@ -357,7 +356,7 @@ public class ResourceCardDeckCreator {
         hidEmpInsIns.add(new Corner(CornerEnum.ResourceEnum.INSECT));
         hidEmpInsIns.add(new Corner(CornerEnum.ResourceEnum.INSECT));
 
-        content.add(new ResourceCard(points, resource, hidEmpInsIns, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_32.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_32.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.INSECT, hidEmpInsIns, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_32.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_32.png"));
 
 
         ArrayList<Corner> insHidInsEmp = new ArrayList<>();
@@ -366,7 +365,7 @@ public class ResourceCardDeckCreator {
         insHidInsEmp.add(new Corner(CornerEnum.ResourceEnum.INSECT));
         insHidInsEmp.add(new Corner(CornerEnum.EMPTY));
 
-        content.add(new ResourceCard(points, resource, insHidInsEmp, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_33.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_33.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.INSECT, insHidInsEmp, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_33.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_33.png"));
 
 
 
@@ -376,7 +375,7 @@ public class ResourceCardDeckCreator {
         empInsHidIns.add(new Corner(CornerEnum.HIDDEN));
         empInsHidIns.add(new Corner(CornerEnum.ResourceEnum.INSECT));
 
-        content.add(new ResourceCard(points, resource, empInsHidIns, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_34.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_34.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.INSECT, empInsHidIns, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_34.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_34.png"));
 
 
 
@@ -386,7 +385,7 @@ public class ResourceCardDeckCreator {
         hidQuiAniIns.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
         hidQuiAniIns.add(new Corner(CornerEnum.ResourceEnum.INSECT));
 
-        content.add(new ResourceCard(points, resource, hidQuiAniIns, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_35.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_35.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.INSECT, hidQuiAniIns, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_35.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_35.png"));
 
 
 
@@ -396,7 +395,7 @@ public class ResourceCardDeckCreator {
         manInsHidFun.add(new Corner(CornerEnum.HIDDEN));
         manInsHidFun.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
 
-        content.add(new ResourceCard(points, resource, manInsHidFun, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_36.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_36.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.INSECT, manInsHidFun, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_36.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_36.png"));
 
 
 
@@ -406,18 +405,18 @@ public class ResourceCardDeckCreator {
         insPlaInkHid.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
         insPlaInkHid.add(new Corner(CornerEnum.HIDDEN));
 
-        content.add(new ResourceCard(points, resource, insPlaInkHid, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_37.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_37.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.INSECT, insPlaInkHid, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_37.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_37.png"));
 
         
 
-        points=1;
+        
         ArrayList<Corner> insHidEmpEmp = new ArrayList<>();
         insHidEmpEmp.add(new Corner(CornerEnum.ResourceEnum.INSECT));
         insHidEmpEmp.add(new Corner(CornerEnum.HIDDEN));
         insHidEmpEmp.add(new Corner(CornerEnum.EMPTY));
         insHidEmpEmp.add(new Corner(CornerEnum.EMPTY));
 
-        content.add(new ResourceCard(points, resource, insHidEmpEmp, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_38.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_38.png"));
+        content.add(new ResourceCard(1, CornerEnum.ResourceEnum.INSECT, insHidEmpEmp, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_38.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_38.png"));
 
 
 
@@ -427,7 +426,7 @@ public class ResourceCardDeckCreator {
         empEmpHidIns.add(new Corner(CornerEnum.HIDDEN));
         empEmpHidIns.add(new Corner(CornerEnum.ResourceEnum.INSECT));
 
-        content.add(new ResourceCard(points, resource, empEmpHidIns, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_39.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_39.png"));
+        content.add(new ResourceCard(1, CornerEnum.ResourceEnum.INSECT, empEmpHidIns, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_39.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_39.png"));
 
 
 
@@ -437,7 +436,7 @@ public class ResourceCardDeckCreator {
         hidInsEmpEmp.add(new Corner(CornerEnum.EMPTY));
         hidInsEmpEmp.add(new Corner(CornerEnum.EMPTY));
 
-        content.add(new ResourceCard(points, resource, hidInsEmpEmp, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_40.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_40.png"));
+        content.add(new ResourceCard(1, CornerEnum.ResourceEnum.INSECT, hidInsEmpEmp, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_40.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_40.png"));
 
 
         return resourceCardDeck;
