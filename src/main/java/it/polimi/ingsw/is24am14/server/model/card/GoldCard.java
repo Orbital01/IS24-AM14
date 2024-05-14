@@ -12,6 +12,7 @@ public class GoldCard extends PlayableCard {
     private final int points;
     private final Condition pointCondition;
     private final CornerEnum.ResourceEnum resource;
+
     private final ResourceCondition placementCondition;
 
     public GoldCard(int points, Condition pointCondition, CornerEnum.ResourceEnum resource,
@@ -47,7 +48,7 @@ public class GoldCard extends PlayableCard {
         return resource;
     }
 
-    public Condition getPlacementCondition() {
+    public ResourceCondition getPlacementCondition() {
         return placementCondition;
     }
 
