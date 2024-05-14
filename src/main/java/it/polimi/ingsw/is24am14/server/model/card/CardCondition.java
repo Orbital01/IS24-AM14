@@ -56,6 +56,12 @@ public class CardCondition implements Condition {
         return false;
     }
 
+    @Override
+    public int numSatisfied(GameArea board) {
+        return 0;
+    }
+
+
     /**
      * Checks the type of the card
      * @param boardCard card to be checked
