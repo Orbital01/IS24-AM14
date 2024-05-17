@@ -26,6 +26,10 @@ public class Lobby implements Serializable {
         return host;
     }
 
+    public ArrayList<ClientHandler> getPlayers() {
+        return players;
+    }
+
     public GameContext getGameContext() {
         return gameContext;
     }

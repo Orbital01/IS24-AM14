@@ -29,7 +29,7 @@ public class LobbyList implements Serializable {
 
     public Lobby getPlayersLobby(String playerName) {
         for (Lobby lobby : lobbies) {
-            for (ClientHandler client : clients) {
+            for (ClientHandler client : lobby.getPlayers()) {
                 try {
                     if (client.getClientUsername().equals(playerName)) return lobby;
                 } catch (Exception e) {
