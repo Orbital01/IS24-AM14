@@ -77,4 +77,11 @@ public class ObjectCondition implements Condition {
         return objectsFound;
     }
 
+    /**
+     * these methods are used to serialize the object condition
+     */
+    public ArrayList<CornerEnum.ObjectEnum> getListObject() {
+        return listObject;
+    }
+
 }

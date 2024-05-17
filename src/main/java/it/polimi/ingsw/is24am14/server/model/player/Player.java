@@ -3,18 +3,26 @@ package it.polimi.ingsw.is24am14.server.model.player;
 
 import it.polimi.ingsw.is24am14.server.model.card.*;
 import it.polimi.ingsw.is24am14.server.model.game.*;
+import it.polimi.ingsw.is24am14.server.network.ClientHandler;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-
-public class Player {
+/**
+ * Represents a player in the game.
+ * Each player has a nickname, a score, a token color, a starter card, a hand of cards, a secret objective card, and a game area.
+ */
+public class Player implements Serializable {
     private String nickname;
+    private boolean isFirstPlayer;
     private int points;
-    private final TokenColour colour;
+    private TokenColour colour;
     private StarterCard starterCard;
     private ArrayList<PlayableCard> playerHand;
     private ObjectiveCard secretObjective;
     private GameArea playerBoard;
+
+    private ClientHandler connection;
 
     //Constructor
     /**
@@ -23,15 +31,17 @@ public class Player {
      * their secret objective to null, and their game area to a new GameArea.
      *
      * @param nickname The nickname of the player.
-     * @param colour The colour of the player's token.
      */
-    public Player(String nickname, TokenColour colour) {
+    public Player(String nickname, ClientHandler connection) {
         this.nickname = nickname;
         this.points = 0;
-        this.colour = colour;
+        this.isFirstPlayer = false;
         this.playerHand = new ArrayList<PlayableCard>();
+        this.starterCard = null;
         this.secretObjective = null;
         this.playerBoard = new GameArea();
+
+        this.connection = connection;
     }
 
     //Getters
@@ -58,7 +68,7 @@ public class Player {
      *
      * @return The starter card of the player.
      */
-    public Card getStarterCard() {
+    public StarterCard getStarterCard() {
         return this.starterCard;
     }
 
@@ -80,11 +90,32 @@ public class Player {
         return this.secretObjective;
     }
 
+    /**
+     * Retrieves the player's game area.
+     *
+     * @return The game area of the player.
+     */
     public GameArea getPlayerBoard() {
         return this.playerBoard;
     }
 
+    /**
+     * Retrieves the player's token color.
+     *
+     * @return The token color of the player.
+     */
+    public TokenColour getColour() {
+        return this.colour;
+    }
 
+    /**
+     * Checks if the player is the first player.
+     *
+     * @return True if the player is the first player, false otherwise.
+     */
+    public boolean isFirstPlayer() {
+        return this.isFirstPlayer;
+    }
 
     /**
      * Sets the player's nickname.
@@ -111,6 +142,15 @@ public class Player {
      */
     public void setStarterCard(StarterCard starterCard) {
         this.starterCard = starterCard;
+    }
+
+    /**
+     * Sets the player's hand of cards.
+     *
+     * @param playerHand The new hand of cards of the player.
+     */
+    public void setPlayerHand(ArrayList<PlayableCard> playerHand) {
+        this.playerHand = playerHand;
     }
 
     //Methods
@@ -146,15 +186,52 @@ public class Player {
     }
 
     /**
-     * Retrieves the player's secret objective card.
+     * Sets the player's secret objective card.
      */
     public void setSecretObjective(ObjectiveCard secretObjective) {
         this.secretObjective = secretObjective;
     }
 
-    public void setGameArea(GameArea playerBoard) {
+    /**
+     * Sets the player's game area.
+     *
+     * @param playerBoard The new game area of the player.
+     */
+    public void setPlayerBoard(GameArea playerBoard) {
         this.playerBoard = playerBoard;
     }
 
+    /**
+     * Sets the player's secret objective card.
+     *
+     * @param objectiveCard The new secret objective card of the player.
+     */
+    public void setObjectiveCard(ObjectiveCard objectiveCard) {
+        this.secretObjective = objectiveCard;
+    }
 
+    /**
+     * Sets the player's token color.
+     *
+     * @param colour The new token color of the player.
+     */
+    public void setColour(TokenColour colour) {
+        this.colour = colour;
+    }
+
+    /**
+     * Sets the player's first player status.
+     *
+     * @param firstPlayer The new first player status of the player.
+     */
+    public void setFirstPlayer(boolean firstPlayer) {
+        this.isFirstPlayer = firstPlayer;
+    }
+
+    /**
+     * Retrieves the player's connection.
+     *
+     * @return The connection of the player.
+     */
+    public ClientHandler getConnection() {return this.connection;}
 }

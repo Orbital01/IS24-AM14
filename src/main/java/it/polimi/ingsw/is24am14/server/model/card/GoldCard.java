@@ -8,23 +8,32 @@ import java.util.ArrayList;
  * It also has a condition that must be satisfied in order to place it on the board.
  */
 
-public class GoldCard extends Card implements PlayableCard {
+public class GoldCard extends PlayableCard {
     private final int points;
     private final Condition pointCondition;
     private final CornerEnum.ResourceEnum resource;
 
-    private final Condition placementCondition;
+    private final ResourceCondition placementCondition;
 
     public GoldCard(int points, Condition pointCondition, CornerEnum.ResourceEnum resource,
-                    Condition placementCondition, ArrayList<Corner> frontCorners, ArrayList<Corner> backCorners,
+                    ResourceCondition placementCondition, ArrayList<Corner> frontCorners,
                     String frontImage, String backImage) {
 
-        super(frontCorners, backCorners, frontImage, backImage);
+        super(frontCorners, createBackCorners(), frontImage, backImage);
         this.points = points;
         this.pointCondition = pointCondition;
         this.resource = resource;
         this.placementCondition = placementCondition;
 
+    }
+
+    public static ArrayList<Corner> createBackCorners() {
+        ArrayList<Corner> backCorners = new ArrayList<>();
+        backCorners.add(new Corner(CornerEnum.EMPTY));
+        backCorners.add(new Corner(CornerEnum.EMPTY));
+        backCorners.add(new Corner(CornerEnum.EMPTY));
+        backCorners.add(new Corner(CornerEnum.EMPTY));
+        return backCorners;
     }
 
     public int getPoints() {
@@ -39,7 +48,9 @@ public class GoldCard extends Card implements PlayableCard {
         return resource;
     }
 
-    public Condition getPlacementCondition() {
+    public ResourceCondition getPlacementCondition() {
         return placementCondition;
     }
+
+
 }

@@ -1,13 +1,15 @@
 package it.polimi.ingsw.is24am14.server.model.card;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 /**
  * This class represents the deck of cards used in the game. It contains a list of cards and methods to manipulate them.
  */
-public class Deck<T extends Card> {
-    private ArrayList<T> content;
+public class Deck<T extends Card> implements Serializable, Iterable<T> {
+    private final ArrayList<T> content;
 
 
     /**
@@ -49,4 +51,8 @@ public class Deck<T extends Card> {
         Collections.shuffle(content);
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return content.iterator();
+    }
 }

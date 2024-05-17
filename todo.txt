@@ -1,8 +1,0 @@
-Cosa devo fare:
- - fixare condizioni già fatte (metti le PlayableCard)
-
- - Creare nella interface Condition il metodo numSatisfied                                  FATTO
-    -> CardCondition == numero di pattern L
-    -> ObjectCondition == numero di oggetti                                                 FATTO
-    -> ResourceCondition == 1 se soddisfatto, 0 altrimenti                                  FATTO
-    -> CornerCondition == numero di angoli coperti                                          FATTO

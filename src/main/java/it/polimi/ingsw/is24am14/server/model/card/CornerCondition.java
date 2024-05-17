@@ -3,11 +3,20 @@ package it.polimi.ingsw.is24am14.server.model.card;
 import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 
 public class CornerCondition implements Condition {
-    private final Coordinates coordinates;
+    private Coordinates coordinates;
 
-    public CornerCondition(Coordinates coordinates) {
+    public CornerCondition() {
+    }
+
+    public void setCoodinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+
+
     @Override
     public boolean isSatisfied(GameArea board) {
         return numSatisfied(board) > 0;

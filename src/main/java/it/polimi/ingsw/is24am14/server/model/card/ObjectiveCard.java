@@ -12,11 +12,18 @@ public class ObjectiveCard extends Card {
     private final Condition condition;
     private int points;
 
-    public ObjectiveCard(Condition condition, ArrayList<Corner> frontCorners, ArrayList<Corner> backCorners,
-                         String frontImage, String backImage, int points) {
-        super(frontCorners, backCorners, frontImage, backImage);
+    public ObjectiveCard(Condition condition, String frontImage, String backImage, int points) {
+
+        super(createFakeCorners(), createFakeCorners(), frontImage, backImage);
         this.condition = condition;
         this.points = points;
+    }
+    /**
+     * This method creates the back corners of the objective card
+     * @return an array list of 4 hidden corners
+     */
+    private static ArrayList<Corner> createFakeCorners() {
+        return new ArrayList<>();
     }
 
     public Condition getCondition() {

@@ -5,18 +5,20 @@ import it.polimi.ingsw.is24am14.server.model.game.exceptions.MaximumNumberOfPlay
 import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.model.card.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Game {
+public class Game implements Serializable {
     public Game(int numPlayers) {
+        this.players = new ArrayList<>();
         this.numPlayers = numPlayers;
     }
     private ArrayList<Player> players;
     private int numPlayers;
-    private Deck resourceDeck;
-    private Deck goldDeck;
+    private Deck<ResourceCard> resourceDeck;
+    private Deck<GoldCard> goldDeck;
     private ArrayList<PlayableCard> faceUpCards; //modificato da Card a PlayableCard
-    private ArrayList<ObjectiveCard> objectiveCards; //modificato da Card a ObjectiveCard
+    private Deck<ObjectiveCard> objectiveDeck; //modificato da Card a ObjectiveCard
     private boolean isEndGame;
     private int indexActivePlayer;
 
@@ -38,6 +40,30 @@ public class Game {
         this.numPlayers = numPlayers;
     }
 
+    public GoldCard popGoldDeck() {
+        return goldDeck.removeTop();
+    }
+
+    public ResourceCard popResourceDeck() {
+        return resourceDeck.removeTop();
+    }
+
+    public Deck<GoldCard> getGoldDeck() {
+        return goldDeck;
+    }
+
+    public Deck<ResourceCard> getResourceDeck() {
+        return resourceDeck;
+    }
+
+    public ArrayList<PlayableCard> getFaceUpCards() {
+        return faceUpCards;
+    }
+
+    public boolean areDecksEmpty() {
+        return resourceDeck.isEmpty() && goldDeck.isEmpty();
+    }
+
     public ArrayList<Player> getPlayers() {
         return players;
     }
@@ -47,12 +73,23 @@ public class Game {
         if (faceUpCards.size() == 4) throw new MaximumNumberOfFaceUpCardsReachedException();
         faceUpCards.add(newCard);
     }
-    public void removeFaceUpCard(int indexCard) {
-        faceUpCards.remove(indexCard);
+
+    public PlayableCard drawFaceUpCard(int indexCard) {
+        if (indexCard < 0 || indexCard >= faceUpCards.size()) throw new IndexOutOfBoundsException();
+        PlayableCard card = faceUpCards.remove(indexCard);
+
+        if (indexCard < 2 ) faceUpCards.add(popGoldDeck());
+        else faceUpCards.add(popResourceDeck());
+
+        return card;
     }
 
     public int getIndexActivePlayer() {
         return indexActivePlayer;
+    }
+
+    public void setIndexActivePlayer(int indexActivePlayer) {
+        this.indexActivePlayer = indexActivePlayer;
     }
 
     public void changeActivePlayer() {
@@ -66,7 +103,27 @@ public class Game {
     public void setEndGame() {
         isEndGame = true;
     }
-    public ArrayList<ObjectiveCard> getObjectiveCards() {
-        return objectiveCards;
+    public Deck<ObjectiveCard> getObjectiveDeck() {
+        return objectiveDeck;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
+
+    public void setGoldDeck(Deck<GoldCard> goldDeck) {
+        this.goldDeck = goldDeck;
+    }
+
+    public void setResourceDeck(Deck<ResourceCard> resourceDeck) {
+        this.resourceDeck = resourceDeck;
+    }
+
+    public void setObjectiveDeck(Deck<ObjectiveCard> objectiveDeck) {
+        this.objectiveDeck = objectiveDeck;
+    }
+
+    public void setFaceUpCards(ArrayList<PlayableCard> faceUpCards) {
+        this.faceUpCards = faceUpCards;
     }
 }

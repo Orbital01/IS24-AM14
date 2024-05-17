@@ -52,6 +52,12 @@ public class ResourceCondition implements Condition {
 
         return toFind.isEmpty();
     }
+    /**
+     * these methods are ONLY used to serialize the class
+     */
+    public ArrayList<CornerEnum.ResourceEnum> getListResource() {
+        return listResource;
+    }
 
     @Override
     public int numSatisfied(GameArea board) {

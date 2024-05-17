@@ -21,4 +21,5 @@ public class StarterCard extends Card {
     public ArrayList<CornerEnum.ResourceEnum> getResources() {
         return resources;
     }
+
 }

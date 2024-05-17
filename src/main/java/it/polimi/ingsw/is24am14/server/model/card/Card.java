@@ -1,5 +1,6 @@
 package it.polimi.ingsw.is24am14.server.model.card;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  * The card is abstract because it is a generic card, there are different types of cards in the game.
  */
 
-public abstract class Card {
+public abstract class Card implements Serializable {
 
     private final ArrayList<Corner> frontCorners;
     private final ArrayList<Corner> backCorners;
@@ -101,5 +102,15 @@ public abstract class Card {
         }
         return items;
     }
+
+    /**
+     * these methods are implemented in order to be able to serialize the card
+     * they should not be used in the model or controller
+     */
+    //getters
+    public ArrayList<Corner> getFrontCorners() {return frontCorners;}
+    public ArrayList<Corner> getBackCorners() {return backCorners;}
+    public String getFrontImage() {return frontImage;}
+    public String getBackImage() {return backImage;}
 
 }

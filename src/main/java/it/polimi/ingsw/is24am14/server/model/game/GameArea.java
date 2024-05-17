@@ -4,13 +4,14 @@ import it.polimi.ingsw.is24am14.server.model.card.*;
 
 import static it.polimi.ingsw.is24am14.server.model.card.Coordinates.newCoordinates;
 
+import java.io.Serializable;
 import java.util.*;
 
 
 /**
  * Represents the game area where cards will be placed during the game
  */
-public class GameArea {
+public class GameArea implements Serializable {
     private final HashMap<Coordinates, Card> board;
     /**
      * Constructs a new empty GameArea
