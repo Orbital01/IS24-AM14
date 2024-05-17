@@ -1,5 +1,7 @@
 package it.polimi.ingsw.is24am14.server.controller;
 
-public interface GameState {
-    public void execute();
+import java.io.Serializable;
+
+public interface GameState extends Serializable {
+    void execute();
 }

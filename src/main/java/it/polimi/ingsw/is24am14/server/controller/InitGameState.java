@@ -8,6 +8,7 @@ import it.polimi.ingsw.is24am14.server.utils.ObjectiveCardDeckCreator;
 import it.polimi.ingsw.is24am14.server.utils.ResourceCardDeckCreator;
 import it.polimi.ingsw.is24am14.server.utils.StarterCardDeckCreator;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.Random;
 
@@ -15,7 +16,7 @@ import java.util.Random;
  * Represents the initial game state.
  * This class is responsible for setting up the game, including shuffling and dealing cards, assigning player colors, and setting the first player.
  */
-public class InitGameState implements GameState{
+public class InitGameState implements GameState {
     private final GameContext context;
     private final List<TokenColour> TokenColours;
     private final Deck<StarterCard> starterCards;
@@ -99,7 +100,7 @@ public class InitGameState implements GameState{
         }
 
         //Shuffle objectiveDeck and assign two common objectives for all players
-        ArrayList<ObjectiveCard> commonObjectives = new ArrayList<ObjectiveCard>();
+        ArrayList<ObjectiveCard> commonObjectives = new ArrayList<>();
         for (int i = 0; i < 2; i++){
             commonObjectives.add(objectiveDeck.removeTop()); //POLYMORPHISM ERROR: to be fixed by Matteo by introducing Java generics types
         }
