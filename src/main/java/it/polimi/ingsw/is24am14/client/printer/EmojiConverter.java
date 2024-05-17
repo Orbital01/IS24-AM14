@@ -159,6 +159,42 @@ public class EmojiConverter {
         return resourceEmojis;
     }
 
+    public static ArrayList<Emoji> drawPlacementCondition(GoldCard goldCard){
+        Emoji resource;
+        int i = 0;
+        ArrayList<Emoji> resourceEmojis = new ArrayList<Emoji>();
+        for (i = 0; i < goldCard.getPlacementCondition().getListResource().size(); i++) {
+            switch (goldCard.getPlacementCondition().getListResource().get(i)) {
+                case CornerEnum.ResourceEnum.FUNGI:
+                    Emoji fungi = Emojis.MUSHROOM;
+                    resource = fungi;
+                    resourceEmojis.add(resource);
+                    break;
+                case CornerEnum.ResourceEnum.ANIMAL:
+                    Emoji animal = Emojis.WOLF;
+                    resource = animal;
+                    resourceEmojis.add(resource);
+                    break;
+                case CornerEnum.ResourceEnum.PLANT:
+                    Emoji plant = Emojis.SHAMROCK;
+                    resource = plant;
+                    resourceEmojis.add(resource);
+                    break;
+                case CornerEnum.ResourceEnum.INSECT:
+                    Emoji insect = Emojis.BUTTERFLY;
+                    resource = insect;
+                    resourceEmojis.add(resource);
+                    break;
+                default:
+                    //throw new IllegalStateEcornerception("Unecornerpected value: " + corners.get(i).getType());
+                    break;
+            }
+        }
+        return resourceEmojis;
+    }
+
+
+
     /*************************************** STARTER CARD **************************************/
     public static ArrayList<Emoji> drawCorners(StarterCard card) {
         Emoji corner;
@@ -195,6 +231,11 @@ public class EmojiConverter {
                     case CornerEnum.OthersEnum.EMPTY:
                         Emoji empty = Emojis.WHITE_MEDIUM_SQUARE;
                         corner = empty;
+                        cornerEmojis.add(corner);
+                        break;
+                    case null:
+                        Emoji nullEmoji = Emojis.WHITE_MEDIUM_SQUARE;
+                        corner = nullEmoji;
                         cornerEmojis.add(corner);
                         break;
                     default:
@@ -365,11 +406,36 @@ public class EmojiConverter {
         return cornerEmojis;
     }
 
-    public static ArrayList<Emoji> drawObjectCondition(ObjectCondition objectCondition) {
+    public static ArrayList<Emoji> drawCondition(Condition condition) {
+        if (condition.toString().equals("CornerCondition")){
+            ArrayList<Emoji> conditionEmojis = new ArrayList<Emoji>();
+            conditionEmojis.add(Emojis.TOP_ARROW);
+            return conditionEmojis;
+        }
+        else if (condition.toString().equals("ResourceCondition")){
+            return drawCondition((ResourceCondition) condition);
+        }
+        else if (condition.toString().equals("CardCondition")){
+            return drawCondition((CardCondition) condition);
+        }
+        else if (condition.toString().equals("ObjectCondition")){
+            return drawCondition((ObjectCondition) condition);
+        }
+        else {
+            return null;
+        }
+
+    }
+    public static ArrayList<Emoji> drawCondition(ObjectCondition objectCondition) {
         Emoji object;
         ArrayList<Emoji> objectEmojis = new ArrayList<Emoji>();
         for (int i = 0; i < objectCondition.getListObject().size(); i++) {
             switch (objectCondition.getListObject().get(i)) {
+                case null:
+                    Emoji nullEmoji = Emojis.WHITE_MEDIUM_SQUARE;
+                    object = nullEmoji;
+                    objectEmojis.add(object);
+                    break;
                 case CornerEnum.ObjectEnum.INKWELL:
                     Emoji inkwell = Emojis.BLACK_NIB;
                     object = inkwell;
@@ -393,7 +459,7 @@ public class EmojiConverter {
         return objectEmojis;
     }
 
-    public static ArrayList<Emoji> drawResourceCondition(ResourceCondition resourceCondition){
+    public static ArrayList<Emoji> drawCondition(ResourceCondition resourceCondition){
         Emoji resource;
         ArrayList<Emoji> resourceEmojis = new ArrayList<Emoji>();
         for (int i = 0; i < resourceCondition.getListResource().size(); i++) {
@@ -424,6 +490,12 @@ public class EmojiConverter {
             }
         }
         return resourceEmojis;
+    }
+
+    public static ArrayList<Emoji> drawCondition(CornerCondition objectCondition) {
+        ArrayList<Emoji> objectEmojis = new ArrayList<Emoji>();
+        objectEmojis.add(Emojis.TOP_ARROW);
+        return objectEmojis;
     }
 
     public static ArrayList<Emoji> drawCardCondition(CardCondition cardCondition){

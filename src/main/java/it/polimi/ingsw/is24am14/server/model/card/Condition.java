@@ -12,4 +12,5 @@ import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 public interface Condition {
     boolean isSatisfied(GameArea board);
     int numSatisfied(GameArea board);
+    String toString();
 }

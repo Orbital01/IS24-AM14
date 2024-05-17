@@ -2,6 +2,7 @@ package it.polimi.ingsw.is24am14.server.model.card;
 
 import it.polimi.ingsw.is24am14.client.printer.EmojiConverter;
 import net.fellbaum.jemoji.Emoji;
+import net.fellbaum.jemoji.Emojis;
 
 import java.util.ArrayList;
 
@@ -26,24 +27,64 @@ public class StarterCard extends Card {
     }
 
     public ArrayList<String> drawCard() {
-        ArrayList<String> cardString = new ArrayList<>();
+        if (this.getSide().equals(EnumSide.FRONT)) {
+            ArrayList<String> cardString = new ArrayList<>();
 
-        ArrayList<Emoji> corners;
-        corners = EmojiConverter.drawCorners(this);
-        ArrayList<Emoji> resources = EmojiConverter.drawResource(this);
+            ArrayList<Emoji> corners;
+            corners = EmojiConverter.drawCorners(this);
+            ArrayList<Emoji> resources = EmojiConverter.drawResource(this);
 
-        cardString.add("upper side");
-        cardString.add("spacing");
-        cardString.add("upper corners: " + corners.get(0).getEmoji() + corners.get(1).getEmoji());
-        cardString.add("resources: ");
-        for (Emoji resource : resources) {
-            cardString.add(""+resource.getEmoji());
+            //Each card has 7 rows
+            //First Row
+            cardString.add("|-----|------------|-----|");
+            //Second Row
+            cardString.add("| " + corners.get(0).getEmoji() + " |" + "             | " + corners.get(1).getEmoji() + " |");
+            //Third Row
+            cardString.add("|-----|		       |-----|");
+            //Fourth Row
+            cardString.add("|		");
+            cardString.set(3, cardString.get(3) + "		         |");
+            //Fifth Row
+            cardString.add("|-----|		       |-----|");
+            //Sixth Row
+            cardString.add("| " + corners.get(2).getEmoji() + " |" + "             | " + corners.get(3).getEmoji() + " |");
+            //Seventh Row
+            cardString.add("|-----|------------|-----|");
+
+            return cardString;
         }
-        cardString.add("bottom corners: " + corners.get(2).getEmoji() + corners.get(3).getEmoji());
-        cardString.add("spacing");
-        cardString.add("bottom side");
+        else{ //Card is played on the BACK side
+            ArrayList<String> cardString = new ArrayList<>();
 
-        return cardString;
+            ArrayList<Emoji> corners = new ArrayList<Emoji>();
+            for (int i = 0; i < this.getCorners().size(); i++){
+                corners.add(Emojis.WHITE_MEDIUM_SQUARE);
+            }
+            ArrayList<Emoji> resources = EmojiConverter.drawResource(this);
+
+            //Each card has 7 rows
+            //First Row
+            cardString.add("|-----|------------|-----|");
+            //Second Row
+            cardString.add("| " + corners.get(0).getEmoji() + " |" + "             | " + corners.get(1).getEmoji() + " |");
+            //Third Row
+            cardString.add("|-----|		       |-----|");
+            //Fourth Row
+            cardString.add("|		");
+            for (Emoji e : resources) {
+                cardString.set(3, cardString.get(3) + e.getEmoji());
+            }
+            cardString.set(3, cardString.get(3) + "		         |");
+            //Fifth Row
+            cardString.add("|-----|		       |-----|");
+            //Sixth Row
+            cardString.add("| " + corners.get(2).getEmoji() + " |" + "             | " + corners.get(3).getEmoji() + " |");
+            //Seventh Row
+            cardString.add("|-----|------------|-----|");
+
+            return cardString;
+        }
+
     }
 
 }
