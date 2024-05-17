@@ -49,14 +49,16 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
     @Override
     public void flipCard(Object o, int cardIndex) throws Exception {
-        Lobby lobby = this.lobbyList.getPlayersLobby(((ClientConnection) o).getUsername());
+        ClientConnection clientConnection = (ClientConnection) o;
+        Lobby lobby = this.lobbyList.getPlayersLobby(clientConnection.getUsername());
         Game game = lobby.getGameContext().getGame();
         game.getPlayers().get(game.getIndexActivePlayer()).getPlayerHand().get(cardIndex).flipSide();
         for (PlayableCard c : game.getPlayers().get(game.getIndexActivePlayer()).getPlayerHand())
         {
             System.out.println(c.getSide());
         }
-        game.getPlayers().get(game.getIndexActivePlayer()).getConnection().askForMove(game.getPlayers().get(game.getIndexActivePlayer()));
+        //game.getPlayers().get(game.getIndexActivePlayer()).getConnection().askForMove(game.getPlayers().get(game.getIndexActivePlayer()));
+        clientConnection.makeMove(game.getPlayers().get(game.getIndexActivePlayer()));
     }
 
     @Override
