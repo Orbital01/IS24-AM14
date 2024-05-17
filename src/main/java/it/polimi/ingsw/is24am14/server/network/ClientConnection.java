@@ -27,4 +27,6 @@ public interface ClientConnection extends Remote {
     void pickChoice(Deck<GoldCard> goldCardDeck, Deck<ResourceCard> resourceCardDeck, ArrayList<PlayableCard> faceUpCards) throws Exception;
 
     void printScore(int score) throws Exception;
+
+    void printWinner(String winner) throws Exception;
 }

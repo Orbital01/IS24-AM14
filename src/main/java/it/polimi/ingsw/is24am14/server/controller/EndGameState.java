@@ -1,18 +1,16 @@
 package it.polimi.ingsw.is24am14.server.controller;
 
 import it.polimi.ingsw.is24am14.server.model.card.*;
-import it.polimi.ingsw.is24am14.server.model.game.Game;
 import it.polimi.ingsw.is24am14.server.model.player.*;
 
 public class EndGameState implements GameState {
 
-    private GameContext context;
+    private final GameContext context;
 
     public EndGameState(GameContext context) {
         this.context = context;
     }
 
-    /*
     public void execute() {
         //controlla se gli obbiettivi del giocatore sono stati raggiunti
         for (Player player : context.getGame().getPlayers()) {
@@ -36,23 +34,26 @@ public class EndGameState implements GameState {
 
         //il context avrà un winner e quindi dovrò settarlo
         //cerco il giocatore con il punteggio maggiore
-        Player winner = context.getGame().getPlayers().get(0);
+        Player winner = context.getGame().getPlayers().getFirst();
         for (Player player : context.getGame().getPlayers()) {
             if (player.getScore() > winner.getScore()) {
                 winner = player;
             }
         }
         //setto il vincitore
-        context.setWinner(winner);
+        try {
+            for (Player player : context.getGame().getPlayers()) {
+                player.getConnection().sendWinner(winner.getPlayerNickname());
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
 
         //cancello il gioco perché il è finito, vediamo come si comporta il context
 
         //disconnetto prima i giocatori
 
 
-    }
-    */
-    public void execute() {
-        System.out.println("Per favore fixare");
     }
 }

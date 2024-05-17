@@ -21,4 +21,5 @@ public interface ClientHandler extends Remote {
     void askForMove(Player player) throws Exception;
     void askPickChoice(Deck<GoldCard> goldCardDeck, Deck<ResourceCard> resourceCardDeck, ArrayList<PlayableCard> faceUpCards) throws Exception;
     void sendScore(int score) throws Exception;
+    void sendWinner(String winner) throws Exception;
 }

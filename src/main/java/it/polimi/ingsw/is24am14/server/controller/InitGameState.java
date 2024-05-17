@@ -8,7 +8,7 @@ import it.polimi.ingsw.is24am14.server.utils.ObjectiveCardDeckCreator;
 import it.polimi.ingsw.is24am14.server.utils.ResourceCardDeckCreator;
 import it.polimi.ingsw.is24am14.server.utils.StarterCardDeckCreator;
 
-import java.io.Serializable;
+
 import java.util.*;
 import java.util.Random;
 
@@ -23,7 +23,6 @@ public class InitGameState implements GameState {
     private final Deck<GoldCard> goldDeck;
     private final Deck<ResourceCard> resourceDeck;
     private final Deck<ObjectiveCard> objectiveDeck;
-    private final ArrayList<PlayableCard> faceUpCards;
 
     /**
      * Constructor for the InitGameState class.
@@ -42,13 +41,13 @@ public class InitGameState implements GameState {
         this.resourceDeck = new ResourceCardDeckCreator().createResourceCardDeck();
         this.objectiveDeck = new ObjectiveCardDeckCreator().createObjectiveCardDeck();
 
-        this.faceUpCards = new ArrayList<>();
+        ArrayList<PlayableCard> faceUpCards = new ArrayList<>();
 
         //Set all decks to Game class
         context.getGame().setGoldDeck(this.goldDeck);
         context.getGame().setResourceDeck(this.resourceDeck);
         context.getGame().setObjectiveDeck(this.objectiveDeck);
-        context.getGame().setFaceUpCards(this.faceUpCards);
+        context.getGame().setFaceUpCards(faceUpCards);
 
     }
 
@@ -68,14 +67,14 @@ public class InitGameState implements GameState {
             try {
                 context.getGame().addFaceUpCard(resourceDeck.removeTop());
             } catch (MaximumNumberOfFaceUpCardsReachedException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }
         for (int i = 0; i < 2; i++){
             try {
                 context.getGame().addFaceUpCard(goldDeck.removeTop());
             } catch (MaximumNumberOfFaceUpCardsReachedException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }
 
@@ -83,7 +82,7 @@ public class InitGameState implements GameState {
         for (Player player : context.getGame().getPlayers()){
             //Initialize player's board, hand and starter card
             player.setPlayerBoard(new GameArea());
-            player.setPlayerHand(new ArrayList<PlayableCard>());
+            player.setPlayerHand(new ArrayList<>());
             player.setStarterCard(starterCards.removeTop()); //POLYMORPHISM ERROR: to be fixed by Matteo by introducing Java generics types
             player.getPlayerBoard().placeStarterCard(player.getStarterCard());
             //Let each player choose his colour

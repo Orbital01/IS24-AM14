@@ -8,6 +8,7 @@ module it.polimi.ingsw.is24am14 {
     requires java.rmi;
     requires com.google.gson;
     requires net.fellbaum.jemoji;
+    requires java.naming;
 
     opens it.polimi.ingsw.is24am14 to javafx.fxml;
     exports it.polimi.ingsw.is24am14.server;

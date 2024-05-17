@@ -4,14 +4,12 @@ import it.polimi.ingsw.is24am14.server.controller.Lobby;
 import it.polimi.ingsw.is24am14.server.controller.LobbyList;
 import it.polimi.ingsw.is24am14.server.model.card.*;
 import it.polimi.ingsw.is24am14.server.model.game.Game;
-import it.polimi.ingsw.is24am14.server.model.player.Player;
 
+import javax.naming.NameAlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class RMIServer extends UnicastRemoteObject implements RMIServerInterface {
     private final ClientHandlerList clients;
@@ -35,6 +33,8 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
     @Override
     public void acceptConnection(ClientConnection client) throws Exception {
+        if (this.lobbyList.getPlayersLobby(client.getUsername()) != null) throw new NameAlreadyBoundException("Username not available");
+
         RMIClientHandler clientHandler = new RMIClientHandler(client);
         this.clients.add(clientHandler);
         System.out.println("RMI client connected");

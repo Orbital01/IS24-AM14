@@ -84,4 +84,9 @@ public class RMIClientHandler extends UnicastRemoteObject implements ClientHandl
     public void sendScore(int score) throws Exception {
         this.client.printScore(score);
     }
+
+    @Override
+    public void sendWinner(String winner) throws Exception {
+        this.client.printWinner(winner);
+    }
 }
