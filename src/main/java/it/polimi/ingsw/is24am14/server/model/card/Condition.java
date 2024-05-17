@@ -1,6 +1,9 @@
 package it.polimi.ingsw.is24am14.server.model.card;
 
 import it.polimi.ingsw.is24am14.server.model.game.GameArea;
+
+import java.io.Serializable;
+
 /**
  *  The Condition interface serves as an abstraction for all conditions within the game.
  *  Conditions represent various states or criteria that affect gameplay, progression, or outcomes.
@@ -9,7 +12,7 @@ import it.polimi.ingsw.is24am14.server.model.game.GameArea;
  *  Implementing classes should provide methods to check if a particular condition is met,
  *  as well as any additional functionality necessary for managing or updating the condition state.
  */
-public interface Condition {
+public interface Condition extends Serializable {
     boolean isSatisfied(GameArea board);
     int numSatisfied(GameArea board);
 }

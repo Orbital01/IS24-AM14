@@ -126,7 +126,7 @@ public class StarterCardDeckCreator {
         content.add(new StarterCard(empEmpHidHid, funAniPlaIns, plaAniFun, "src/main/resources/images/cards/starter_cards/starter_fronts/page_86.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_86.png"));
 
 
-        return starterCardDeck;
+        return new Deck<>(content);
     }
 
 }

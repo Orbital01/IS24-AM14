@@ -9,20 +9,17 @@ public class ServerLauncher {
     //questa classe è la lobby dell'esempio di @SteBog, solo che lobby è già presente nel package controller
 
     public static void main(String[] args) {
-        ArrayList<ServerConnection> servers = new ArrayList<>();
+        ClientHandlerList servers = new ClientHandlerList();
 
         try {
             LobbyList lobbyList = new LobbyList(servers);
 
             RMIServer RMIserver = new RMIServer(servers, lobbyList);
-            TCPServer TCPserver = new TCPServer(servers);
 
             RMIserver.startServer();
-            TCPserver.startServer();
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-
 }

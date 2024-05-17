@@ -3,13 +3,16 @@ package it.polimi.ingsw.is24am14.server.controller;
 import it.polimi.ingsw.is24am14.server.model.card.*;
 import it.polimi.ingsw.is24am14.server.model.game.Game;
 
-public class GameContext {
+import java.io.Serializable;
+
+public class GameContext implements Serializable {
     Game game;
     GameState gameState;
     PlayableCard lastPlayedCard;
 
 
     public GameContext(Game game) {
+        this.game = game;
     }
 
     public void setGameState(GameState gameState) {

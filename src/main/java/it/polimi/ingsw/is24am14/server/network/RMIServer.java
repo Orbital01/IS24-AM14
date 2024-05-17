@@ -1,122 +1,25 @@
 package it.polimi.ingsw.is24am14.server.network;
 
-import it.polimi.ingsw.is24am14.client.ClientConnection;
-import it.polimi.ingsw.is24am14.server.controller.GameContext;
 import it.polimi.ingsw.is24am14.server.controller.Lobby;
 import it.polimi.ingsw.is24am14.server.controller.LobbyList;
-import it.polimi.ingsw.is24am14.server.controller.PlayState;
 import it.polimi.ingsw.is24am14.server.model.card.*;
+import it.polimi.ingsw.is24am14.server.model.game.Game;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
-import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Objects;
 
-public class RMIServer extends UnicastRemoteObject implements RMIServerConnection {
-    private GameContext context;
-    private ClientConnection client;
-    private final ArrayList<ServerConnection> serverList;
-    private final LobbyList lobbies;
+public class RMIServer extends UnicastRemoteObject implements RMIServerInterface {
+    private final ClientHandlerList clients;
+    private final LobbyList lobbyList;
 
-    public RMIServer(ArrayList<ServerConnection> servers, LobbyList lobbies) throws RemoteException {
-        this.serverList = servers;
-        this.lobbies = lobbies;
-    }
-
-    public void setContext(GameContext context) {
-        this.context = context;
-    }
-
-    @Override
-    public void askForMove() throws Exception {
-        client.makeMove();
-    }
-
-    @Override
-    public void flipCard(int cardIndex) throws Exception {
-        ArrayList<PlayableCard> playerHand = context.getGame().getPlayers().get(context.getGame().getIndexActivePlayer()).getPlayerHand();
-        if (cardIndex > 0 && cardIndex < playerHand.size()) {
-            playerHand.get(cardIndex).flipSide();
-        }
-        client.makeMove();
-    }
-
-    @Override
-    public void assignColor(List<TokenColour> colors, Player player) throws Exception {
-        client.chooseColor(colors, player);
-    }
-
-    public void playCard(PlayableCard playedCard, Card alreadyPlacedCard, int cornerIndex) throws Exception {
-        boolean success = PlayState.playCard(playedCard, alreadyPlacedCard, cornerIndex, context.getGame().getPlayers().get(context.getGame().getIndexActivePlayer()));
-        if (!success) {
-            client.makeMove();
-        }
-        context.setLastPlayedCard(playedCard);
-    }
-
-    public void chooseSecretObjective(Player player, Deck<ObjectiveCard> objectiveDeck) throws Exception {
-        ArrayList<ObjectiveCard> chooseSecret = new ArrayList<>();
-        for (int i = 0; i < 2; i++){
-            chooseSecret.add(objectiveDeck.removeTop()); //POLYMORPHISM ERROR: to be fixed by Matteo by introducing Java generics types
-        }
-        client.pickObjective(chooseSecret, player);
-    }
-
-    @Override
-    public void drawGoldCard() throws Exception {
-        Player currentPlayer = context.getGame().getPlayers().get(context.getGame().getIndexActivePlayer());
-        currentPlayer.addCardToHand(context.getGame().popGoldDeck());
-        if (context.getGame().areDecksEmpty()) context.getGame().setEndGame();
-    }
-
-    //  Non viene gestito il caso in cui se il gold deck è vuoto pesco dal resource
-    @Override
-    public void drawResourceCard() throws Exception {
-        Player currentPlayer = context.getGame().getPlayers().get(context.getGame().getIndexActivePlayer());
-        currentPlayer.addCardToHand(context.getGame().popResourceDeck());
-        if (context.getGame().areDecksEmpty()) context.getGame().setEndGame();
-    }
-
-    //  Non viene gestito il caso in cui se il resource deck è vuoto pesco dal gold
-    @Override
-    public void drawFromFaceUp(int faceUpIndex) throws Exception {
-        Player currentPlayer = context.getGame().getPlayers().get(context.getGame().getIndexActivePlayer());
-        currentPlayer.addCardToHand(context.getGame().removeFaceUpCard(faceUpIndex));
-        if (context.getGame().areDecksEmpty()) context.getGame().setEndGame();
-    }
-
-
-    @Override
-    public void askStartingOption() throws Exception {
-        this.client.joinLobby(this.lobbies);
-    }
-
-    @Override
-    public void joinExistingLobby(Lobby lobby) throws Exception {
-        lobby.joinLobby(this);
-    }
-
-    @Override
-    public void joinNewLobby(int numPlayers) throws Exception {
-        Lobby newLobby = new Lobby(numPlayers, new ArrayList<>());
-        this.lobbies.createLobby(newLobby);
-        System.out.println("Nuova lobby creata con successo");
-        newLobby.joinLobby(this);
-        System.out.println("Il gioco inizierà quando ci saranno " + numPlayers + " giocatori");
-    }
-
-    @Override
-    public ArrayList<PlayableCard> getPlayerHand() throws Exception {
-        return new ArrayList<>(context.getGame().getPlayers().get(context.getGame().getIndexActivePlayer()).getPlayerHand());
-    }
-
-    public HashMap<Coordinates, Card> getGameBoard() throws Exception {
-        return new HashMap<>(context.getGame().getPlayers().get(context.getGame().getIndexActivePlayer()).getPlayerBoard().getBoard());
+    protected RMIServer(ClientHandlerList clients, LobbyList lobbyList) throws RemoteException {
+        this.clients = clients;
+        this.lobbyList = lobbyList;
     }
 
     public void startServer() throws Exception {
@@ -125,20 +28,92 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerConnectio
             registry.bind("RMIServer", this);
         }
         catch (Exception e) {
-            e.printStackTrace();
+            throw new RemoteException(e.getMessage());
         }
         System.out.println("RMI server started");
     }
 
+    @Override
     public void acceptConnection(ClientConnection client) throws Exception {
-        this.client = client;
+        RMIClientHandler clientHandler = new RMIClientHandler(client);
+        this.clients.add(clientHandler);
         System.out.println("RMI client connected");
-        serverList.add(this);
-        this.askStartingOption();
+        clientHandler.askStartingOption(this.lobbyList);
     }
 
-    public String getClientNickname() throws RemoteException{
-        return null;
-        //TODO: implement this method
+    @Override
+    public void assignSecretObjective(Object o, int playerIndex, ObjectiveCard objectiveCard) throws Exception {
+        Lobby lobby = this.lobbyList.getPlayersLobby(((ClientConnection) o).getUsername());
+        lobby.getGameContext().getGame().getPlayers().get(playerIndex).setObjectiveCard(objectiveCard);
+    }
+
+    @Override
+    public void flipCard(Object o, int cardIndex) throws Exception {
+        Lobby lobby = this.lobbyList.getPlayersLobby(((ClientConnection) o).getUsername());
+        Game game = lobby.getGameContext().getGame();
+        game.getPlayers().get(game.getIndexActivePlayer()).getPlayerHand().get(cardIndex).flipSide();
+        for (PlayableCard c : game.getPlayers().get(game.getIndexActivePlayer()).getPlayerHand())
+        {
+            System.out.println(c.getSide());
+        }
+        game.getPlayers().get(game.getIndexActivePlayer()).getConnection().askForMove(game.getPlayers().get(game.getIndexActivePlayer()));
+    }
+
+    @Override
+    public void putCard(Object o, int indexToPlay, Coordinates alreadyPlayedCoordinates, int cornerIndex) throws Exception {
+        //  get the objects I need
+        Lobby lobby = this.lobbyList.getPlayersLobby(((ClientConnection) o).getUsername());
+        Game game = lobby.getGameContext().getGame();
+        Card alreadyPlayedCard = game.getPlayers().get(game.getIndexActivePlayer()).getPlayerBoard().getCard(alreadyPlayedCoordinates);
+        PlayableCard cardToPlay = game.getPlayers().get(game.getIndexActivePlayer()).getPlayerHand().get(indexToPlay);
+
+        //  put the card on the board
+        game.getPlayers().get(game.getIndexActivePlayer()).placeCard(alreadyPlayedCard, cardToPlay, cornerIndex);
+
+        //  remove the card from the player's hand
+        game.getPlayers().get(game.getIndexActivePlayer()).removeCardFromHand(indexToPlay);
+
+        System.out.println("______");
+        for (Card card : game.getPlayers().get(game.getIndexActivePlayer()).getPlayerBoard().getBoard().values())
+        {
+            System.out.println(card.getFrontImage());
+        }
+        System.out.println("______");
+    }
+
+
+    @Override
+    public void joinExistingLobby(Object o, Lobby lobby) throws Exception {
+        ClientHandler clientHandler = this.clients.getClientHandler(((ClientConnection) o).getUsername());
+        this.lobbyList.getLobbyByHost(lobby.getHost()).joinLobby(clientHandler);
+    }
+
+    @Override
+    public void joinNewLobby(Object o, int numPlayers) throws Exception {
+        ClientHandler client = this.clients.getClientHandler(((ClientConnection) o).getUsername());
+        Lobby lobby = new Lobby(client.getClientUsername(), numPlayers);
+        this.lobbyList.createLobby(lobby);
+        lobby.joinLobby(client);
+    }
+
+    @Override
+    public void drawGoldDeck(Object o) throws Exception {
+        Lobby lobby = this.lobbyList.getPlayersLobby(((ClientConnection) o).getUsername());
+        Game game = lobby.getGameContext().getGame();
+        game.getPlayers().get(game.getIndexActivePlayer()).addCardToHand(game.popGoldDeck());
+    }
+
+    @Override
+    public void drawResourceDeck(Object o) throws Exception {
+        Lobby lobby = this.lobbyList.getPlayersLobby(((ClientConnection) o).getUsername());
+        Game game = lobby.getGameContext().getGame();
+        game.getPlayers().get(game.getIndexActivePlayer()).addCardToHand(game.popResourceDeck());
+    }
+
+    @Override
+    public void drawFaceUpCard(Object o, int cardIndex) throws Exception {
+        Lobby lobby = this.lobbyList.getPlayersLobby(((ClientConnection) o).getUsername());
+        Game game = lobby.getGameContext().getGame();
+        game.getPlayers().get(game.getIndexActivePlayer()).addCardToHand(game.drawFaceUpCard(cardIndex));
     }
 }

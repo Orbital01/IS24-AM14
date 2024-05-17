@@ -40,7 +40,7 @@ public class GoldCardDeckCreator {
         twoFungiOneAnimal.addClause(CornerEnum.ResourceEnum.FUNGI);
         twoFungiOneAnimal.addClause(CornerEnum.ResourceEnum.ANIMAL);
         content.add(new GoldCard(1, quillCondition, CornerEnum.ResourceEnum.FUNGI, twoFungiOneAnimal, hidEmpEmpQui, "src/main/resources/images/cards/gold_cards/red_fronts/page_41.png", "src/main/resources/images/cards/gold_cards/red_backs/page_41.png"));
-        
+
 
         ArrayList<Corner> empInkHidEmp = new ArrayList<>();
         empInkHidEmp.add(new Corner(CornerEnum.EMPTY));
@@ -351,10 +351,10 @@ public class GoldCardDeckCreator {
         content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.ANIMAL, threeAnimal, empHidManHid, "src/main/resources/images/cards/gold_cards/blue_fronts/page_67.png", "src/main/resources/images/cards/gold_cards/blue_backs/page_67.png"));
 
         ArrayList<Corner> empInkHidHid = new ArrayList<>();
-        empEmpEmpHid.add(new Corner(CornerEnum.EMPTY));
-        empEmpEmpHid.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
-        empEmpEmpHid.add(new Corner(CornerEnum.HIDDEN));
-        empEmpEmpHid.add(new Corner(CornerEnum.HIDDEN));
+        empInkHidHid.add(new Corner(CornerEnum.EMPTY));
+        empInkHidHid.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
+        empInkHidHid.add(new Corner(CornerEnum.HIDDEN));
+        empInkHidHid.add(new Corner(CornerEnum.HIDDEN));
         content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.ANIMAL, threeAnimal, empInkHidHid, "src/main/resources/images/cards/gold_cards/blue_fronts/page_68.png", "src/main/resources/images/cards/gold_cards/blue_backs/page_68.png"));
 
         ArrayList<Corner> hidEmpHidQui = new ArrayList<>();
@@ -404,7 +404,7 @@ public class GoldCardDeckCreator {
         ArrayList<Corner> empHidManEmp = new ArrayList<>();
         empHidManEmp.add(new Corner(CornerEnum.EMPTY));
         empHidManEmp.add(new Corner(CornerEnum.ObjectEnum.QUILL));
-        empHidEmpEmp.add(new Corner(CornerEnum.HIDDEN));
+        empHidManEmp.add(new Corner(CornerEnum.HIDDEN));
         empHidManEmp.add(new Corner(CornerEnum.EMPTY));
         content.add(new GoldCard(1, manuscriptCondition, CornerEnum.ResourceEnum.INSECT, twoInsectOneAnimal, empHidManEmp, "src/main/resources/images/cards/gold_cards/purple_fronts/page_72.png", "src/main/resources/images/cards/gold_cards/purple_backs/page_72.png"));
 
@@ -497,7 +497,6 @@ public class GoldCardDeckCreator {
 
         content.add(new GoldCard(5, noCondition, CornerEnum.ResourceEnum.INSECT, fiveInsect, empEmpHidHid, "src/main/resources/images/cards/gold_cards/purple_fronts/page_80.png", "src/main/resources/images/cards/gold_cards/purple_backs/page_80.png"));
 
-
-        return goldCardDeck;
+        return new Deck<>(content);
     }
 }

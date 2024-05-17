@@ -1,12 +1,13 @@
 package it.polimi.ingsw.is24am14.server.model.card;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
 /**
  * This class represents the deck of cards used in the game. It contains a list of cards and methods to manipulate them.
  */
-public class Deck<T extends Card> {
+public class Deck<T extends Card> implements Serializable {
     private ArrayList<T> content;
 
 

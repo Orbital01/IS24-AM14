@@ -13,7 +13,6 @@ public class ObjectiveCardDeckCreator {
     public Deck<ObjectiveCard> createObjectiveCardDeck() {
 
         ArrayList<ObjectiveCard> content = new ArrayList<>();
-        Deck<ObjectiveCard> objectiveCardDeck = new Deck<>(content);
 
 
         Coordinates topLeft = new Coordinates(1, -1);
@@ -134,9 +133,7 @@ public class ObjectiveCardDeckCreator {
         twoQui.addClause(CornerEnum.ObjectEnum.QUILL);
         content.add(new ObjectiveCard(twoQui,"src/main/resources/images/cards/objective_cards/red_fronts/page_102.png", "src/main/resources/images/cards/resource_cards/red_backs/page_102.png", 2));
 
-
-
-        return objectiveCardDeck;
+        return new Deck<>(content);
 
     }
 
