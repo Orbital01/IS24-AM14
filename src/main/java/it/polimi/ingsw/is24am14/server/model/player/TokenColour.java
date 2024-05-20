@@ -1,5 +1,7 @@
 package it.polimi.ingsw.is24am14.server.model.player;
 
-public enum TokenColour {
+import java.io.Serializable;
+
+public enum TokenColour implements Serializable {
     BLACK, RED, YELLOW, GREEN, BLUE
 }

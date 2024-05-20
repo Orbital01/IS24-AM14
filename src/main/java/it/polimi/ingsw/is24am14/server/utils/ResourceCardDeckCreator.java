@@ -439,6 +439,6 @@ public class ResourceCardDeckCreator {
         content.add(new ResourceCard(1, CornerEnum.ResourceEnum.INSECT, hidInsEmpEmp, backCorners, "src/main/resources/images/cards/resource_cards/purple_fronts/page_40.png", "src/main/resources/images/cards/resource_cards/purple_backs/page_40.png"));
 
 
-        return resourceCardDeck;
+        return new Deck<>(content);
     }
 }

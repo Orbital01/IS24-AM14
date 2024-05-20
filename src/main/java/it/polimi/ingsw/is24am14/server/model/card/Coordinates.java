@@ -1,8 +1,11 @@
 package it.polimi.ingsw.is24am14.server.model.card;
+
+import java.io.Serializable;
+
 /**
  * Represents the Coordinates (row and column index) of the position of a Card on the GameArea
  */
-public class Coordinates {
+public class Coordinates implements Serializable, Comparable<Coordinates> {
     private int row;
     private int column;
     
@@ -80,5 +83,19 @@ public class Coordinates {
         int addedRow = addedCoordinate.getRow();
         int addedColumn = addedCoordinate.getColumn();
         return new Coordinates(baseRow+addedRow, baseColumn+addedColumn);
+    }
+
+    @Override
+    public int compareTo(Coordinates o) {
+        if (this.row == o.row && this.column == o.column) {
+            return 0;
+        } else if (distance(this) > distance(o)) {
+            return 1;
+        }
+        return -1;
+    }
+
+    private double distance(Coordinates coordinates) {
+        return Math.sqrt(this.row * this.row + this.column * this.column);
     }
 }

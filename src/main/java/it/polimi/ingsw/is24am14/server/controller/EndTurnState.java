@@ -9,8 +9,8 @@ import it.polimi.ingsw.is24am14.server.controller.PlayState;
 
 public class EndTurnState implements GameState{
     private Game game;
-    private final int playerIndex = game.getIndexActivePlayer();
-    private final Player currentPlayer = game.getPlayers().get(playerIndex);
+    private final int playerIndex;
+    private final Player currentPlayer;
 
     private final PlayableCard lastPlayedCard;
 
@@ -20,12 +20,20 @@ public class EndTurnState implements GameState{
     public EndTurnState(GameContext context){
         this.lastPlayedCard = context.lastPlayedCard;
         this.game = context.game;
+        this.playerIndex = game.getIndexActivePlayer();
+        this.currentPlayer = game.getPlayers().get(playerIndex);
     }
 
 
     @Override
     public void execute(){
         updateScore(lastPlayedCard, currentPlayer);
+        try {
+            this.currentPlayer.getConnection().sendScore(currentPlayer.getScore());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        this.game.changeActivePlayer();
     }
 
 

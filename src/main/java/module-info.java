@@ -8,6 +8,7 @@ module it.polimi.ingsw.is24am14 {
     requires java.rmi;
     requires com.google.gson;
     requires net.fellbaum.jemoji;
+    requires java.naming;
 
     opens it.polimi.ingsw.is24am14 to javafx.fxml;
     exports it.polimi.ingsw.is24am14.server;
@@ -18,5 +19,8 @@ module it.polimi.ingsw.is24am14 {
     exports it.polimi.ingsw.is24am14.server.model.card to com.google.gson;
 
     exports it.polimi.ingsw.is24am14.server.network to java.rmi;
-    exports it.polimi.ingsw.is24am14.client to java.rmi;
+    exports it.polimi.ingsw.is24am14.server.model.player to java.rmi;
+    exports it.polimi.ingsw.is24am14.server.model.game to java.rmi;
+    exports it.polimi.ingsw.is24am14.server.model.game.exceptions to java.rmi;
+    exports it.polimi.ingsw.is24am14.server.controller to java.rmi;
 }

@@ -3,15 +3,16 @@ package it.polimi.ingsw.is24am14.server.model.player;
 
 import it.polimi.ingsw.is24am14.server.model.card.*;
 import it.polimi.ingsw.is24am14.server.model.game.*;
-import it.polimi.ingsw.is24am14.server.network.ServerConnection;
+import it.polimi.ingsw.is24am14.server.network.ClientHandler;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Represents a player in the game.
  * Each player has a nickname, a score, a token color, a starter card, a hand of cards, a secret objective card, and a game area.
  */
-public class Player {
+public class Player implements Serializable {
     private String nickname;
     private boolean isFirstPlayer;
     private int points;
@@ -21,7 +22,7 @@ public class Player {
     private ObjectiveCard secretObjective;
     private GameArea playerBoard;
 
-    private ServerConnection connection;
+    private ClientHandler connection;
 
     //Constructor
     /**
@@ -31,7 +32,7 @@ public class Player {
      *
      * @param nickname The nickname of the player.
      */
-    public Player(String nickname, ServerConnection connection) {
+    public Player(String nickname, ClientHandler connection) {
         this.nickname = nickname;
         this.points = 0;
         this.isFirstPlayer = false;
@@ -185,7 +186,7 @@ public class Player {
     }
 
     /**
-     * Retrieves the player's secret objective card.
+     * Sets the player's secret objective card.
      */
     public void setSecretObjective(ObjectiveCard secretObjective) {
         this.secretObjective = secretObjective;
@@ -232,9 +233,5 @@ public class Player {
      *
      * @return The connection of the player.
      */
-    public ServerConnection getConnection() {return this.connection;}
-
-    public void addToHand(PlayableCard card) {
-        this.playerHand.addLast(card);
-    }
+    public ClientHandler getConnection() {return this.connection;}
 }

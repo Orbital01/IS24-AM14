@@ -1,5 +1,7 @@
 package it.polimi.ingsw.is24am14.server.model.card;
 
+import java.io.Serializable;
+
 /**
  * This class represents a corner of a card.
  * Each corner has a type and can be overlapped by another card.
@@ -7,7 +9,7 @@ package it.polimi.ingsw.is24am14.server.model.card;
  * The overlapping card is represented by a Card object.
  */
 
-public class Corner {
+public class Corner implements Serializable {
     private CornerEnum type;
     private boolean isOverlapped;
 

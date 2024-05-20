@@ -5,9 +5,10 @@ import it.polimi.ingsw.is24am14.server.model.game.exceptions.MaximumNumberOfPlay
 import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.model.card.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Game {
+public class Game implements Serializable {
     public Game(int numPlayers) {
         this.players = new ArrayList<>();
         this.numPlayers = numPlayers;
@@ -47,6 +48,18 @@ public class Game {
         return resourceDeck.removeTop();
     }
 
+    public Deck<GoldCard> getGoldDeck() {
+        return goldDeck;
+    }
+
+    public Deck<ResourceCard> getResourceDeck() {
+        return resourceDeck;
+    }
+
+    public ArrayList<PlayableCard> getFaceUpCards() {
+        return faceUpCards;
+    }
+
     public boolean areDecksEmpty() {
         return resourceDeck.isEmpty() && goldDeck.isEmpty();
     }
@@ -60,12 +73,23 @@ public class Game {
         if (faceUpCards.size() == 4) throw new MaximumNumberOfFaceUpCardsReachedException();
         faceUpCards.add(newCard);
     }
-    public PlayableCard removeFaceUpCard(int indexCard) {
-        return faceUpCards.remove(indexCard);
+
+    public PlayableCard drawFaceUpCard(int indexCard) {
+        if (indexCard < 0 || indexCard >= faceUpCards.size()) throw new IndexOutOfBoundsException();
+        PlayableCard card = faceUpCards.remove(indexCard);
+
+        if (indexCard < 2 ) faceUpCards.add(popGoldDeck());
+        else faceUpCards.add(popResourceDeck());
+
+        return card;
     }
 
     public int getIndexActivePlayer() {
         return indexActivePlayer;
+    }
+
+    public void setIndexActivePlayer(int indexActivePlayer) {
+        this.indexActivePlayer = indexActivePlayer;
     }
 
     public void changeActivePlayer() {
