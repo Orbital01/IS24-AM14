@@ -1,44 +1,75 @@
 package it.polimi.ingsw.is24am14.client.printer;
 
 import it.polimi.ingsw.is24am14.server.model.card.Card;
+import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
+import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RenderBoard {
-
-    private final ActualBoard actualBoard;
-
-    public RenderBoard(ActualBoard actualBoard) {
-        this.actualBoard = actualBoard;
+    //prendo la hasmap nel costruttore
+    GameArea board;
+    public RenderBoard(GameArea board) {
+        this.board = board;
     }
 
-    private ArrayList<String> renderRow(int row) {
-        ArrayList<String> rowString = new ArrayList<>();
+    private int boardMaxColumn() {
+        int maxColumn;
+        maxColumn = board.getBoard().keySet().stream().mapToInt(Coordinates::getColumn).max().orElse(0);
+        return maxColumn;
+    }
 
-        //inizializzo la riga della board con tot righe vuote in base alla dimensione della carta
-        ArrayList<String> testCard = actualBoard.getActualBoard()[row][0].drawCard();
-        for (int i = 0; i < testCard.size()+1; i++) {
-            rowString.add("");
+    private int boardMinColumn() {
+        int minColumn;
+        minColumn = board.getBoard().keySet().stream().mapToInt(Coordinates::getColumn).min().orElse(0);
+        return minColumn;
+    }
+
+    private int boardMaxRow() {
+        int maxRow;
+        maxRow = board.getBoard().keySet().stream().mapToInt(Coordinates::getRow).max().orElse(0);
+        return maxRow;
+    }
+
+    private int boardMinRow() {
+        int minRow;
+        minRow = board.getBoard().keySet().stream().mapToInt(Coordinates::getRow).min().orElse(0);
+        return minRow;
+    }
+
+    //creo un metodo per stampare la singola riga della hashmap
+    private ArrayList<String> printRow(int rowNumber) {
+        ArrayList<String> row = new ArrayList<>();
+        //inizializzo le righe della riga da stampare
+        for(int i=0; i<=7 ;i++){
+            row.add(" ");
         }
-
-        for (int i = 0; i < actualBoard.getActualBoard()[row].length+1; i++) {
-            //per ogni carta della riga corrente chiamo il disegno della carta
-            ArrayList<String> card = actualBoard.getActualBoard()[row][i].drawCard();
-
-            //aggiungo ogni riga della carta alla riga della board concatenandole -> la prima riga di tutte le carte
-            for (int j=0; j<card.size()+1 ;j++ ){
-                rowString.add(j, rowString.get(j).concat(card.get(j))); //concatena la riga della carta alla riga della board
+        //per ogni carta nella riga aggiungo tutte le righe della carta
+        for(int j=boardMinColumn(); j<=boardMaxColumn(); j++){
+            if(board.getCard(new Coordinates(rowNumber, j)) != null){
+                Card card = board.getCard(new Coordinates(rowNumber, j));
+                ArrayList<String> cardRow = card.drawCard();
+                for (String s : cardRow) {
+                    row.add(s);
+                }
+            } else {
+                System.out.print(" white spaces"); // ci saranno degli spazi vuoti di un posto vuoto
             }
         }
-        return rowString;
+    return row;
     }
-    public void render() {
-        //a questo punto stampo tutte le righe in ordine
-        for (int i = 0; i < actualBoard.getActualBoard().length; i++) {
-            ArrayList<String> row = renderRow(i);
-            for (String s : row) {
+
+    //il metodo sopra va iterato per tutte le righe della hashmap in un metodo printBoard
+    // e poi vanno tutte stampate in ordine
+    public void printBoard(){
+        for(int i=boardMinRow(); i<=boardMaxRow(); i++){
+            ArrayList<String> render = printRow(i);
+            for(String s : render){
                 System.out.println(s);
             }
         }
     }
+
+
 }
