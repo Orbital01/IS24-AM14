@@ -5,7 +5,6 @@ import net.fellbaum.jemoji.Emoji;
 
 import java.util.ArrayList;
 
-
 /**
  * This class represents the objective cards in the game.
  * Objective cards are used to gain a certain amount of points.
@@ -38,72 +37,33 @@ public class ObjectiveCard extends Card {
 
     public ArrayList<String> drawCard() {
         ArrayList<String> cardString = new ArrayList<>();
-        if (this.getCondition().toString().equals("CornerCondition")){
-            ArrayList<Emoji> corners;
-            corners = EmojiConverter.drawCorners(this);
 
-            EmojiConverter conditionConverter = null;
-            ArrayList<Emoji> condition = conditionConverter.drawCondition(this.getCondition());
-            int points = this.getPoints();
+        ArrayList<Emoji> corners;
+        corners = EmojiConverter.drawCorners(this);
+        ArrayList<Emoji> condition = EmojiConverter.drawCondition(this.getCondition());
+        int points = this.getPoints();
 
-            //Each card has 7 rows
-            //First Row
-            cardString.add("|------------------------|");
-            //Second Row
-            cardString.add("|            " + points + "           |");
-            //Third Row
-            cardString.add("|                        |");
-            //Fourth Row
-            cardString.add("|		  ");
-            for (Emoji e : condition) {
-                cardString.set(3, cardString.get(3) + e.getEmoji());
-            }
-            cardString.set(3, cardString.get(3) + "		 |");
-            //Fifth Row
-            cardString.add("|                        |");
-            //Sixth Row
-            cardString.add("|                        |");
-            //Seventh Row
-            cardString.add("|------------------------|");
-
-            return cardString;
+        //Each card has 7 rows
+        //First Row
+        cardString.add("|------------------------|");
+        //Second Row
+        cardString.add("|            "  + points +  "           |");
+        //Third Row
+        cardString.add("|                        |");
+        //Fourth Row
+        cardString.add("|		  ");
+        for (Emoji e : condition) {
+            cardString.set(3, cardString.get(3) + e.getEmoji());
         }
-        else if (this.getCondition().toString().equals("CardCondition")){
-            int points = this.getPoints();
-            
-            EmojiConverter conditionConverter = new EmojiConverter();
-            ArrayList<ArrayList<String>> cardCondition = conditionConverter.drawCardCondition(this.getCondition());
+        cardString.set(3, cardString.get(3) + "		 |");
+        //Fifth Row
+        cardString.add("|                        |");
+        //Sixth Row
+        cardString.add("|                        |");
+        //Seventh Row
+        cardString.add("|------------------------|");
 
-            //cardCondition = cardCondition.get(0).replaceAll(" ", "").split("\n";
-
-            cardString.add("|------------------------|");
-            cardString.add("|            "  + points +  "           |");
-
-            cardString.add("|         ");
-            for (String e : cardCondition.get(0)) {
-                cardString.set(2, cardString.get(2) + e);
-            }
-            cardString.set(2, cardString.get(2) + "		 |");
-
-            cardString.add("|         ");
-            for (String e : cardCondition.get(1)) {
-                cardString.set(3, cardString.get(3) + e);
-            }
-            cardString.set(3, cardString.get(3) + "		 |");
-
-            cardString.add("|         ");
-            for (String e : cardCondition.get(2)) {
-                cardString.set(4, cardString.get(4) + e);
-            }
-            cardString.set(4, cardString.get(4) + "		 |");
-
-
-            //cardString.add("|        " + cardCondition.get(0).get(i) +     "         |");
-            //cardString.add("|            " + cardCondition.get(1) + "           |");
-            //cardString.add("|            " + cardCondition.get(2) + "           |");
-            cardString.add("|                        |");
-            cardString.add("|------------------------|");
-        }
         return cardString;
+
     }
 }
