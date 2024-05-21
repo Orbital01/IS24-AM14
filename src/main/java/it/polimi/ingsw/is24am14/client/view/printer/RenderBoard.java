@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RenderBoard {
-    //prendo la hasmap nel costruttore
+    //prendo la hashmap nel costruttore
     GameArea board;
     public RenderBoard(GameArea board) {
         this.board = board;
@@ -40,13 +40,13 @@ public class RenderBoard {
 
     private ArrayList<String> drawEmptyCard() {
         ArrayList<String> emptyCard = new ArrayList<>();
-        emptyCard.add("|-------------------| ");
-        emptyCard.add("|                   | ");
-        emptyCard.add("|                   | ");
-        emptyCard.add("|                   | ");
-        emptyCard.add("|                   | ");
-        emptyCard.add("|                   | ");
-        emptyCard.add("|-------------------| ");
+        emptyCard.add("                         ");
+        emptyCard.add("                         ");
+        emptyCard.add("                         ");
+        emptyCard.add("                         ");
+        emptyCard.add("                         ");
+        emptyCard.add("                         ");
+        emptyCard.add("                         ");
         return emptyCard;
     }
 
@@ -54,7 +54,7 @@ public class RenderBoard {
     private ArrayList<String> printRow(int rowNumber) {
         ArrayList<String> row = new ArrayList<>();
         //inizializzo le righe della riga da stampare
-        for(int i=0; i<=6 ;i++){
+        for(int i=0; i<7 ;i++){
             row.add("");
         }
         //per ogni carta nella riga aggiungo tutte le righe della carta
@@ -64,11 +64,9 @@ public class RenderBoard {
                 Card card = board.getCard(new Coordinates(rowNumber, j));
                 ArrayList<String> cardRow = card.drawCard();
 
-                System.out.println("sto stampando la riga alla colonna " +rowNumber +" "+ j + " la carta si trova a " + board.getRow(card) +" "+ board.getColumn(card));
-
                 int counter=0;
                 for (String s : cardRow) {
-                    row.add(counter, row.get(counter).concat(s));
+                    row.set(counter, row.get(counter).concat(s));
                     counter++;
                 }
             } else {
@@ -76,7 +74,7 @@ public class RenderBoard {
                 ArrayList<String> emptyCard = drawEmptyCard();
                 int counter=0;
                 for (String s : emptyCard) {
-                    row.add(counter, row.get(counter).concat(s));
+                    row.set(counter, row.get(counter).concat(s));
                     counter++;
                 }
 
@@ -88,7 +86,7 @@ public class RenderBoard {
     //il metodo sopra va iterato per tutte le righe della hashmap in un metodo printBoard
     // e poi vanno tutte stampate in ordine
     public void printBoard(){
-        for(int i=boardMaxRow(); i>=boardMinRow(); i--){
+        for(int i=boardMaxRow(); i>boardMinRow(); i--){
             ArrayList<String> render = printRow(i);
             for(String s : render){
                 System.out.println(s);
