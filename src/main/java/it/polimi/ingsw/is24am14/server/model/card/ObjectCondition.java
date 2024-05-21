@@ -83,5 +83,9 @@ public class ObjectCondition implements Condition {
     public ArrayList<CornerEnum.ObjectEnum> getListObject() {
         return listObject;
     }
+    @Override
+    public String toString() {
+        return "ObjectCondition";
+    }
 
 }

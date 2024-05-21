@@ -113,4 +113,8 @@ public abstract class Card implements Serializable {
     public String getFrontImage() {return frontImage;}
     public String getBackImage() {return backImage;}
 
+    public ArrayList<String> drawCard() {
+        return new ArrayList<>();
+    }
+
 }

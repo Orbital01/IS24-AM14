@@ -1,5 +1,8 @@
 package it.polimi.ingsw.is24am14.server.model.card;
 
+import it.polimi.ingsw.is24am14.client.printer.EmojiConverter;
+import net.fellbaum.jemoji.Emoji;
+
 import java.util.ArrayList;
 
 /**
@@ -31,4 +34,36 @@ public class ObjectiveCard extends Card {
     }
 
     public int getPoints() {return points;}
+
+    public ArrayList<String> drawCard() {
+        ArrayList<String> cardString = new ArrayList<>();
+
+        ArrayList<Emoji> corners;
+        corners = EmojiConverter.drawCorners(this);
+        ArrayList<Emoji> condition = EmojiConverter.drawCondition(this.getCondition());
+        int points = this.getPoints();
+
+        //Each card has 7 rows
+        //First Row
+        cardString.add("|------------------------|");
+        //Second Row
+        cardString.add("|            "  + points +  "           |");
+        //Third Row
+        cardString.add("|                        |");
+        //Fourth Row
+        cardString.add("|		  ");
+        for (Emoji e : condition) {
+            cardString.set(3, cardString.get(3) + e.getEmoji());
+        }
+        cardString.set(3, cardString.get(3) + "		 |");
+        //Fifth Row
+        cardString.add("|                        |");
+        //Sixth Row
+        cardString.add("|                        |");
+        //Seventh Row
+        cardString.add("|------------------------|");
+
+        return cardString;
+
+    }
 }
