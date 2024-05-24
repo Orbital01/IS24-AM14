@@ -53,4 +53,8 @@ public class CornerCondition implements Condition {
 
         return num;
     }
+    @Override
+    public String toString() {
+        return "CornerCondition";
+    }
 }
