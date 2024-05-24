@@ -1,5 +1,6 @@
 package it.polimi.ingsw.is24am14.server.network;
 
+import it.polimi.ingsw.is24am14.client.view.printer.RenderBoard;
 import it.polimi.ingsw.is24am14.server.controller.LobbyList;
 import it.polimi.ingsw.is24am14.server.model.card.*;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
@@ -56,7 +57,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientConnection {
     @Override
     public void execute() throws Exception {
         Registry registry;
-        registry = LocateRegistry.getRegistry("127.0.0.1", 12345);
+        registry = LocateRegistry.getRegistry("127.0.0.1", 12500);
 
         System.out.println("Choose a username");
         Scanner in = new Scanner(System.in);
@@ -85,17 +86,23 @@ public class RMIClient extends UnicastRemoteObject implements ClientConnection {
 
     @Override
     public int pickColor(List<TokenColour> colours) throws Exception {
-        System.out.println("Choose a colour");
-        for (int i = 1; i < colours.size(); i++) {
-            System.out.println(i + ")" + colours.get(i));
-        }
 
         Scanner in = new Scanner(System.in);
-        int choice = in.nextInt();
-        while (choice < 0 || choice > colours.size()) {
-            System.out.println("Invalid choice");
+        int choice;
+        do {
+            System.out.println("Choose a colour");
+            for (int i = 1; i < colours.size(); i++) {
+                System.out.println(i + ")" + colours.get(i));
+            }
+            while (!in.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a number.");
+                in.next(); // discard the non-integer input
+            }
             choice = in.nextInt();
-        }
+            if (choice < 0 || choice >= colours.size()) {
+                System.out.println("Invalid choice, please try again.");
+            }
+        } while (choice < 0 || choice >= colours.size());
 
         return choice;
     }
@@ -103,9 +110,16 @@ public class RMIClient extends UnicastRemoteObject implements ClientConnection {
     @Override
     public void pickSecretObjective(int playerIndex, ArrayList<ObjectiveCard> objectiveCards) throws Exception {
         System.out.println("Pick one objective card");
+
+        int i = 0;
         for (ObjectiveCard card : objectiveCards) {
-            System.out.println(card.getCondition());
+            System.out.println(i + ")" + card.getCondition());
+            i++;
+            for (String s : card.drawCard()) {
+                System.out.println(s);
+            }
         }
+
         Scanner in = new Scanner(System.in);
         int choice = in.nextInt();
         while (choice < 0 || choice > objectiveCards.size()) {
@@ -135,6 +149,16 @@ public class RMIClient extends UnicastRemoteObject implements ClientConnection {
 
         if (choice == 0) {
             System.out.println("Which card would you like to flip?");
+
+            //stampo la mano del giocatore
+            System.out.println("Your hand:");
+            for (int i = 0; i < player.getPlayerHand().size(); i++) {
+                System.out.println(i + ") ");
+                for (String s : player.getPlayerHand().get(i).drawCard()) {
+                    System.out.println(s);
+                }
+            }
+
             int cardIndex = in.nextInt();
             while (cardIndex < 0 || cardIndex > player.getPlayerHand().size()) {
                 System.out.println("Invalid choice");
@@ -144,18 +168,33 @@ public class RMIClient extends UnicastRemoteObject implements ClientConnection {
             this.server.flipCard(this, cardIndex);
         } else {
             int handCardIndex, boardX, boardY, cornerIndex;
+
             while (true) {
+                System.out.println("Your hand:");
+                for (int i = 0; i < player.getPlayerHand().size(); i++) {
+                    System.out.println(i + ") ");
+
+                    // riga di test
+                    System.out.println(player.getPlayerHand().get(i));
+
+                    for (String s : player.getPlayerHand().get(i).drawCard()) {
+                        System.out.println(s);
+                    }
+
+                }
+                //stampo la board del giocatore
+                System.out.println("Your board:");
+                RenderBoard renderBoard = new RenderBoard(player.getPlayerBoard());
+                renderBoard.printBoard();
+
+                //eseguo la mossa
                 try {
                     System.out.println("Select a card to place on the board");
-                    for (int i = 0; i < player.getPlayerHand().size(); i++) {
-                        System.out.println(i + ") " + player.getPlayerHand().get(i));
-                    }
                     handCardIndex = in.nextInt();
                     while (handCardIndex < 0 || handCardIndex > player.getPlayerHand().size()) {
                         System.out.println("Invalid choice");
                         handCardIndex = in.nextInt();
                     }
-
                     System.out.println("Select a cart on the board to overlap");
                     for (Coordinates coordinates : player.getPlayerBoard().getBoard().keySet())
                     {
@@ -196,6 +235,14 @@ public class RMIClient extends UnicastRemoteObject implements ClientConnection {
         else if (deckChoice == 2 && !resourceCardDeck.isEmpty()) this.server.drawResourceDeck(this);
         else {
             System.out.println("Which card from the Face Up Cards?");
+            //stampo le face up cards
+            for (int i = 0; i < faceUpCards.size(); i++) {
+                System.out.println(i + ")");
+                for (String s : faceUpCards.get(i).drawCard()) {
+                    System.out.println(s);
+                }
+            }
+
             deckChoice = in.nextInt();
             while (deckChoice < 0 || deckChoice > 3) {
                 System.out.println("Invalid choice");
