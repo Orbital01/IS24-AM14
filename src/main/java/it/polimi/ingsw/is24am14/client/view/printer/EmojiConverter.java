@@ -1,4 +1,4 @@
-package it.polimi.ingsw.is24am14.client.printer;
+package it.polimi.ingsw.is24am14.client.view.printer;
 
 import it.polimi.ingsw.is24am14.server.model.card.*;
 import javafx.beans.value.ObservableNumberValue;

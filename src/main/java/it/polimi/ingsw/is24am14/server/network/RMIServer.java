@@ -21,7 +21,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     }
 
     public void startServer() throws Exception {
-        Registry registry = LocateRegistry.createRegistry(12345);
+        Registry registry = LocateRegistry.createRegistry(12500);
         try {
             registry.bind("RMIServer", this);
         }

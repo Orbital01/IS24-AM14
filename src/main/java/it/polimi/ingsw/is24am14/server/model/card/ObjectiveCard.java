@@ -1,6 +1,6 @@
 package it.polimi.ingsw.is24am14.server.model.card;
 
-import it.polimi.ingsw.is24am14.client.printer.EmojiConverter;
+import it.polimi.ingsw.is24am14.client.view.printer.EmojiConverter;
 import net.fellbaum.jemoji.Emoji;
 
 import java.util.ArrayList;

@@ -14,6 +14,170 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Random;
 
 public class DrawCardTest {
+//    @Test
+//    void randomResourceCardCardPrint() {
+//        //Creating all parameters needed
+//        ArrayList<Corner> frontCorners = new ArrayList<Corner>();
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.EMPTY));
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.HIDDEN));
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+//
+//        ArrayList<Corner> backCorners = new ArrayList<Corner>();
+//        backCorners = frontCorners;
+//
+//        ResourceCard card = new ResourceCard(0, CornerEnum.ResourceEnum.INSECT, frontCorners, backCorners, "frontImage", "backImage");
+//        ResourceCard overlappingCard = new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, frontCorners, backCorners, "frontImage", "backImage");
+//        DrawCard drawCard = new DrawCard(card);
+//        DrawCard drawOverlappingCard = new DrawCard(overlappingCard);
+//        drawCard.drawCorners(card);
+//        drawCard.printCard(card);
+//        //drawOverlappingCard.drawCorners(overlappingCard);
+//        //drawCard.drawOverlapSE(card, overlappingCard);
+//    }
+//
+//    @Test
+//    void ResourceCardSEPrint() {
+//        //Creating all parameters needed
+//        ArrayList<Corner> frontCorners = new ArrayList<Corner>();
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.EMPTY));
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.HIDDEN));
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+//
+//        ArrayList<Corner> overlapCorners = new ArrayList<Corner>();
+//        overlapCorners.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
+//        overlapCorners.add(new Corner(CornerEnum.ResourceEnum.PLANT));
+//        overlapCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+//        overlapCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+//
+//
+//        ArrayList<Corner> backCorners = new ArrayList<Corner>();
+//        backCorners = frontCorners;
+//
+//        ResourceCard card = new ResourceCard(0, CornerEnum.ResourceEnum.INSECT, frontCorners, backCorners, "frontImage", "backImage");
+//        card.getCorners().get(3).overlap();
+//        ResourceCard overlappingCard = new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, overlapCorners, backCorners, "frontImage", "backImage");
+//        DrawCard drawCard = new DrawCard(card);
+//        DrawCard drawOverlappingCard = new DrawCard(overlappingCard);
+//        drawCard.drawCorners(card);
+//        //drawCard.printCard(card);
+//        drawOverlappingCard.drawCorners(overlappingCard);
+//        drawCard.drawOverlap(card, overlappingCard);
+//    }
+//
+//    @Test
+//    void ResourceCardNEPrint() {
+//        //Creating all parameters needed
+//        ArrayList<Corner> frontCorners = new ArrayList<Corner>();
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.EMPTY));
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.HIDDEN));
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+//
+//        ArrayList<Corner> overlapCorners = new ArrayList<Corner>();
+//        overlapCorners.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
+//        overlapCorners.add(new Corner(CornerEnum.ResourceEnum.PLANT));
+//        overlapCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+//        overlapCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+//
+//
+//        ArrayList<Corner> backCorners = new ArrayList<Corner>();
+//        backCorners = frontCorners;
+//
+//        ResourceCard card = new ResourceCard(0, CornerEnum.ResourceEnum.INSECT, frontCorners, backCorners, "frontImage", "backImage");
+//        card.getCorners().get(1).overlap();
+//        ResourceCard overlappingCard = new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, overlapCorners, backCorners, "frontImage", "backImage");
+//        DrawCard drawCard = new DrawCard(card);
+//        DrawCard drawOverlappingCard = new DrawCard(overlappingCard);
+//        drawCard.drawCorners(card);
+//        //drawCard.printCard(card);
+//        drawOverlappingCard.drawCorners(overlappingCard);
+//        drawCard.drawOverlap(card, overlappingCard);
+//    }
+//
+//    @Test
+//    void ResourceCardNWPrint() {
+//        //Creating all parameters needed
+//        ArrayList<Corner> frontCorners = new ArrayList<Corner>();
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.EMPTY));
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.HIDDEN));
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+//
+//        ArrayList<Corner> overlapCorners = new ArrayList<Corner>();
+//        overlapCorners.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
+//        overlapCorners.add(new Corner(CornerEnum.ResourceEnum.PLANT));
+//        overlapCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+//        overlapCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+//
+//
+//        ArrayList<Corner> backCorners = new ArrayList<Corner>();
+//        backCorners = frontCorners;
+//
+//        ResourceCard card = new ResourceCard(0, CornerEnum.ResourceEnum.INSECT, frontCorners, backCorners, "frontImage", "backImage");
+//        card.getCorners().get(0).overlap();
+//        ResourceCard overlappingCard = new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, overlapCorners, backCorners, "frontImage", "backImage");
+//        DrawCard drawCard = new DrawCard(card);
+//        DrawCard drawOverlappingCard = new DrawCard(overlappingCard);
+//        drawCard.drawCorners(card);
+//        //drawCard.printCard(card);
+//        drawOverlappingCard.drawCorners(overlappingCard);
+//        drawCard.drawOverlap(card, overlappingCard);
+//    }
+//
+//    @Test
+//    void ResourceCardSWPrint() {
+//        //Creating all parameters needed
+//        ArrayList<Corner> frontCorners = new ArrayList<Corner>();
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.EMPTY));
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.HIDDEN));
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+//
+//        ArrayList<Corner> overlapCorners = new ArrayList<Corner>();
+//        overlapCorners.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
+//        overlapCorners.add(new Corner(CornerEnum.ResourceEnum.PLANT));
+//        overlapCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+//        overlapCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+//
+//
+//        ArrayList<Corner> backCorners = new ArrayList<Corner>();
+//        backCorners = frontCorners;
+//
+//        ResourceCard card = new ResourceCard(0, CornerEnum.ResourceEnum.INSECT, frontCorners, backCorners, "frontImage", "backImage");
+//        card.getCorners().get(2).overlap();
+//        ResourceCard overlappingCard = new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, overlapCorners, backCorners, "frontImage", "backImage");
+//        DrawCard drawCard = new DrawCard(card);
+//        DrawCard drawOverlappingCard = new DrawCard(overlappingCard);
+//        drawCard.drawCorners(card);
+//        //drawCard.printCard(card);
+//        drawOverlappingCard.drawCorners(overlappingCard);
+//        drawCard.drawOverlap(card, overlappingCard);
+//    }
+//
+//    @Test
+//    void randomGoldCardCardPrint() {
+//        //Creating all parameters needed
+//        ArrayList<Corner> frontCorners = new ArrayList<Corner>();
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.EMPTY));
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.HIDDEN));
+//        frontCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+//
+//        Condition pointCondition = new CardCondition();
+//
+//        ResourceCondition placementCondition = new ResourceCondition();
+//        placementCondition.addClause(CornerEnum.ResourceEnum.FUNGI);
+//        placementCondition.addClause(CornerEnum.ResourceEnum.FUNGI);
+//        placementCondition.addClause(CornerEnum.ResourceEnum.FUNGI);
+//
+//        GoldCard card = new GoldCard(3, pointCondition, CornerEnum.ResourceEnum.INSECT, placementCondition, frontCorners, "frontImage", "backImage");
+//        DrawCard drawGoldCard = new DrawCard(card);
+//        drawGoldCard.drawCorners(card);
+//        drawGoldCard.printCard(card);
+//    }
+
     @Test
     void drawStarterCard() {
         //creo una starter card e la disegno
@@ -216,25 +380,6 @@ public class DrawCardTest {
         //resourceCardTest.flipSide();
 
         ArrayList<String> carta = resourceCardTest.drawCard();
-
-        for (String s : carta) {
-            System.out.println(s);
-        }
-    }
-
-    @Test
-    public void drawResourceCard3(){
-        ResourceCard resourceCard3;
-
-        ArrayList<Corner> resourceCard3FrontCorners = new ArrayList<>();
-        resourceCard3FrontCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
-        resourceCard3FrontCorners.add(new Corner(CornerEnum.ResourceEnum.PLANT));
-        resourceCard3FrontCorners.add(new Corner(CornerEnum.HIDDEN));
-        resourceCard3FrontCorners.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
-
-        resourceCard3 = new ResourceCard(0, CornerEnum.ResourceEnum.PLANT, resourceCard3FrontCorners, resourceCard3FrontCorners, "", "");
-
-        ArrayList<String> carta = resourceCard3.drawCard();
 
         for (String s : carta) {
             System.out.println(s);
