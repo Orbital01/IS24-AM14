@@ -37,7 +37,7 @@ public class ObjectiveCard extends Card {
 
     public ArrayList<String> drawCard() {
         ArrayList<String> cardString = new ArrayList<>();
-        if (this.getCondition().toString().equals("CornerCondition")){
+        if (this.getCondition().toString().equals("ObjectCondition") || this.getCondition().toString().equals("ResourceCondition")){
             ArrayList<Emoji> corners;
             corners = EmojiConverter.drawCorners(this);
 
@@ -73,8 +73,6 @@ public class ObjectiveCard extends Card {
             EmojiConverter conditionConverter = new EmojiConverter();
             ArrayList<ArrayList<String>> cardCondition = conditionConverter.drawCardCondition(this.getCondition());
 
-            //cardCondition = cardCondition.get(0).replaceAll(" ", "").split("\n";
-
             cardString.add("|------------------------|");
             cardString.add("|            "  + points +  "           |");
 
@@ -96,12 +94,11 @@ public class ObjectiveCard extends Card {
             }
             cardString.set(4, cardString.get(4) + "		 |");
 
-
-            //cardString.add("|        " + cardCondition.get(0).get(i) +     "         |");
-            //cardString.add("|            " + cardCondition.get(1) + "           |");
-            //cardString.add("|            " + cardCondition.get(2) + "           |");
             cardString.add("|                        |");
             cardString.add("|------------------------|");
+        }
+        else if(this.getCondition().toString().equals("ResourceCondition")){
+
         }
         return cardString;
     }

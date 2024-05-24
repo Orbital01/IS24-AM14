@@ -10,9 +10,7 @@ import java.util.HashMap;
 
 public class EmojiConverter {
     //Constructor
-    public EmojiConverter() {
-
-    }
+    public EmojiConverter() {}
 
 /*************************************** GOLD AND RESOURCE **************************************/
     public static ArrayList<Emoji> drawCorners(PlayableCard card) {
