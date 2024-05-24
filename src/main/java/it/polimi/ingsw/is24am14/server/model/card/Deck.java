@@ -41,7 +41,6 @@ public class Deck<T extends Card> implements Serializable, Iterable<T> {
         return content.removeFirst();
     }
 
-
     /**
      * it shuffles the deck
      */

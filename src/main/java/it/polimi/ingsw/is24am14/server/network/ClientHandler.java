@@ -1,9 +1,7 @@
 package it.polimi.ingsw.is24am14.server.network;
 
-import it.polimi.ingsw.is24am14.server.controller.GameContext;
-import it.polimi.ingsw.is24am14.server.controller.LobbyList;
 import it.polimi.ingsw.is24am14.server.model.card.*;
-import it.polimi.ingsw.is24am14.server.model.player.Player;
+import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 
 import java.rmi.Remote;
@@ -11,15 +9,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface ClientHandler extends Remote {
-    void askStartingOption(LobbyList lobbyList) throws Exception;
-    String getClientUsername() throws Exception;
-    void setGameContext(GameContext gameContext) throws Exception;
-    ClientConnection getClientConnection() throws Exception;
-    void assignColor(List<TokenColour> tokenColourList, Player player) throws Exception;
-    void chooseSecretObjective(int playerIndex, Deck<ObjectiveCard> objectiveDeck) throws Exception;
-    void sendIsFirstPlayer(boolean isFirstPlayer) throws Exception;
-    void askForMove(Player player) throws Exception;
-    void askPickChoice(Deck<GoldCard> goldCardDeck, Deck<ResourceCard> resourceCardDeck, ArrayList<PlayableCard> faceUpCards) throws Exception;
+    String getUsername() throws Exception;
+
+    void askStartingOption(ArrayList<String> lobbiesNames) throws Exception;
+
+    void sendPlayersInLobby(ArrayList<String> players) throws Exception;
+
+    void assignColor(List<TokenColour> colours) throws Exception;
+
+    void askSecretObjective(ObjectiveCard card1, ObjectiveCard card2) throws Exception;
+
+    void sendIsFirstPlayer() throws Exception;
+
+    void askForMove(ArrayList<PlayableCard> hand, GameArea board) throws Exception;
+
+    void askPickChoice(Deck<GoldCard> goldDeck, Deck<ResourceCard> resourceDeck, ArrayList<PlayableCard> faceUpCards) throws Exception;
+
     void sendScore(int score) throws Exception;
+
     void sendWinner(String winner) throws Exception;
 }

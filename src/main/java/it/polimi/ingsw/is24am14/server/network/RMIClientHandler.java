@@ -1,9 +1,7 @@
 package it.polimi.ingsw.is24am14.server.network;
 
-import it.polimi.ingsw.is24am14.server.controller.GameContext;
-import it.polimi.ingsw.is24am14.server.controller.LobbyList;
 import it.polimi.ingsw.is24am14.server.model.card.*;
-import it.polimi.ingsw.is24am14.server.model.player.Player;
+import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 
 import java.rmi.RemoteException;
@@ -12,81 +10,61 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RMIClientHandler extends UnicastRemoteObject implements ClientHandler {
-    private final ClientConnection client;
-    private GameContext gameContext;    //  let me think if I need it or not
+    private final String username;
+    private final RMIClientInterface client;
 
-    protected RMIClientHandler(ClientConnection client) throws RemoteException {
+    protected RMIClientHandler(RMIClientInterface client, String username) throws RemoteException {
+        this.username = username;
         this.client = client;
     }
 
     @Override
-    public void askStartingOption(LobbyList lobbyList) throws Exception {
-        this.client.joinLobby(lobbyList);
+    public String getUsername() throws Exception {
+        return username;
     }
 
     @Override
-    public String getClientUsername() throws Exception {
-        return client.getUsername();
+    public void askStartingOption(ArrayList<String> lobbiesNames) throws Exception {
+        this.client.chooseOption(lobbiesNames);
     }
 
     @Override
-    public void setGameContext(GameContext gameContext) throws Exception {
-        this.gameContext = gameContext;
+    public void sendPlayersInLobby(ArrayList<String> players) throws Exception {
+        this.client.receivePlayersInLobby(players);
     }
 
     @Override
-    public ClientConnection getClientConnection() throws Exception {
-        return client;
-    }
-
-    ///////////////////////////////////////////////////////////////////
-    //                         InitGameState                         //
-    ///////////////////////////////////////////////////////////////////
-    @Override
-    public void assignColor(List<TokenColour> tokenColourList, Player player) throws Exception {
-        int option = this.client.pickColor(tokenColourList);
-        player.setColour(tokenColourList.get(option));
-        tokenColourList.remove(option);
+    public void assignColor(List<TokenColour> colors) throws Exception {
+        this.client.selectColor(colors);
     }
 
     @Override
-    public void chooseSecretObjective(int playerIndex, Deck<ObjectiveCard> objectiveDeck) throws Exception {
-        ArrayList<ObjectiveCard> objectiveCards = new ArrayList<>();
-        objectiveCards.add(objectiveDeck.removeTop());
-        objectiveCards.add(objectiveDeck.removeTop());
-        this.client.pickSecretObjective(playerIndex, objectiveCards);
+    public void askSecretObjective(ObjectiveCard card1, ObjectiveCard card2) throws Exception {
+        this.client.selectObjectiveCard(card1, card2);
     }
 
     @Override
-    public void sendIsFirstPlayer(boolean isFirstPlayer) throws Exception {
-        this.client.receiveIsFirstPlayer(isFirstPlayer);
-    }
-
-    ///////////////////////////////////////////////////////////////////
-    //                           PlayState                           //
-    ///////////////////////////////////////////////////////////////////
-
-    @Override
-    public void askForMove(Player player) throws Exception {
-        this.client.makeMove(player);
+    public void sendIsFirstPlayer() throws Exception {
+        this.client.printBlackToken();
     }
 
     @Override
-    public void askPickChoice(Deck<GoldCard> goldCardDeck, Deck<ResourceCard> resourceCardDeck, ArrayList<PlayableCard> faceUpCards) throws Exception {
-        this.client.pickChoice(goldCardDeck, resourceCardDeck, faceUpCards);
+    public void askForMove(ArrayList<PlayableCard> hand, GameArea board) throws Exception {
+        this.client.chooseMove(hand, board);
     }
 
-    ///////////////////////////////////////////////////////////////////
-    //                           EndState                            //
-    ///////////////////////////////////////////////////////////////////
+    @Override
+    public void askPickChoice(Deck<GoldCard> goldDeck, Deck<ResourceCard> resourceDeck, ArrayList<PlayableCard> faceUpCards) throws Exception {
+        this.client.pickChoice(goldDeck, resourceDeck, faceUpCards);
+    }
 
     @Override
     public void sendScore(int score) throws Exception {
-        this.client.printScore(score);
+        this.client.receiveScore(score);
     }
 
     @Override
     public void sendWinner(String winner) throws Exception {
-        this.client.printWinner(winner);
+        this.client.receiveWinner(winner);
     }
 }

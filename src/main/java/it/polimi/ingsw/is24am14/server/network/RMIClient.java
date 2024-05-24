@@ -1,82 +1,57 @@
 package it.polimi.ingsw.is24am14.server.network;
 
-import it.polimi.ingsw.is24am14.server.controller.LobbyList;
-import it.polimi.ingsw.is24am14.server.model.card.*;
-import it.polimi.ingsw.is24am14.server.model.player.Player;
-import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
-
-import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class RMIClient extends UnicastRemoteObject implements ClientConnection {
-    private RMIServerInterface server;
+import it.polimi.ingsw.is24am14.server.model.card.*;
+import it.polimi.ingsw.is24am14.server.model.game.GameArea;
+import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
+import it.polimi.ingsw.is24am14.server.view.*;
+
+public class RMIClient extends UnicastRemoteObject implements RMIClientInterface {
     private String username;
+    private VirtualView view;
+    private RMIServerInterface server;
 
-    protected RMIClient() throws RemoteException {}
-
-    @Override
-    public void joinLobby(LobbyList lobbyList) throws Exception {
-        Scanner in = new Scanner(System.in);
-        int option, lobby_index, num_players;
-        System.out.println("There are " + lobbyList.getLobbies().size() + " lobbies");
-        for (int i = 0; i < lobbyList.getLobbies().size(); i++) {
-            System.out.println(i + ") " + lobbyList.getLobbies().get(i).getHost());
-        }
-
-        System.out.println("Digit: \n0 to join an existing lobby\n1 to create a new lobby");
-        option = in.nextInt();
-
-        while (option < 0 || option > 1) {
-            //  there's going to be the chat option here
-            System.out.println("Invalid option");
-            option = in.nextInt();
-        }
-
-        if (option == 0) {
-            System.out.println("Choose a lobby");
-            lobby_index = in.nextInt();
-            server.joinExistingLobby(this, lobbyList.getLobbies().get(lobby_index));
-        } else if (option == 1) {
-            System.out.println("You've decided to create a new lobby");
-            System.out.println("How many players do you want to join? (Must be a number between 0 and 4)");
-            num_players = in.nextInt();
-            while (num_players < 0 || num_players > 4) {
-                System.out.println("Invalid players number");
-                num_players = in.nextInt();
-            }
-            server.joinNewLobby(this, num_players);
-        }
-    }
-
-    @Override
-    public void execute() throws Exception {
+    protected RMIClient() throws Exception {
         Registry registry;
         registry = LocateRegistry.getRegistry("127.0.0.1", 12345);
-
-        System.out.println("Choose a username");
-        Scanner in = new Scanner(System.in);
-        this.username = in.nextLine();
-
         this.server = (RMIServerInterface) registry.lookup("RMIServer");
+
+        this.view = new TUIView();
+        this.username = view.askForUsername();
 
         while (true) {
             try {
-                this.server.acceptConnection(this);
+                server.acceptConnection(this, username);
                 break;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                this.username = in.nextLine();
+                this.username = view.askForUsername();
             }
         }
 
         System.out.println("Client connected");
     }
 
+    @Override
+    public void chooseOption(ArrayList<String> lobbiesNames) throws Exception {
+        this.view.printLobbyOption(lobbiesNames);
+        int choice = view.getLobbyOption();
+
+        if (choice == 0) {
+            int lobbyIndex = view.getLobbyIndex(lobbiesNames);
+            this.server.joinExistingLobby(this, lobbiesNames.get(lobbyIndex));
+        }
+        else if (choice == 1) {
+            int numPlayers = this.view.getLobbyNumPlayers();
+            this.server.createNewLobby(this, numPlayers);
+        }
+    }
 
     @Override
     public String getUsername() throws Exception {
@@ -84,135 +59,75 @@ public class RMIClient extends UnicastRemoteObject implements ClientConnection {
     }
 
     @Override
-    public int pickColor(List<TokenColour> colours) throws Exception {
-        System.out.println("Choose a colour");
-        for (int i = 1; i < colours.size(); i++) {
-            System.out.println(i + ")" + colours.get(i));
-        }
-
-        Scanner in = new Scanner(System.in);
-        int choice = in.nextInt();
-        while (choice < 0 || choice > colours.size()) {
-            System.out.println("Invalid choice");
-            choice = in.nextInt();
-        }
-
-        return choice;
+    public void receivePlayersInLobby(ArrayList<String> players) throws Exception {
+        this.view.printPlayersInLobby(players);
     }
 
     @Override
-    public void pickSecretObjective(int playerIndex, ArrayList<ObjectiveCard> objectiveCards) throws Exception {
-        System.out.println("Pick one objective card");
-        for (ObjectiveCard card : objectiveCards) {
-            System.out.println(card.getCondition());
-        }
-        Scanner in = new Scanner(System.in);
-        int choice = in.nextInt();
-        while (choice < 0 || choice > objectiveCards.size()) {
-            System.out.println("Invalid choice");
-            choice = in.nextInt();
-        }
-
-        this.server.assignSecretObjective(this, playerIndex, objectiveCards.get(choice));
+    public void selectColor(List<TokenColour> colors) throws Exception {
+        this.view.printColors(colors);
+        TokenColour color = this.view.chooseColor(colors);
+        this.server.setColor(this, color);
     }
 
     @Override
-    public void receiveIsFirstPlayer(boolean isFirstPlayer) throws Exception {
-        if (!isFirstPlayer) System.out.println("The game has started. Please wait for your turn");
+    public void selectObjectiveCard(ObjectiveCard card1, ObjectiveCard card2) throws Exception {
+        this.view.printSecretObjective(card1, card2);
+        ObjectiveCard choice = this.view.chooseSecretObjective(card1, card2);
+        this.server.setSecretObjective(this, choice);
     }
 
     @Override
-    public void makeMove(Player player) throws Exception {
-        System.out.println("It's your turn");
-        System.out.println("Select:\n0 -> flip a card\n1 -> play a card");
-        Scanner in = new Scanner(System.in);
-        int choice = in.nextInt();
-
-        while (choice < 0 || choice > 1) {
-            System.out.println("Invalid choice");
-            choice = in.nextInt();
-        }
-
-        if (choice == 0) {
-            System.out.println("Which card would you like to flip?");
-            int cardIndex = in.nextInt();
-            while (cardIndex < 0 || cardIndex > player.getPlayerHand().size()) {
-                System.out.println("Invalid choice");
-                cardIndex = in.nextInt();
-            }
-
-            this.server.flipCard(this, cardIndex);
-        } else {
-            int handCardIndex, boardX, boardY, cornerIndex;
-            while (true) {
-                try {
-                    System.out.println("Select a card to place on the board");
-                    for (int i = 0; i < player.getPlayerHand().size(); i++) {
-                        System.out.println(i + ") " + player.getPlayerHand().get(i));
-                    }
-                    handCardIndex = in.nextInt();
-                    while (handCardIndex < 0 || handCardIndex > player.getPlayerHand().size()) {
-                        System.out.println("Invalid choice");
-                        handCardIndex = in.nextInt();
-                    }
-
-                    System.out.println("Select a cart on the board to overlap");
-                    for (Coordinates coordinates : player.getPlayerBoard().getBoard().keySet())
-                    {
-                        System.out.println("(" + coordinates.getRow() + ", " + coordinates.getColumn() + ")");
-                    }
-                    System.out.println("Insert the row");
-                    boardX = in.nextInt();
-                    System.out.println("Insert the column");
-                    boardY = in.nextInt();
-                    Coordinates cardToOverlap = new Coordinates(boardX, boardY);
-                    System.out.println("Select the corner to overlap");
-                    cornerIndex = in.nextInt();
-                    this.server.putCard(this, handCardIndex, cardToOverlap, cornerIndex);
-                    break;
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
+    public void printBlackToken() throws Exception {
+        this.view.printBlackToken();
     }
 
     @Override
-    public void pickChoice(Deck<GoldCard> goldCardDeck, Deck<ResourceCard> resourceCardDeck, ArrayList<PlayableCard> faceUpCards) throws Exception {
-        int deckChoice;
-        Scanner in = new Scanner(System.in);
-        System.out.println("You have to draw");
-        if (!goldCardDeck.isEmpty()) System.out.println("1) Draw from the Gold Deck");
-        if (!resourceCardDeck.isEmpty()) System.out.println("2) Draw from the Resource Deck");
-        System.out.println("3) Draw from the Face Up Cards");
+    public void chooseMove(ArrayList<PlayableCard> hand, GameArea board) throws Exception {
+        this.view.printBoard(board);
+        this.view.printHand(hand);
 
-        deckChoice = in.nextInt();
-        while (deckChoice < 1 || deckChoice > 3) {
-            System.out.println("Invalid choice");
-            deckChoice = in.nextInt();
-        }
+        int choice = this.view.moveChoice();
+        if (choice == 0) this.flipCard(hand);
+        else if (choice == 1) this.putCard(hand, board);
+    }
 
-        if (deckChoice == 1 && !goldCardDeck.isEmpty()) this.server.drawGoldDeck(this);
-        else if (deckChoice == 2 && !resourceCardDeck.isEmpty()) this.server.drawResourceDeck(this);
+    @Override
+    public void flipCard(ArrayList<PlayableCard> hand) throws Exception {
+        int choice = this.view.chooseCardToFlip(hand);
+        this.server.flipCard(this, choice);
+    }
+
+    @Override
+    public void putCard(ArrayList<PlayableCard> hand, GameArea board) throws Exception {
+        int handCardIndex, cornerIndex;
+        Coordinates boardCard;
+        handCardIndex = this.view.chooseCardToPlay(hand);
+        boardCard = this.view.chooseCardToOverlap(board);
+        cornerIndex = this.view.chooseCornerIndex(board);
+        this.server.playCard(this, hand.get(handCardIndex), boardCard, cornerIndex);
+    }
+
+    @Override
+    public void pickChoice(Deck<GoldCard> goldDeck, Deck<ResourceCard> resourceDeck, ArrayList<PlayableCard> faceUpCards) throws Exception {
+        int option = this.view.pickChoices(goldDeck, resourceDeck, faceUpCards);
+
+        if (option == 0) this.server.drawFromGoldDeck(this);
+        else if (option == 1) this.server.drawFromResourceDeck(this);
         else {
-            System.out.println("Which card from the Face Up Cards?");
-            deckChoice = in.nextInt();
-            while (deckChoice < 0 || deckChoice > 3) {
-                System.out.println("Invalid choice");
-                deckChoice = in.nextInt();
-            }
-
-            this.server.drawFaceUpCard(this, deckChoice);
+            this.view.showFaceUpCards(faceUpCards);
+            int faceUpIndex = this.view.chooseFaceUpCard(faceUpCards);
+            this.server.drawFromFaceUpCards(this, faceUpIndex);
         }
     }
 
     @Override
-    public void printScore(int score) throws Exception {
-        System.out.println("Your score is: " + score);
+    public void receiveScore(int score) throws Exception {
+        this.view.printScore(score);
     }
 
     @Override
-    public void printWinner(String winner) throws Exception {
-        System.out.println("The winner is " + winner + "!!!");
+    public void receiveWinner(String winner) throws Exception {
+        this.view.printWinner(winner);
     }
 }

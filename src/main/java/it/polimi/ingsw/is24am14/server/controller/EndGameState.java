@@ -43,7 +43,7 @@ public class EndGameState implements GameState {
         //setto il vincitore
         try {
             for (Player player : context.getGame().getPlayers()) {
-                player.getConnection().sendWinner(winner.getPlayerNickname());
+                player.sendWinner(winner.getPlayerNickname());
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
