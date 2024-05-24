@@ -38,11 +38,11 @@ public class ObjectiveCard extends Card {
     public ArrayList<String> drawCard() {
         ArrayList<String> cardString = new ArrayList<>();
         if (this.getCondition().toString().equals("ObjectCondition") || this.getCondition().toString().equals("ResourceCondition")){
-            ArrayList<Emoji> corners;
+            ArrayList<String> corners;
             corners = EmojiConverter.drawCorners(this);
 
-            EmojiConverter conditionConverter = null;
-            ArrayList<Emoji> condition = conditionConverter.drawCondition(this.getCondition());
+            EmojiConverter conditionConverter = new EmojiConverter();
+            ArrayList<String> condition = conditionConverter.drawCondition(this.getCondition());
             int points = this.getPoints();
 
             //Each card has 7 rows
@@ -53,11 +53,15 @@ public class ObjectiveCard extends Card {
             //Third Row
             cardString.add("|                        |");
             //Fourth Row
-            cardString.add("|		  ");
-            for (Emoji e : condition) {
-                cardString.set(3, cardString.get(3) + e.getEmoji());
+            cardString.add("|		");
+//            for (String e : condition) {
+//                cardString.set(3, cardString.get(3) + e);
+//            }
+//            cardString.set(3, cardString.get(3) + "		 |");
+            for (String e : condition){
+                cardString.set(3, cardString.get(3) + e);
             }
-            cardString.set(3, cardString.get(3) + "		 |");
+            cardString.set(3, cardString.get(3) + "      |");
             //Fifth Row
             cardString.add("|                        |");
             //Sixth Row
@@ -77,6 +81,7 @@ public class ObjectiveCard extends Card {
             cardString.add("|            "  + points +  "           |");
 
             cardString.add("|         ");
+            int i = 0;
             for (String e : cardCondition.get(0)) {
                 cardString.set(2, cardString.get(2) + e);
             }
@@ -96,9 +101,6 @@ public class ObjectiveCard extends Card {
 
             cardString.add("|                        |");
             cardString.add("|------------------------|");
-        }
-        else if(this.getCondition().toString().equals("ResourceCondition")){
-
         }
         return cardString;
     }
