@@ -3,22 +3,23 @@ package it.polimi.ingsw.is24am14.server.controller;
 import it.polimi.ingsw.is24am14.server.model.game.Game;
 import it.polimi.ingsw.is24am14.server.model.game.exceptions.MaximumNumberOfPlayersReachedException;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
-import it.polimi.ingsw.is24am14.server.network.ClientConnection;
+import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 import it.polimi.ingsw.is24am14.server.network.ClientHandler;
+import it.polimi.ingsw.is24am14.server.network.ClientHandlerList;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class Lobby implements Serializable {
-    private final ArrayList<ClientHandler> players;
+    private final ClientHandlerList players;
     private final int maxPlayers;
     private GameContext gameContext;
     private final String host;
 
     public Lobby(String host, int maxPlayers) {
         this.maxPlayers = maxPlayers;
-        this.players = new ArrayList<>();
+        this.players = new ClientHandlerList();
         this.host = host;
     }
 
@@ -26,7 +27,11 @@ public class Lobby implements Serializable {
         return host;
     }
 
-    public ArrayList<ClientHandler> getPlayers() {
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public ClientHandlerList getPlayers() {
         return players;
     }
 
@@ -37,7 +42,7 @@ public class Lobby implements Serializable {
     public ClientHandler getClientHandler(String username) {
         for (ClientHandler clientHandler : players) {
             try {
-                if (Objects.equals(clientHandler.getClientConnection().getUsername(), username)) return clientHandler;
+                if (Objects.equals(clientHandler.getUsername(), username)) return clientHandler;
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -53,6 +58,10 @@ public class Lobby implements Serializable {
         }
     }
 
+    public void setColor(String player, TokenColour color) {
+        this.gameContext.game.getPlayer(player).setColour(color);
+    }
+
     public void startGame() {
         //questo metodo avvia la partita chiamando il pattern state del game
         this.gameContext = new GameContext(new Game(maxPlayers));
@@ -62,8 +71,8 @@ public class Lobby implements Serializable {
         for (ClientHandler player : players) {
             Player newPlayer = null;
             try {
-                newPlayer = new Player(player.getClientUsername(), player);
-                newPlayer.getConnection().setGameContext(gameContext);
+                newPlayer = new Player(player.getUsername(), player);
+                //newPlayer.getConnection().setGameContext(gameContext);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

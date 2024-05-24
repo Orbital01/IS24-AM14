@@ -30,7 +30,7 @@ public class PlayState implements GameState {
     @Override
     public void execute(){
         try {
-            currentPlayer.getConnection().askForMove(currentPlayer);
+            currentPlayer.askForMove();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

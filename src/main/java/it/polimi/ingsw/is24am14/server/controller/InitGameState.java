@@ -48,7 +48,7 @@ public class InitGameState implements GameState {
         context.getGame().setResourceDeck(this.resourceDeck);
         context.getGame().setObjectiveDeck(this.objectiveDeck);
         context.getGame().setFaceUpCards(faceUpCards);
-
+        context.getGame().setColors(TokenColours);
     }
 
     /**
@@ -87,7 +87,8 @@ public class InitGameState implements GameState {
             player.getPlayerBoard().placeStarterCard(player.getStarterCard());
             //Let each player choose his colour
             try {
-                player.getConnection().assignColor(TokenColours, player);
+                //player.getConnection().assignColor(TokenColours, player);
+                player.assignColor(TokenColours);
                 System.out.println("Player " + player.getPlayerNickname() + " has chosen " + player.getColour());
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -108,7 +109,7 @@ public class InitGameState implements GameState {
         for (int playerIndex = 0; playerIndex < context.getGame().getPlayers().size(); playerIndex++){
             Player player = context.getGame().getPlayers().get(playerIndex);
             try {
-                player.getConnection().chooseSecretObjective(playerIndex, objectiveDeck);
+                player.askSecretObjective(objectiveDeck.removeTop(), objectiveDeck.removeTop());
                 System.out.println("Player " + player.getPlayerNickname() + " has chosen " + player.getSecretObjective());
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -118,25 +119,13 @@ public class InitGameState implements GameState {
         //First player is randomly chosen; after first player is chosen, he will have black token as well
         Random random = new Random();
         int firstPlayerIndex = random.nextInt(context.getGame().getNumPlayers());
-
-        for (int i = 0; i < this.context.getGame().getNumPlayers(); i++){
-            if (i == firstPlayerIndex){
-                try {
-                    this.context.getGame().getPlayers().get(i).getConnection().sendIsFirstPlayer(true);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            else {
-                try {
-                    this.context.getGame().getPlayers().get(i).getConnection().sendIsFirstPlayer(false);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-
         context.getGame().setIndexActivePlayer(firstPlayerIndex);
         context.getGame().getPlayers().get(firstPlayerIndex).setFirstPlayer(true); //--> the VIEW will graphically assign the black token to the first player
+
+        try {
+            this.context.getGame().getPlayers().get(firstPlayerIndex).sendIsFirstPlayer();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

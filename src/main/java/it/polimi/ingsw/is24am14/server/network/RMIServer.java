@@ -1,121 +1,107 @@
 package it.polimi.ingsw.is24am14.server.network;
 
-import it.polimi.ingsw.is24am14.server.controller.Lobby;
-import it.polimi.ingsw.is24am14.server.controller.LobbyList;
-import it.polimi.ingsw.is24am14.server.model.card.*;
-import it.polimi.ingsw.is24am14.server.model.game.Game;
-
-import javax.naming.NameAlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+
+import it.polimi.ingsw.is24am14.server.controller.*;
+import it.polimi.ingsw.is24am14.server.model.card.Card;
+import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
+import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
+import it.polimi.ingsw.is24am14.server.model.card.PlayableCard;
+import it.polimi.ingsw.is24am14.server.model.player.Player;
+import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 
 public class RMIServer extends UnicastRemoteObject implements RMIServerInterface {
-    private final ClientHandlerList clients;
     private final LobbyList lobbyList;
 
-    protected RMIServer(ClientHandlerList clients, LobbyList lobbyList) throws RemoteException {
-        this.clients = clients;
-        this.lobbyList = lobbyList;
-    }
+    protected RMIServer(LobbyList lobbies) throws RemoteException {
+        this.lobbyList = lobbies;
 
-    public void startServer() throws Exception {
-        Registry registry = LocateRegistry.createRegistry(12500);
+        Registry registry = LocateRegistry.createRegistry(12345);
         try {
             registry.bind("RMIServer", this);
         }
         catch (Exception e) {
             throw new RemoteException(e.getMessage());
         }
-        System.out.println("RMI server started");
+        System.out.println("RMI Server started");
     }
 
     @Override
-    public void acceptConnection(ClientConnection client) throws Exception {
-        if (this.lobbyList.getPlayersLobby(client.getUsername()) != null) throw new NameAlreadyBoundException("Username not available");
-
-        RMIClientHandler clientHandler = new RMIClientHandler(client);
-        this.clients.add(clientHandler);
-        System.out.println("RMI client connected");
-        clientHandler.askStartingOption(this.lobbyList);
+    public void acceptConnection(RMIClientInterface client, String username) throws Exception {
+        if (lobbyList.getClientHandler(username) != null) throw new Exception("Username already taken");
+        RMIClientHandler newClient = new RMIClientHandler(client, username);
+        this.lobbyList.addClientHandler(newClient);
+        newClient.askStartingOption(lobbyList.getLobbiesNames());
     }
 
     @Override
-    public void assignSecretObjective(Object o, int playerIndex, ObjectiveCard objectiveCard) throws Exception {
-        Lobby lobby = this.lobbyList.getPlayersLobby(((ClientConnection) o).getUsername());
-        lobby.getGameContext().getGame().getPlayers().get(playerIndex).setObjectiveCard(objectiveCard);
-    }
+    public void createNewLobby(RMIClientInterface client, int numPlayers) throws Exception {
+        this.lobbyList.createLobby(client.getUsername(), numPlayers);
+        this.lobbyList.joinLobby(client.getUsername(), client.getUsername());
 
-    @Override
-    public void flipCard(Object o, int cardIndex) throws Exception {
-        ClientConnection clientConnection = (ClientConnection) o;
-        Lobby lobby = this.lobbyList.getPlayersLobby(clientConnection.getUsername());
-        Game game = lobby.getGameContext().getGame();
-        game.getPlayers().get(game.getIndexActivePlayer()).getPlayerHand().get(cardIndex).flipSide();
-        for (PlayableCard c : game.getPlayers().get(game.getIndexActivePlayer()).getPlayerHand())
-        {
-            System.out.println(c.getSide());
+        ArrayList<String> playerUsernames = new ArrayList<>();
+        for (ClientHandler player : this.lobbyList.getLobbyByHost(client.getUsername()).getPlayers()) {
+            playerUsernames.add(player.getUsername());
         }
-        //game.getPlayers().get(game.getIndexActivePlayer()).getConnection().askForMove(game.getPlayers().get(game.getIndexActivePlayer()));
-        clientConnection.makeMove(game.getPlayers().get(game.getIndexActivePlayer()));
+        client.receivePlayersInLobby(playerUsernames);
     }
 
     @Override
-    public void putCard(Object o, int indexToPlay, Coordinates alreadyPlayedCoordinates, int cornerIndex) throws Exception {
-        //  get the objects I need
-        Lobby lobby = this.lobbyList.getPlayersLobby(((ClientConnection) o).getUsername());
-        Game game = lobby.getGameContext().getGame();
-        Card alreadyPlayedCard = game.getPlayers().get(game.getIndexActivePlayer()).getPlayerBoard().getCard(alreadyPlayedCoordinates);
-        PlayableCard cardToPlay = game.getPlayers().get(game.getIndexActivePlayer()).getPlayerHand().get(indexToPlay);
+    public void joinExistingLobby(RMIClientInterface client, String lobbyHost) throws Exception {
+        this.lobbyList.joinLobby(client.getUsername(), lobbyHost);
 
-        //  put the card on the board
-        game.getPlayers().get(game.getIndexActivePlayer()).placeCard(alreadyPlayedCard, cardToPlay, cornerIndex);
-
-        //  remove the card from the player's hand
-        game.getPlayers().get(game.getIndexActivePlayer()).removeCardFromHand(indexToPlay);
-
-        System.out.println("______");
-        for (Card card : game.getPlayers().get(game.getIndexActivePlayer()).getPlayerBoard().getBoard().values())
-        {
-            System.out.println(card.getFrontImage());
+        ArrayList<String> playerUsernames = new ArrayList<>();
+        for (ClientHandler player : this.lobbyList.getLobbyByHost(lobbyHost).getPlayers()) {
+            playerUsernames.add(player.getUsername());
         }
-        System.out.println("______");
-    }
-
-
-    @Override
-    public void joinExistingLobby(Object o, Lobby lobby) throws Exception {
-        ClientHandler clientHandler = this.clients.getClientHandler(((ClientConnection) o).getUsername());
-        this.lobbyList.getLobbyByHost(lobby.getHost()).joinLobby(clientHandler);
+        client.receivePlayersInLobby(playerUsernames);
     }
 
     @Override
-    public void joinNewLobby(Object o, int numPlayers) throws Exception {
-        ClientHandler client = this.clients.getClientHandler(((ClientConnection) o).getUsername());
-        Lobby lobby = new Lobby(client.getClientUsername(), numPlayers);
-        this.lobbyList.createLobby(lobby);
-        lobby.joinLobby(client);
+    public void setColor(RMIClientInterface client, TokenColour color) throws Exception {
+        Lobby lobby = this.lobbyList.getPlayersLobby(client.getUsername());
+        lobby.setColor(client.getUsername(), color);
+        lobby.getGameContext().getGame().removeColor(color);
     }
 
     @Override
-    public void drawGoldDeck(Object o) throws Exception {
-        Lobby lobby = this.lobbyList.getPlayersLobby(((ClientConnection) o).getUsername());
-        Game game = lobby.getGameContext().getGame();
-        game.getPlayers().get(game.getIndexActivePlayer()).addCardToHand(game.popGoldDeck());
+    public void setSecretObjective(RMIClientInterface client, ObjectiveCard card) throws Exception {
+        Lobby lobby = this.lobbyList.getPlayersLobby(client.getUsername());
+        lobby.getGameContext().getGame().getPlayer(client.getUsername()).setSecretObjective(card);
     }
 
     @Override
-    public void drawResourceDeck(Object o) throws Exception {
-        Lobby lobby = this.lobbyList.getPlayersLobby(((ClientConnection) o).getUsername());
-        Game game = lobby.getGameContext().getGame();
-        game.getPlayers().get(game.getIndexActivePlayer()).addCardToHand(game.popResourceDeck());
+    public void flipCard(RMIClientInterface client, int cardIndex) throws Exception {
+        Lobby lobby = this.lobbyList.getPlayersLobby(client.getUsername());
+        lobby.getGameContext().getGame().getActivePlayer().getPlayerHand().get(cardIndex).flipSide();
+        client.chooseMove(lobby.getGameContext().getGame().getActivePlayer().getPlayerHand(), lobby.getGameContext().getGame().getActivePlayer().getPlayerBoard());
     }
 
     @Override
-    public void drawFaceUpCard(Object o, int cardIndex) throws Exception {
-        Lobby lobby = this.lobbyList.getPlayersLobby(((ClientConnection) o).getUsername());
-        Game game = lobby.getGameContext().getGame();
-        game.getPlayers().get(game.getIndexActivePlayer()).addCardToHand(game.drawFaceUpCard(cardIndex));
+    public void playCard(RMIClientInterface client, PlayableCard cardToPlay, Coordinates boardCard, int cornerIndex) throws Exception {
+        Lobby lobby = this.lobbyList.getPlayersLobby(client.getUsername());
+        lobby.getGameContext().getGame().getActivePlayer().placeCard(boardCard, cardToPlay, cornerIndex);
+    }
+
+    @Override
+    public void drawFromGoldDeck(RMIClientInterface client) throws Exception {
+        Lobby lobby = this.lobbyList.getPlayersLobby(client.getUsername());
+        lobby.getGameContext().getGame().getActivePlayer().addCardToHand(lobby.getGameContext().getGame().popGoldDeck());
+    }
+
+    @Override
+    public void drawFromResourceDeck(RMIClientInterface client) throws Exception {
+        Lobby lobby = this.lobbyList.getPlayersLobby(client.getUsername());
+        lobby.getGameContext().getGame().getActivePlayer().addCardToHand(lobby.getGameContext().getGame().popResourceDeck());
+    }
+
+    @Override
+    public void drawFromFaceUpCards(RMIClientInterface client, int cardIndex) throws Exception {
+        Lobby lobby = this.lobbyList.getPlayersLobby(client.getUsername());
+        lobby.getGameContext().getGame().getActivePlayer().addCardToHand(lobby.getGameContext().getGame().drawFaceUpCard(cardIndex));
     }
 }

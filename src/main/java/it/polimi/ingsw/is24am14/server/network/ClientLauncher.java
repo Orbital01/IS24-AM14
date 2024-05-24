@@ -42,12 +42,11 @@ public class ClientLauncher {
                 switch (choice) {
                     case 0:
                         System.out.println("Starting RMI connection...");
-                        try {
-                            connection = new RMIClient();
-                            connection.execute();
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
+                        RMIClientInterface client = null;
+        try {
+            client = new RMIClient();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
                         break;
                     case 1:
                         System.out.println("Starting TCP connection...");
