@@ -339,7 +339,7 @@ public class GoldCardDeckCreator {
 
         ResourceCondition threeAnimal= new ResourceCondition();
         threeAnimal.addClause(CornerEnum.ResourceEnum.ANIMAL);
-        threeAnimalOneInsect.addClause(CornerEnum.ResourceEnum.ANIMAL);
+        threeAnimal.addClause(CornerEnum.ResourceEnum.ANIMAL);
         threeAnimal.addClause(CornerEnum.ResourceEnum.ANIMAL);
 
 
@@ -403,8 +403,8 @@ public class GoldCardDeckCreator {
 
         ArrayList<Corner> empHidManEmp = new ArrayList<>();
         empHidManEmp.add(new Corner(CornerEnum.EMPTY));
-        empHidManEmp.add(new Corner(CornerEnum.ObjectEnum.QUILL));
         empHidManEmp.add(new Corner(CornerEnum.HIDDEN));
+        empHidManEmp.add(new Corner(CornerEnum.ObjectEnum.MANUSCRIPT));
         empHidManEmp.add(new Corner(CornerEnum.EMPTY));
         content.add(new GoldCard(1, manuscriptCondition, CornerEnum.ResourceEnum.INSECT, twoInsectOneAnimal, empHidManEmp, "src/main/resources/images/cards/gold_cards/purple_fronts/page_72.png", "src/main/resources/images/cards/gold_cards/purple_backs/page_72.png"));
 

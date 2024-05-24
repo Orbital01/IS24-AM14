@@ -54,23 +54,23 @@ public class ResourceCardDeckCreator {
 
         
 
-        ArrayList<Corner> empFunEmpFun = new ArrayList<>();
-        empFunEmpFun.add(new Corner(CornerEnum.EMPTY));
-        empFunEmpFun.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
-        empFunEmpFun.add(new Corner(CornerEnum.EMPTY));
-        empFunEmpFun.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+        ArrayList<Corner> hidFunEmpFun = new ArrayList<>();
+        hidFunEmpFun.add(new Corner(CornerEnum.HIDDEN));
+        hidFunEmpFun.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+        hidFunEmpFun.add(new Corner(CornerEnum.EMPTY));
+        hidFunEmpFun.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
 
-        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, empFunEmpFun, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_4.png", "src/main/resources/images/cards/resource_cards/red_backs/page_4.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, hidFunEmpFun, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_4.png", "src/main/resources/images/cards/resource_cards/red_backs/page_4.png"));
 
         
 
-        ArrayList<Corner> empQuiPlaFun = new ArrayList<>();
-        empQuiPlaFun.add(new Corner(CornerEnum.EMPTY));
-        empQuiPlaFun.add(new Corner(CornerEnum.ObjectEnum.QUILL));
-        empQuiPlaFun.add(new Corner(CornerEnum.ResourceEnum.PLANT));
-        empQuiPlaFun.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+        ArrayList<Corner> hidQuiPlaFun = new ArrayList<>();
+        hidQuiPlaFun.add(new Corner(CornerEnum.HIDDEN));
+        hidQuiPlaFun.add(new Corner(CornerEnum.ObjectEnum.QUILL));
+        hidQuiPlaFun.add(new Corner(CornerEnum.ResourceEnum.PLANT));
+        hidQuiPlaFun.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
 
-        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, empQuiPlaFun, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_5.png", "src/main/resources/images/cards/resource_cards/red_backs/page_5.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, hidQuiPlaFun, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_5.png", "src/main/resources/images/cards/resource_cards/red_backs/page_5.png"));
 
         
 
@@ -85,13 +85,13 @@ public class ResourceCardDeckCreator {
         
 
 
-        ArrayList<Corner> funInsManHid = new ArrayList<>();
-        funInsManHid.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
-        funInsManHid.add(new Corner(CornerEnum.ResourceEnum.INSECT));
-        funInsManHid.add(new Corner(CornerEnum.ObjectEnum.MANUSCRIPT));
-        funInsManHid.add(new Corner(CornerEnum.HIDDEN));
+        ArrayList<Corner> funInsManEmp = new ArrayList<>();
+        funInsManEmp.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+        funInsManEmp.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+        funInsManEmp.add(new Corner(CornerEnum.ObjectEnum.MANUSCRIPT));
+        funInsManEmp.add(new Corner(CornerEnum.EMPTY));
 
-        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, funInsManHid, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_7.png", "src/main/resources/images/cards/resource_cards/red_backs/page_7.png"));
+        content.add(new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, funInsManEmp, backCorners, "src/main/resources/images/cards/resource_cards/red_fronts/page_7.png", "src/main/resources/images/cards/resource_cards/red_backs/page_7.png"));
 
         
 

@@ -19,7 +19,7 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 
     protected RMIClient() throws Exception {
         Registry registry;
-        registry = LocateRegistry.getRegistry("127.0.0.1", 12500);
+        registry = LocateRegistry.getRegistry("172.20.10.4", 12500);
         this.server = (RMIServerInterface) registry.lookup("RMIServer");
 
         this.view = new TUIView();

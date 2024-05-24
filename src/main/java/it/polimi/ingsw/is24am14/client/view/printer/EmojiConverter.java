@@ -429,7 +429,7 @@ public class EmojiConverter {
         }
         else if (condition.toString().equals("NoCondition")){
             ArrayList<String> emptyString = new ArrayList<>();
-            emptyString.add("");
+            emptyString.add("  ");
             return emptyString;
         }
         else {
