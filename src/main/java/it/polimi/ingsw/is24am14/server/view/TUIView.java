@@ -1,5 +1,6 @@
 package it.polimi.ingsw.is24am14.server.view;
 
+import it.polimi.ingsw.is24am14.client.view.printer.RenderBoard;
 import it.polimi.ingsw.is24am14.server.model.card.*;
 import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
@@ -99,8 +100,12 @@ public class TUIView implements VirtualView{
 
     @Override
     public void printSecretObjective(ObjectiveCard card1, ObjectiveCard card2) {
-        System.out.println("0) " + card1.toString());
-        System.out.println("1) " + card2.toString());
+        for(String s : card1.drawCard()) {
+            System.out.println(s);
+        }
+        for (String s : card2.drawCard()) {
+            System.out.println(s);
+        }
     }
 
     @Override
@@ -127,16 +132,17 @@ public class TUIView implements VirtualView{
     @Override
     public void printBoard(GameArea board) {
         System.out.println("Your board");
-        for (Card card : board.getBoard().values()) {
-            System.out.println(card.toString());
-        }
+        RenderBoard render = new RenderBoard(board);
+        render.printBoard();
     }
 
     @Override
     public void printHand(ArrayList<PlayableCard> hand) {
         System.out.println("Your hand");
         for (PlayableCard card : hand) {
-            System.out.println(card.toString());
+            for (String s : card.drawCard()) {
+                System.out.println(s);
+            }
         }
     }
 

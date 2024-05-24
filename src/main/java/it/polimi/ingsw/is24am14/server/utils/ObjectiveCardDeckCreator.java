@@ -66,15 +66,15 @@ public class ObjectiveCardDeckCreator {
         content.add(new ObjectiveCard(redRedGreenL, "src/main/resources/images/cards/objective_cards/red_fronts/page_91.png", "src/main/resources/images/cards/resource_cards/red_backs/page_91.png", 3));
 
         CardCondition greenGreenPurpleL = new CardCondition();
-        greenGreenPurpleL.addClause(topRight, CornerEnum.ResourceEnum.PLANT);
-        greenGreenPurpleL.addClause(midRight, CornerEnum.ResourceEnum.PLANT);
+        greenGreenPurpleL.addClause(topMid, CornerEnum.ResourceEnum.PLANT);
+        greenGreenPurpleL.addClause(centre, CornerEnum.ResourceEnum.PLANT);
         greenGreenPurpleL.addClause(bottomLeft, CornerEnum.ResourceEnum.INSECT);
         content.add(new ObjectiveCard(greenGreenPurpleL, "src/main/resources/images/cards/objective_cards/red_fronts/page_92.png", "src/main/resources/images/cards/resource_cards/red_backs/page_92.png", 3));
 
         CardCondition redBlueBlueL = new CardCondition();
-        redRedGreenL.addClause(topRight, CornerEnum.ResourceEnum.FUNGI);
-        redRedGreenL.addClause(centre, CornerEnum.ResourceEnum.ANIMAL);
-        redRedGreenL.addClause(bottomMid, CornerEnum.ResourceEnum.ANIMAL);
+        redBlueBlueL.addClause(topRight, CornerEnum.ResourceEnum.FUNGI);
+        redBlueBlueL.addClause(centre, CornerEnum.ResourceEnum.ANIMAL);
+        redBlueBlueL.addClause(bottomMid, CornerEnum.ResourceEnum.ANIMAL);
         content.add(new ObjectiveCard(redBlueBlueL, "src/main/resources/images/cards/objective_cards/red_fronts/page_93.png", "src/main/resources/images/cards/resource_cards/red_backs/page_93.png", 3));
 
         CardCondition bluePurplePurpleL = new CardCondition();
