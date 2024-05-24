@@ -4,9 +4,11 @@ import it.polimi.ingsw.is24am14.server.model.game.exceptions.MaximumNumberOfFace
 import it.polimi.ingsw.is24am14.server.model.game.exceptions.MaximumNumberOfPlayersReachedException;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.model.card.*;
+import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Game implements Serializable {
     public Game(int numPlayers) {
@@ -21,6 +23,7 @@ public class Game implements Serializable {
     private Deck<ObjectiveCard> objectiveDeck; //modificato da Card a ObjectiveCard
     private boolean isEndGame;
     private int indexActivePlayer;
+    private List<TokenColour> colors;
 
     public void addPlayer(Player newPlayer) throws IllegalArgumentException, MaximumNumberOfPlayersReachedException {
         if (players.size() >= numPlayers) throw new MaximumNumberOfPlayersReachedException("Maximum number of players already reached");
@@ -66,6 +69,21 @@ public class Game implements Serializable {
 
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    public Player getPlayer(int index) {
+        return players.get(index);
+    }
+
+    public Player getPlayer(String playerName) {
+        for (Player player : players) {
+            if (player.getPlayerNickname().equals(playerName)) return player;
+        }
+        return null;
+    }
+
+    public Player getActivePlayer() {
+        return players.get(indexActivePlayer);
     }
 
     public void addFaceUpCard(PlayableCard newCard) throws MaximumNumberOfFaceUpCardsReachedException {
@@ -125,5 +143,13 @@ public class Game implements Serializable {
 
     public void setFaceUpCards(ArrayList<PlayableCard> faceUpCards) {
         this.faceUpCards = faceUpCards;
+    }
+
+    public void setColors(List<TokenColour> colors) {
+        this.colors = colors;
+    }
+
+    public void removeColor(TokenColour color) {
+        this.colors.remove(color);
     }
 }

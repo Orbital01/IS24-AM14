@@ -27,12 +27,8 @@ public class EndTurnState implements GameState{
 
     @Override
     public void execute(){
-        updateScore(lastPlayedCard, currentPlayer);
-        try {
-            this.currentPlayer.getConnection().sendScore(currentPlayer.getScore());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        this.updateScore(lastPlayedCard, currentPlayer);
+        this.currentPlayer.sendScore(currentPlayer.getScore());
         this.game.changeActivePlayer();
     }
 

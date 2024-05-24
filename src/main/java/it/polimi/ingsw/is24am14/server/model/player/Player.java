@@ -7,6 +7,7 @@ import it.polimi.ingsw.is24am14.server.network.ClientHandler;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a player in the game.
@@ -22,7 +23,7 @@ public class Player implements Serializable {
     private ObjectiveCard secretObjective;
     private GameArea playerBoard;
 
-    private ClientHandler connection;
+    private final ClientHandler connection;
 
     //Constructor
     /**
@@ -181,8 +182,17 @@ public class Player implements Serializable {
      * @param cardToPlace The new card that the player wants to place on the board.
      * @param cornerIndex The index of the corner where the new card is goin to be placed upon the old card.
      */
+
+    //  Second row added by Stefan. Must be checked and documented
     public void placeCard(Card cardToOverlap, Card cardToPlace, int cornerIndex) {
-        playerBoard.addCard(cardToOverlap, cardToPlace, cornerIndex);
+        this.playerBoard.addCard(cardToOverlap, cardToPlace, cornerIndex);
+        this.playerHand.remove(cardToPlace);
+    }
+
+    public void placeCard(Coordinates coordinatesToOverlap, Card cardToPlace, int cornerIndex) {
+        Card cardToOverlap = this.getPlayerBoard().getCard(coordinatesToOverlap);
+        this.playerBoard.addCard(cardToOverlap, cardToPlace, cornerIndex);
+        this.playerHand.remove(cardToPlace);
     }
 
     /**
@@ -228,10 +238,43 @@ public class Player implements Serializable {
         this.isFirstPlayer = firstPlayer;
     }
 
-    /**
-     * Retrieves the player's connection.
-     *
-     * @return The connection of the player.
-     */
-    public ClientHandler getConnection() {return this.connection;}
+    public void assignColor(List<TokenColour> colors) throws Exception {
+        this.connection.assignColor(colors);
+    }
+
+    public void askSecretObjective(ObjectiveCard card1, ObjectiveCard card2) throws Exception {
+        this.connection.askSecretObjective(card1, card2);
+    }
+
+    public void sendIsFirstPlayer() throws Exception {
+        this.connection.sendIsFirstPlayer();
+    }
+
+    public void askForMove() throws Exception {
+        this.connection.askForMove(this.playerHand, this.getPlayerBoard());
+    }
+
+    public void sendScore(int score) {
+        try {
+            this.connection.sendScore(score);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void askPickChoice(Deck<GoldCard> goldDeck, Deck<ResourceCard> resourceDeck, ArrayList<PlayableCard> faceUpCards) {
+        try {
+            this.connection.askPickChoice(goldDeck, resourceDeck, faceUpCards);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void sendWinner(String playerNickname) {
+        try {
+            this.connection.sendWinner(playerNickname);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

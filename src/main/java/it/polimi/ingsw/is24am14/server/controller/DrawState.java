@@ -19,10 +19,6 @@ public class DrawState implements GameState{
 
     @Override
     public void execute(){
-        try {
-            currentPlayer.getConnection().askPickChoice(this.game.getGoldDeck(), this.game.getResourceDeck(), this.game.getFaceUpCards());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        currentPlayer.askPickChoice(this.game.getGoldDeck(), this.game.getResourceDeck(), this.game.getFaceUpCards());
     }
 }

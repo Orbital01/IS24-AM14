@@ -2,10 +2,9 @@ package it.polimi.ingsw.is24am14.server.network;
 
 public class ClientLauncher {
     public static void main(String[] args) {
-        ClientConnection connection;
+        RMIClientInterface client = null;
         try {
-            connection = new RMIClient();
-            connection.execute();
+            client = new RMIClient();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
