@@ -77,4 +77,8 @@ public class CardCondition implements Condition {
     public HashMap<Coordinates, CornerEnum.ResourceEnum> getListCard() {
         return listCard;
     }
+    @Override
+    public String toString() {
+        return "CardCondition";
+    }
 }

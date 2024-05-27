@@ -63,4 +63,9 @@ public class ResourceCondition implements Condition {
     public int numSatisfied(GameArea board) {
         return isSatisfied(board) ? 1 : 0;
     }
+
+    @Override
+    public String toString() {
+        return "ResourceCondition";
+    }
 }

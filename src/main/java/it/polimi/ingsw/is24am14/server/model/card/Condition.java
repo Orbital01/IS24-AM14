@@ -15,4 +15,5 @@ import java.io.Serializable;
 public interface Condition extends Serializable {
     boolean isSatisfied(GameArea board);
     int numSatisfied(GameArea board);
+    String toString();
 }
