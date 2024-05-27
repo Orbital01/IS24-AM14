@@ -10,7 +10,8 @@ public class ServerLauncher {
         LobbyList lobbyList = new LobbyList(clientHandlerList);
         try {
             RMIServer server = new RMIServer(lobbyList);
-        } catch (RemoteException e) {
+            SocketServer socketServer = new SocketServer(lobbyList);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

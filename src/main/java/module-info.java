@@ -28,5 +28,9 @@ module it.polimi.ingsw.is24am14 {
     opens it.polimi.ingsw.is24am14.server.controller to com.google.gson;
     opens it.polimi.ingsw.is24am14.server.model.card to com.google.gson;
     exports it.polimi.ingsw.is24am14.server.view;
+    exports it.polimi.ingsw.is24am14.server.utils to java.rmi;
+    opens it.polimi.ingsw.is24am14.server.utils to com.google.gson, java.rmi;
+    exports it.polimi.ingsw.is24am14.server.utils.GSONAdapters to java.rmi;
+    opens it.polimi.ingsw.is24am14.server.utils.GSONAdapters to com.google.gson, java.rmi;
 
 }

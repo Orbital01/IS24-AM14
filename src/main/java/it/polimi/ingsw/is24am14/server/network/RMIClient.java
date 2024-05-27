@@ -14,17 +14,16 @@ import it.polimi.ingsw.is24am14.server.view.*;
 
 public class RMIClient extends UnicastRemoteObject implements RMIClientInterface {
     private String username;
-    private VirtualView view;
-    private RMIServerInterface server;
+    private final VirtualView view;
+    private final RMIServerInterface server;
 
     protected RMIClient() throws Exception {
         Registry registry;
         registry = LocateRegistry.getRegistry("127.0.0.1", 12345);
         this.server = (RMIServerInterface) registry.lookup("RMIServer");
-
         this.view = new TUIView();
-        this.username = view.askForUsername();
 
+        this.username = view.askForUsername();
         while (true) {
             try {
                 server.acceptConnection(this, username);
@@ -34,8 +33,6 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
                 this.username = view.askForUsername();
             }
         }
-
-        System.out.println("Client connected");
     }
 
     @Override
@@ -73,7 +70,12 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
     @Override
     public void selectObjectiveCard(ObjectiveCard card1, ObjectiveCard card2) throws Exception {
         this.view.printSecretObjective(card1, card2);
-        ObjectiveCard choice = this.view.chooseSecretObjective(card1, card2);
+        ObjectiveCard choice = null;
+        if (this.view.chooseSecretObjective(card1, card2) == 0) {
+            choice = card1;
+        } else if (this.view.chooseSecretObjective(card1, card2) == 1) {
+            choice = card2;
+        }
         this.server.setSecretObjective(this, choice);
     }
 

@@ -35,6 +35,7 @@ public class InitGameState implements GameState {
         this.context = context;
 
         TokenColours = new ArrayList<>(List.of(TokenColour.values()));
+        TokenColours.remove(TokenColour.BLACK);
 
         this.starterCards = new StarterCardDeckCreator().createStarterCardDeck();
         this.goldDeck = new GoldCardDeckCreator().createGoldCardDeck();

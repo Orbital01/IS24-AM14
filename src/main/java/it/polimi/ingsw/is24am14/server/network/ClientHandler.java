@@ -1,5 +1,6 @@
 package it.polimi.ingsw.is24am14.server.network;
 
+import it.polimi.ingsw.is24am14.server.controller.Lobby;
 import it.polimi.ingsw.is24am14.server.model.card.*;
 import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
@@ -13,7 +14,7 @@ public interface ClientHandler extends Remote {
 
     void askStartingOption(ArrayList<String> lobbiesNames) throws Exception;
 
-    void sendPlayersInLobby(ArrayList<String> players) throws Exception;
+    void sendPlayersInLobby(Lobby lobby) throws Exception;
 
     void assignColor(List<TokenColour> colours) throws Exception;
 

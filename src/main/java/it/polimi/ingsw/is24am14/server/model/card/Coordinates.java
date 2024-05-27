@@ -98,4 +98,9 @@ public class Coordinates implements Serializable, Comparable<Coordinates> {
     private double distance(Coordinates coordinates) {
         return Math.sqrt(this.row * this.row + this.column * this.column);
     }
+
+    @Override
+    public String toString() {
+        return "[" + row + ", " + column + "]";
+    }
 }

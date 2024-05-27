@@ -26,7 +26,7 @@ public interface VirtualView {
 
     void printSecretObjective(ObjectiveCard card1, ObjectiveCard card2);
 
-    ObjectiveCard chooseSecretObjective(ObjectiveCard card1, ObjectiveCard card2);
+    int chooseSecretObjective(ObjectiveCard card1, ObjectiveCard card2);
 
     void printBlackToken();
 
@@ -45,6 +45,8 @@ public interface VirtualView {
     int chooseCornerIndex(GameArea board);
 
     int pickChoices(Deck<GoldCard> goldDeck, Deck<ResourceCard> resourceDeck, ArrayList<PlayableCard> faceUpCards);
+
+    int pickChoices(boolean goldDeckEmpty, boolean resourceDeckEmpty, ArrayList<PlayableCard> faceUpCards);
 
     int chooseFaceUpCard(ArrayList<PlayableCard> faceUpCards);
 

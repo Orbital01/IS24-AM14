@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ObjectiveCard extends Card {
     private final Condition condition;
-    private int points;
+    private final int points;
 
     public ObjectiveCard(Condition condition, String frontImage, String backImage, int points) {
 

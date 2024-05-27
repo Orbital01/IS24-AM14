@@ -104,7 +104,7 @@ public class TUIView implements VirtualView{
     }
 
     @Override
-    public ObjectiveCard chooseSecretObjective(ObjectiveCard card1, ObjectiveCard card2) {
+    public int chooseSecretObjective(ObjectiveCard card1, ObjectiveCard card2) {
         int secretObjectiveChoice;
         Scanner in = new Scanner(System.in);
         System.out.println("Choose a secret objective");
@@ -115,8 +115,7 @@ public class TUIView implements VirtualView{
             secretObjectiveChoice = in.nextInt();
         }
 
-        if (secretObjectiveChoice == 1) return card1;
-        return card2;
+        return secretObjectiveChoice;
     }
 
     @Override
@@ -237,6 +236,34 @@ public class TUIView implements VirtualView{
 
         option = scanner.nextInt();
         while (option < 0 || option >= 3 || (option == 0 && goldDeck.isEmpty()) || (option == 1 && resourceDeck.isEmpty())) {
+            System.out.println("Invalid option. Try again.");
+            option = scanner.nextInt();
+        }
+        return option;
+    }
+
+    @Override
+    public int pickChoices(boolean goldDeckEmpty, boolean resourceDeckEmpty, ArrayList<PlayableCard> faceUpCards) {
+        Scanner scanner = new Scanner(System.in);
+        int option;
+
+        System.out.println("Digit:");
+        if (goldDeckEmpty) {
+            System.out.println("The gold deck is empty");
+        } else {
+            System.out.println("0) to draw from the Gold Deck");
+        }
+
+        if (resourceDeckEmpty) {
+            System.out.println("The resource deck is empty");
+        } else {
+            System.out.println("1) to draw from the Resource Deck");
+        }
+
+        System.out.println("2) to pick one of the Face Up Cards");
+
+        option = scanner.nextInt();
+        while (option < 0 || option >= 3 || (option == 0 && goldDeckEmpty) || (option == 1 && resourceDeckEmpty)) {
             System.out.println("Invalid option. Try again.");
             option = scanner.nextInt();
         }
