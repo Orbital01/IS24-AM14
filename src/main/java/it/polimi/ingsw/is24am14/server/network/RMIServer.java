@@ -85,6 +85,14 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     public void playCard(RMIClientInterface client, PlayableCard cardToPlay, Coordinates boardCard, int cornerIndex) throws Exception {
         Lobby lobby = this.lobbyList.getPlayersLobby(client.getUsername());
         lobby.getGameContext().getGame().getActivePlayer().placeCard(boardCard, cardToPlay, cornerIndex);
+        lobby.getGameContext().getGame().getActivePlayer().getPlayerHand().remove(cardToPlay);
+    }
+
+    @Override
+    public void playCard(RMIClientInterface client, int indexCardToPlay, Coordinates boardCard, int cornerIndex) throws Exception {
+        Lobby lobby = this.lobbyList.getPlayersLobby(client.getUsername());
+        PlayableCard cardToPlay = lobby.getGameContext().getGame().getActivePlayer().getPlayerHand().get(indexCardToPlay);
+        lobby.getGameContext().getGame().getActivePlayer().placeCard(boardCard, cardToPlay, cornerIndex);
     }
 
     @Override

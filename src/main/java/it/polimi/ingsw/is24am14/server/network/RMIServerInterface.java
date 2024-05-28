@@ -24,6 +24,8 @@ public interface RMIServerInterface extends Remote {
 
     void playCard(RMIClientInterface client, PlayableCard cardToPlay, Coordinates boardCard, int cornerIndex) throws Exception;
 
+    void playCard(RMIClientInterface client, int indexCardToPlay, Coordinates boardCard, int cornerIndex) throws Exception;
+
     void drawFromGoldDeck(RMIClientInterface client) throws Exception;
 
     void drawFromResourceDeck(RMIClientInterface client) throws Exception;

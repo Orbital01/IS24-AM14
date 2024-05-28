@@ -110,7 +110,7 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
         handCardIndex = this.view.chooseCardToPlay(hand);
         boardCard = this.view.chooseCardToOverlap(board);
         cornerIndex = this.view.chooseCornerIndex(board);
-        this.server.playCard(this, hand.get(handCardIndex), boardCard, cornerIndex);
+        this.server.playCard(this, handCardIndex, boardCard, cornerIndex);
     }
 
     @Override
