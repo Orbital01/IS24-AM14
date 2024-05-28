@@ -101,7 +101,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>it.polimi.ingsw.is24am14/it.polimi.ingsw.is24am14.HelloApplication</mainClass>
+                            <mainClass>it.polimi.ingsw.is24am14/it.polimi.ingsw.is24am14.client.GUI.Menu1.GUILauncher</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
@@ -115,7 +115,7 @@
         </plugins>
         <resources>
             <resource>
-                <directory>src/main/java/it/polimi/ingsw/is24am14/client/GUI/Menu1</directory>
+                <directory>src/main/resources</directory>
             </resource>
         </resources>
     </build>

@@ -10,7 +10,7 @@ module it.polimi.ingsw.is24am14 {
     requires net.fellbaum.jemoji;
     requires java.naming;
 
-    opens it.polimi.ingsw.is24am14 to javafx.fxml;
+    opens it.polimi.ingsw.is24am14.server;
     exports it.polimi.ingsw.is24am14.server;
     opens it.polimi.ingsw.is24am14.server.model.player to javafx.fxml, com.google.gson;
     opens it.polimi.ingsw.is24am14.server.model.game to javafx.fxml, com.google.gson;
@@ -29,4 +29,6 @@ module it.polimi.ingsw.is24am14 {
     opens it.polimi.ingsw.is24am14.server.model.card to com.google.gson;
     exports it.polimi.ingsw.is24am14.server.view;
 
+    opens it.polimi.ingsw.is24am14.client.GUI.Menu1 to javafx.fxml;
+    exports it.polimi.ingsw.is24am14.client.GUI.Menu1;
 }

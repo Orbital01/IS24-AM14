@@ -15,7 +15,7 @@
    <children>
       <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
          <image>
-            <Image url="@../../../../../../../../resources/images/background.jpg" />
+            <Image url="@images/background.jpg" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="115.0" layoutX="202.0" layoutY="16.0" stroke="BLACK" strokeType="INSIDE" width="196.0">
@@ -38,7 +38,7 @@
       </Rectangle>
       <ImageView fitHeight="172.0" fitWidth="191.0" layoutX="214.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../resources/images/codexlogo.png"/>
+            <Image url="@images/codexlogo.png"/>
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="69.0" layoutX="193.0" layoutY="151.0" strokeType="INSIDE" width="214.0">
