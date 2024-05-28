@@ -33,7 +33,7 @@ public class StarterCardDeckCreator {
         ArrayList<CornerEnum.ResourceEnum> insect = new ArrayList<>();
         insect.add(CornerEnum.ResourceEnum.INSECT);
 
-        content.add(new StarterCard(empPlaInsEmp, funPlaInsAni, insect, "src/main/resources/images/cards/starter_cards/starter_fronts/page_81.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_81.png"));
+        content.add(new StarterCard(funPlaInsAni, empPlaInsEmp, insect, "src/main/resources/images/cards/starter_cards/starter_fronts/page_81.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_81.png"));
 
 
 
@@ -53,7 +53,7 @@ public class StarterCardDeckCreator {
         ArrayList<CornerEnum.ResourceEnum> fungi = new ArrayList<>();
         fungi.add(CornerEnum.ResourceEnum.FUNGI);
 
-        content.add(new StarterCard(aniEmpEmpFun, plaAniFunIns, fungi, "src/main/resources/images/cards/starter_cards/starter_fronts/page_82.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_82.png"));
+        content.add(new StarterCard(plaAniFunIns, aniEmpEmpFun, fungi, "src/main/resources/images/cards/starter_cards/starter_fronts/page_82.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_82.png"));
 
 
 
@@ -72,7 +72,7 @@ public class StarterCardDeckCreator {
         ArrayList<CornerEnum.ResourceEnum> plaFun = new ArrayList<>();
         plaFun.add(CornerEnum.ResourceEnum.PLANT);
         plaFun.add(CornerEnum.ResourceEnum.FUNGI);
-        content.add(new StarterCard(empEmpEmpEmp, insAniFunPlan, plaFun, "src/main/resources/images/cards/starter_cards/starter_fronts/page_83.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_83.png"));
+        content.add(new StarterCard(insAniFunPlan, empEmpEmpEmp, plaFun, "src/main/resources/images/cards/starter_cards/starter_fronts/page_83.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_83.png"));
 
 
 
@@ -87,7 +87,7 @@ public class StarterCardDeckCreator {
         ArrayList<CornerEnum.ResourceEnum> aniIns = new ArrayList<>();
         aniIns.add(CornerEnum.ResourceEnum.ANIMAL);
         aniIns.add(CornerEnum.ResourceEnum.INSECT);
-        content.add(new StarterCard(empEmpEmpEmp, plaInsAniFun, aniIns, "src/main/resources/images/cards/starter_cards/starter_fronts/page_84.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_84.png"));
+        content.add(new StarterCard(plaInsAniFun, empEmpEmpEmp, aniIns, "src/main/resources/images/cards/starter_cards/starter_fronts/page_84.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_84.png"));
 
 
 
@@ -108,7 +108,7 @@ public class StarterCardDeckCreator {
         aniInsPLa.add(CornerEnum.ResourceEnum.ANIMAL);
         aniInsPLa.add(CornerEnum.ResourceEnum.INSECT);
         aniInsPLa.add(CornerEnum.ResourceEnum.PLANT);
-        content.add(new StarterCard(empEmpHidHid, insFunPlaAni, aniInsPLa, "src/main/resources/images/cards/starter_cards/starter_fronts/page_85.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_85.png"));
+        content.add(new StarterCard(insFunPlaAni, empEmpHidHid, aniInsPLa, "src/main/resources/images/cards/starter_cards/starter_fronts/page_85.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_85.png"));
 
 
 
@@ -123,8 +123,14 @@ public class StarterCardDeckCreator {
         plaAniFun.add(CornerEnum.ResourceEnum.PLANT);
         plaAniFun.add(CornerEnum.ResourceEnum.ANIMAL);
         plaAniFun.add(CornerEnum.ResourceEnum.FUNGI);
-        content.add(new StarterCard(empEmpHidHid, funAniPlaIns, plaAniFun, "src/main/resources/images/cards/starter_cards/starter_fronts/page_86.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_86.png"));
+        content.add(new StarterCard(funAniPlaIns, empEmpHidHid, plaAniFun, "src/main/resources/images/cards/starter_cards/starter_fronts/page_86.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_86.png"));
 
+        /* content.get(0).flipSide();
+        content.get(1).flipSide();
+        content.get(2).flipSide();
+        content.get(3).flipSide();
+        content.get(4).flipSide();
+        content.get(5).flipSide(); */
 
         return new Deck<>(content);
     }

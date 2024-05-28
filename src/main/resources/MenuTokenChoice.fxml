@@ -15,7 +15,7 @@
    <children>
       <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
          <image>
-            <Image url="@../../../../../../../../resources/images/background.jpg" />
+            <Image url="@images/background.jpg" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="115.0" layoutX="202.0" layoutY="16.0" stroke="BLACK" strokeType="INSIDE" width="196.0">
@@ -43,7 +43,7 @@
       </Rectangle>
       <ImageView fitHeight="172.0" fitWidth="191.0" layoutX="214.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../../../../../Downloads/codexlogo.png" />
+            <Image url="@images/codexlogo.png"/>
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="42.0" layoutX="202.0" layoutY="151.0" strokeType="INSIDE" width="196.0">
@@ -82,7 +82,7 @@
       </Rectangle>
       <ImageView fitHeight="48.0" fitWidth="223.0" layoutX="189.0" layoutY="148.0" pickOnBounds="true">
          <image>
-            <Image url="@../../../../../../../../resources/images.tokens/token_selection_background.png" />
+            <Image url="@images.tokens/token_selection_background.png" />
          </image>
       </ImageView>
       <Text layoutX="176.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose your token!&#10;" textAlignment="CENTER" wrappingWidth="248.953125">
@@ -92,14 +92,14 @@
       </Text>
       <ImageView fitHeight="115.0" fitWidth="389.0" layoutX="106.0" layoutY="202.0" pickOnBounds="true">
          <image>
-            <Image url="@../../../../../../../../resources/images.tokens/token_selection_background.png" />
+            <Image url="@images.tokens/token_selection_background.png" />
          </image>
       </ImageView>
       <Button layoutX="144.0" layoutY="231.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: transparent;">
          <graphic>
             <ImageView fitHeight="72.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../../../resources/images.tokens/blue_token.png" />
+                  <Image url="@images.tokens/blue_token.png" />
                </image>
             </ImageView>
          </graphic>
@@ -108,7 +108,7 @@
          <graphic>
             <ImageView fitHeight="72.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../../../resources/images.tokens/green_token.png" />
+                  <Image url="@images.tokens/green_token.png" />
                </image>
             </ImageView>
          </graphic>
@@ -117,7 +117,7 @@
          <graphic>
             <ImageView fitHeight="72.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../../../resources/images.tokens/red_token.png" />
+                  <Image url="@images.tokens/red_token.png" />
                </image>
             </ImageView>
          </graphic>
@@ -126,7 +126,7 @@
          <graphic>
             <ImageView fitHeight="72.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../../../resources/images.tokens/yellow_token.png" />
+                  <Image url="@images.tokens/yellow_token.png" />
                </image>
             </ImageView>
          </graphic>

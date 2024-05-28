@@ -223,7 +223,7 @@ public class DrawCardTest {
         threeFunOneIns.addClause(CornerEnum.ResourceEnum.FUNGI);
         threeFunOneIns.addClause(CornerEnum.ResourceEnum.FUNGI);
         threeFunOneIns.addClause(CornerEnum.ResourceEnum.INSECT);
-        threeFunOneIns.addClause(CornerEnum.ResourceEnum.PLANT);
+        //threeFunOneIns.addClause(CornerEnum.ResourceEnum.PLANT);
         card = new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.FUNGI, threeFunOneIns, empHidEmpEmp,  "src/main/resources/images/cards/gold_cards/red_fronts/page_46.png", "src/main/resources/images/cards/gold_cards/red_back/page_46.png");
 
         ArrayList<String> carta = card.drawCard();

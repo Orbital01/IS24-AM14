@@ -13,56 +13,56 @@ public class EmojiConverter {
     public EmojiConverter() {}
 
 /*************************************** GOLD AND RESOURCE **************************************/
-    public static ArrayList<Emoji> drawCorners(PlayableCard card) {
-        Emoji corner;
+    public static ArrayList<String> drawCorners(PlayableCard card) {
+        String corner;
         int i = 0;
-        ArrayList<Emoji> cornerEmojis = new ArrayList<Emoji>();
+        ArrayList<String> cornerEmojis = new ArrayList<String>();
         if (card.getSide().equals(EnumSide.FRONT)) {
             for (i = 0; i < card.getCorners().size(); i++) {
                 switch (card.getCorners().get(i).getType()) {
                     case CornerEnum.ResourceEnum.FUNGI:
                         Emoji fungi = Emojis.MUSHROOM;
-                        corner = fungi;
+                        corner = fungi.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ResourceEnum.ANIMAL:
                         Emoji animal = Emojis.WOLF;
-                        corner = animal;
+                        corner = animal.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ResourceEnum.PLANT:
                         Emoji plant = Emojis.SHAMROCK;
-                        corner = plant;
+                        corner = plant.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ResourceEnum.INSECT:
                         Emoji insect = Emojis.BUTTERFLY;
-                        corner = insect;
+                        corner = insect.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.OthersEnum.HIDDEN:
                         Emoji hidden = Emojis.PROHIBITED;
-                        corner = hidden;
+                        corner = hidden.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.OthersEnum.EMPTY:
                         Emoji empty = Emojis.WHITE_MEDIUM_SQUARE;
-                        corner = empty;
+                        corner = empty.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ObjectEnum.INKWELL:
                         Emoji inkwell = Emojis.BLACK_NIB;
-                        corner = inkwell;
+                        corner = inkwell.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ObjectEnum.MANUSCRIPT:
                         Emoji manuscript = Emojis.SCROLL;
-                        corner = manuscript;
+                        corner = manuscript.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ObjectEnum.QUILL:
                         Emoji quill = Emojis.FEATHER;
-                        corner = quill;
+                        corner = quill.getEmoji();
                         cornerEmojis.add(corner);
                         break;
 
@@ -77,47 +77,47 @@ public class EmojiConverter {
                 switch (card.getCorners().get(i).getType()) {
                     case CornerEnum.ResourceEnum.FUNGI:
                         Emoji fungi = Emojis.MUSHROOM;
-                        corner = fungi;
+                        corner = fungi.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ResourceEnum.ANIMAL:
                         Emoji animal = Emojis.WOLF;
-                        corner = animal;
+                        corner = animal.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ResourceEnum.PLANT:
                         Emoji plant = Emojis.SHAMROCK;
-                        corner = plant;
+                        corner = plant.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ResourceEnum.INSECT:
                         Emoji insect = Emojis.BUTTERFLY;
-                        corner = insect;
+                        corner = insect.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.OthersEnum.HIDDEN:
                         Emoji hidden = Emojis.PROHIBITED;
-                        corner = hidden;
+                        corner = hidden.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.OthersEnum.EMPTY:
                         Emoji empty = Emojis.WHITE_MEDIUM_SQUARE;
-                        corner = empty;
+                        corner = empty.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ObjectEnum.INKWELL:
                         Emoji inkwell = Emojis.BLACK_NIB;
-                        corner = inkwell;
+                        corner = inkwell.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ObjectEnum.MANUSCRIPT:
                         Emoji manuscript = Emojis.SCROLL;
-                        corner = manuscript;
+                        corner = manuscript.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ObjectEnum.QUILL:
                         Emoji quill = Emojis.FEATHER;
-                        corner = quill;
+                        corner = quill.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     default:
@@ -129,57 +129,30 @@ public class EmojiConverter {
         return cornerEmojis;
     }
 
-    /*public static Emoji drawCardType(PlayableCard card){
-        Emoji resource = null;
+    public static ArrayList<String> drawResource(PlayableCard card) {
+        String resource;
         int i = 0;
-        switch (card.getResource()){
-                case CornerEnum.ResourceEnum.FUNGI:
-                    Emoji fungi = Emojis.MUSHROOM;
-                    resource = fungi;
-                    break;
-                case CornerEnum.ResourceEnum.ANIMAL:
-                    Emoji animal = Emojis.WOLF;
-                    resource = animal;
-                    break;
-                case CornerEnum.ResourceEnum.PLANT:
-                    Emoji plant = Emojis.SHAMROCK;
-                    resource = plant;
-                    break;
-                case CornerEnum.ResourceEnum.INSECT:
-                    Emoji insect = Emojis.BUTTERFLY;
-                    resource = insect;
-                    break;
-                default:
-                    //throw new IllegalStateEcornerception("Unecornerpected value: " + corners.get(i).getType());
-                    break;
-            }
-        return resource;
-    }*/
-
-    public static ArrayList<Emoji> drawResource(PlayableCard card) {
-        Emoji resource;
-        int i = 0;
-        ArrayList<Emoji> resourceEmojis = new ArrayList<Emoji>();
+        ArrayList<String> resourceEmojis = new ArrayList<String>();
         for (i = 0; i < card.getCorners().size(); i++) {
             switch (card.getResource()) {
                 case CornerEnum.ResourceEnum.FUNGI:
                     Emoji fungi = Emojis.MUSHROOM;
-                    resource = fungi;
+                    resource = fungi.getEmoji();
                     resourceEmojis.add(resource);
                     break;
                 case CornerEnum.ResourceEnum.ANIMAL:
                     Emoji animal = Emojis.WOLF;
-                    resource = animal;
+                    resource = animal.getEmoji();
                     resourceEmojis.add(resource);
                     break;
                 case CornerEnum.ResourceEnum.PLANT:
                     Emoji plant = Emojis.SHAMROCK;
-                    resource = plant;
+                    resource = plant.getEmoji();
                     resourceEmojis.add(resource);
                     break;
                 case CornerEnum.ResourceEnum.INSECT:
                     Emoji insect = Emojis.BUTTERFLY;
-                    resource = insect;
+                    resource = insect.getEmoji();
                     resourceEmojis.add(resource);
                     break;
                 default:
@@ -190,31 +163,33 @@ public class EmojiConverter {
         return resourceEmojis;
     }
 
-    public static ArrayList<Emoji> drawPlacementCondition(GoldCard goldCard){
-        Emoji resource;
-        int i = 0;
-        ArrayList<Emoji> resourceEmojis = new ArrayList<Emoji>();
-        for (i = 0; i < goldCard.getPlacementCondition().getListResource().size(); i++) {
+    public static ArrayList<String> drawPlacementCondition(GoldCard goldCard){
+        String resource;
+        ArrayList<String> resourceEmojis = new ArrayList<String>();
+        for (int i = 0; i < 5; i++) {
+            resourceEmojis.add(Emojis.WHITE_LARGE_SQUARE.getEmoji());
+        }
+        for (int i = 0; i < goldCard.getPlacementCondition().getListResource().size(); i++) {
             switch (goldCard.getPlacementCondition().getListResource().get(i)) {
                 case CornerEnum.ResourceEnum.FUNGI:
                     Emoji fungi = Emojis.MUSHROOM;
-                    resource = fungi;
-                    resourceEmojis.add(resource);
+                    resource = fungi.getEmoji();
+                    resourceEmojis.set(i, resource);
                     break;
                 case CornerEnum.ResourceEnum.ANIMAL:
                     Emoji animal = Emojis.WOLF;
-                    resource = animal;
-                    resourceEmojis.add(resource);
+                    resource = animal.getEmoji();
+                    resourceEmojis.set(i, resource);
                     break;
                 case CornerEnum.ResourceEnum.PLANT:
                     Emoji plant = Emojis.SHAMROCK;
-                    resource = plant;
-                    resourceEmojis.add(resource);
+                    resource = plant.getEmoji();
+                    resourceEmojis.set(i, resource);
                     break;
                 case CornerEnum.ResourceEnum.INSECT:
                     Emoji insect = Emojis.BUTTERFLY;
-                    resource = insect;
-                    resourceEmojis.add(resource);
+                    resource = insect.getEmoji();
+                    resourceEmojis.set(i, resource);
                     break;
                 default:
                     //throw new IllegalStateEcornerception("Unecornerpected value: " + corners.get(i).getType());
@@ -227,46 +202,46 @@ public class EmojiConverter {
 
 
     /*************************************** STARTER CARD **************************************/
-    public static ArrayList<Emoji> drawCorners(StarterCard card) {
-        Emoji corner;
+    public static ArrayList<String> drawCorners(StarterCard card) {
+        String corner;
         int i = 0;
-        ArrayList<Emoji> cornerEmojis = new ArrayList<Emoji>();
+        ArrayList<String> cornerEmojis = new ArrayList<String>();
         if (card.getSide().equals(EnumSide.FRONT)) {
             for (i = 0; i < card.getCorners().size(); i++) {
                 switch (card.getCorners().get(i).getType()) {
                     case CornerEnum.ResourceEnum.FUNGI:
                         Emoji fungi = Emojis.MUSHROOM;
-                        corner = fungi;
+                        corner = fungi.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ResourceEnum.ANIMAL:
                         Emoji animal = Emojis.WOLF;
-                        corner = animal;
+                        corner = animal.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ResourceEnum.PLANT:
                         Emoji plant = Emojis.SHAMROCK;
-                        corner = plant;
+                        corner = plant.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ResourceEnum.INSECT:
                         Emoji insect = Emojis.BUTTERFLY;
-                        corner = insect;
+                        corner = insect.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.OthersEnum.HIDDEN:
                         Emoji hidden = Emojis.PROHIBITED;
-                        corner = hidden;
+                        corner = hidden.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.OthersEnum.EMPTY:
                         Emoji empty = Emojis.WHITE_MEDIUM_SQUARE;
-                        corner = empty;
+                        corner = empty.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case null:
                         Emoji nullEmoji = Emojis.WHITE_MEDIUM_SQUARE;
-                        corner = nullEmoji;
+                        corner = nullEmoji.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     default:
@@ -280,32 +255,32 @@ public class EmojiConverter {
                 switch (card.getCorners().get(i).getType()) {
                     case CornerEnum.ResourceEnum.FUNGI:
                         Emoji fungi = Emojis.MUSHROOM;
-                        corner = fungi;
+                        corner = fungi.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ResourceEnum.ANIMAL:
                         Emoji animal = Emojis.WOLF;
-                        corner = animal;
+                        corner = animal.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ResourceEnum.PLANT:
                         Emoji plant = Emojis.SHAMROCK;
-                        corner = plant;
+                        corner = plant.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ResourceEnum.INSECT:
                         Emoji insect = Emojis.BUTTERFLY;
-                        corner = insect;
+                        corner = insect.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.OthersEnum.HIDDEN:
                         Emoji hidden = Emojis.PROHIBITED;
-                        corner = hidden;
+                        corner = hidden.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.OthersEnum.EMPTY:
                         Emoji empty = Emojis.WHITE_MEDIUM_SQUARE;
-                        corner = empty;
+                        corner = empty.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     default:
@@ -317,31 +292,33 @@ public class EmojiConverter {
         return cornerEmojis;
     }
 
-    public static ArrayList<Emoji> drawResource(StarterCard card) {
-        Emoji resource;
-        int i = 0;
-        ArrayList<Emoji> resourceEmojis = new ArrayList<Emoji>();
-        for (i = 0; i < card.getResources().size(); i++) {
+    public static ArrayList<String> drawResource(StarterCard card) {
+        String resource;
+        ArrayList<String> resourceEmojis = new ArrayList<String>();
+        for (int i = 0; i < 3; i++) {
+            resourceEmojis.add(Emojis.WHITE_LARGE_SQUARE.getEmoji());
+        }
+        for (int i = 0; i < card.getResources().size(); i++) {
             switch (card.getResources().get(i)) {
                 case CornerEnum.ResourceEnum.FUNGI:
                     Emoji fungi = Emojis.MUSHROOM;
-                    resource = fungi;
-                    resourceEmojis.add(resource);
+                    resource = fungi.getEmoji();
+                    resourceEmojis.set(i, resource);
                     break;
                 case CornerEnum.ResourceEnum.ANIMAL:
                     Emoji animal = Emojis.WOLF;
-                    resource = animal;
-                    resourceEmojis.add(resource);
+                    resource = animal.getEmoji();
+                    resourceEmojis.set(i, resource);
                     break;
                 case CornerEnum.ResourceEnum.PLANT:
                     Emoji plant = Emojis.SHAMROCK;
-                    resource = plant;
-                    resourceEmojis.add(resource);
+                    resource = plant.getEmoji();
+                    resourceEmojis.set(i, resource);
                     break;
                 case CornerEnum.ResourceEnum.INSECT:
                     Emoji insect = Emojis.BUTTERFLY;
-                    resource = insect;
-                    resourceEmojis.add(resource);
+                    resource = insect.getEmoji();
+                    resourceEmojis.set(i, resource);
                     break;
                 default:
                     //throw new IllegalStateEcornerception("Unecornerpected value: " + corners.get(i).getType());
@@ -352,41 +329,41 @@ public class EmojiConverter {
     }
 
     /*************************************** OBJECTIVE CARD **************************************/
-    public static ArrayList<Emoji> drawCorners(ObjectiveCard card) {
-        Emoji corner;
+    public static ArrayList<String> drawCorners(ObjectiveCard card) {
+        String corner;
         int i = 0;
-        ArrayList<Emoji> cornerEmojis = new ArrayList<Emoji>();
+        ArrayList<String> cornerEmojis = new ArrayList<String>();
         if (card.getSide().equals(EnumSide.FRONT)) {
             for (i = 0; i < card.getCorners().size(); i++) {
                 switch (card.getCorners().get(i).getType()) {
                     case CornerEnum.ResourceEnum.FUNGI:
                         Emoji fungi = Emojis.MUSHROOM;
-                        corner = fungi;
+                        corner = fungi.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ResourceEnum.ANIMAL:
                         Emoji animal = Emojis.WOLF;
-                        corner = animal;
+                        corner = animal.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ResourceEnum.PLANT:
                         Emoji plant = Emojis.SHAMROCK;
-                        corner = plant;
+                        corner = plant.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ResourceEnum.INSECT:
                         Emoji insect = Emojis.BUTTERFLY;
-                        corner = insect;
+                        corner = insect.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.OthersEnum.HIDDEN:
                         Emoji hidden = Emojis.PROHIBITED;
-                        corner = hidden;
+                        corner = hidden.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.OthersEnum.EMPTY:
                         Emoji empty = Emojis.WHITE_MEDIUM_SQUARE;
-                        corner = empty;
+                        corner = empty.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     default:
@@ -400,32 +377,32 @@ public class EmojiConverter {
                 switch (card.getCorners().get(i).getType()) {
                     case CornerEnum.ResourceEnum.FUNGI:
                         Emoji fungi = Emojis.MUSHROOM;
-                        corner = fungi;
+                        corner = fungi.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ResourceEnum.ANIMAL:
                         Emoji animal = Emojis.WOLF;
-                        corner = animal;
+                        corner = animal.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ResourceEnum.PLANT:
                         Emoji plant = Emojis.SHAMROCK;
-                        corner = plant;
+                        corner = plant.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.ResourceEnum.INSECT:
                         Emoji insect = Emojis.BUTTERFLY;
-                        corner = insect;
+                        corner = insect.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.OthersEnum.HIDDEN:
                         Emoji hidden = Emojis.PROHIBITED;
-                        corner = hidden;
+                        corner = hidden.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     case CornerEnum.OthersEnum.EMPTY:
                         Emoji empty = Emojis.WHITE_MEDIUM_SQUARE;
-                        corner = empty;
+                        corner = empty.getEmoji();
                         cornerEmojis.add(corner);
                         break;
                     default:
@@ -437,10 +414,10 @@ public class EmojiConverter {
         return cornerEmojis;
     }
 
-    public static ArrayList<Emoji> drawCondition(Condition condition) {
+    public static ArrayList<String> drawCondition(Condition condition) {
         if (condition.toString().equals("CornerCondition")){
-            ArrayList<Emoji> conditionEmojis = new ArrayList<Emoji>();
-            conditionEmojis.add(Emojis.TOP_ARROW);
+            ArrayList<String> conditionEmojis = new ArrayList<String>();
+            conditionEmojis.add(Emojis.TOP_ARROW.getEmoji());
             return conditionEmojis;
         }
         else if (condition.toString().equals("ResourceCondition")){
@@ -451,6 +428,11 @@ public class EmojiConverter {
         }*/
         else if (condition.toString().equals("ObjectCondition")){
             return drawCondition((ObjectCondition) condition);
+        }
+        else if (condition.toString().equals("NoCondition")){
+            ArrayList<String> emptyString = new ArrayList<>();
+            emptyString.add("  ");
+            return emptyString;
         }
         else {
             return null;
@@ -468,38 +450,33 @@ public class EmojiConverter {
 
     }
 
-//    public ArrayList<ArrayList<String>> drawCondition(Condition condition) {
-//        if (condition.toString().equals("CardCondition")) {
-//            return drawCondition((CardCondition) condition);
-//        }
-//        else {
-//            return null;
-//        }
-//    }
-    public static ArrayList<Emoji> drawCondition(ObjectCondition objectCondition) {
-        Emoji object;
-        ArrayList<Emoji> objectEmojis = new ArrayList<Emoji>();
+    public static ArrayList<String> drawCondition(ObjectCondition objectCondition) {
+        String object;
+        ArrayList<String> objectEmojis = new ArrayList<String>();
+        for (int i = 0; i < 5; i++) {
+            objectEmojis.add(Emojis.WHITE_LARGE_SQUARE.getEmoji());
+        }
         for (int i = 0; i < objectCondition.getListObject().size(); i++) {
             switch (objectCondition.getListObject().get(i)) {
                 case null:
                     Emoji nullEmoji = Emojis.WHITE_MEDIUM_SQUARE;
-                    object = nullEmoji;
-                    objectEmojis.add(object);
+                    object = nullEmoji.getEmoji();
+                    objectEmojis.set(i, object);
                     break;
                 case CornerEnum.ObjectEnum.INKWELL:
                     Emoji inkwell = Emojis.BLACK_NIB;
-                    object = inkwell;
-                    objectEmojis.add(object);
+                    object = inkwell.getEmoji();
+                    objectEmojis.set(i, object);
                     break;
                 case CornerEnum.ObjectEnum.MANUSCRIPT:
                     Emoji manuscript = Emojis.SCROLL;
-                    object = manuscript;
-                    objectEmojis.add(object);
+                    object = manuscript.getEmoji();
+                    objectEmojis.set(i, object);
                     break;
                 case CornerEnum.ObjectEnum.QUILL:
                     Emoji quill = Emojis.FEATHER;
-                    object = quill;
-                    objectEmojis.add(object);
+                    object = quill.getEmoji();
+                    objectEmojis.set(i, object);
                     break;
                 default:
                     //throw new IllegalStateEcornerception("Unecornerpected value: " + corners.get(i).getType());
@@ -509,30 +486,33 @@ public class EmojiConverter {
         return objectEmojis;
     }
 
-    public static ArrayList<Emoji> drawCondition(ResourceCondition resourceCondition){
-        Emoji resource;
-        ArrayList<Emoji> resourceEmojis = new ArrayList<Emoji>();
+    public static ArrayList<String> drawCondition(ResourceCondition resourceCondition){
+        String resource;
+        ArrayList<String> resourceEmojis = new ArrayList<String>();
+        for (int i = 0; i < 5; i++) {
+            resourceEmojis.add(Emojis.WHITE_LARGE_SQUARE.getEmoji());
+        }
         for (int i = 0; i < resourceCondition.getListResource().size(); i++) {
             switch (resourceCondition.getListResource().get(i)) {
                 case CornerEnum.ResourceEnum.FUNGI:
                     Emoji fungi = Emojis.MUSHROOM;
-                    resource = fungi;
-                    resourceEmojis.add(resource);
+                    resource = fungi.getEmoji();
+                    resourceEmojis.set(i, resource);
                     break;
                 case CornerEnum.ResourceEnum.ANIMAL:
                     Emoji animal = Emojis.WOLF;
-                    resource = animal;
-                    resourceEmojis.add(resource);
+                    resource = animal.getEmoji();
+                    resourceEmojis.set(i, resource);
                     break;
                 case CornerEnum.ResourceEnum.PLANT:
                     Emoji plant = Emojis.SHAMROCK;
-                    resource = plant;
-                    resourceEmojis.add(resource);
+                    resource = plant.getEmoji();
+                    resourceEmojis.set(i, resource);
                     break;
                 case CornerEnum.ResourceEnum.INSECT:
                     Emoji insect = Emojis.BUTTERFLY;
-                    resource = insect;
-                    resourceEmojis.add(resource);
+                    resource = insect.getEmoji();
+                    resourceEmojis.set(i, resource);
                     break;
                 default:
                     //throw new IllegalStateEcornerception("Unecornerpected value: " + corners.get(i).getType());
@@ -542,48 +522,11 @@ public class EmojiConverter {
         return resourceEmojis;
     }
 
-    public ArrayList<Emoji> drawCondition(CornerCondition objectCondition) {
-        ArrayList<Emoji> objectEmojis = new ArrayList<Emoji>();
-        objectEmojis.add(Emojis.TOP_ARROW);
+    public ArrayList<String> drawCondition(CornerCondition objectCondition) {
+        ArrayList<String> objectEmojis = new ArrayList<String>();
+        objectEmojis.add(Emojis.TOP_ARROW.getEmoji());
         return objectEmojis;
     }
-
-//    public ArrayList<Emoji> drawCardCondition(CardCondition cardCondition){
-//        Emoji card;
-//        ArrayList<Emoji> cardEmojis = new ArrayList<Emoji>();
-//        for (int i = 0; i < cardCondition.getListCard().size(); i++) {
-//            switch (cardCondition.getListCard().get(i)) { //Come fa a funzionare .get(i)? Il campo della chiave è di tipo Coordinates
-//                case CornerEnum.ResourceEnum.FUNGI:
-//                    //Fungi Card ==> Red Card
-//                    Emoji fungi = Emojis.RED_SQUARE;
-//                    card = fungi;
-//                    cardEmojis.add(card);
-//                    break;
-//                case CornerEnum.ResourceEnum.ANIMAL:
-//                    //Animal Card ==> Blue Card
-//                    Emoji animal = Emojis.BLUE_SQUARE;
-//                    card = animal;
-//                    cardEmojis.add(card);
-//                    break;
-//                case CornerEnum.ResourceEnum.PLANT:
-//                    //Plant Card ==> Green Card
-//                    Emoji plant = Emojis.GREEN_SQUARE;
-//                    card = plant;
-//                    cardEmojis.add(card);
-//                    break;
-//                case CornerEnum.ResourceEnum.INSECT:
-//                    //Insect Card ==> Purple Card
-//                    Emoji insect = Emojis.PURPLE_SQUARE;
-//                    card = insect;
-//                    cardEmojis.add(card);
-//                    break;
-//                default:
-//                    //throw new IllegalStateEcornerception("Unecornerpected value: " + corners.get(i).getType());
-//                    break;
-//            }
-//        }
-//        return cardEmojis;
-//    }
 
     public ArrayList<ArrayList<String>> drawCondition(CardCondition cardCondition) {
         ArrayList<String> row1 = new ArrayList<>(3);

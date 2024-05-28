@@ -11,11 +11,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.is24am14.client.GUI.Menu1.GUILauncher">
    <children>
-      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
+      <ImageView fx:id="sfondo" fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
          <image>
-            <Image url="@../../../../../../../../resources/images/background.jpg" />
+            <Image url="@images/background.jpg" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="115.0" layoutX="202.0" layoutY="16.0" stroke="BLACK" strokeType="INSIDE" width="196.0">
@@ -38,21 +38,21 @@
       </Rectangle>
       <ImageView fitHeight="172.0" fitWidth="191.0" layoutX="214.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../../../../../Downloads/codexlogo.png" />
+            <Image url="@images/codexlogo.png" />
          </image>
       </ImageView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="69.0" layoutX="193.0" layoutY="151.0" strokeType="INSIDE" width="214.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="48.0" layoutX="191.0" layoutY="154.0" strokeType="INSIDE" width="219.0">
          <stroke>
             <LinearGradient endX="0.44696968252008606" endY="1.0" startY="1.0">
                <stops>
                   <Stop>
                      <color>
-                        <Color red="0.3921568691730499" green="0.3176470696926117" blue="0.2078431397676468" />
+                        <Color />
                      </color>
                   </Stop>
                   <Stop offset="1.0">
                      <color>
-                        <Color red="0.658823549747467" green="0.4901960790157318" blue="0.3333333432674408" />
+                        <Color red="0.7473683953285217" green="0.5749200582504272" blue="0.25465887784957886" />
                      </color>
                   </Stop>
                </stops>
@@ -75,12 +75,11 @@
             </LinearGradient>
          </fill>
       </Rectangle>
-      <Text layoutX="176.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create a new lobby&#10;or join an existing one" textAlignment="CENTER" wrappingWidth="248.953125">
+      <Text layoutX="203.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose your connection type">
          <font>
-            <Font size="17.0" />
-         </font>
-      </Text>
-      <Button layoutX="247.0" layoutY="239.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="105.0" style="-fx-background-color: #dfbd93; -fx-border-color: #a87d55;" text="Create Lobby" />
-      <Button layoutX="246.0" layoutY="298.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" style="-fx-background-color: #dfbd93; -fx-border-color: #a87d55;" text="Join Lobby" />
+            <Font size="15.0" />
+         </font></Text>
+      <Button layoutX="259.0" layoutY="211.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #dfbd93; -fx-border-color: #a87d55;" text="RMI" textAlignment="CENTER" />
+      <Button layoutX="259.0" layoutY="266.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #dfbd93; -fx-border-color: #a87d55;" text="TCP" textAlignment="CENTER" />
    </children>
 </AnchorPane>

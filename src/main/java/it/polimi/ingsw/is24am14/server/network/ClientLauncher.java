@@ -29,7 +29,6 @@ public class ClientLauncher {
         System.out.println("                                                          **"+ reset);
 
         //chiedo all'utente se vuole giocare RMI o TCP
-        ClientConnection connection;
 
         //menu di scelta
         Scanner scanner = new Scanner(System.in);
@@ -43,11 +42,12 @@ public class ClientLauncher {
                     case 0:
                         System.out.println("Starting RMI connection...");
                         RMIClientInterface client = null;
-        try {
-            client = new RMIClient();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-                        break;
+                         try {
+                            client = new RMIClient();
+                         } catch (Exception e) {
+                            throw new RuntimeException(e);
+                         }
+                         break;
                     case 1:
                         System.out.println("Starting TCP connection...");
                         //va aggiunta la parte di connessione TCP
@@ -58,6 +58,7 @@ public class ClientLauncher {
                         System.out.println("Exiting...");
                         System.exit(0);
                         break;
+
                     default:
                         System.out.println("Invalid choice, please try again.");
                 }

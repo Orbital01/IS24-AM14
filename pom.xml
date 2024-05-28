@@ -13,9 +13,12 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.10.0</junit.version>
+        <javafx.version> 21 </javafx.version>
+        <javafx.maven.plugin.version> 0.0.8 </javafx.maven.plugin.version>
     </properties>
 
-    <dependencies>
+
+<dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -98,7 +101,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>it.polimi.ingsw.is24am14/it.polimi.ingsw.is24am14.HelloApplication</mainClass>
+                            <mainClass>it.polimi.ingsw.is24am14/it.polimi.ingsw.is24am14.client.GUI.Menu1.GUILauncher</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
@@ -110,5 +113,10 @@
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
     </build>
 </project>

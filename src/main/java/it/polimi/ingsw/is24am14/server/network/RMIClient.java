@@ -23,7 +23,9 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
         this.server = (RMIServerInterface) registry.lookup("RMIServer");
         this.view = new TUIView();
 
+
         this.username = view.askForUsername();
+      
         while (true) {
             try {
                 server.acceptConnection(this, username);
@@ -85,6 +87,7 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
     }
 
     @Override
+
     public void chooseMove(ArrayList<PlayableCard> hand, GameArea board) throws Exception {
         this.view.printBoard(board);
         this.view.printHand(hand);
