@@ -13,9 +13,12 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.10.0</junit.version>
+        <javafx.version> 21 </javafx.version>
+        <javafx.maven.plugin.version> 0.0.8 </javafx.maven.plugin.version>
     </properties>
 
-    <dependencies>
+
+<dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -110,5 +113,10 @@
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/java/it/polimi/ingsw/is24am14/client/GUI/Menu1</directory>
+            </resource>
+        </resources>
     </build>
 </project>

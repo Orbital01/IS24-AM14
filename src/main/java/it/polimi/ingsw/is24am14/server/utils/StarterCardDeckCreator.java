@@ -125,12 +125,12 @@ public class StarterCardDeckCreator {
         plaAniFun.add(CornerEnum.ResourceEnum.FUNGI);
         content.add(new StarterCard(funAniPlaIns, empEmpHidHid, plaAniFun, "src/main/resources/images/cards/starter_cards/starter_fronts/page_86.png", "src/main/resources/images/cards/starter_cards/starter_backs/page_86.png"));
 
-        content.get(0).flipSide();
+        /* content.get(0).flipSide();
         content.get(1).flipSide();
         content.get(2).flipSide();
         content.get(3).flipSide();
         content.get(4).flipSide();
-        content.get(5).flipSide();
+        content.get(5).flipSide(); */
 
         return new Deck<>(content);
     }

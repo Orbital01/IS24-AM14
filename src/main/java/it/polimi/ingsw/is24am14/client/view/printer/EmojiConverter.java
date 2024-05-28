@@ -294,29 +294,31 @@ public class EmojiConverter {
 
     public static ArrayList<String> drawResource(StarterCard card) {
         String resource;
-        int i = 0;
         ArrayList<String> resourceEmojis = new ArrayList<String>();
-        for (i = 0; i < card.getResources().size(); i++) {
+        for (int i = 0; i < 3; i++) {
+            resourceEmojis.add(Emojis.WHITE_LARGE_SQUARE.getEmoji());
+        }
+        for (int i = 0; i < card.getResources().size(); i++) {
             switch (card.getResources().get(i)) {
                 case CornerEnum.ResourceEnum.FUNGI:
                     Emoji fungi = Emojis.MUSHROOM;
                     resource = fungi.getEmoji();
-                    resourceEmojis.add(resource);
+                    resourceEmojis.set(i, resource);
                     break;
                 case CornerEnum.ResourceEnum.ANIMAL:
                     Emoji animal = Emojis.WOLF;
                     resource = animal.getEmoji();
-                    resourceEmojis.add(resource);
+                    resourceEmojis.set(i, resource);
                     break;
                 case CornerEnum.ResourceEnum.PLANT:
                     Emoji plant = Emojis.SHAMROCK;
                     resource = plant.getEmoji();
-                    resourceEmojis.add(resource);
+                    resourceEmojis.set(i, resource);
                     break;
                 case CornerEnum.ResourceEnum.INSECT:
                     Emoji insect = Emojis.BUTTERFLY;
                     resource = insect.getEmoji();
-                    resourceEmojis.add(resource);
+                    resourceEmojis.set(i, resource);
                     break;
                 default:
                     //throw new IllegalStateEcornerception("Unecornerpected value: " + corners.get(i).getType());

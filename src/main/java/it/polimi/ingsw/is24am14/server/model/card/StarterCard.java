@@ -57,9 +57,7 @@ public class StarterCard extends Card {
             ArrayList<String> cardString = new ArrayList<>();
 
             ArrayList<String> corners = new ArrayList<String>();
-            for (int i = 0; i < this.getCorners().size(); i++){
-                corners.add(Emojis.WHITE_MEDIUM_SQUARE.getEmoji());
-            }
+            corners = EmojiConverter.drawCorners(this);
             ArrayList<String> resources = EmojiConverter.drawResource(this);
 
             //Each card has 7 rows
@@ -70,11 +68,11 @@ public class StarterCard extends Card {
             //Third Row
             cardString.add("|-----|		       |-----|");
             //Fourth Row
-            cardString.add("|		");
+            cardString.add("|		  ");
             for (String e : resources) {
                 cardString.set(3, cardString.get(3) + e);
             }
-            cardString.set(3, cardString.get(3) + "		         |");
+            cardString.set(3, cardString.get(3) + "		 |");
             //Fifth Row
             cardString.add("|-----|		       |-----|");
             //Sixth Row
