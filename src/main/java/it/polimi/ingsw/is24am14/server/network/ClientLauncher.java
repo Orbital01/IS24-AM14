@@ -1,71 +1,81 @@
 package it.polimi.ingsw.is24am14.server.network;
 
-import java.util.InputMismatchException;
+import it.polimi.ingsw.is24am14.server.controller.GameStateEnum;
+import it.polimi.ingsw.is24am14.server.model.card.PlayableCard;
+import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
+
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class ClientLauncher {
-    public static void main(String[] args) {
-        //stampo il titolo del gioco
-        String green = "\033[32m";
-        String reset = "\033[0m";
-
-        System.out.println(green + "                                                                                                                                                                                ");
-        System.out.println("      * ***                    **                                     ***** *     **                                                               ***                        ");
-        System.out.println("    *  ****  *                  **                                 ******  **    **** *                *                                            ***      *                ");
-        System.out.println("   *  *  ****                   **                                **   *  * **    ****                **                                             **     ***               ");
-        System.out.println("  *  **   **                    **                               *    *  *  **    * *                 **                                             **      *                ");
-        System.out.println(" *  ***           ****          **              ***    ***           *  *    **   *                 ******** **   ****     ***  ****                 **               ****    ");
-        System.out.println("**   **          * ***  *   *** **      ***    * ***  **** *        ** **    **   *        ****    ********   **    ***  *  **** **** *    ****      **    ***       * **** * ");
-        System.out.println("**   **         *   ****   *********   * ***      *** *****         ** **     **  *       * ***  *    **      **     ****    **   ****    * ***  *   **     ***     **  ****  ");
-        System.out.println("**   **        **    **   **   ****   *   ***      ***  **          ** **     **  *      *   ****     **      **      **     **          *   ****    **      **    ****       ");
-        System.out.println("**   **        **    **   **    **   **    ***      ***             ** **      ** *     **    **      **      **      **     **         **    **     **      **      ***      ");
-        System.out.println("**   **        **    **   **    **   ********      * ***            ** **      ** *     **    **      **      **      **     **         **    **     **      **        ***    ");
-        System.out.println(" **  **        **    **   **    **   *******      *   ***           *  **       ***     **    **      **      **      **     **         **    **     **      **          ***  ");
-        System.out.println("  ** *      *  **    **   **    **   **          *     ***             *        ***     **    **      **      **      **     **         **    **     **      **     ****  **  ");
-        System.out.println("   ***     *    ******    **    **   ****    *  *       *** *      ****          **     **    **      **       ******* **    ***        **    **     **      **    * **** *   ");
-        System.out.println("    *******      ****      *****      *******  *         ***      *  *****               ***** **      **       *****   **    ***        ***** **    *** *   *** *    ****    ");
-        System.out.println("      ***                   ***        *****                     *     **                 ***   **                                        ***   **    ***     ***             ");
-        System.out.println("                                                         *                                                                                                            ");
-        System.out.println("                                                          **"+ reset);
-
-        //chiedo all'utente se vuole giocare RMI o TCP
-
-        //menu di scelta
+    public static void main(String[] args) throws Exception {
+        String username, host;
         Scanner scanner = new Scanner(System.in);
-        int choice = -1;
+        System.out.println("Username:");
+        username = scanner.nextLine();
+        int option;
 
-        while(choice != 0 && choice != 1 && choice != 2){
-            System.out.println("Digit 0 to play with RMI \n1 to play with TCP \n2 to exit:");
-            try {
-                choice = scanner.nextInt();
-                switch (choice) {
-                    case 0:
-                        System.out.println("Starting RMI connection...");
-                        RMIClientInterface client = null;
-                         try {
-                            client = new RMIClient();
-                         } catch (Exception e) {
-                            throw new RuntimeException(e);
-                         }
-                         break;
-                    case 1:
-                        System.out.println("Starting TCP connection...");
-                        //va aggiunta la parte di connessione TCP
-                        System.out.println("TCP connection not implemented yet.");
-                        System.exit(0);
-                        break;
-                    case 2:
-                        System.out.println("Exiting...");
-                        System.exit(0);
-                        break;
+        RMIClient client = new RMIClient();
 
-                    default:
-                        System.out.println("Invalid choice, please try again.");
+        client.connect(username);
+        System.out.println("Option:");
+        option = scanner.nextInt();
+        if (option == 1) {
+            client.createLobby(2);
+            scanner.nextLine();
+            scanner.nextLine();
+            client.startGame();
+        } else if (option == 2) {
+            System.out.println("Host:");
+            scanner.nextLine();
+            host = scanner.nextLine();
+            client.joinLobby(host);
+        }
+
+        while (true) {
+            client.updateGameContext();
+            if (client.getGameContext() != null) {
+                if (client.getGameContext().getGameStateEnum() == GameStateEnum.DeckInit) {
+                    System.out.println("Initializing");
                 }
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a number.");
-                scanner.next(); // discard the non-integer input
+                else if (client.getGameContext().getGameStateEnum() == GameStateEnum.ChoosingColor) {
+                    int myIndex = client.getGameContext().getGame().getPlayers().indexOf(client.getGameContext().getGame().getPlayer(client.getUsername()));
+                    if (myIndex == -1) {throw new RuntimeException("Player not found");}
+                    boolean myTurn = true;
+
+                    for (int i = 0; i < myIndex; i++) {
+                        if (client.getGameContext().getGame().getPlayers().get(i).getColour() == null) {
+                            myTurn = false;
+                        }
+                    }
+
+                    if (myTurn && client.getGameContext().getGame().getPlayers().get(myIndex).getColour() == null) {
+                        System.out.println("Available colors:");
+                        for (TokenColour color : client.getGameContext().getColors()) {
+                            System.out.println(color);
+                        }
+                        String colorChoice = scanner.nextLine();
+                        client.pickColor(TokenColour.valueOf(colorChoice));
+                    }
+                } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.ChoosingSecretObjective && client.getGameContext().getGame().getPlayer(username).getSecretObjective() == null) {
+                    System.out.println("Secret objective");
+                    System.out.println(client.getGameContext().getObjectiveCardChoices(username).getFirst());
+                    System.out.println(client.getGameContext().getObjectiveCardChoices(username).get(1));
+                    client.pickObjectiveCard(client.getGameContext().getObjectiveCardChoices(username).get(0));
+                } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.Move) {
+                    if (client.getGameContext().getGame().getActivePlayer().getPlayerNickname().equals(username)) {
+                        System.out.println("It's my turn");
+                    } else {
+                        System.out.println("It's not your turn");
+                    }
+
+                    for (PlayableCard card : client.getGameContext().getGame().getPlayer(username).getPlayerHand()) {
+                        System.out.println(card.getSide());
+                    }
+                    client.flipCard(0);
+                }
             }
+            TimeUnit.SECONDS.sleep(1);
         }
     }
 }

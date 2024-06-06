@@ -1,6 +1,7 @@
 package it.polimi.ingsw.is24am14.server.model.player;
 
 
+import it.polimi.ingsw.is24am14.server.controller.GameContext;
 import it.polimi.ingsw.is24am14.server.model.card.*;
 import it.polimi.ingsw.is24am14.server.model.game.*;
 import it.polimi.ingsw.is24am14.server.network.ClientHandler;
@@ -37,7 +38,7 @@ public class Player implements Serializable {
         this.nickname = nickname;
         this.points = 0;
         this.isFirstPlayer = false;
-        this.playerHand = new ArrayList<PlayableCard>();
+        this.playerHand = new ArrayList<>();
         this.starterCard = null;
         this.secretObjective = null;
         this.playerBoard = new GameArea();
@@ -236,45 +237,5 @@ public class Player implements Serializable {
      */
     public void setFirstPlayer(boolean firstPlayer) {
         this.isFirstPlayer = firstPlayer;
-    }
-
-    public void assignColor(List<TokenColour> colors) throws Exception {
-        this.connection.assignColor(colors);
-    }
-
-    public void askSecretObjective(ObjectiveCard card1, ObjectiveCard card2) throws Exception {
-        this.connection.askSecretObjective(card1, card2);
-    }
-
-    public void sendIsFirstPlayer() throws Exception {
-        this.connection.sendIsFirstPlayer();
-    }
-
-    public void askForMove() throws Exception {
-        this.connection.askForMove(this.playerHand, this.getPlayerBoard());
-    }
-
-    public void sendScore(int score) {
-        try {
-            this.connection.sendScore(score);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void askPickChoice(Deck<GoldCard> goldDeck, Deck<ResourceCard> resourceDeck, ArrayList<PlayableCard> faceUpCards) {
-        try {
-            this.connection.askPickChoice(goldDeck, resourceDeck, faceUpCards);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void sendWinner(String playerNickname) {
-        try {
-            this.connection.sendWinner(playerNickname);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 }

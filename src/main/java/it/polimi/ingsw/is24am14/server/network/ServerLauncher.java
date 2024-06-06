@@ -6,12 +6,10 @@ import java.rmi.RemoteException;
 
 public class ServerLauncher {
     public static void main(String[] args) {
-        ClientHandlerList clientHandlerList = new ClientHandlerList();
-        LobbyList lobbyList = new LobbyList(clientHandlerList);
+        LobbyList lobbyList = new LobbyList(new ClientHandlerList());
         try {
             RMIServer server = new RMIServer(lobbyList);
-            SocketServer socketServer = new SocketServer(lobbyList);
-        } catch (Exception e) {
+        } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
     }

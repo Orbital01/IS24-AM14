@@ -3,7 +3,6 @@ package it.polimi.ingsw.is24am14.server.network;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.function.Consumer;
 
 public class ClientHandlerList implements Iterable<ClientHandler>, Serializable {
     private final ArrayList<ClientHandler> clientHandlers;

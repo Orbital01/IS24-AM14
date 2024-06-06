@@ -32,11 +32,11 @@ public class LobbyList implements Serializable {
         lobbies.remove(lobby);
     }
 
-    public void joinLobby(ClientHandler client, String host) {
+    public void joinLobby(ClientHandler client, String host) throws Exception {
         this.getLobbyByHost(host).joinLobby(client);
     }
 
-    public void joinLobby(String client, String host) {
+    public void joinLobby(String client, String host) throws Exception {
         this.getLobbyByHost(host).joinLobby(this.getClientHandler(client));
     }
 
@@ -74,5 +74,11 @@ public class LobbyList implements Serializable {
             info.put(lobby.getHost(), Integer.toString(lobby.getMaxPlayers()));
         }
         return info;
+    }
+
+    public void printHosts() {
+        for (Lobby lobby : lobbies) {
+            System.out.println(lobby.getHost());
+        }
     }
 }
