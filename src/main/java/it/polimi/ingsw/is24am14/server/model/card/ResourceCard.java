@@ -15,12 +15,14 @@ public class ResourceCard extends PlayableCard {
 
     private final int points;
     private final CornerEnum.ResourceEnum resource;
+    private final Condition pointCondition;
 
     public ResourceCard(int points, CornerEnum.ResourceEnum resource, ArrayList<Corner> frontCorners, ArrayList<Corner> backCorners,
                         String frontImage, String backImage) {
         super(frontCorners, backCorners, frontImage, backImage);
         this.points = points;
         this.resource = resource;
+        this.pointCondition = new NoCondition();
     }
 
     public ArrayList<CornerEnum> getCornerEnums() {
@@ -41,6 +43,11 @@ public class ResourceCard extends PlayableCard {
 
     public CornerEnum.ResourceEnum getResource() {
         return resource;
+    }
+
+    @Override
+    public Condition getPointCondition() {
+        return this.pointCondition;
     }
 
     public ArrayList<String> drawCard() {

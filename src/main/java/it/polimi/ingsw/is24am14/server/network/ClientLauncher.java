@@ -1,6 +1,8 @@
 package it.polimi.ingsw.is24am14.server.network;
 
 import it.polimi.ingsw.is24am14.server.controller.GameStateEnum;
+import it.polimi.ingsw.is24am14.server.model.card.Card;
+import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
 import it.polimi.ingsw.is24am14.server.model.card.PlayableCard;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 
@@ -69,10 +71,12 @@ public class ClientLauncher {
                         System.out.println("It's not your turn");
                     }
 
-                    for (PlayableCard card : client.getGameContext().getGame().getPlayer(username).getPlayerHand()) {
-                        System.out.println(card.getSide());
-                    }
                     client.flipCard(0);
+                    client.putCard(0, new Coordinates(0, 0), 0);
+                } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.Draw) {
+                    client.drawGoldCard();
+                } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.EndTurn) {
+
                 }
             }
             TimeUnit.SECONDS.sleep(1);

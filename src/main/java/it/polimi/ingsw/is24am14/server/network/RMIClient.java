@@ -1,6 +1,7 @@
 package it.polimi.ingsw.is24am14.server.network;
 
 import it.polimi.ingsw.is24am14.server.controller.GameContext;
+import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
 import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 
@@ -94,6 +95,11 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface {
     @Override
     public void drawFaceUpCard(int index) throws Exception {
         this.server.faceUpCard(this, index);
+    }
+
+    @Override
+    public void putCard(int handCardIndex, Coordinates coordinates, int cornerIndex) throws Exception {
+        this.server.putCard(this, handCardIndex, coordinates, cornerIndex);
     }
 
     GameContext getGameContext() {

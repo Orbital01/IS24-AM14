@@ -1,6 +1,7 @@
 package it.polimi.ingsw.is24am14.server.network;
 
 import it.polimi.ingsw.is24am14.server.controller.GameContext;
+import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
 import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 
@@ -20,4 +21,5 @@ public interface ClientInterface extends Remote {
     void drawGoldCard() throws Exception;
     void drawResourceCard() throws Exception;
     void drawFaceUpCard(int index) throws Exception;
+    void putCard(int handCardIndex, Coordinates coordinates, int cornerIndex) throws Exception;
 }

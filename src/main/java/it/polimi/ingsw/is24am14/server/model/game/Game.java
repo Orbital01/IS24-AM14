@@ -97,6 +97,10 @@ public class Game implements Serializable {
         return resourceDeck;
     }
 
+    public Deck<StarterCard> getStarterCards() {
+        return starterCards;
+    }
+
     public ArrayList<PlayableCard> getFaceUpCards() {
         return faceUpCards;
     }
