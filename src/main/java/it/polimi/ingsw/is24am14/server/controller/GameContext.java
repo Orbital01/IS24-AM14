@@ -4,6 +4,7 @@ import it.polimi.ingsw.is24am14.server.model.card.*;
 import it.polimi.ingsw.is24am14.server.model.game.Game;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
+import it.polimi.ingsw.is24am14.server.network.Message;
 import it.polimi.ingsw.is24am14.server.network.NotYourColorTurnException;
 
 import java.io.Serializable;
@@ -15,12 +16,14 @@ public class GameContext implements Serializable {
     ArrayList<TokenColour> colors;
     HashMap<String, ArrayList<ObjectiveCard>> objectiveCardChoices;
     PlayableCard lastPlayedCard;
+    ArrayList<Message> messages;
 
     public GameContext(Game game) {
         this.game = game;
         colors = new ArrayList<>(Arrays.asList(TokenColour.values()));
         colors.remove(TokenColour.BLACK);
         objectiveCardChoices = new HashMap<>();
+        messages = new ArrayList<>();
     }
 
     public GameStateEnum getGameStateEnum() {
@@ -115,7 +118,12 @@ public class GameContext implements Serializable {
             PlayableCard cardToPlay = player.getPlayerHand().get(handCardIndex);
             player.placeCard(cardToOverlap, cardToPlay, cornerIndex);
             lastPlayedCard = cardToPlay;
-            gameStateEnum = GameStateEnum.Draw;
+
+            if (gameStateEnum == GameStateEnum.Move) {
+                gameStateEnum = GameStateEnum.Draw;
+            } else if (gameStateEnum == GameStateEnum.LastMove) {
+                gameStateEnum = GameStateEnum.LastDraw;
+            }
         }
     }
 
@@ -145,10 +153,19 @@ public class GameContext implements Serializable {
 
     private void endTurn() {
         this.updateScore();
-        this.game.changeActivePlayer();
-        System.out.println("Ora tocca a " + game.getActivePlayer().getPlayerNickname());
 
-        this.gameStateEnum = GameStateEnum.Move;
+        if (gameStateEnum == GameStateEnum.LastDraw && game.getIndexActivePlayer() == game.getNumPlayers()) {
+            gameStateEnum = GameStateEnum.EndGame;
+            return;
+        }
+
+        this.game.changeActivePlayer();
+
+        if (someoneHas20points() && game.getIndexActivePlayer() == 0) {
+            this.gameStateEnum = GameStateEnum.LastMove;
+        } else {
+            this.gameStateEnum = GameStateEnum.Move;
+        }
     }
 
     private void updateScore(){
@@ -161,5 +178,20 @@ public class GameContext implements Serializable {
             earnedPoints = lastPlayedCard.getPoints();
         //Sets player score to his old score + the points given by the satisfied condition on the gold card
         game.getActivePlayer().setScore(game.getActivePlayer().getScore() + earnedPoints);
+    }
+
+    private boolean someoneHas20points() {
+        for (Player player : game.getPlayers()) {
+            if (player.getScore() >= 20) return true;
+        }
+        return false;
+    }
+
+    public void addMessage(Message message) {
+        this.messages.add(message);
+    }
+
+    public void addMessage(String sender, String receiver, String message) {
+        this.messages.add(new Message(sender, receiver, message));
     }
 }

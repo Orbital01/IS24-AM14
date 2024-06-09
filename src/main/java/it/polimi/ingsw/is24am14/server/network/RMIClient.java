@@ -102,6 +102,11 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface {
         this.server.putCard(this, handCardIndex, coordinates, cornerIndex);
     }
 
+    @Override
+    public void sendMessage(String receiver, String message) throws Exception {
+        this.server.addMessage(this, receiver, message);
+    }
+
     GameContext getGameContext() {
         return this.context;
     }

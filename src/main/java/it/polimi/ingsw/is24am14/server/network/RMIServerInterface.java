@@ -20,4 +20,5 @@ public interface RMIServerInterface extends Remote {
     void drawGoldCard(ClientInterface client) throws Exception;
     void drawResourceCard(ClientInterface client) throws Exception;
     void faceUpCard(ClientInterface client, int index) throws Exception;
+    void addMessage(ClientInterface client, String receiver, String message) throws Exception;
 }

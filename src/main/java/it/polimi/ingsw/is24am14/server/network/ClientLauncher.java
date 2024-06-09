@@ -75,8 +75,6 @@ public class ClientLauncher {
                     client.putCard(0, new Coordinates(0, 0), 0);
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.Draw) {
                     client.drawGoldCard();
-                } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.EndTurn) {
-
                 }
             }
             TimeUnit.SECONDS.sleep(1);

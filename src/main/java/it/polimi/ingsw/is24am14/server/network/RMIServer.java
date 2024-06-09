@@ -14,8 +14,6 @@ import java.nio.channels.AlreadyConnectedException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.RMIClientSocketFactory;
-import java.rmi.server.RMIServerSocketFactory;
 import java.rmi.server.UnicastRemoteObject;
 
 public class RMIServer extends UnicastRemoteObject implements RMIServerInterface {
@@ -118,5 +116,12 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     public void faceUpCard(ClientInterface client, int index) throws Exception {
         String username = client.getUsername();
         this.lobbyList.getPlayersLobby(username).getGameContext().drawFaceUpCard(username, index);
+    }
+
+    @Override
+    public void addMessage(ClientInterface client, String receiver, String message) throws Exception {
+        String username = client.getUsername();
+        Lobby lobby = this.lobbyList.getPlayersLobby(username);
+        lobby.getGameContext().addMessage(username, receiver, message);
     }
 }
