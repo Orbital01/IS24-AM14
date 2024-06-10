@@ -80,7 +80,7 @@
             <Font size="17.0" />
          </font>
       </Text>
-      <Button layoutX="247.0" layoutY="239.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="105.0" style="-fx-background-color: #dfbd93; -fx-border-color: #a87d55;" text="Create Lobby" />
-      <Button layoutX="246.0" layoutY="298.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" style="-fx-background-color: #dfbd93; -fx-border-color: #a87d55;" text="Join Lobby" />
+      <Button fx:id="createButton" layoutX="247.0" layoutY="239.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="105.0" style="-fx-background-color: #dfbd93; -fx-border-color: #a87d55;" text="Create Lobby" />
+      <Button fx:id="joinButton" layoutX="246.0" layoutY="298.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="106.0" style="-fx-background-color: #dfbd93; -fx-border-color: #a87d55;" text="Join Lobby" />
    </children>
 </AnchorPane>

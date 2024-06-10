@@ -11,9 +11,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.is24am14.client.GUI.Menu1.GUILauncher">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="sfondo" fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
          <image>
             <Image url="@images/background.jpg" />
          </image>
@@ -79,7 +79,7 @@
          <font>
             <Font size="15.0" />
          </font></Text>
-      <Button layoutX="259.0" layoutY="211.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #dfbd93; -fx-border-color: #a87d55;" text="RMI" textAlignment="CENTER" />
-      <Button layoutX="259.0" layoutY="266.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #dfbd93; -fx-border-color: #a87d55;" text="TCP" textAlignment="CENTER" />
+      <Button fx:id="rmiButton" layoutX="259.0" layoutY="211.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #dfbd93; -fx-border-color: #a87d55;" text="RMI" textAlignment="CENTER" />
+      <Button fx:id="tcpButton" layoutX="259.0" layoutY="266.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="82.0" style="-fx-background-color: #dfbd93; -fx-border-color: #a87d55;" text="TCP" textAlignment="CENTER" />
    </children>
 </AnchorPane>

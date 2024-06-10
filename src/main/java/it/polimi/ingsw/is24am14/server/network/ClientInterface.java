@@ -23,4 +23,5 @@ public interface ClientInterface extends Remote {
     void drawFaceUpCard(int index) throws Exception;
     void putCard(int handCardIndex, Coordinates coordinates, int cornerIndex) throws Exception;
     void sendMessage(String receiver, String message) throws Exception;
+    GameContext getGameContext();
 }

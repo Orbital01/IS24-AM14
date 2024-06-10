@@ -17,7 +17,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface {
     private final RMIServerInterface server;
     private GameContext context;
 
-    protected RMIClient() throws Exception {
+    public RMIClient() throws Exception {
         Registry registry;
         registry = LocateRegistry.getRegistry("127.0.0.1", 12345);
         this.server = (RMIServerInterface) registry.lookup("RMIServer");
@@ -107,7 +107,8 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface {
         this.server.addMessage(this, receiver, message);
     }
 
-    GameContext getGameContext() {
+    @Override
+    public GameContext getGameContext() {
         return this.context;
     }
 }

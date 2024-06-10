@@ -35,6 +35,6 @@ module it.polimi.ingsw.is24am14 {
     exports it.polimi.ingsw.is24am14.server.utils.GSONAdapters to java.rmi;
     opens it.polimi.ingsw.is24am14.server.utils.GSONAdapters to com.google.gson, java.rmi;
 
-    opens it.polimi.ingsw.is24am14.client.GUI.Menu1 to javafx.fxml;
-    exports it.polimi.ingsw.is24am14.client.GUI.Menu1;
+    opens it.polimi.ingsw.is24am14.client.GUI to javafx.fxml;
+    exports it.polimi.ingsw.is24am14.client.GUI;
 }

@@ -24,7 +24,7 @@ public class ClientLauncher {
         option = scanner.nextInt();
         if (option == 1) {
             client.createLobby(2);
-            scanner.nextLine();
+            scanner.nextLine();// a cosa servono questi?
             scanner.nextLine();
             client.startGame();
         } else if (option == 2) {
@@ -39,8 +39,9 @@ public class ClientLauncher {
             if (client.getGameContext() != null) {
                 if (client.getGameContext().getGameStateEnum() == GameStateEnum.DeckInit) {
                     System.out.println("Initializing");
-                }
-                else if (client.getGameContext().getGameStateEnum() == GameStateEnum.ChoosingColor) {
+                } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.ChoosingColor) {
+
+                    //gui fino a qua
                     int myIndex = client.getGameContext().getGame().getPlayers().indexOf(client.getGameContext().getGame().getPlayer(client.getUsername()));
                     if (myIndex == -1) {throw new RuntimeException("Player not found");}
                     boolean myTurn = true;

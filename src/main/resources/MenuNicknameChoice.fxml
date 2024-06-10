@@ -90,12 +90,12 @@
          <font>
             <Font size="18.0" />
          </font></Text>
-      <TextField layoutX="163.0" layoutY="195.0" prefHeight="46.0" prefWidth="196.0" promptText="Nickname">
+      <TextField fx:id="usernameField" layoutX="163.0" layoutY="195.0" prefHeight="46.0" prefWidth="196.0" promptText="Nickname">
          <font>
             <Font size="19.0" />
          </font>
       </TextField>
-      <Button layoutX="372.0" layoutY="195.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="78.0" style="-fx-background-color: #dfbd93; -fx-border-color: #645135;" text="Confirm">
+      <Button fx:id="confirmButton" layoutX="372.0" layoutY="195.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="78.0" style="-fx-background-color: #dfbd93; -fx-border-color: #645135;" text="Confirm">
          <font>
             <Font size="14.0" />
          </font></Button>
