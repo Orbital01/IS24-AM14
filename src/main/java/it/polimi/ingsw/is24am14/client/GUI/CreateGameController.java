@@ -33,11 +33,13 @@ public class CreateGameController {
                 numPlayers.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
+
+        confirmButton.setOnAction(this::handleConfirmButtonAction);
     }
 
     public CreateGameController(GUIView context){
         this.context = context;
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("JoinLobby.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("createGame.fxml"));
         loader.setController(this);
         try {
             Parent root = loader.load();

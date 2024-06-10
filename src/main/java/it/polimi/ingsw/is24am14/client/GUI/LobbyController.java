@@ -1,6 +1,7 @@
 package it.polimi.ingsw.is24am14.client.GUI;
 
 import it.polimi.ingsw.is24am14.server.controller.GameStateEnum;
+import it.polimi.ingsw.is24am14.server.network.RMIClient;
 import it.polimi.ingsw.is24am14.server.view.GUIView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -51,7 +52,10 @@ public class LobbyController {
     }
 
     private void goToToken(){
-        if(context.getClient().getGameContext().getGameStateEnum() == GameStateEnum.ChoosingColor) {
+
+        RMIClient client = (RMIClient) context.getClient(); // andrà tolto perchè gameContext andrà generalizzato
+
+        if(client.getGameContext().getGameStateEnum() == GameStateEnum.ChoosingColor) {
             MenuTokenController tokenController = new MenuTokenController(context);
             tokenController.showScene();
         }
@@ -60,7 +64,8 @@ public class LobbyController {
     private void handleStartButtonAction(ActionEvent event) {
         try {
             context.getClient().startGame();
-            if(context.getClient().getGameContext().getGameStateEnum() == GameStateEnum.DeckInit){
+            RMIClient client = (RMIClient) context.getClient(); // andrà tolto perchè gameContext andrà generalizzato
+            if(client.getGameContext().getGameStateEnum() == GameStateEnum.DeckInit){
                 goToToken();
             }
         } catch (Exception e) {

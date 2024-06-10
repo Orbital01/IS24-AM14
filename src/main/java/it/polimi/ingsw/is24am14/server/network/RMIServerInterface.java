@@ -6,6 +6,8 @@ import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 public interface RMIServerInterface extends Remote {
     void acceptConnection(ClientInterface client, String username) throws Exception;
@@ -21,4 +23,6 @@ public interface RMIServerInterface extends Remote {
     void drawResourceCard(ClientInterface client) throws Exception;
     void faceUpCard(ClientInterface client, int index) throws Exception;
     void addMessage(ClientInterface client, String receiver, String message) throws Exception;
+
+    ArrayList<String> getLobbyList() throws RemoteException;
 }

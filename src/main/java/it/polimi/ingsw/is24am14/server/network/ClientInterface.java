@@ -7,6 +7,7 @@ import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 public interface ClientInterface extends Remote {
     String getUsername() throws Exception;
@@ -23,5 +24,6 @@ public interface ClientInterface extends Remote {
     void drawFaceUpCard(int index) throws Exception;
     void putCard(int handCardIndex, Coordinates coordinates, int cornerIndex) throws Exception;
     void sendMessage(String receiver, String message) throws Exception;
-    GameContext getGameContext();
+
+    ArrayList<String> getLobbyList() throws RemoteException;
 }

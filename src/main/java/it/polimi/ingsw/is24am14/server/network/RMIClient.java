@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class RMIClient extends UnicastRemoteObject implements ClientInterface {
@@ -19,7 +20,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface {
 
     public RMIClient() throws Exception {
         Registry registry;
-        registry = LocateRegistry.getRegistry("127.0.0.1", 12345);
+        registry = LocateRegistry.getRegistry("127.0.0.1", 12346);
         this.server = (RMIServerInterface) registry.lookup("RMIServer");
         this.context = null;
     }
@@ -31,12 +32,8 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface {
 
     @Override
     public void connect(String username) throws Exception {
-        try {
             this.server.acceptConnection(this, username);
             this.username = username;
-        } catch (NameAlreadyBoundException e) {
-            System.out.println("Name already taken");
-        }
     }
 
     @Override
@@ -107,8 +104,11 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface {
         this.server.addMessage(this, receiver, message);
     }
 
-    @Override
     public GameContext getGameContext() {
         return this.context;
+    }
+
+    public ArrayList<String> getLobbyList() throws RemoteException {
+        return this.server.getLobbyList();
     }
 }

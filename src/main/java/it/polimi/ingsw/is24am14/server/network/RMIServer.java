@@ -15,6 +15,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 public class RMIServer extends UnicastRemoteObject implements RMIServerInterface {
     private final LobbyList lobbyList;
@@ -22,7 +23,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     protected RMIServer(LobbyList lobbies) throws RemoteException {
         this.lobbyList = lobbies;
 
-        Registry registry = LocateRegistry.createRegistry(12345);
+        Registry registry = LocateRegistry.createRegistry(12346);
         try {
             registry.bind("RMIServer", this);
         }
@@ -123,5 +124,10 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
         String username = client.getUsername();
         Lobby lobby = this.lobbyList.getPlayersLobby(username);
         lobby.getGameContext().addMessage(username, receiver, message);
+    }
+
+    @Override
+    public ArrayList<String> getLobbyList() throws RemoteException {
+        return this.lobbyList.getLobbiesNames();
     }
 }

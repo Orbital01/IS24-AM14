@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import javax.naming.NameAlreadyBoundException;
 import java.io.IOException;
 
 public class MenuNicknameController {
@@ -57,7 +58,6 @@ public class MenuNicknameController {
         String username = usernameField.getText();
         //verifico he l'username sia valido
         int ok = -1;
-        while(ok == -1) {
             if (username.length() > 0) {
                 try{
                     context.getClient().connect(username);
@@ -65,15 +65,14 @@ public class MenuNicknameController {
                     //vado alla decisione sulla lobby
                     goToLobbyChoice();
                 } catch (Exception e) {
+                    System.out.println("Username già in uso");
                     //username non valido
                     //mostro un messaggio di errore
                     //e chiedo di inserire un nuovo username
-                    usernameField.clear();
-                    username = usernameField.getText();
-                    ok = -1;
+                    MenuNicknameController menuNicknameController = new MenuNicknameController(context);
+                    menuNicknameController.showScene();
                 }
             }
-        }
     }
 
 }

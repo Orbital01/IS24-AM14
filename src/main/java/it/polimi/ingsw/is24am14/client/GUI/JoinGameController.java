@@ -12,6 +12,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class JoinGameController {
@@ -23,9 +24,14 @@ public class JoinGameController {
     private ListView<String> lobbyList;
 
     public void initialize() {
-        ArrayList<String> lobbies = context.getClient().lobbyList();
-        ObservableList<String> observableList = FXCollections.observableList(lobbies);
-        lobbyList.setItems(observableList);
+        try {
+            ArrayList<String> lobbies = context.getClient().getLobbyList();
+            ObservableList<String> observableList = FXCollections.observableList(lobbies);
+            lobbyList.setItems(observableList);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        joinLobby();//?
     }
 
     public JoinGameController(GUIView context){

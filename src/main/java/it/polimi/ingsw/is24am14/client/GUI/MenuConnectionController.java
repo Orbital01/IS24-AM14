@@ -55,6 +55,8 @@ public class MenuConnectionController {
 
             rmiClient = new RMIClient(); //dovrò poi aggiungere l'indirizzo IP
             context.setClient(rmiClient);
+            //passo alla scena di selezione del nickname
+            GoToUsername();
 
         }catch (Exception e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -63,10 +65,8 @@ public class MenuConnectionController {
             alert.setContentText("Errore nella connessione RMI");
             alert.showAndWait();
             e.printStackTrace();
+            System.exit(1);
         }
-
-        //passo alla scena di selezione del nickname
-        GoToUsername();
     }
 
     private void handleTcpButtonAction(ActionEvent event) {
