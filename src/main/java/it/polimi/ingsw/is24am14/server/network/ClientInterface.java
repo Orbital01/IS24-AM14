@@ -26,4 +26,6 @@ public interface ClientInterface extends Remote {
     void sendMessage(String receiver, String message) throws Exception;
 
     ArrayList<String> getLobbyList() throws Exception;
+
+    ArrayList<String> getLobbyClients(String lobbyHost) throws Exception;
 }

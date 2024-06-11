@@ -19,7 +19,7 @@ public class GUIView extends Application {
     //scene è il contenuto della finestra
 
     private Stage primaryStage;
-    private ClientInterface client;
+    private RMIClient client; //poi deve diventare una ClientInterface
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -40,12 +40,12 @@ public class GUIView extends Application {
         return primaryStage;
     }
 
-    public ClientInterface getClient(){
+    public RMIClient getClient(){
         return client;
-    }
+    } //idem come sopra
 
-    public void setClient(ClientInterface client){
+    public void setClient(RMIClient client){
         this.client = client;
-    }
+    } //idem come sopra
 
 }
