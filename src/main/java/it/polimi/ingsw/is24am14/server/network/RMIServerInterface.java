@@ -24,5 +24,6 @@ public interface RMIServerInterface extends Remote {
     void faceUpCard(ClientInterface client, int index) throws Exception;
     void addMessage(ClientInterface client, String receiver, String message) throws Exception;
 
-    ArrayList<String> getLobbyList() throws RemoteException;
+    ArrayList<String> getLobbyList() throws Exception;
+    ArrayList<String> getLobbyClients(String lobbyHost) throws Exception;
 }

@@ -46,7 +46,7 @@ public class GameContext implements Serializable {
         }
         colors.remove(color);
         game.getPlayer(player).setColour(color);
-        if (colorStateCompleted()) playersCards();
+        if (colorStateCompleted()) starterCardState();
     }
 
     public List<TokenColour> getColors() {
@@ -64,11 +64,28 @@ public class GameContext implements Serializable {
         return true;
     }
 
-    public void playersCards() {
+    public void starterCardState() {
         for (Player player : game.getPlayers()) {
             player.setStarterCard(game.getStarterCards().removeTop());
-            player.getPlayerBoard().placeStarterCard(player.getStarterCard());
+        }
+        gameStateEnum = GameStateEnum.ChoosingStarterCard;
+    }
 
+    public void placeStarterCard(String username, StarterCard card) {
+        this.game.getPlayer(username).getPlayerBoard().placeStarterCard(card);
+
+        if (everyoneHasStarterCard()) playersCards();
+    }
+
+    private boolean everyoneHasStarterCard() {
+        for (Player player : game.getPlayers()) {
+            if (player.getPlayerBoard().getBoard().values().isEmpty()) return false;
+        }
+        return true;
+    }
+
+    public void playersCards() {
+        for (Player player : game.getPlayers()) {
             player.addCardToHand(game.popResourceDeck());
             player.addCardToHand(game.popResourceDeck());
             player.addCardToHand(game.popGoldDeck());

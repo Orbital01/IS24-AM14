@@ -108,7 +108,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface {
         return this.context;
     }
 
-    public ArrayList<String> getLobbyList() throws RemoteException {
+    public ArrayList<String> getLobbyList() throws Exception {
         return this.server.getLobbyList();
     }
 }

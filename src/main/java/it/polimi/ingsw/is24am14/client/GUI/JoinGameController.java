@@ -28,7 +28,7 @@ public class JoinGameController {
             ArrayList<String> lobbies = context.getClient().getLobbyList();
             ObservableList<String> observableList = FXCollections.observableList(lobbies);
             lobbyList.setItems(observableList);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         joinLobby();//?

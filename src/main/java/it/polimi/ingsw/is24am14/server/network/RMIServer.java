@@ -130,4 +130,14 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     public ArrayList<String> getLobbyList() throws RemoteException {
         return this.lobbyList.getLobbiesNames();
     }
+
+    @Override
+    public ArrayList<String> getLobbyClients(String lobbyHost) throws Exception {
+        ArrayList<String> clients = new ArrayList<>();
+        Lobby lobby = this.lobbyList.getLobbyByHost(lobbyHost);
+        for (ClientHandler client : lobby.getPlayers()) {
+            clients.add(client.getUsername());
+        }
+        return clients;
+    }
 }
