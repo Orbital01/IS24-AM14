@@ -60,8 +60,8 @@ public class LobbyController {
         executorService = Executors.newSingleThreadScheduledExecutor();
         gameStatusExecutorService = Executors.newSingleThreadScheduledExecutor();
 
-        executorService.scheduleAtFixedRate(this::checkConnectedClients, 0, 5, TimeUnit.SECONDS);
-        gameStatusExecutorService.scheduleAtFixedRate(this::checkGameStatus, 0, 4, TimeUnit.SECONDS);
+        executorService.scheduleAtFixedRate(this::checkConnectedClients, 0, 1, TimeUnit.SECONDS);
+        gameStatusExecutorService.scheduleAtFixedRate(this::checkGameStatus, 0, 1, TimeUnit.SECONDS);
 
     }
 
@@ -73,17 +73,12 @@ public class LobbyController {
     }
 
     private void goToToken(){
+        //termino l'esecuzione dei thread di controllo
+        executorService.shutdown();
+        gameStatusExecutorService.shutdown();
 
-        try {
-            context.getClient().updateGameContext();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if(context.getClient().getGameContext().getGameStateEnum() == GameStateEnum.ChoosingColor) {
-            MenuTokenController tokenController = new MenuTokenController(context);
-            tokenController.showScene();
-        }
+        MenuTokenController tokenController = new MenuTokenController(context);
+        tokenController.showScene();
     }
 
     private void handleStartButtonAction(ActionEvent event) {

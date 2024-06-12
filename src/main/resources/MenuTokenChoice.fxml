@@ -82,12 +82,13 @@
          </image>
       </ImageView>
 
-      <Text fx:id="text" layoutX="176.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="248.953125">
+      <Text fx:id="waitText" layoutX="176.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="248.953125">
             <font>
                 <Font size="17.0" />
             </font>
       </Text>
-      <Text layoutX="176.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose your token!&#10;" textAlignment="CENTER" wrappingWidth="248.953125">
+
+      <Text fx:id="goText" layoutX="176.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose your token!&#10;" textAlignment="CENTER" wrappingWidth="248.953125">
          <font>
             <Font size="17.0" />
          </font>

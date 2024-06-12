@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class JoinGameController {
 
@@ -22,6 +24,8 @@ public class JoinGameController {
 
     @FXML
     private ListView<String> lobbyList;
+
+    private ScheduledExecutorService updateLobbyListService;
 
     public void initialize() {
         try {
@@ -44,6 +48,8 @@ public class JoinGameController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        updateLobbyListService = Executors.newSingleThreadScheduledExecutor();
+        updateLobbyListService.scheduleAtFixedRate(this::updateLobbyList, 0, 1, java.util.concurrent.TimeUnit.SECONDS);
     }
 
 
@@ -51,6 +57,16 @@ public class JoinGameController {
         Stage stage = context.getStage();
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void updateLobbyList() {
+        try {
+            ArrayList<String> lobbies = context.getClient().getLobbyList();
+            ObservableList<String> observableList = FXCollections.observableList(lobbies);
+            lobbyList.setItems(observableList);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void joinLobby() {
@@ -68,6 +84,9 @@ public class JoinGameController {
     }
 
     private void goToLobby() {
+        //kill scheduled executor
+        updateLobbyListService.shutdown();
+
         int AP = 2;
         LobbyController lobbyController = new LobbyController(context, AP);
         lobbyController.showScene();

@@ -27,7 +27,10 @@ public class MenuTokenController {
     private Scene scene;
 
     @FXML
-    Text text;
+    Text waitText;
+
+    @FXML
+    Text goText;
 
     @FXML
     Button blueTokenButton;
@@ -55,6 +58,9 @@ public class MenuTokenController {
         yellowTokenButton.setOnAction(this::handleYellowTokenButton);
         redTokenButton.setOnAction(this::handleRedTokenButton);
         greenTokenButton.setOnAction(this::handleGreenTokenButton);
+
+        waitText.setVisible(true);
+        goText.setVisible(false);
 
         try {
             myIndex = context.getClient().getGameContext().getGame().getPlayers().
@@ -85,13 +91,13 @@ public class MenuTokenController {
         }
 
         colorExecutorService = Executors.newSingleThreadScheduledExecutor();
-        colorExecutorService.scheduleAtFixedRate(this::checkAvailableColors, 0, 3, TimeUnit.SECONDS);
+        colorExecutorService.scheduleAtFixedRate(this::checkAvailableColors, 0, 1, TimeUnit.SECONDS);
 
         gameStatusExecutorService = Executors.newSingleThreadScheduledExecutor();
-        gameStatusExecutorService.scheduleAtFixedRate(this::checkGameStatus, 0, 3, TimeUnit.SECONDS);
+        gameStatusExecutorService.scheduleAtFixedRate(this::checkGameStatus, 0, 1, TimeUnit.SECONDS);
 
         turnExecutorService = Executors.newSingleThreadScheduledExecutor();
-        turnExecutorService.scheduleAtFixedRate(this::checkTurn, 0, 3, TimeUnit.SECONDS);
+        turnExecutorService.scheduleAtFixedRate(this::checkTurn, 0, 1, TimeUnit.SECONDS);
 
     }
 
@@ -120,7 +126,6 @@ public class MenuTokenController {
     private void handleBlueTokenButton(ActionEvent actionEvent) {
         try {
             context.getClient().pickColor(TokenColour.BLUE);
-            System.out.println("Blue token picked");
         }catch (Exception e){
             System.out.println("unable to pick color");
         }
@@ -151,6 +156,11 @@ public class MenuTokenController {
     }
 
     private void goToStarterCard() {
+        //devo terminare l'esecuzione dei thread di aggiornamento di questa fase
+        this.colorExecutorService.shutdown();
+        this.gameStatusExecutorService.shutdown();
+        this.turnExecutorService.shutdown();
+
         StarterCardController starterCardController = new StarterCardController(context);
         starterCardController.showScene();
     }
@@ -173,6 +183,8 @@ public class MenuTokenController {
 
     private void updateSceneBasedOnGameState() {
         if(previousGameState == GameStateEnum.ChoosingStarterCard) {
+            //passo alla scelta della carta iniziale
+            System.out.println("Going to starter card");
             goToStarterCard();
         }
     }
@@ -183,7 +195,8 @@ public class MenuTokenController {
                 myTurn = false;
             }else {
                 myTurn = true;
-                text.setText("It's your turn");
+                waitText.setVisible(false);
+                goText.setVisible(true);
             }
         }
     }
