@@ -34,6 +34,9 @@ public class StarterCardController {
     private StarterCard starterCard;
     private ImageView cardImage;
 
+    private ScheduledExecutorService gameStatusExecutorService;
+    private GameStateEnum previousGameState = null;
+
     @FXML
     Button flipButton;
 
@@ -51,7 +54,7 @@ public class StarterCardController {
         layout = new VBox();
 
         flipButton = new Button("Flip");
-        flipButton.setOnAction(this::handleFlipButtonAction);
+        flipButton.setOnAction(this::handleFlipButtonAction); //si può togliere?
         layout.getChildren().add(flipButton);
 
         confirmButton = new Button("Confirm");
@@ -65,8 +68,10 @@ public class StarterCardController {
         }
 
         printStarterCard();
-
         scene = new Scene(layout, 600, 400);
+
+        gameStatusExecutorService = Executors.newSingleThreadScheduledExecutor();
+        gameStatusExecutorService.scheduleAtFixedRate(this::checkGameStatus, 0, 1, TimeUnit.SECONDS);
     }
 
     public void showScene() {
@@ -83,16 +88,11 @@ public class StarterCardController {
     private void handleConfirmButtonAction(ActionEvent actionEvent) {
         try {
             context.getClient().setStarterCard(starterCard);
-            goToGame();
+            flipButton.setVisible(false);
+            confirmButton.setVisible(false);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private void goToGame() {
-        GameController GameController = new GameController(context);
-        System.out.println("Going to game");
-        GameController.showScene();
     }
 
     private void printStarterCard() {
@@ -103,6 +103,39 @@ public class StarterCardController {
         Image image = Guifactory.displayCardImage(starterCard);
         cardImage = new ImageView(image);
         layout.getChildren().add(cardImage);
+    }
+
+    private void checkGameStatus() {
+        System.out.println("Checking game status");
+        try {
+            context.getClient().updateGameContext();
+            if (context.getClient().getGameContext() != null) {
+                GameStateEnum currentGameState = context.getClient().getGameContext().getGameStateEnum();
+                System.out.println("Current game state: " + currentGameState);
+                if (currentGameState != previousGameState) {
+                    previousGameState = currentGameState;
+                    Platform.runLater(this::updateSceneBasedOnGameState);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void updateSceneBasedOnGameState() {
+        if(previousGameState == GameStateEnum.ChoosingSecretObjective) {
+            //passo alla scelta della carta iniziale
+            System.out.println("Going to objective card selection");
+            goToObjective();
+        }
+    }
+
+    private void goToObjective() {
+        //devo terminare l'esecuzione dei thread di aggiornamento di questa fase
+        this.gameStatusExecutorService.shutdown();
+        ObjectiveCardController objectiveCardController = new ObjectiveCardController(context);
+        System.out.println("Going to secret objective card selection");
+        objectiveCardController.showScene();
     }
 
 }

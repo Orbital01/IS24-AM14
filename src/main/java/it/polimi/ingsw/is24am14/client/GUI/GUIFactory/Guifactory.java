@@ -8,10 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -37,6 +34,18 @@ public class Guifactory {
         String imagePath = Card.getImage();
         Image image = new Image("file:"+ imagePath);
         return image;
+    }
+
+    public static void setAutomaticBackground(VBox layout) {
+        Image image = new Image("file:" + "src/main/resources/images/background.jpg");
+
+        BackgroundImage backgroundImage = new BackgroundImage(image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+
+        layout.setBackground(new Background(backgroundImage));
     }
 
 }

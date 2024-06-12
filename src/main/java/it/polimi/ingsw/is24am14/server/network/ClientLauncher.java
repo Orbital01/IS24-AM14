@@ -60,12 +60,13 @@ public class ClientLauncher {
                         client.pickColor(TokenColour.valueOf(colorChoice));
                     }
 
-                //gui fino a qua
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.ChoosingSecretObjective && client.getGameContext().getGame().getPlayer(username).getSecretObjective() == null) {
                     System.out.println("Secret objective");
                     System.out.println(client.getGameContext().getObjectiveCardChoices(username).getFirst());
                     System.out.println(client.getGameContext().getObjectiveCardChoices(username).get(1));
                     client.pickObjectiveCard(client.getGameContext().getObjectiveCardChoices(username).get(0));
+
+                    //gui fino a qua
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.Move) {
 
                     if (client.getGameContext().getGame().getActivePlayer().getPlayerNickname().equals(username)) {
