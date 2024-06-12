@@ -3,6 +3,7 @@ package it.polimi.ingsw.is24am14.server.network;
 import it.polimi.ingsw.is24am14.server.controller.GameContext;
 import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
 import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
+import it.polimi.ingsw.is24am14.server.model.card.StarterCard;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 
 import javax.naming.NameAlreadyBoundException;
@@ -102,6 +103,11 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface {
     @Override
     public void sendMessage(String receiver, String message) throws Exception {
         this.server.addMessage(this, receiver, message);
+    }
+
+    @Override
+    public void setStarterCard(StarterCard starterCard) throws Exception {
+        this.server.setStarterCard(this, starterCard);
     }
 
     public GameContext getGameContext() {

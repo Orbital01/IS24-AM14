@@ -6,6 +6,7 @@ import it.polimi.ingsw.is24am14.server.controller.Lobby;
 import it.polimi.ingsw.is24am14.server.controller.LobbyList;
 import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
 import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
+import it.polimi.ingsw.is24am14.server.model.card.StarterCard;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 
@@ -124,6 +125,13 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
         String username = client.getUsername();
         Lobby lobby = this.lobbyList.getPlayersLobby(username);
         lobby.getGameContext().addMessage(username, receiver, message);
+    }
+
+    @Override
+    public void setStarterCard(ClientInterface client, StarterCard card) throws Exception {
+        String username = client.getUsername();
+        Lobby lobby = this.lobbyList.getPlayersLobby(username);
+        lobby.getGameContext().getGame().getPlayer(username).setStarterCard(card);
     }
 
     @Override

@@ -3,6 +3,7 @@ package it.polimi.ingsw.is24am14.server.network;
 import it.polimi.ingsw.is24am14.server.controller.GameContext;
 import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
 import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
+import it.polimi.ingsw.is24am14.server.model.card.StarterCard;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 
 import java.rmi.Remote;
@@ -23,6 +24,7 @@ public interface RMIServerInterface extends Remote {
     void drawResourceCard(ClientInterface client) throws Exception;
     void faceUpCard(ClientInterface client, int index) throws Exception;
     void addMessage(ClientInterface client, String receiver, String message) throws Exception;
+    void setStarterCard(ClientInterface client, StarterCard card) throws Exception;
 
     ArrayList<String> getLobbyList() throws Exception;
     ArrayList<String> getLobbyClients(String lobbyHost) throws Exception;
