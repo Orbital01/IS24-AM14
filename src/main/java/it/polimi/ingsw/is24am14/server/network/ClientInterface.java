@@ -26,6 +26,7 @@ public interface ClientInterface extends Remote {
     void putCard(int handCardIndex, Coordinates coordinates, int cornerIndex) throws Exception;
     void sendMessage(String receiver, String message) throws Exception;
     void setStarterCard(StarterCard starterCard) throws Exception;
+    GameContext getGameContext() throws Exception;
 
     ArrayList<String> getLobbyList() throws Exception;
 

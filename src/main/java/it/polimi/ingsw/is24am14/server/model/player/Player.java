@@ -24,8 +24,6 @@ public class Player implements Serializable {
     private ObjectiveCard secretObjective;
     private GameArea playerBoard;
 
-    private final ClientHandler connection;
-
     //Constructor
     /**
      * Constructs a Player object with the given nickname and colour.
@@ -34,7 +32,7 @@ public class Player implements Serializable {
      *
      * @param nickname The nickname of the player.
      */
-    public Player(String nickname, ClientHandler connection) {
+    public Player(String nickname) {
         this.nickname = nickname;
         this.points = 0;
         this.isFirstPlayer = false;
@@ -42,8 +40,6 @@ public class Player implements Serializable {
         this.starterCard = null;
         this.secretObjective = null;
         this.playerBoard = new GameArea();
-
-        this.connection = connection;
     }
 
     //Getters

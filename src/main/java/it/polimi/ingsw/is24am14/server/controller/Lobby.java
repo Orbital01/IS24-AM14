@@ -68,7 +68,7 @@ public class Lobby implements Serializable {
 
         for (ClientHandler player : players) {
             try {
-                this.gameContext.game.addPlayer(new Player(player.getUsername(), player));
+                this.gameContext.game.addPlayer(new Player(player.getUsername()));
             } catch (MaximumNumberOfPlayersReachedException e) {
                 throw new RuntimeException(e);
             }

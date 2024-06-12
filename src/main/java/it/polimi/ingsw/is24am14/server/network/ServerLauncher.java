@@ -8,7 +8,8 @@ public class ServerLauncher {
     public static void main(String[] args) {
         LobbyList lobbyList = new LobbyList(new ClientHandlerList());
         try {
-            RMIServer server = new RMIServer(lobbyList);
+            RMIServer rmiServer = new RMIServer(lobbyList);
+            SocketServer socketServer = new SocketServer(lobbyList);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

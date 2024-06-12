@@ -79,14 +79,11 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
     @Override
     public void setObjectiveCard(ClientInterface client, ObjectiveCard card) throws Exception {
-        //  move check from here to controller
         String username = client.getUsername();
         Lobby lobby = this.lobbyList.getPlayersLobby(username);
         Player player = lobby.getGameContext().getGame().getPlayer(username);
 
-        if (lobby.getGameContext().getGameStateEnum() == GameStateEnum.ChoosingSecretObjective && player.getSecretObjective() == null) {
-            lobby.getGameContext().setObjectiveCard(player, card);
-        }
+        lobby.getGameContext().setObjectiveCard(player, card);
     }
 
     @Override

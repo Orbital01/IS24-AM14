@@ -17,7 +17,7 @@ public class ClientLauncher {
         username = scanner.nextLine();
         int option;
 
-        RMIClient client = new RMIClient();
+        ClientInterface client = new SocketClient();
 
         client.connect(username);
         System.out.println("Option:");
@@ -78,6 +78,10 @@ public class ClientLauncher {
                     client.putCard(0, new Coordinates(0, 0), 0);
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.Draw) {
                     client.drawGoldCard();
+                } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.ChoosingStarterCard) {
+                    client.setStarterCard(client.getGameContext().getGame().getPlayer(username).getStarterCard());
+                } else {
+                    System.out.println("Boh non so");
                 }
             }
             TimeUnit.SECONDS.sleep(1);

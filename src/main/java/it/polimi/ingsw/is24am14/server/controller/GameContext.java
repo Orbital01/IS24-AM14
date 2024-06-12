@@ -65,6 +65,7 @@ public class GameContext implements Serializable {
     }
 
     public void starterCardState() {
+        System.out.println("Choosing starter cards");
         for (Player player : game.getPlayers()) {
             player.setStarterCard(game.getStarterCards().removeTop());
         }
@@ -85,6 +86,7 @@ public class GameContext implements Serializable {
     }
 
     public void playersCards() {
+        System.out.println("Setting players hand cards");
         for (Player player : game.getPlayers()) {
             player.addCardToHand(game.popResourceDeck());
             player.addCardToHand(game.popResourceDeck());
@@ -107,9 +109,11 @@ public class GameContext implements Serializable {
     }
 
     public void setObjectiveCard(Player player, ObjectiveCard objectiveCard) {
-        this.game.getPlayer(player.getPlayerNickname()).setObjectiveCard(objectiveCard);
+        if (gameStateEnum == GameStateEnum.ChoosingSecretObjective && player.getSecretObjective() == null) {
+            this.game.getPlayer(player.getPlayerNickname()).setObjectiveCard(objectiveCard);
 
-        if (objectiveCardStateCompleted()) setFirstPlayer();
+            if (objectiveCardStateCompleted()) setFirstPlayer();
+        }
     }
 
     public boolean objectiveCardStateCompleted() {
