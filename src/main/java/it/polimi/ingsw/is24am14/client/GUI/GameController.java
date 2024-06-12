@@ -15,6 +15,9 @@ public class GameController {
     private GUIView context;
     private Scene scene;
 
+    public void initialize() {
+    }
+
     public GameController(GUIView context){
         this.context = context;
 
