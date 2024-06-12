@@ -66,7 +66,6 @@ public class ClientLauncher {
                     System.out.println(client.getGameContext().getObjectiveCardChoices(username).get(1));
                     client.pickObjectiveCard(client.getGameContext().getObjectiveCardChoices(username).get(0));
 
-                    //gui fino a qua
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.Move) {
 
                     if (client.getGameContext().getGame().getActivePlayer().getPlayerNickname().equals(username)) {

@@ -37,11 +37,6 @@ public class ObjectiveCardController {
     private ScheduledExecutorService gameStatusExecutorService;
     private GameStateEnum previousGameState = null;
 
-    public void initialize() {
-        select1.setOnAction(this::handleSelect1);
-        select2.setOnAction(this::handleSelect2);
-    }
-
     public ObjectiveCardController(GUIView context){
         this.context = context;
         try{
@@ -59,7 +54,7 @@ public class ObjectiveCardController {
         layout.getChildren().add(select1);
 
         select2 = new Button("Select Second");
-        select2.setOnAction(this::handleSelect1);
+        select2.setOnAction(this::handleSelect2);
         layout.getChildren().add(select2);
 
         scene = new Scene(layout, 600, 400);

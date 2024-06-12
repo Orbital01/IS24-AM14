@@ -20,6 +20,8 @@ import java.io.InputStream;
 /**
  * The Class Guifactory is a factory class that provides the GUI elements during the game.
  */
+//TODO: Add textfield creation method
+//TODO: Add javaDoc
 
 public class Guifactory {
 
@@ -36,16 +38,33 @@ public class Guifactory {
         return image;
     }
 
+
     public static void setAutomaticBackground(VBox layout) {
         Image image = new Image("file:" + "src/main/resources/images/background.jpg");
+
+        BackgroundSize BackgroundSize = new BackgroundSize(600, 400, true, true, true, true);
 
         BackgroundImage backgroundImage = new BackgroundImage(image,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
+                BackgroundSize);
 
         layout.setBackground(new Background(backgroundImage));
     }
+
+    public static Button createButton(String text, int width, int height){
+        Button button = new Button(text);
+        button.setPrefSize(width, height);
+        return button;
+    }
+
+    public static TextField createTextField(String text, int width, int height){
+        TextField textField = new TextField(text);
+        textField.setPrefSize(width, height);
+        return textField;
+    }
+
+    //public static void
 
 }
