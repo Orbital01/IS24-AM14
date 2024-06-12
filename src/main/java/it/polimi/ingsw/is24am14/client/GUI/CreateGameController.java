@@ -72,8 +72,8 @@ public class CreateGameController {
     }
 
     private void goToLobby() {
-        int POA = 1;
-        LobbyController lobbyController = new LobbyController(context, POA);
+        int AP = 1;
+        LobbyController lobbyController = new LobbyController(context, AP);
         lobbyController.showScene();
     }
 }

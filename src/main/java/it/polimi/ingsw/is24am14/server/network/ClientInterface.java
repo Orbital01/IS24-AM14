@@ -28,4 +28,6 @@ public interface ClientInterface extends Remote {
     void setStarterCard(StarterCard starterCard) throws Exception;
 
     ArrayList<String> getLobbyList() throws Exception;
+
+    ArrayList<String> getLobbyClients(String lobbyHost) throws Exception;
 }

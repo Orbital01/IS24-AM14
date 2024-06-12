@@ -41,11 +41,10 @@ public class ClientLauncher {
                     System.out.println("Initializing");
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.ChoosingColor) {
 
-                    //gui fino a qua
                     int myIndex = client.getGameContext().getGame().getPlayers().indexOf(client.getGameContext().getGame().getPlayer(client.getUsername()));
                     if (myIndex == -1) {throw new RuntimeException("Player not found");}
-                    boolean myTurn = true;
 
+                    boolean myTurn = true;
                     for (int i = 0; i < myIndex; i++) {
                         if (client.getGameContext().getGame().getPlayers().get(i).getColour() == null) {
                             myTurn = false;
@@ -60,12 +59,15 @@ public class ClientLauncher {
                         String colorChoice = scanner.nextLine();
                         client.pickColor(TokenColour.valueOf(colorChoice));
                     }
+
+                //gui fino a qua
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.ChoosingSecretObjective && client.getGameContext().getGame().getPlayer(username).getSecretObjective() == null) {
                     System.out.println("Secret objective");
                     System.out.println(client.getGameContext().getObjectiveCardChoices(username).getFirst());
                     System.out.println(client.getGameContext().getObjectiveCardChoices(username).get(1));
                     client.pickObjectiveCard(client.getGameContext().getObjectiveCardChoices(username).get(0));
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.Move) {
+
                     if (client.getGameContext().getGame().getActivePlayer().getPlayerNickname().equals(username)) {
                         System.out.println("It's my turn");
                     } else {

@@ -21,7 +21,7 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface {
 
     public RMIClient() throws Exception {
         Registry registry;
-        registry = LocateRegistry.getRegistry("127.0.0.1", 12346);
+        registry = LocateRegistry.getRegistry("127.0.0.1", 12347);
         this.server = (RMIServerInterface) registry.lookup("RMIServer");
         this.context = null;
     }
@@ -117,4 +117,9 @@ public class RMIClient extends UnicastRemoteObject implements ClientInterface {
     public ArrayList<String> getLobbyList() throws Exception {
         return this.server.getLobbyList();
     }
+
+    public ArrayList<String> getLobbyClients(String lobbyHost) throws Exception {
+        return this.server.getLobbyClients(lobbyHost);
+    }
+
 }

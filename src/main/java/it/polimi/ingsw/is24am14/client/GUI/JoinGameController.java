@@ -68,8 +68,8 @@ public class JoinGameController {
     }
 
     private void goToLobby() {
-        int POA = 2;
-        LobbyController lobbyController = new LobbyController(context, POA);
+        int AP = 2;
+        LobbyController lobbyController = new LobbyController(context, AP);
         lobbyController.showScene();
     }
 
