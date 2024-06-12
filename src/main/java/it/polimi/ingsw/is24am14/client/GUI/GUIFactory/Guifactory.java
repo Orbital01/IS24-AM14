@@ -1,5 +1,7 @@
 package it.polimi.ingsw.is24am14.client.GUI.GUIFactory;
 
+import it.polimi.ingsw.is24am14.server.model.card.Card;
+import it.polimi.ingsw.is24am14.server.model.card.StarterCard;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -24,21 +26,17 @@ import java.io.InputStream;
 
 public class Guifactory {
 
-    /** The default width. */
-    private static final int SCENE_WIDTH = 1280;
-
-    /** The default height. */
-    private static final int SCENE_HEIGHT = 720;
-
-    /** The stage reference. */
-    public static Stage finestra;
-
-    //metodi implementati man mano che li implemento
     public static Text printMessage(String message){
         Text errorText = new Text(message);
         errorText.setFont(Font.font("Verdana", 20));
         errorText.setFill(Color.RED);
         return errorText;
+    }
+
+    public static Image displayCardImage(Card Card) {
+        String imagePath = Card.getImage();
+        Image image = new Image("file:"+ imagePath);
+        return image;
     }
 
 }
