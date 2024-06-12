@@ -131,7 +131,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     public void setStarterCard(ClientInterface client, StarterCard card) throws Exception {
         String username = client.getUsername();
         Lobby lobby = this.lobbyList.getPlayersLobby(username);
-        lobby.getGameContext().getGame().getPlayer(username).setStarterCard(card);
+        lobby.getGameContext().placeStarterCard(username, card);
     }
 
     @Override
