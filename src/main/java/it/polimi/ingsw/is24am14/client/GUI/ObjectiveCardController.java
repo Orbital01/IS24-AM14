@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -46,16 +47,11 @@ public class ObjectiveCardController {
         }
 
         layout = new VBox();
+        layout.setPrefWidth(600);
+        layout.setPrefHeight(400);
+
         Guifactory.setAutomaticBackground(layout);
         printObjectiveCards();
-
-        select1 = new Button("Select First");
-        select1.setOnAction(this::handleSelect1);
-        layout.getChildren().add(select1);
-
-        select2 = new Button("Select Second");
-        select2.setOnAction(this::handleSelect2);
-        layout.getChildren().add(select2);
 
         scene = new Scene(layout, 600, 400);
 
@@ -122,15 +118,36 @@ public class ObjectiveCardController {
 
     private void printObjectiveCards(){
         try {
+            HBox cardLayout = new HBox();
+
+            VBox firstCardLayout = new VBox();
+
             ObjectiveCard objectiveCard1 = context.getClient().getGameContext().getObjectiveCardChoices(context.getClient().getUsername()).getFirst();
-            Image image = Guifactory.displayCardImage(objectiveCard1);
-            firstCardImage = new ImageView(image);
-            layout.getChildren().add(firstCardImage);
+            ImageView image = Guifactory.displayCardImage(objectiveCard1);
+            firstCardImage = image;
+            firstCardLayout.getChildren().add(firstCardImage);
+
+            select1 = new Button("Select First");
+            select1.setOnAction(this::handleSelect1);
+            firstCardLayout.getChildren().add(select1);
+
+            cardLayout.getChildren().add(firstCardLayout);
+
+            VBox secondCardLayout = new VBox();
 
             ObjectiveCard objectiveCard2 = context.getClient().getGameContext().getObjectiveCardChoices(context.getClient().getUsername()).get(1);
             image = Guifactory.displayCardImage(objectiveCard2);
-            secondCardImage = new ImageView(image);
-            layout.getChildren().add(secondCardImage);
+            secondCardImage = image;
+            secondCardLayout.getChildren().add(secondCardImage);
+
+            select2 = new Button("Select Second");
+            select2.setOnAction(this::handleSelect2);
+            secondCardLayout.getChildren().add(select2);
+
+            cardLayout.getChildren().add(secondCardLayout);
+
+            layout.getChildren().add(cardLayout);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

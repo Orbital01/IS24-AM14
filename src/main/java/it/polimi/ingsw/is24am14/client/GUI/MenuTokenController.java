@@ -191,12 +191,16 @@ public class MenuTokenController {
 
     private void checkTurn(){
         for (int i = 0; i < myIndex; i++) {
-            if (context.getClient().getGameContext().getGame().getPlayers().get(i).getColour() == null) {
-                myTurn = false;
-            }else {
-                myTurn = true;
-                waitText.setVisible(false);
-                goText.setVisible(true);
+            try {
+                if (context.getClient().getGameContext().getGame().getPlayers().get(i).getColour() == null) {
+                    myTurn = false;
+                }else {
+                    myTurn = true;
+                    waitText.setVisible(false);
+                    goText.setVisible(true);
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         }
     }

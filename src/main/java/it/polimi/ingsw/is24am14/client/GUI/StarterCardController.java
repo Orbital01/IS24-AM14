@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
@@ -100,8 +101,8 @@ public class StarterCardController {
         if (cardImage != null) {
             layout.getChildren().remove(cardImage);
         }
-        Image image = Guifactory.displayCardImage(starterCard);
-        cardImage = new ImageView(image);
+        ImageView image = Guifactory.displayCardImage(starterCard);
+        cardImage = image;
         layout.getChildren().add(cardImage);
     }
 
