@@ -88,7 +88,6 @@ public class Guifactory {
         return textField;
     }
 
-
     public static GridPane getBoard(GameArea board){
         //non posso avere valori negativi negli indici della grid
         int rows = boardMaxRow(board) - boardMinRow(board);
@@ -96,7 +95,7 @@ public class Guifactory {
 
         GridPane gridPane = new GridPane();
         for(int i = 0; i <= columns; i++){
-            int row = boardMinRow(board) + i;
+            int row = boardMaxRow(board) - i;
             for(int j = 0; j <= rows; j++){
                 int column = boardMinColumn(board) + j;
 
