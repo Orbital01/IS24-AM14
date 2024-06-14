@@ -215,4 +215,8 @@ public class GameContext implements Serializable {
     public void addMessage(String sender, String receiver, String message) {
         this.messages.add(new Message(sender, receiver, message));
     }
+
+    public ArrayList<Message> getMessages() {
+        return messages;
+    }
 }

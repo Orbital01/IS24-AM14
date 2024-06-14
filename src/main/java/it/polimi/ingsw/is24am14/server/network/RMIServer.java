@@ -132,6 +132,11 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     }
 
     @Override
+    public ArrayList<Message> getMessages(ClientInterface client) throws Exception {
+        return this.lobbyList.getPlayersLobby(client.getUsername()).getGameContext().getMessages();
+    }
+
+    @Override
     public ArrayList<String> getLobbyList() throws RemoteException {
         return this.lobbyList.getLobbiesNames();
     }
