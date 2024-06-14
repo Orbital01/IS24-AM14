@@ -1,6 +1,7 @@
 package it.polimi.ingsw.is24am14.client.GUI;
 
 import it.polimi.ingsw.is24am14.client.GUI.GUIFactory.Guifactory;
+import it.polimi.ingsw.is24am14.client.GUI.GuiHelper.GuiHelper;
 import it.polimi.ingsw.is24am14.client.view.printer.RenderBoard;
 import it.polimi.ingsw.is24am14.server.controller.GameStateEnum;
 import it.polimi.ingsw.is24am14.server.model.card.Card;
@@ -55,6 +56,8 @@ public class GameController {
 
     private ScheduledExecutorService updatePointsExecutorService;
 
+    private ScheduledExecutorService ChatExecutorService;
+
     public GameController(GUIView context) {
         this.context = context;
         scene = new Scene(layout, 1200, 700);
@@ -68,6 +71,9 @@ public class GameController {
 
         updatePointsExecutorService = Executors.newSingleThreadScheduledExecutor();
         updatePointsExecutorService.scheduleAtFixedRate(this::updatePoints, 0, 1, TimeUnit.SECONDS);
+
+        ChatExecutorService = Executors.newSingleThreadScheduledExecutor();
+        ChatExecutorService.scheduleAtFixedRate(this::updateChat, 0, 1, TimeUnit.SECONDS);
     }
 
     public void showScene() {
@@ -115,7 +121,7 @@ public class GameController {
                     break;
                 case EndGame:
                     System.out.println("End game stage");
-                    //Todo: implement end game
+                    endGame();
                     break;
             }
         } catch (Exception e) {
@@ -128,7 +134,7 @@ public class GameController {
             playerHand = context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()).getPlayerHand();
             if(playerHand.size()==3){
                 printPlayerHand();
-                itsYourTurn();
+                itsYourTurn(myTurn);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -198,14 +204,29 @@ public class GameController {
         }
     }
 
-    private void itsYourTurn() {
-        //mostro un messaggio che è il mio turno
-        Label label = Guifactory.printLabel("It's your turn!", 100);
-        label.setAlignment(Pos.CENTER);
-        label.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        HBox messageContainer = new HBox();
-        messageContainer.setAlignment(Pos.CENTER);
-        messageContainer.getChildren().add(label);
+    private void itsYourTurn(Boolean myTurn) {
+        //se il messaggio è già presente lo rimuovo
+        if (layout.getTop() != null) {
+            layout.getChildren().remove(layout.getTop());
+        }
+        //se è il mio turno mostro un messaggio
+        HBox messageContainer;
+        if (myTurn) {
+            Label label = Guifactory.printLabel("It's your turn!", 100);
+            label.setAlignment(Pos.CENTER);
+            label.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+            messageContainer = new HBox();
+            messageContainer.setAlignment(Pos.CENTER);
+            messageContainer.getChildren().add(label);
+        }else {
+            Label label = Guifactory.printLabel("It's NOT your turn!", 100);
+            label.setAlignment(Pos.CENTER);
+            label.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+            messageContainer = new HBox();
+            messageContainer.setAlignment(Pos.CENTER);
+            messageContainer.getChildren().add(label);
+        }
+
         Platform.runLater(() -> layout.setTop(messageContainer));
     }
 
@@ -415,6 +436,35 @@ public class GameController {
 
     private void updatePoints() {
         //Todo: implementare tabellone punti
+    }
+
+    private void endGame() {
+        //mostro una finestra modale con il giocatore vincitore
+        Stage modalStage = new Stage();
+        modalStage.initModality(Modality.APPLICATION_MODAL);
+        BorderPane modalLayout = new BorderPane();
+
+        Label label;
+        try {
+             label = new Label("Il giocatore " + GuiHelper.getWinner(context.getClient().getGameContext().getGame()) + " ha vinto!");
+        } catch (Exception e) {
+             label = new Label("Errore nel recupero del vincitore");
+            throw new RuntimeException(e);
+        }
+
+        Button closeButton = Guifactory.createButton("Close", 100, 50);
+        closeButton.setOnAction(event -> {
+            modalStage.close();
+            System.exit(0);
+        });
+        modalLayout.setCenter(label);
+        modalLayout.setBottom(closeButton);
+    }
+
+    private void updateChat() {
+       // VBox chat = GuiHelper.updateChat(context);
+        //aggiungo il vbox al layout
+        //Platform.runLater(() -> layout.setRight(chat));
     }
 
 

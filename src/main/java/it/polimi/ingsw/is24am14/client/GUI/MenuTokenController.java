@@ -59,9 +59,6 @@ public class MenuTokenController {
         redTokenButton.setOnAction(this::handleRedTokenButton);
         greenTokenButton.setOnAction(this::handleGreenTokenButton);
 
-        waitText.setVisible(true);
-        goText.setVisible(false);
-
         try {
             myIndex = context.getClient().getGameContext().getGame().getPlayers().
                     indexOf(context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()));
@@ -126,6 +123,9 @@ public class MenuTokenController {
     private void handleBlueTokenButton(ActionEvent actionEvent) {
         try {
             context.getClient().pickColor(TokenColour.BLUE);
+            yellowTokenButton.setDisable(true);
+            redTokenButton.setDisable(true);
+            greenTokenButton.setDisable(true);
         }catch (Exception e){
             System.out.println("unable to pick color");
         }
@@ -134,6 +134,9 @@ public class MenuTokenController {
     private void handleYellowTokenButton(ActionEvent actionEvent) {
         try {
             context.getClient().pickColor(TokenColour.YELLOW);
+            blueTokenButton.setDisable(true);
+            redTokenButton.setDisable(true);
+            greenTokenButton.setDisable(true);
         }catch (Exception e){
             System.out.println("unable to pick color");
         }
@@ -142,6 +145,9 @@ public class MenuTokenController {
     private void handleRedTokenButton(ActionEvent actionEvent) {
         try {
             context.getClient().pickColor(TokenColour.RED);
+            blueTokenButton.setDisable(true);
+            yellowTokenButton.setDisable(true);
+            greenTokenButton.setDisable(true);
         }catch (Exception e){
             System.out.println("unable to pick color");
         }
@@ -150,6 +156,9 @@ public class MenuTokenController {
     private void handleGreenTokenButton(ActionEvent actionEvent) {
         try {
             context.getClient().pickColor(TokenColour.GREEN);
+            blueTokenButton.setDisable(true);
+            yellowTokenButton.setDisable(true);
+            redTokenButton.setDisable(true);
         }catch (Exception e){
             System.out.println("unable to pick color");
         }
@@ -194,10 +203,16 @@ public class MenuTokenController {
             try {
                 if (context.getClient().getGameContext().getGame().getPlayers().get(i).getColour() == null) {
                     myTurn = false;
+                    Platform.runLater(() -> {
+                        waitText.setVisible(true);
+                        goText.setVisible(false);
+                    });
                 }else {
                     myTurn = true;
-                    waitText.setVisible(false);
-                    goText.setVisible(true);
+                    Platform.runLater(() -> {
+                        waitText.setVisible(false);
+                        goText.setVisible(true);
+                    });
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
