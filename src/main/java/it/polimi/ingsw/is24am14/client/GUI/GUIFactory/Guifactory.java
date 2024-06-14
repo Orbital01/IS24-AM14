@@ -2,8 +2,11 @@ package it.polimi.ingsw.is24am14.client.GUI.GUIFactory;
 
 import it.polimi.ingsw.is24am14.server.model.card.Card;
 import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
+import it.polimi.ingsw.is24am14.server.model.card.PlayableCard;
+import it.polimi.ingsw.is24am14.server.model.game.Game;
 import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -15,6 +18,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+import java.util.ArrayList;
 
 /**
  * The Class Guifactory is a factory class that provides the GUI elements during the game.
@@ -96,24 +101,23 @@ public class Guifactory {
         GridPane gridPane = new GridPane();
         for(int i = 0; i <= columns; i++){
             int row = boardMaxRow(board) - i;
+
             for(int j = 0; j <= rows; j++){
                 int column = boardMinColumn(board) + j;
 
                 Card card = board.getCard(new Coordinates(row, column));
-                StackPane cellStack = new StackPane();
 
                 if (card != null) {
                     ImageView cardImage = displayCardImage(card);
                     cardImage.setPreserveRatio(true);
                     cardImage.setFitWidth(200);
 
-                    cellStack.getChildren().add(cardImage);
+                    gridPane.add(cardImage, j, i);
 
                 } else {
                     // Aggiungi un nodo vuoto
-                    cellStack.getChildren().add(emptyNode());
+                    gridPane.add(emptyNode(), j, i);
                 }
-                gridPane.add(cellStack, i, j);
                 gridPane.setVgap(-55);
                 gridPane.setHgap(-45);
             }
@@ -152,5 +156,21 @@ public class Guifactory {
         pane.setPrefSize(10, 10);
         return pane;
     }
+
+    public static GridPane getFaceUpCards(ArrayList<PlayableCard> faceUpCards){
+        GridPane gridPane = new GridPane();
+        int i = 0;
+        for (PlayableCard card : faceUpCards) {
+            ImageView cardImage = displayCardImage(card);
+            cardImage.setPreserveRatio(true);
+            cardImage.setFitWidth(200);
+            gridPane.add(cardImage, i, 0);
+            i++;
+        }
+        return gridPane;
+    }
+
+    //todo: implementare questo metodo per la stampa sulla ScoreBoard
+    //public static HBox playerScoreBoard(/*Game game*/){}
 
 }
