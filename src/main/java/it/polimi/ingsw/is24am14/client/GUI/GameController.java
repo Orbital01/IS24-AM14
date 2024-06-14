@@ -13,6 +13,7 @@ import it.polimi.ingsw.is24am14.server.view.GUIView;
 import it.polimi.ingsw.is24am14.server.view.TUIView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -26,10 +27,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -130,6 +128,7 @@ public class GameController {
             playerHand = context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()).getPlayerHand();
             if(playerHand.size()==3){
                 printPlayerHand();
+                itsYourTurn();
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -197,6 +196,17 @@ public class GameController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void itsYourTurn() {
+        //mostro un messaggio che è il mio turno
+        Label label = Guifactory.printLabel("It's your turn!", 100);
+        label.setAlignment(Pos.CENTER);
+        label.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        HBox messageContainer = new HBox();
+        messageContainer.setAlignment(Pos.CENTER);
+        messageContainer.getChildren().add(label);
+        Platform.runLater(() -> layout.setTop(messageContainer));
     }
 
     private void flipHandCard(ActionEvent event, int index) {
@@ -283,7 +293,18 @@ public class GameController {
     }
 
     private void selectCorner(int cardIndex, int row, int column){
-        Card cardToOverlap = playerBoard.getCard(new Coordinates(row, column));
+        //attenzione sono row e column della GRID non della BOARD
+        int realRow = Guifactory.boardMaxRow(playerBoard) - row;
+        int realColumn = column + Guifactory.boardMinColumn(playerBoard);
+
+        Card cardToOverlap = playerBoard.getCard(new Coordinates(realRow, realColumn));
+        //procedo con la selezione dell'angolo solo se la carta è valida
+        if (cardToOverlap == null) {
+            System.out.println("Invalid move: no card to overlap -> realRow: " + realRow + ", realColumn: " + realColumn);
+            return;
+        }
+
+        System.out.println("Select corner for card " + cardIndex + " at row " + row + ", column " + column);
 
         //apro una finestra modale che mostra la carta selezionata e permette di selezionare l'angolo
         Stage modalStage = new Stage();
@@ -301,8 +322,8 @@ public class GameController {
             // Recupera l'input dell'utente dal TextField e lo converte in un intero
             int corner = Integer.parseInt(cornerInput.getText());
             try {
-                context.getClient().putCard(cardIndex, new Coordinates(row, column), corner);
-                System.out.println("Card " +cardIndex + " placed at row " + row + ", column " + column + ", corner " + corner);
+                context.getClient().putCard(cardIndex, new Coordinates(realRow, realColumn), corner);
+                System.out.println("Card " +cardIndex + " placed at row " + realRow + ", column " + realColumn + ", corner " + corner);
                 //aggiorno la mano del giocatore
                 makeMove();
             } catch (Exception e) {

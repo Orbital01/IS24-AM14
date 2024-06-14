@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -33,6 +34,17 @@ public class Guifactory {
         errorText.setFont(Font.font("Verdana", 20));
         errorText.setFill(Color.RED);
         return errorText;
+    }
+
+    public static Label printLabel(String message, int fontSize){
+        Label label = new Label(message);
+        label.setFont(Font.font("Verdana", 20));
+        label.setFont(Guifactory.getFont(30));
+        return label;
+    }
+
+    public static Font getFont(int fontSize){
+        return Font.font("Verdana", fontSize);
     }
 
     public static ImageView displayCardImage(Card Card) {
@@ -98,54 +110,104 @@ public class Guifactory {
         int rows = boardMaxRow(board) - boardMinRow(board);
         int columns = boardMaxColumn(board) - boardMinColumn(board);
 
+        //alloco la griglia
         GridPane gridPane = new GridPane();
-        for(int i = 0; i <= columns; i++){
+        for(int i = 0; i <= columns; i++) {
+            for (int j = 0; j <= rows; j++) {
+                gridPane.add(emptyNode(), i, j);
+            }
+        }
+
+        //aggiungo le carte alla griglia
+        for(int i=boardMaxRow(board); i>=boardMinRow(board); i--) {
+
             int row = boardMaxRow(board) - i;
 
-            for(int j = 0; j <= rows; j++){
-                int column = boardMinColumn(board) + j;
+            for (int j = boardMinColumn(board); j <= boardMaxColumn(board); j++) {
 
-                Card card = board.getCard(new Coordinates(row, column));
+                Card card = board.getCard(new Coordinates(i, j));
+
+                //ricalibro l'indice di colonna
+                int column = j - boardMinColumn(board);
 
                 if (card != null) {
                     ImageView cardImage = displayCardImage(card);
                     cardImage.setPreserveRatio(true);
                     cardImage.setFitWidth(200);
 
-                    gridPane.add(cardImage, j, i);
+                    cardImage.setViewOrder(j);
+
+                    gridPane.add(cardImage, column, row); //colonna / riga
 
                 } else {
                     // Aggiungi un nodo vuoto
-                    gridPane.add(emptyNode(), j, i);
+                    gridPane.add(emptyNode(), column, row);
                 }
-                gridPane.setVgap(-55);
-                gridPane.setHgap(-45);
             }
-
         }
+
+
+
+//        metodo funzionante
+//        GridPane gridPane = new GridPane();
+//        for(int i = 0; i <= columns; i++){
+//            int column = boardMinColumn(board) + i;
+//
+//            for(int j = 0; j <= rows; j++){
+//                int row = boardMaxRow(board) - j;
+//
+//                Card card = board.getCard(new Coordinates(row, column));
+//                System.out.println("grid column: " + i + " grid row: " + j);
+//                System.out.println("board row: " + row + " board Column: " + column);
+//
+//                if (card != null) {
+//                    ImageView cardImage = displayCardImage(card);
+//                    cardImage.setPreserveRatio(true);
+//                    cardImage.setFitWidth(200);
+//
+//                    System.out.println("card is present");
+//                    System.out.println();
+//
+//                    gridPane.add(cardImage, i, j); //colonna / riga
+//
+//                } else {
+//                    // Aggiungi un nodo vuoto
+//                    gridPane.add(emptyNode(), i, j);
+//
+//                    System.out.println("card is NOT present");
+//                    System.out.println();
+//                }
+//                gridPane.setVgap(-55);
+//                gridPane.setHgap(-45);
+//            }
+//
+//        }
+
+        gridPane.setVgap(-55);
+        gridPane.setHgap(-45);
         gridPane.setGridLinesVisible(true);
         return gridPane;
     }
 
-    private static int boardMaxColumn(GameArea board) {
+    public static int boardMaxColumn(GameArea board) {
         int maxColumn;
         maxColumn = board.getBoard().keySet().stream().mapToInt(Coordinates::getColumn).max().orElse(0);
         return maxColumn;
     }
 
-    private static int boardMinColumn(GameArea board) {
+    public static int boardMinColumn(GameArea board) {
         int minColumn;
         minColumn = board.getBoard().keySet().stream().mapToInt(Coordinates::getColumn).min().orElse(0);
         return minColumn;
     }
 
-    private static int boardMaxRow(GameArea board) {
+    public static int boardMaxRow(GameArea board) {
         int maxRow;
         maxRow = board.getBoard().keySet().stream().mapToInt(Coordinates::getRow).max().orElse(0);
         return maxRow;
     }
 
-    private static int boardMinRow(GameArea board) {
+    public static int boardMinRow(GameArea board) {
         int minRow;
         minRow = board.getBoard().keySet().stream().mapToInt(Coordinates::getRow).min().orElse(0);
         return minRow;
