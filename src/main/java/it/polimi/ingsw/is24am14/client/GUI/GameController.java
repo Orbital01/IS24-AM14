@@ -59,7 +59,7 @@ public class GameController {
 
     public GameController(GUIView context) {
         this.context = context;
-        scene = new Scene(layout, 600, 400);
+        scene = new Scene(layout, 1200, 700);
         Guifactory.setAutomaticBackground(layout);
 
         gameStatusExecutorService = Executors.newSingleThreadScheduledExecutor();

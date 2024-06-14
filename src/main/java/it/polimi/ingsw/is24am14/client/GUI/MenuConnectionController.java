@@ -3,6 +3,7 @@ package it.polimi.ingsw.is24am14.client.GUI;
 import it.polimi.ingsw.is24am14.client.GUI.GUIFactory.Guifactory;
 import it.polimi.ingsw.is24am14.server.network.ClientInterface;
 import it.polimi.ingsw.is24am14.server.network.RMIClient;
+import it.polimi.ingsw.is24am14.server.network.SocketClient;
 import it.polimi.ingsw.is24am14.server.view.GUIView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +23,7 @@ public class MenuConnectionController {
 
     private GUIView context;
     private Scene scene;
-    private RMIClient rmiClient;
+    private ClientInterface client;
 
     @FXML
     private Button rmiButton;
@@ -53,8 +54,8 @@ public class MenuConnectionController {
         System.out.println("Connessione RMI");
         try {
 
-            rmiClient = new RMIClient(); //dovrò poi aggiungere l'indirizzo IP
-            context.setClient(rmiClient);
+            client = new RMIClient(); //dovrò poi aggiungere l'indirizzo IP
+            context.setClient(client);
             //passo alla scena di selezione del nickname
             GoToUsername();
 
@@ -64,19 +65,27 @@ public class MenuConnectionController {
             alert.setHeaderText(null);
             alert.setContentText("Errore nella connessione RMI");
             alert.showAndWait();
-            e.printStackTrace();
             System.exit(1);
         }
     }
 
     private void handleTcpButtonAction(ActionEvent event) {
-        Text testo = Guifactory.printMessage("TCP non ancora implementato");
-        VBox vbox = new VBox();
-        vbox.getChildren().add(testo);
-        scene.setRoot(vbox);
-        context.getStage().setScene(scene);
-        context.getStage().show();
+        System.out.println("Connessione TCP");
+        try {
 
+            client = new SocketClient(); //dovrò poi aggiungere l'indirizzo IP
+            context.setClient(client);
+            //passo alla scena di selezione del nickname
+            GoToUsername();
+
+        }catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errore di connessione");
+            alert.setHeaderText(null);
+            alert.setContentText("Errore nella connessione TCP");
+            alert.showAndWait();
+            System.exit(1);
+        }
     }
 
     public void GoToUsername(){
