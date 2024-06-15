@@ -224,9 +224,11 @@ public class SocketMediator implements ClientHandler {
         send(new SocketResponse(200, "ok"));
     }
 
-    public void getLobbyList() throws RemoteException {
+    public void getLobbyList() throws Exception {
         SocketResponse message = new SocketResponse(200, "getLobbyList");
         message.strings.add(gson.toJson(this.lobbyList.getLobbiesNames()));
+
+        send(message);
     }
 
     public void getLobbyClients(String lobbyHost) throws Exception {

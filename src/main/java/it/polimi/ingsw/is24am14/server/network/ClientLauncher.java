@@ -1,6 +1,7 @@
 package it.polimi.ingsw.is24am14.server.network;
 
 import it.polimi.ingsw.is24am14.server.controller.GameStateEnum;
+import it.polimi.ingsw.is24am14.server.controller.Lobby;
 import it.polimi.ingsw.is24am14.server.model.card.Card;
 import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
 import it.polimi.ingsw.is24am14.server.model.card.PlayableCard;
@@ -20,6 +21,9 @@ public class ClientLauncher {
         ClientInterface client = new SocketClient();
 
         client.connect(username);
+        for (String lobby : client.getLobbyList()) {
+            System.out.println(lobby);
+        }
         System.out.println("Option:");
         option = scanner.nextInt();
         if (option == 1) {
