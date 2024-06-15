@@ -5,6 +5,7 @@ import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
 import it.polimi.ingsw.is24am14.server.model.card.PlayableCard;
 import it.polimi.ingsw.is24am14.server.model.game.Game;
 import it.polimi.ingsw.is24am14.server.model.game.GameArea;
+import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -19,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 
@@ -38,13 +40,9 @@ public class Guifactory {
 
     public static Label printLabel(String message, int fontSize){
         Label label = new Label(message);
-        label.setFont(Font.font("Verdana", 20));
-        label.setFont(Guifactory.getFont(30));
+        label.setFont(Font.font("Verdana", fontSize));
+        label.setStyle("-fx-background-color: #dfbd93; -fx-border-color: #a87d55");
         return label;
-    }
-
-    public static Font getFont(int fontSize){
-        return Font.font("Verdana", fontSize);
     }
 
     public static ImageView displayCardImage(Card Card) {
@@ -52,6 +50,14 @@ public class Guifactory {
         Image image = new Image("file:"+ imagePath);
         ImageView imageView = new ImageView(image);
         applyShadow(imageView);
+        return imageView;
+    }
+
+    public static ImageView displayLogo() {
+        Image image = new Image("file:" + "src/main/resources/images/codexlogo.png");
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(300);
+        imageView.setPreserveRatio(true);
         return imageView;
     }
 
@@ -68,7 +74,7 @@ public class Guifactory {
     public static void setAutomaticBackground(VBox layout) {
         Image image = new Image("file:" + "src/main/resources/images/background.jpg");
 
-        BackgroundSize BackgroundSize = new BackgroundSize(600, 400, true, true, true, true);
+        BackgroundSize BackgroundSize = new BackgroundSize(1920, 1080, true, true, true, true);
 
         BackgroundImage backgroundImage = new BackgroundImage(image,
                 BackgroundRepeat.NO_REPEAT,
@@ -96,6 +102,16 @@ public class Guifactory {
     public static Button createButton(String text, int width, int height){
         Button button = new Button(text);
         button.setPrefSize(width, height);
+        button.setStyle("-fx-background-color: #dfbd93; -fx-border-color: #a87d55");
+        button.setOnMouseEntered(event -> {
+            button.setScaleX(1.1); // Ingrandisce il tasto del 10%
+            button.setScaleY(1.1); // Ingrandisce il tasto del 10%
+        });
+
+        button.setOnMouseExited(event -> {
+            button.setScaleX(1.0); // Ripristina la dimensione originale
+            button.setScaleY(1.0); // Ripristina la dimensione originale
+        });
         return button;
     }
 

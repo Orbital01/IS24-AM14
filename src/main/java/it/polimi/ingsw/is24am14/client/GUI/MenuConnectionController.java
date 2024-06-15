@@ -5,6 +5,7 @@ import it.polimi.ingsw.is24am14.server.network.ClientInterface;
 import it.polimi.ingsw.is24am14.server.network.RMIClient;
 import it.polimi.ingsw.is24am14.server.network.SocketClient;
 import it.polimi.ingsw.is24am14.server.view.GUIView;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -24,29 +28,33 @@ public class MenuConnectionController {
     private GUIView context;
     private Scene scene;
     private ClientInterface client;
-
-    @FXML
-    private Button rmiButton;
-
-    @FXML
-    private Button tcpButton;
-
-    @FXML
-    public void initialize() {
-        rmiButton.setOnAction(this::handleRmiButtonAction);
-        tcpButton.setOnAction(this::handleTcpButtonAction);
-    }
+    private BorderPane layout = new BorderPane();
 
     public MenuConnectionController(GUIView context){
         this.context = context;
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("MenuConnectionChoice.fxml"));
-        loader.setController(this);
-        try {
-            Parent root = loader.load();
-            scene = new Scene(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        scene = new Scene(layout, 1920, 1080);
+        Guifactory.setAutomaticBackground(layout);
+
+        VBox container = new VBox();
+        container.setSpacing(20);
+        container.setAlignment(javafx.geometry.Pos.CENTER);
+        //aggiungo l'immagine del logo
+        container.getChildren().add(Guifactory.displayLogo());
+        //aggiungo i due bottoni per la connessione
+        Button rmiButton = Guifactory.createButton("Connessione RMI", 200, 50);
+        rmiButton.setOnAction(this::handleRmiButtonAction);
+
+        Button tcpButton = Guifactory.createButton("Connessione TCP", 200, 50);
+        tcpButton.setOnAction(this::handleTcpButtonAction);
+
+        HBox buttonContainer = new HBox();
+        buttonContainer.setSpacing(20);
+        buttonContainer.setAlignment(javafx.geometry.Pos.CENTER);
+        buttonContainer.getChildren().addAll(rmiButton, tcpButton);
+
+        container.getChildren().add(buttonContainer);
+
+        layout.setCenter(container);
     }
 
     private void handleRmiButtonAction(ActionEvent event) {
