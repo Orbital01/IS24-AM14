@@ -20,5 +20,7 @@ public abstract class PlayableCard extends Card {
 
     public abstract Condition getPointCondition();
 
+    public abstract Condition getPlacementCondition();
+
     public abstract int getPoints();
 }

@@ -33,8 +33,8 @@ public class GuiHelper {
     public static void updateMessages(TextArea messageArea, GUIView context){
         ArrayList<Message> messaggi;
 
-        System.out.println("Aggiorno messaggi");
         try {
+            System.out.println("Size: " + context.getClient().getGameContext().getMessages().size());
             messaggi = context.getClient().getGameContext().getMessages();
         } catch (Exception e) {
             throw new RuntimeException(e);

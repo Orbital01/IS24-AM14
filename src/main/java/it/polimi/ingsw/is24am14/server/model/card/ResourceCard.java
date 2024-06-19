@@ -50,6 +50,11 @@ public class ResourceCard extends PlayableCard {
         return this.pointCondition;
     }
 
+    @Override
+    public Condition getPlacementCondition() {
+        return new NoCondition();
+    }
+
     public ArrayList<String> drawCard() {
         ArrayList<String> cardString = new ArrayList<>();
 
