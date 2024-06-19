@@ -57,6 +57,9 @@ public class JoinGameController {
         Stage stage = context.getStage();
         stage.setScene(scene);
         stage.show();
+        stage.setX(0);
+        stage.setY(0);
+
     }
 
     private void updateLobbyList() {
