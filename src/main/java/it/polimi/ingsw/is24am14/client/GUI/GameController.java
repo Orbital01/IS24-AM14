@@ -7,9 +7,11 @@ import it.polimi.ingsw.is24am14.server.controller.GameStateEnum;
 import it.polimi.ingsw.is24am14.server.model.card.Card;
 import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
 import it.polimi.ingsw.is24am14.server.model.card.PlayableCard;
+import it.polimi.ingsw.is24am14.server.model.game.Game;
 import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
+import it.polimi.ingsw.is24am14.server.network.Message;
 import it.polimi.ingsw.is24am14.server.view.GUIView;
 import it.polimi.ingsw.is24am14.server.view.TUIView;
 import javafx.application.Platform;
@@ -19,9 +21,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -60,8 +60,9 @@ public class GameController {
 
     public GameController(GUIView context) {
         this.context = context;
-        scene = new Scene(layout, 1200, 700);
+        scene = new Scene(layout, 1920, 1080);
         Guifactory.setAutomaticBackground(layout);
+        createChatInterface();
 
         gameStatusExecutorService = Executors.newSingleThreadScheduledExecutor();
         gameStatusExecutorService.scheduleAtFixedRate(this::checkGameStatus, 0, 1, TimeUnit.SECONDS);
@@ -72,8 +73,6 @@ public class GameController {
         updatePointsExecutorService = Executors.newSingleThreadScheduledExecutor();
         updatePointsExecutorService.scheduleAtFixedRate(this::updatePoints, 0, 1, TimeUnit.SECONDS);
 
-        ChatExecutorService = Executors.newSingleThreadScheduledExecutor();
-        ChatExecutorService.scheduleAtFixedRate(this::updateChat, 0, 1, TimeUnit.SECONDS);
     }
 
     public void showScene() {
@@ -212,14 +211,14 @@ public class GameController {
         //se è il mio turno mostro un messaggio
         HBox messageContainer;
         if (myTurn) {
-            Label label = Guifactory.printLabel("It's your turn!", 100);
+            Label label = Guifactory.printLabel("It's your turn!", 50);
             label.setAlignment(Pos.CENTER);
             label.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
             messageContainer = new HBox();
             messageContainer.setAlignment(Pos.CENTER);
             messageContainer.getChildren().add(label);
         }else {
-            Label label = Guifactory.printLabel("It's NOT your turn!", 100);
+            Label label = Guifactory.printLabel("It's NOT your turn!", 50);
             label.setAlignment(Pos.CENTER);
             label.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
             messageContainer = new HBox();
@@ -360,7 +359,12 @@ public class GameController {
     }
 
     private void makeDraw() {
-        //apro una finestra modale che mi fa scelgiere da dove voglio pescare
+        //apro una finestra modale che mi fa scegliere da dove voglio pescare
+        //devo fare questa operazione solo e soltanto se è il mio turno
+        if (!myTurn) {
+            return;
+        }
+
         Stage modalStage = new Stage();
         modalStage.initModality(Modality.APPLICATION_MODAL);
         BorderPane modalLayout = new BorderPane();
@@ -461,11 +465,66 @@ public class GameController {
         modalLayout.setBottom(closeButton);
     }
 
-    private void updateChat() {
-       // VBox chat = GuiHelper.updateChat(context);
-        //aggiungo il vbox al layout
-        //Platform.runLater(() -> layout.setRight(chat));
-    }
+    private void createChatInterface() {
+        VBox chatContainer = new VBox();
+        chatContainer.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 
+        //aggiungo i controlli per la chat
+        TextField chatInput = new TextField();
+        //aggiungo la scelta del destinatario
+        ChoiceBox<String> recipientChoice = new ChoiceBox<>();
+        recipientChoice.getItems().add("All");
+        try {
+            for (Player player : context.getClient().getGameContext().getGame().getPlayers()) {
+                recipientChoice.getItems().add(player.getPlayerNickname());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        recipientChoice.setValue("All");
+
+        Button sendButton = Guifactory.createButton("Send", 100, 50);
+        sendButton.setOnAction(event -> {
+            try {
+                String selectedValue = recipientChoice.getValue();
+                if (selectedValue.equals("All")) {
+                    selectedValue = "";
+                }
+                Message message = new Message(context.getClient().getUsername(), selectedValue, chatInput.getText());
+                System.out.println("Sending message to: " + message.getReceiver() + " selected voice " + selectedValue); //debug line
+                context.getClient().getGameContext().addMessage(message);
+                chatInput.clear();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        //aggiungo l'area per i messaggi
+        TextArea chatMessages = new TextArea();
+        chatMessages.setEditable(false);
+        chatMessages.setPrefHeight(400);
+        chatContainer.getChildren().add(chatMessages);
+
+        //aggiungo i controlli
+        HBox chatInputContainer = new HBox(chatInput, sendButton);
+        chatInputContainer.setAlignment(Pos.CENTER);
+        chatInputContainer.setSpacing(10);
+        chatContainer.getChildren().add(chatInputContainer);
+        chatContainer.getChildren().add(recipientChoice);
+
+
+        //aggiorno i messaggi ogni secondo
+        ScheduledExecutorService chatExecutorService;
+        chatExecutorService = Executors.newSingleThreadScheduledExecutor();
+        chatExecutorService.scheduleAtFixedRate(() -> {
+            Platform.runLater(() -> GuiHelper.updateMessages(chatMessages, context));
+        }, 0, 1, TimeUnit.SECONDS);
+
+
+        chatContainer.setMaxWidth(200);
+        chatContainer.setAlignment(Pos.CENTER);
+        layout.setRight(chatContainer);
+    }
 
 }

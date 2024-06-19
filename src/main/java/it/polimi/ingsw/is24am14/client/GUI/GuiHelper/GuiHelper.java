@@ -2,9 +2,12 @@ package it.polimi.ingsw.is24am14.client.GUI.GuiHelper;
 
 import it.polimi.ingsw.is24am14.server.model.game.Game;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
+import it.polimi.ingsw.is24am14.server.network.Message;
 import it.polimi.ingsw.is24am14.server.view.GUIView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -27,21 +30,21 @@ public class GuiHelper {
         return winner;
     }
 
-//    public static VBox updateChat(GUIView context){
-//        //aggiorno l'array contenenete i messaggi
-//        ArrayList<String> messages = context.getClient().getGameContext().getChat().updateChat(); //in attesa di stef
-//        //creo il Vbox che conterrà i messaggi
-//        VBox chat = new VBox();
-//        chat.setAlignment(Pos.TOP_RIGHT);
-//        //aggiungo uno sfondo
-//        chat.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-//        chat.setPrefSize(300, 300);
-//        //aggiungo i messaggi al Vbox
-//        for(String message : messages){
-//
-//        }
-//        return chat;
-//    }
+    public static void updateMessages(TextArea messageArea, GUIView context){
+        ArrayList<Message> messaggi;
+
+        System.out.println("Aggiorno messaggi");
+        try {
+            messaggi = context.getClient().getGameContext().getMessages();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        for(Message message : messaggi){
+            messageArea.appendText(message.getSender() + " " +  message.getMessage() + "\n");
+            System.out.println(message.getSender() + " " +  message.getMessage() + "\n");
+        }
 
 
+    }
 }

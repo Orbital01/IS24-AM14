@@ -59,12 +59,17 @@ public class LobbyController {
 
         executorService = Executors.newSingleThreadScheduledExecutor();
         gameStatusExecutorService = Executors.newSingleThreadScheduledExecutor();
-
-        executorService.scheduleAtFixedRate(this::checkConnectedClients, 0, 1, TimeUnit.SECONDS);
         gameStatusExecutorService.scheduleAtFixedRate(this::checkGameStatus, 0, 1, TimeUnit.SECONDS);
 
-    }
+        if (AP == 1) {
+            executorService.scheduleAtFixedRate(this::checkConnectedClients, 0, 1, TimeUnit.SECONDS);
+        }
 
+        if (AP == 0) {
+            connectedPlayers.setText("waiting for the host to start the game");
+        }
+
+    }
 
     public void showScene() {
         Stage stage = context.getStage();

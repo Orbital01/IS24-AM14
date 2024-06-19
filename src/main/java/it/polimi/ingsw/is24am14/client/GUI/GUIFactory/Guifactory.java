@@ -151,8 +151,14 @@ public class Guifactory {
                     cardImage.setPreserveRatio(true);
                     cardImage.setFitWidth(200);
 
-                    cardImage.setViewOrder(j);
+                    //TODO: sistemare la visualizzazione delle carte
+                    if(i!=0) {
+                        cardImage.setViewOrder(-Math.abs(j * i));
+                    }else{
+                        cardImage.setViewOrder(-Math.abs(j));
+                    }
 
+                    //inserisco la carta nella gridPane
                     gridPane.add(cardImage, column, row); //colonna / riga
 
                 } else {
@@ -161,43 +167,6 @@ public class Guifactory {
                 }
             }
         }
-
-
-
-//        metodo funzionante
-//        GridPane gridPane = new GridPane();
-//        for(int i = 0; i <= columns; i++){
-//            int column = boardMinColumn(board) + i;
-//
-//            for(int j = 0; j <= rows; j++){
-//                int row = boardMaxRow(board) - j;
-//
-//                Card card = board.getCard(new Coordinates(row, column));
-//                System.out.println("grid column: " + i + " grid row: " + j);
-//                System.out.println("board row: " + row + " board Column: " + column);
-//
-//                if (card != null) {
-//                    ImageView cardImage = displayCardImage(card);
-//                    cardImage.setPreserveRatio(true);
-//                    cardImage.setFitWidth(200);
-//
-//                    System.out.println("card is present");
-//                    System.out.println();
-//
-//                    gridPane.add(cardImage, i, j); //colonna / riga
-//
-//                } else {
-//                    // Aggiungi un nodo vuoto
-//                    gridPane.add(emptyNode(), i, j);
-//
-//                    System.out.println("card is NOT present");
-//                    System.out.println();
-//                }
-//                gridPane.setVgap(-55);
-//                gridPane.setHgap(-45);
-//            }
-//
-//        }
 
         gridPane.setVgap(-55);
         gridPane.setHgap(-45);
