@@ -493,7 +493,7 @@ public class GameController {
                 }
                 Message message = new Message(context.getClient().getUsername(), selectedValue, chatInput.getText());
                 System.out.println("Sending message to: " + message.getReceiver() + " selected voice " + selectedValue); //debug line
-                context.getClient().getGameContext().addMessage(message);
+                context.getClient().sendMessage(message.getReceiver(), message.getMessage());
                 chatInput.clear();
             } catch (Exception e) {
                 throw new RuntimeException(e);

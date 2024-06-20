@@ -122,6 +122,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
         String username = client.getUsername();
         Lobby lobby = this.lobbyList.getPlayersLobby(username);
         lobby.getGameContext().addMessage(username, receiver, message);
+        System.out.println("Messaggio aggiunto. Size: " + lobby.getGameContext().getMessages().size());
     }
 
     @Override
@@ -131,10 +132,6 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
         lobby.getGameContext().placeStarterCard(username, card);
     }
 
-    @Override
-    public ArrayList<Message> getMessages(ClientInterface client) throws Exception {
-        return this.lobbyList.getPlayersLobby(client.getUsername()).getGameContext().getMessages();
-    }
 
     @Override
     public ArrayList<String> getLobbyList() throws RemoteException {

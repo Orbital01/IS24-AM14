@@ -23,7 +23,6 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class SocketMediator implements ClientHandler {
-    private String buffer;
     public PrintWriter socketOut;
     public BufferedReader socketIn;
     private String username;
@@ -31,7 +30,6 @@ public class SocketMediator implements ClientHandler {
     private final Gson gson;
 
     public SocketMediator(Socket socket, LobbyList lobbyList) {
-        this.buffer = "";
         this.lobbyList = lobbyList;
 
         gson = InitGSON.init();
@@ -187,59 +185,90 @@ public class SocketMediator implements ClientHandler {
     }
 
     public void flipCard(int index) throws Exception {
-        Lobby lobby = this.lobbyList.getPlayersLobby(username);
-        lobby.getGameContext().getGame().getPlayer(username).getPlayerHand().get(index).flipSide();
+        try {
+            Lobby lobby = this.lobbyList.getPlayersLobby(username);
+            lobby.getGameContext().getGame().getPlayer(username).getPlayerHand().get(index).flipSide();
 
-        send(new SocketResponse(200, "ok"));
+            send(new SocketResponse(200, "ok"));
+        } catch (Exception e) {
+            send(new SocketResponse(400, "flipCardException", e.getMessage()));
+        }
     }
 
     public void putCard(int handCardIndex, Coordinates cardToOverlap, int cornerIndex) throws Exception {
-        this.lobbyList.getPlayersLobby(username).getGameContext().putCard(username, handCardIndex, cardToOverlap, cornerIndex);
+        try {
+            this.lobbyList.getPlayersLobby(username).getGameContext().putCard(username, handCardIndex, cardToOverlap, cornerIndex);
 
-        send(new SocketResponse(200, "ok"));
+            send(new SocketResponse(200, "ok"));
+        } catch (Exception e) {
+            send(new SocketResponse(400, "putCardException", e.getMessage()));
+        }
     }
 
     public void drawGoldCard() throws Exception {
-        this.lobbyList.getPlayersLobby(username).getGameContext().drawGoldCard(username);
+        try {
+            this.lobbyList.getPlayersLobby(username).getGameContext().drawGoldCard(username);
 
-        send(new SocketResponse(200, "ok"));
+            send(new SocketResponse(200, "ok"));
+        } catch (Exception e) {
+            send(new SocketResponse(400, "drawGoldCardException", e.getMessage()));
+        }
     }
 
     public void drawResourceCard() throws Exception {
-        this.lobbyList.getPlayersLobby(username).getGameContext().drawGoldCard(username);
+        try {
+            this.lobbyList.getPlayersLobby(username).getGameContext().drawGoldCard(username);
 
-        send(new SocketResponse(200, "ok"));
+            send(new SocketResponse(200, "ok"));
+        } catch (Exception e) {
+            send(new SocketResponse(400, "drawResourceCardException", e.getMessage()));
+        }
     }
 
     public void faceUpCard(int index) throws Exception {
-        this.lobbyList.getPlayersLobby(username).getGameContext().drawFaceUpCard(username, index);
+        try {
+            this.lobbyList.getPlayersLobby(username).getGameContext().drawFaceUpCard(username, index);
 
-        send(new SocketResponse(200, "ok"));
+            send(new SocketResponse(200, "ok"));
+        } catch (Exception e) {
+            send(new SocketResponse(400, "drawFaceUpCardException", e.getMessage()));
+        }
     }
 
     public void addMessage(String receiver, String message) throws Exception {
-        Lobby lobby = this.lobbyList.getPlayersLobby(username);
-        lobby.getGameContext().addMessage(username, receiver, message);
+        try {
+            Lobby lobby = this.lobbyList.getPlayersLobby(username);
+            lobby.getGameContext().addMessage(username, receiver, message);
 
-        send(new SocketResponse(200, "ok"));
+            send(new SocketResponse(200, "ok"));
+        } catch (Exception e) {
+            send(new SocketResponse(400, "addMessageException", e.getMessage()));
+        }
     }
 
     public void getLobbyList() throws Exception {
-        SocketResponse message = new SocketResponse(200, "getLobbyList");
-        message.strings.add(gson.toJson(this.lobbyList.getLobbiesNames()));
+        try {
+            SocketResponse message = new SocketResponse(200, "getLobbyList");
+            message.strings.add(gson.toJson(this.lobbyList.getLobbiesNames()));
 
-        send(message);
+            send(message);
+        } catch (Exception e) {
+            send(new SocketResponse(400, "getLobbyListException", e.getMessage()));
+        }
+
     }
 
     public void getLobbyClients(String lobbyHost) throws Exception {
-        SocketResponse message = new SocketResponse(200, "getLobbyClients");
-        ArrayList<String> clients = new ArrayList<>();
-        Lobby lobby = this.lobbyList.getLobbyByHost(lobbyHost);
-        for (ClientHandler client : lobby.getPlayers()) {
-            clients.add(client.getUsername());
-        }
+        try {
+            ArrayList<String> clients = new ArrayList<>();
+            Lobby lobby = this.lobbyList.getLobbyByHost(lobbyHost);
+            for (ClientHandler client : lobby.getPlayers()) {
+                clients.add(client.getUsername());
+            }
 
-        message.strings.add(gson.toJson(clients));
-        send(message);
+            send(new SocketResponse(200, "getLobbyClients", gson.toJson(clients)));
+        } catch (Exception e) {
+            send(new SocketResponse(400, "getLobbyClientsException", e.getMessage()));
+        }
     }
 }

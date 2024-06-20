@@ -135,8 +135,9 @@ public class GameContext implements Serializable {
 
     public void putCard(String username, int handCardIndex, Coordinates cardToOverlap, int cornerIndex) {
         Player player = game.getPlayer(username);
-        if (gameStateEnum == GameStateEnum.Move && game.getActivePlayer().getPlayerNickname().equals(username)) {
-            PlayableCard cardToPlay = player.getPlayerHand().get(handCardIndex);
+        PlayableCard cardToPlay = player.getPlayerHand().get(handCardIndex);
+
+        if (gameStateEnum == GameStateEnum.Move && game.getActivePlayer().getPlayerNickname().equals(username) && cardToPlay.getPlacementCondition().isSatisfied(player.getPlayerBoard())) {
             player.placeCard(cardToOverlap, cardToPlay, cornerIndex);
             lastPlayedCard = cardToPlay;
 
@@ -206,10 +207,6 @@ public class GameContext implements Serializable {
             if (player.getScore() >= 20) return true;
         }
         return false;
-    }
-
-    public void addMessage(Message message) {
-        this.messages.add(message);
     }
 
     public void addMessage(String sender, String receiver, String message) {

@@ -7,16 +7,18 @@ public class SocketResponse {
     public String message;
     public ArrayList<String> strings;
 
-    public SocketResponse(int code, String message, ArrayList<String> strings) {
-        this.code = code;
-        this.message = message;
-        this.strings = strings;
-    }
 
     public SocketResponse(int code, String message) {
         this.code = code;
         this.message = message;
         this.strings = new ArrayList<>();
+    }
+
+    public SocketResponse(int code, String message, String firstString) {
+        this.code = code;
+        this.message = message;
+        this.strings = new ArrayList<>();
+        this.strings.add(firstString);
     }
 
     public SocketResponse() {

@@ -203,6 +203,10 @@ public class SocketClient implements ClientInterface {
         message.strings.add(lobbyHost);
         send(message);
 
-        return gson.fromJson(receive().strings.getFirst(), ArrayList.class);
+        SocketResponse response = receive();
+        if (response.code != 200) {
+            throw new Exception(response.strings.getFirst());
+        }
+        return gson.fromJson(response.strings.getFirst(), ArrayList.class);
     }
 }
