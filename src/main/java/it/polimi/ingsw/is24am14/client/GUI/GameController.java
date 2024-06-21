@@ -32,7 +32,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -45,13 +44,16 @@ public class GameController {
     private Scene scene;
     private BorderPane layout = new BorderPane();
 
+    GridPane board;
+    int index = 1;
+
     private ScheduledExecutorService gameStatusExecutorService;
     private GameStateEnum previousGameState = null;
     private Boolean myTurn = false;
 
     private ArrayList<PlayableCard> playerHand;
 
-    private ScheduledExecutorService updatePlayerBoardExecutorService;
+    ScrollPane scrollPane = new ScrollPane();
     private GameArea playerBoard;
 
     private ScheduledExecutorService updatePointsExecutorService;
@@ -66,12 +68,6 @@ public class GameController {
 
         gameStatusExecutorService = Executors.newSingleThreadScheduledExecutor();
         gameStatusExecutorService.scheduleAtFixedRate(this::checkGameStatus, 0, 1, TimeUnit.SECONDS);
-
-        updatePlayerBoardExecutorService = Executors.newSingleThreadScheduledExecutor();
-        updatePlayerBoardExecutorService.scheduleAtFixedRate(this::updatePlayerBoard, 0, 1, TimeUnit.SECONDS);
-
-        updatePointsExecutorService = Executors.newSingleThreadScheduledExecutor();
-        updatePointsExecutorService.scheduleAtFixedRate(this::updatePoints, 0, 1, TimeUnit.SECONDS);
 
     }
 
@@ -113,6 +109,7 @@ public class GameController {
                 case Draw:
                     System.out.println("Draw stage");
                     makeDraw();
+                    createPointBoard();
                     break;
                 case LastMove:
                     System.out.println("Last move stage");
@@ -133,6 +130,8 @@ public class GameController {
             playerHand = context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()).getPlayerHand();
             if(playerHand.size()==3){
                 printPlayerHand();
+                updatePlayerBoard();
+
                 itsYourTurn(myTurn);
             }
         } catch (Exception e) {
@@ -250,9 +249,23 @@ public class GameController {
     }
 
     private void printPlayerBoard() {
-        GridPane board = Guifactory.getBoard(playerBoard);
-        board.setAlignment(Pos.CENTER);
-        Platform.runLater(() -> layout.setCenter(board));
+
+        if(board == null) {
+            //creo la board
+            board = Guifactory.getBoard();
+            board.setStyle("-fx-background-color: transparent;");
+            //aggiungo la starter card
+            Card starterCard = playerBoard.getCard(new Coordinates(0, 0));
+            Guifactory.addStarterCard(board, starterCard);
+
+            scrollPane.setContent(board);
+            scrollPane.setPannable(true);
+            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
+            scrollPane.setVvalue(0.5);
+            scrollPane.setHvalue(0.5);
+        }
 
         //handlers per il drag and drop
         for (Node cell : board.getChildren()) {
@@ -282,6 +295,8 @@ public class GameController {
                         int droppedCardIndex = Integer.parseInt(db.getString());
                         selectCorner(droppedCardIndex, row, column);
                         System.out.println("Card dropped at row " + row + ", column " + column);
+
+                        updatePlayerBoard();
                     }
                     success = true;
                 }
@@ -289,6 +304,8 @@ public class GameController {
                 event.consume();
             });
         }
+
+        Platform.runLater(() -> layout.setCenter(scrollPane));
     }
 
     private void addDragHandlers(ImageView cardView, int index) {
@@ -313,9 +330,10 @@ public class GameController {
     }
 
     private void selectCorner(int cardIndex, int row, int column){
+
         //attenzione sono row e column della GRID non della BOARD
-        int realRow = Guifactory.boardMaxRow(playerBoard) - row;
-        int realColumn = column + Guifactory.boardMinColumn(playerBoard);
+        int realRow = -(row - 50);
+        int realColumn = column - 50;
 
         Card cardToOverlap = playerBoard.getCard(new Coordinates(realRow, realColumn));
         //procedo con la selezione dell'angolo solo se la carta è valida
@@ -343,6 +361,11 @@ public class GameController {
             int corner = Integer.parseInt(cornerInput.getText());
             try {
                 context.getClient().putCard(cardIndex, new Coordinates(realRow, realColumn), corner);
+
+                //aggiungo la carta alla board
+                Guifactory.addCard(board, playerHand.get(cardIndex), row, column, corner, index);
+                index++;
+
                 System.out.println("Card " +cardIndex + " placed at row " + realRow + ", column " + realColumn + ", corner " + corner);
                 //aggiorno la mano del giocatore
                 makeMove();
@@ -438,10 +461,6 @@ public class GameController {
         modalStage.showAndWait();
     }
 
-    private void updatePoints() {
-        //Todo: implementare tabellone punti
-    }
-
     private void endGame() {
         //mostro una finestra modale con il giocatore vincitore
         Stage modalStage = new Stage();
@@ -527,4 +546,69 @@ public class GameController {
         layout.setRight(chatContainer);
     }
 
+    //TODO: implementare la visualizzazione della board dei punti
+    private void createPointBoard(){
+        VBox pointBoard = new VBox();
+        //creo la board passando due array, uno per i colori e uno per i punti
+        ArrayList<Integer> points = new ArrayList<>();
+        ArrayList<TokenColour> colours = new ArrayList<>();
+        try {
+            for (Player player : context.getClient().getGameContext().getGame().getPlayers()) {
+                colours.add(player.getColour());
+                points.add(player.getScore());
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        //chiamo il metodo per la creazione della board
+
+
+        //aggiorno la board dei punti
+        Platform.runLater(() -> layout.setLeft(pointBoard));
+    }
+
+    //TODO: implementare la visualizzazione delle board degli altri giocatori
+    private void getOtherBoard(){
+        //prendo i giocatori presenti nella partita
+        ArrayList<Player> players = null;
+        try {
+            players = context.getClient().getGameContext().getGame().getPlayers();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        //mostro n tasti tanti i giocatori presenti nella partita
+        for(Player player: players){
+            Button button = Guifactory.createButtonWithGraphic(100, 100,
+                    "src/main/resources/images/boards/"+player.getColour().toString().toLowerCase()+"_token.png");
+            button.setOnAction(event -> {
+                //apro una finestra modale che mostra la board del giocatore selezionato
+                Stage modalStage = new Stage();
+                modalStage.initModality(Modality.APPLICATION_MODAL);
+                BorderPane modalLayout = new BorderPane();
+                //mostro la board del giocatore selezionato
+                try {
+                    GridPane playerBoard = Guifactory.getBoard();
+                    for (int i = 0; i < 100; i++) {
+                        int row = i / 10;
+                        int column = i % 10;
+                        Card card = player.getPlayerBoard().getCard(new Coordinates(row, column));
+                        if (card != null) {
+                            ImageView cardView = Guifactory.displayCardImage(card);
+                            playerBoard.add(cardView, column, row);
+                        }
+                    }
+                    modalLayout.setCenter(playerBoard);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                //mostro la finestra modale
+                Scene modalScene = new Scene(modalLayout, 500, 500);
+                modalStage.setScene(modalScene);
+                modalStage.showAndWait();
+            });
+            layout.setBottom(button);
+        }
+
+    }
 }

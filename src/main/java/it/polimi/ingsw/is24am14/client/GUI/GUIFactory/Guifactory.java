@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -22,7 +23,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * The Class Guifactory is a factory class that provides the GUI elements during the game.
@@ -70,7 +71,6 @@ public class Guifactory {
         imageView.setEffect(dropShadow);
     }
 
-
     public static void setAutomaticBackground(VBox layout) {
         Image image = new Image("file:" + "src/main/resources/images/background.jpg");
 
@@ -115,18 +115,41 @@ public class Guifactory {
         return button;
     }
 
+    public static Button createButtonWithGraphic(int width, int height, String imagePath){
+        Button button = new Button();
+
+        Image image = new Image("file:" + imagePath);
+        ImageView imageView = new ImageView(image);
+        imageView.setPreserveRatio(true);
+
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
+        button.setGraphic(imageView);
+
+        button.setOnMouseEntered(event -> {
+            button.setScaleX(1.1); // Ingrandisce il tasto del 10%
+            button.setScaleY(1.1); // Ingrandisce il tasto del 10%
+        });
+
+        button.setOnMouseExited(event -> {
+            button.setScaleX(1.0); // Ripristina la dimensione originale
+            button.setScaleY(1.0); // Ripristina la dimensione originale
+        });
+        return button;
+    }
+
     public static TextField createTextField(String text, int width, int height){
         TextField textField = new TextField(text);
         textField.setPrefSize(width, height);
         return textField;
     }
 
-    public static GridPane getBoard(GameArea board){
-        //non posso avere valori negativi negli indici della grid
-        int rows = boardMaxRow(board) - boardMinRow(board);
-        int columns = boardMaxColumn(board) - boardMinColumn(board);
+    public static GridPane getBoard(){
 
         //alloco la griglia
+        int rows = 100;
+        int columns = 100;
+
         GridPane gridPane = new GridPane();
         for(int i = 0; i <= columns; i++) {
             for (int j = 0; j <= rows; j++) {
@@ -134,44 +157,46 @@ public class Guifactory {
             }
         }
 
-        //aggiungo le carte alla griglia
-        for(int i=boardMaxRow(board); i>=boardMinRow(board); i--) {
-
-            int row = boardMaxRow(board) - i;
-
-            for (int j = boardMinColumn(board); j <= boardMaxColumn(board); j++) {
-
-                Card card = board.getCard(new Coordinates(i, j));
-
-                //ricalibro l'indice di colonna
-                int column = j - boardMinColumn(board);
-
-                if (card != null) {
-                    ImageView cardImage = displayCardImage(card);
-                    cardImage.setPreserveRatio(true);
-                    cardImage.setFitWidth(200);
-
-                    //TODO: sistemare la visualizzazione delle carte
-                    if(i!=0) {
-                        cardImage.setViewOrder(-Math.abs(j * i));
-                    }else{
-                        cardImage.setViewOrder(-Math.abs(j));
-                    }
-
-                    //inserisco la carta nella gridPane
-                    gridPane.add(cardImage, column, row); //colonna / riga
-
-                } else {
-                    // Aggiungi un nodo vuoto
-                    gridPane.add(emptyNode(), column, row);
-                }
-            }
-        }
 
         gridPane.setVgap(-55);
         gridPane.setHgap(-45);
-        gridPane.setGridLinesVisible(true);
+        gridPane.setGridLinesVisible(false);
         return gridPane;
+    }
+
+    public static void addCard(GridPane gridPane,Card card, int row, int column, int corner, int index){
+        System.out.println("Row: " + row + " Column: " + column + " index " + index);
+        //devo calcolare come aumentare la riga e la colonna in base all'angolo
+        if (corner == 0){
+            row = row - 1;
+            column = column - 1;
+        } else if (corner == 1){
+            row = row - 1;
+            column = column + 1;
+        } else if (corner == 2){
+            row = row + 1;
+            column = column - 1;
+        } else if (corner == 3){
+            row = row + 1;
+            column = column + 1;
+        }
+
+        System.out.println("Row: " + row + " Column: " + column + " index " + index);
+        System.out.println();
+
+        ImageView cardImage = displayCardImage(card);
+        cardImage.setPreserveRatio(true);
+        cardImage.setFitWidth(200);
+        cardImage.setViewOrder(-index);
+        gridPane.add(cardImage, column, row);
+    }
+
+    public static void addStarterCard(GridPane board, Card card){
+        ImageView cardImage = displayCardImage(card);
+        cardImage.setPreserveRatio(true);
+        cardImage.setFitWidth(200);
+        //la posiziono al centro
+        board.add(cardImage, 50, 50);
     }
 
     public static int boardMaxColumn(GameArea board) {
@@ -200,7 +225,7 @@ public class Guifactory {
 
     private static Node emptyNode() {
         Pane pane = new Pane();
-        pane.setPrefSize(10, 10);
+        pane.setPrefSize(100, 100);
         return pane;
     }
 
@@ -216,8 +241,5 @@ public class Guifactory {
         }
         return gridPane;
     }
-
-    //todo: implementare questo metodo per la stampa sulla ScoreBoard
-    //public static HBox playerScoreBoard(/*Game game*/){}
 
 }
