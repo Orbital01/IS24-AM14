@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -28,14 +30,17 @@ public class PointBoardControllerTest extends Application {
         Parent root = loader.load();
         PointBoardController controller = loader.getController();
 
-        // Set background image (unneeded)
-        URL backgroundImageURL = getClass().getResource("/images/background.png");
-        if (backgroundImageURL != null) {
-            Image backgroundImage = new Image(backgroundImageURL.toString());
-            controller.setBackgroundImage(backgroundImage);
-        } else {
-            System.err.println("Background image not found!");
-        }
+//        // Set background image (unneeded)
+//        URL backgroundImageURL = getClass().getResource("/images/background.png");
+//        if (backgroundImageURL != null) {
+//            Image backgroundImage = new Image(backgroundImageURL.toString());
+//            controller.setBackgroundImage(backgroundImage);
+//        } else {
+//            System.err.println("Background image not found!");
+//        }
+
+
+
 
         // Adding images and scores in the arrays
         ArrayList<Image> tokenImages = new ArrayList<>();
@@ -90,6 +95,8 @@ public class PointBoardControllerTest extends Application {
         // Updating the board
         controller.updateBoard(tokenImages, scores);
 
+        StackPane gameBoardStackPane = controller.getPointBoardStackPane(tokenImages, scores);
+        System.out.println("StackPane aggiornato: " + gameBoardStackPane);
         // Visualizing the scene
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
