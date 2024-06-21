@@ -134,10 +134,15 @@ public class GameContext implements Serializable {
     }
 
     public void putCard(String username, int handCardIndex, Coordinates cardToOverlap, int cornerIndex) {
+        boolean placementConditionSatisfied = false;
         Player player = game.getPlayer(username);
         PlayableCard cardToPlay = player.getPlayerHand().get(handCardIndex);
 
-        if (gameStateEnum == GameStateEnum.Move && game.getActivePlayer().getPlayerNickname().equals(username) && cardToPlay.getPlacementCondition().isSatisfied(player.getPlayerBoard())) {
+        if ((cardToPlay.getSide() == EnumSide.FRONT && cardToPlay.getPlacementCondition().isSatisfied(player.getPlayerBoard())) || cardToPlay.getSide() == EnumSide.BACK) {
+            placementConditionSatisfied = true;
+        }
+
+        if (gameStateEnum == GameStateEnum.Move && game.getActivePlayer().getPlayerNickname().equals(username) && placementConditionSatisfied) {
             player.placeCard(cardToOverlap, cardToPlay, cornerIndex);
             lastPlayedCard = cardToPlay;
 
