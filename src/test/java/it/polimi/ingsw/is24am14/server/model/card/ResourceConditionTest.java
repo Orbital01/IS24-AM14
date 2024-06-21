@@ -25,6 +25,10 @@ class ResourceConditionTest {
 
         gameBoard.getBoard().put(new Coordinates(0, 0), testCard);
 
+        assertFalse(testingCondition.isSatisfied(gameBoard));
+
+        gameBoard.getCard(new Coordinates(0, 0)).flipSide();
+
         assertTrue(testingCondition.isSatisfied(gameBoard));
     }
 }

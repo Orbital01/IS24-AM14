@@ -46,8 +46,10 @@ public class ResourceCondition implements Condition {
                     toFind.remove(entry.getValue().getCornerEnums().get(i));
                 }
             }
-            //  if resource card
-            if (entry.getValue().getCornerEnums().size() > 3) toFind.remove(entry.getValue().getCornerEnums().get(4));
+
+            for (int i = 4; i < entry.getValue().getCornerEnums().size(); i++) {
+                toFind.remove(entry.getValue().getCornerEnums().get(i));
+            }
         }
 
         return toFind.isEmpty();

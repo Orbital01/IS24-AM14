@@ -33,7 +33,7 @@ public class ResourceCard extends PlayableCard {
             items.add(corners.get(i).getType());
         }
 
-        if (getSide() == EnumSide.FRONT) items.add(getResource());
+        if (getSide() == EnumSide.BACK) items.add(getResource());
         return items;
     }
 
