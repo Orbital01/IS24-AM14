@@ -18,9 +18,12 @@ import java.util.Map;
 public class PointBoardController {
 
     @FXML
-    private ImageView backgroundImage;
+    public StackPane pointBoardStackPane;
     @FXML
-    private Pane gameBoardPane;
+    public Pane pointBoardPane;
+    
+    @FXML
+    private ImageView backgroundImage;
 
     @FXML
     private ImageView gameBoardImage;
@@ -69,18 +72,16 @@ public class PointBoardController {
 
 
 
-        // Add listeners for width and height properties of gameBoardPane
+        // Add listeners for width and height properties of pointBoardPane
         ChangeListener<Number> sizeChangeListener = (observable, oldValue, newValue) -> updateTokenPositions();
-        gameBoardPane.widthProperty().addListener(sizeChangeListener);
-        gameBoardPane.heightProperty().addListener(sizeChangeListener);
+        pointBoardPane.widthProperty().addListener(sizeChangeListener);
+        pointBoardPane.heightProperty().addListener(sizeChangeListener);
     }
 
     public void updateBoard(ArrayList<Image> tokenImages, ArrayList<Integer> scores) {
         this.tokenImages = tokenImages;
         this.scores = scores;
-        Platform.runLater(() -> {
-            updateTokenPositions();
-        });
+        Platform.runLater(this::updateTokenPositions);
     }
 
     public void setBackgroundImage(Image image) {
@@ -89,15 +90,15 @@ public class PointBoardController {
 
 
     private void updateTokenPositions() {
-        if (tokenImages == null || scores == null || gameBoardPane.getWidth() <= 0 || gameBoardPane.getHeight() <= 0) {
+        if (tokenImages == null || scores == null || pointBoardPane.getWidth() <= 0 || pointBoardPane.getHeight() <= 0) {
             return;
         }
 
-        // Debug: stampa le dimensioni del gameBoardPane
-        System.out.println("gameBoardPane width: " + gameBoardPane.getWidth() + ", height: " + gameBoardPane.getHeight());
+//        // Debug: stampa le dimensioni del pointBoardPane
+//        System.out.println("pointBoardPane width: " + pointBoardPane.getWidth() + ", height: " + pointBoardPane.getHeight());
 
         // Clear existing tokens by removing nodes with IDs that start with "token_"
-        gameBoardPane.getChildren().removeIf(node -> node.getId() != null && node.getId().startsWith("token_"));
+        pointBoardPane.getChildren().removeIf(node -> node.getId() != null && node.getId().startsWith("token_"));
 
         // Use a map to count tokens at each score position
         Map<Integer, Integer> tokenCount = new HashMap<>();
@@ -108,8 +109,8 @@ public class PointBoardController {
             double[] position = positionsMap.get(score);
 
             if (position != null) {
-                double boardWidth = gameBoardPane.getWidth();
-                double boardHeight = gameBoardPane.getHeight();
+                double boardWidth = pointBoardPane.getWidth();
+                double boardHeight = pointBoardPane.getHeight();
 
                 int count = tokenCount.getOrDefault(score, 0); // Get current count of tokens at this score position
                 // Adjust token size
@@ -118,8 +119,8 @@ public class PointBoardController {
                 double x = position[0] * boardWidth - TOKEN_SIZE / 2; // Adjust by half of the token size
                 double y = position[1] * boardHeight - TOKEN_SIZE / 2 - (count * OFFSET_Y); // Adjust by half of the token height and apply offset
 
-                // Debug: stampa le coordinate calcolate
-                System.out.println("Token " + i + " (score: " + score + ") -> x: " + x + ", y: " + y);
+//                // Debug: stampa le coordinate calcolate
+//                System.out.println("Token " + i + " (score: " + score + ") -> x: " + x + ", y: " + y);
 
                 ImageView tokenImageView = new ImageView(tokenImage);
                 tokenImageView.setLayoutX(x);
@@ -129,7 +130,7 @@ public class PointBoardController {
                 tokenImageView.setPreserveRatio(true);
                 tokenImageView.setId("token_" + i);
 
-                gameBoardPane.getChildren().add(tokenImageView);
+                pointBoardPane.getChildren().add(tokenImageView);
 
                 tokenCount.put(score, count + 1); // Increment the count for this score position
             } else {
@@ -137,19 +138,24 @@ public class PointBoardController {
             }
         }
 
-        // Debug: Log after token positioning
-        System.out.println("Updated token positions:");
-        gameBoardPane.getChildren().forEach(node -> {
-            if (node instanceof ImageView && node.getId().startsWith("token_")) {
-                System.out.println(node.getId() + " at x: " + node.getLayoutX() + ", y: " + node.getLayoutY());
-            }
-        });
+//        // Debug: Log after token positioning
+//        System.out.println("Updated token positions:");
+//        pointBoardPane.getChildren().forEach(node -> {
+//            if (node instanceof ImageView && node.getId().startsWith("token_")) {
+//                System.out.println(node.getId() + " at x: " + node.getLayoutX() + ", y: " + node.getLayoutY());
+//            }
+//        });
 
     }
 
+    public StackPane getPointBoardStackPane(ArrayList<Image> tokenImages, ArrayList<Integer> scores){
+        updateBoard(tokenImages, scores);
+        return pointBoardStackPane;
+    }
 
-    public Pane getPointBoardPane() {
-        return gameBoardPane;
+    public Pane getPointBoardPane(ArrayList<Image> tokenImages, ArrayList<Integer> scores) {
+        updateBoard(tokenImages, scores);
+        return pointBoardPane;
     }
 
     public static PointBoardController createInstance() throws IOException {

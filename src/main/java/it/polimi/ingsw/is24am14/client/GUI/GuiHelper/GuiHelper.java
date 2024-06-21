@@ -18,7 +18,9 @@ import java.util.ArrayList;
 
 public class GuiHelper {
 
-    public static Player getWinner(Game game){
+    private int lastMessageIndex=0;
+
+    public Player getWinner(Game game){
         Player winner = null;
         int max = 0;
         for(Player player : game.getPlayers()){
@@ -30,23 +32,24 @@ public class GuiHelper {
         return winner;
     }
 
-    public static void updateMessages(TextArea messageArea, GUIView context){
+    public void updateMessages(TextArea messageArea, GUIView context) {
         ArrayList<Message> messaggi;
 
-
         try {
-            context.getClient().updateGameContext();
-            System.out.println("Size: " + context.getClient().getGameContext().getMessages().size());
             messaggi = context.getClient().getGameContext().getMessages();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        for(Message message : messaggi){
-            messageArea.appendText(message.getSender() + " " +  message.getMessage() + "\n");
-            System.out.println(message.getSender() + " " +  message.getMessage() + "\n");
+        for (int i = this.lastMessageIndex; i < messaggi.size(); i++) {
+            Message message = messaggi.get(i);
+            if(message.getReceiver().equals("")){
+                messageArea.appendText(message.getSender() + ": " + message.getMessage() + "\n");
+                this.lastMessageIndex++;
+            }else {
+                messageArea.appendText("private message from " + message.getSender() + ": " + message.getMessage() + "\n");
+                this.lastMessageIndex++;
+            }
         }
-
-
     }
 }
