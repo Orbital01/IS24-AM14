@@ -56,9 +56,7 @@ public class GameController {
     ScrollPane scrollPane = new ScrollPane();
     private GameArea playerBoard;
 
-    private ScheduledExecutorService updatePointsExecutorService;
-
-    private ScheduledExecutorService ChatExecutorService;
+    private final GuiHelper GuiHelper = new GuiHelper();
 
     public GameController(GUIView context) {
         this.context = context;
@@ -541,7 +539,7 @@ public class GameController {
         }, 0, 1, TimeUnit.SECONDS);
 
 
-        chatContainer.setMaxWidth(200);
+        chatContainer.setMaxWidth(300);
         chatContainer.setAlignment(Pos.CENTER);
         layout.setRight(chatContainer);
     }
@@ -569,7 +567,7 @@ public class GameController {
     }
 
     //TODO: implementare la visualizzazione delle board degli altri giocatori
-    private void getOtherBoard(){
+    private void getOthersBoard(){
         //prendo i giocatori presenti nella partita
         ArrayList<Player> players = null;
         try {
