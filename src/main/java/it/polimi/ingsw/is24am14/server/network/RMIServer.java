@@ -24,8 +24,8 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     protected RMIServer(LobbyList lobbies) throws RemoteException {
         this.lobbyList = lobbies;
 
-        System.setProperty("java.rmi.server.hostname","192.168.1.205");
-        Registry registry = LocateRegistry.createRegistry(15000);
+        System.setProperty("java.rmi.server.hostname", NetworkSettings.serverAddress);
+        Registry registry = LocateRegistry.createRegistry(NetworkSettings.RMIPort);
         try {
             registry.bind("RMIServer", this);
         }
@@ -123,7 +123,6 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
         String username = client.getUsername();
         Lobby lobby = this.lobbyList.getPlayersLobby(username);
         lobby.getGameContext().addMessage(username, receiver, message);
-        System.out.println("Messaggio aggiunto. Size: " + lobby.getGameContext().getMessages().size());
     }
 
     @Override

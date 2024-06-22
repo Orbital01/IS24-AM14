@@ -21,7 +21,7 @@ public class SocketServer {
         ServerSocket serverSocket = null;
 
         try {
-            serverSocket = new ServerSocket(12346);
+            serverSocket = new ServerSocket(NetworkSettings.socketPort);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return;

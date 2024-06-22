@@ -13,39 +13,45 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class SocketClient implements ClientInterface {
-    private final Socket socket;
     private final PrintWriter socketOut;
     private final BufferedReader socketIn;
     private final Gson gson;
     private String username;
     private GameContext context;
+    private final ReentrantReadWriteLock lock;
 
     public SocketClient() throws Exception {
-        String hostName = "127.0.0.1";
-        int portNumber = 12346;
-        this.socket = new Socket(hostName, portNumber);
+        String hostName = NetworkSettings.serverAddress;
+        int portNumber = NetworkSettings.socketPort;
+        Socket socket = new Socket(hostName, portNumber);
         this.socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.socketOut = new PrintWriter(socket.getOutputStream(), true);
         this.gson = InitGSON.init();
         this.context = null;
+        this.lock = new ReentrantReadWriteLock();
     }
 
-    public void send(SocketResponse message) throws Exception {
+    public synchronized void send(SocketResponse message) throws Exception {
+        System.out.println("Want to lock for " + message.message);
+        lock.writeLock().lock();
+        System.out.println("Locked write lock for " + message.message);
         this.socketOut.println(this.gson.toJson(message));
     }
 
-    public SocketResponse receive() throws Exception {
+    public synchronized SocketResponse receive() throws Exception {
         String response = this.socketIn.readLine();
-        //System.out.println(response);
+        lock.writeLock().unlock();
+        System.out.println("Unlocked when received " + this.gson.fromJson(response, SocketResponse.class).message);
         return this.gson.fromJson(response, SocketResponse.class);
     }
 
     private void validate() throws Exception {
         SocketResponse response = this.receive();
         if (response.code != 200) {
+            System.out.println("Error: " + response.message);
             throw new Exception(response.message);
         }
     }
@@ -103,11 +109,15 @@ public class SocketClient implements ClientInterface {
     public void updateGameContext() throws Exception {
         SocketResponse message = new SocketResponse(100, "updateGameContext");
         this.send(message);
+
         SocketResponse response = this.receive();
 
         if (response.code != 200) {
+            System.out.println("Update Game Context error");
             throw new RuntimeException(response.message);
         }
+
+        if (response.strings.isEmpty()) throw new Exception("Received no game context in updateGameContext.\n" + response.message);
         this.context = gson.fromJson(response.strings.getFirst(), GameContext.class);
     }
 
@@ -201,6 +211,7 @@ public class SocketClient implements ClientInterface {
     public ArrayList<String> getLobbyClients(String lobbyHost) throws Exception {
         SocketResponse message = new SocketResponse(100, "getLobbyClients");
         message.strings.add(lobbyHost);
+
         send(message);
 
         SocketResponse response = receive();

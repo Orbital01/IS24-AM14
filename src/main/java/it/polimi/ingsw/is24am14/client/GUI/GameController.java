@@ -78,6 +78,12 @@ public class GameController {
     private void checkGameStatus() {
         try {
             context.getClient().updateGameContext();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
+        }
+
+        try {
             if (context.getClient().getGameContext() != null) {
                 GameStateEnum currentGameState = context.getClient().getGameContext().getGameStateEnum();
                 //aggiorno anche se è il mio turno
@@ -365,9 +371,6 @@ public class GameController {
                 //questa operazione deve essere fatta solo se la carta è stata effettivamente posizionata
                 Guifactory.addCard(board, playerHand.get(cardIndex), row, column, corner, index);
                 index++;
-
-                RenderBoard tuiBoard = new RenderBoard(context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()).getPlayerBoard());
-                tuiBoard.printBoard();
 
                 System.out.println("Card " +cardIndex + " placed at row " + realRow + ", column " + realColumn + ", corner " + corner);
                 //aggiorno la mano del giocatore
