@@ -377,7 +377,7 @@ public class GoldCardDeckCreator {
         hidEmpHidEmp.add(new Corner(CornerEnum.EMPTY));
         hidEmpHidEmp.add(new Corner(CornerEnum.HIDDEN));
         hidEmpHidEmp.add(new Corner(CornerEnum.EMPTY));
-        content.add(new GoldCard(5, noCondition, CornerEnum.ResourceEnum.ANIMAL, fiveAnimal, hidEmpHidEmp, "src/main/resources/images/cards/gold_cards/blue_fronts/page_70.png", "src/main/resources/images/cards/gold_cards/purple_backs/page_70.png"));
+        content.add(new GoldCard(5, noCondition, CornerEnum.ResourceEnum.ANIMAL, fiveAnimal, hidEmpHidEmp, "src/main/resources/images/cards/gold_cards/blue_fronts/page_70.png", "src/main/resources/images/cards/gold_cards/blue_backs/page_70.png"));
 
 
         // Purple Cards
