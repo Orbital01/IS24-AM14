@@ -24,7 +24,8 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
     protected RMIServer(LobbyList lobbies) throws RemoteException {
         this.lobbyList = lobbies;
 
-        Registry registry = LocateRegistry.createRegistry(12347);
+        System.setProperty("java.rmi.server.hostname","192.168.1.205");
+        Registry registry = LocateRegistry.createRegistry(15000);
         try {
             registry.bind("RMIServer", this);
         }
