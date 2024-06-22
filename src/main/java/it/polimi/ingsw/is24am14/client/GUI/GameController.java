@@ -363,8 +363,12 @@ public class GameController {
                 context.getClient().putCard(cardIndex, new Coordinates(realRow, realColumn), corner);
 
                 //aggiungo la carta alla board
+                //questa operazione deve essere fatta solo se la carta è stata effettivamente posizionata
                 Guifactory.addCard(board, playerHand.get(cardIndex), row, column, corner, index);
                 index++;
+
+                RenderBoard tuiBoard = new RenderBoard(context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()).getPlayerBoard());
+                tuiBoard.printBoard();
 
                 System.out.println("Card " +cardIndex + " placed at row " + realRow + ", column " + realColumn + ", corner " + corner);
                 //aggiorno la mano del giocatore
@@ -568,6 +572,7 @@ public class GameController {
         Label score;
         try {
             score = Guifactory.printLabel("Score: " + context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()).getScore(), 50);
+            System.out.println("Score: " + context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()).getScore()); //debug line
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
