@@ -21,12 +21,12 @@ This Java project is a porting of the boardgame *CODEX* by [Cranio Creations](ht
 | Complete rules | :white_check_mark: |
 | Socket connection | :white_check_mark: |
 | RMI connection | :white_check_mark: |
-| CLI | :ballot_box_with_check: |
-| GUI | :ballot_box_with_check: |
+| CLI | :construction: |
+| GUI | :construction: |
 | Multiple games | :white_check_mark:|
 | Persistence | :x: |
 | Resilience | :x: |
-| Chat | ::white_check_mark:: |
+| Chat | :white_check_mark: |
 
 **Legend**
 | Symbol | Functionality status |
