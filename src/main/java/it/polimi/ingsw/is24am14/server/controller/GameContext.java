@@ -151,6 +151,8 @@ public class GameContext implements Serializable {
             } else if (gameStateEnum == GameStateEnum.LastMove) {
                 gameStateEnum = GameStateEnum.LastDraw;
             }
+        } else {
+            throw new IllegalStateException("Illegal state");
         }
     }
 

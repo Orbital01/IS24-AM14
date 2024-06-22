@@ -31,4 +31,39 @@ class ResourceConditionTest {
 
         assertTrue(testingCondition.isSatisfied(gameBoard));
     }
+
+    @Test
+    void isMultipleResourceSatisfied() {
+        ResourceCondition testingCondition = new ResourceCondition();
+        testingCondition.addClause(CornerEnum.ResourceEnum.PLANT);
+        testingCondition.addClause(CornerEnum.ResourceEnum.PLANT);
+        testingCondition.addClause(CornerEnum.ResourceEnum.PLANT);
+        testingCondition.addClause(CornerEnum.ResourceEnum.PLANT);
+        testingCondition.addClause(CornerEnum.ResourceEnum.PLANT);
+
+        GameArea gameBoard = new GameArea();
+
+        ArrayList<Corner> cornersStarter = new ArrayList<>();
+        cornersStarter.add(new Corner(CornerEnum.EMPTY));
+        cornersStarter.add(new Corner(CornerEnum.EMPTY));
+        cornersStarter.add(new Corner(CornerEnum.HIDDEN));
+        cornersStarter.add(new Corner(CornerEnum.HIDDEN));
+
+        ArrayList<CornerEnum.ResourceEnum> starterResources = new ArrayList<>();
+        starterResources.add(CornerEnum.ResourceEnum.PLANT);
+        starterResources.add(CornerEnum.ResourceEnum.ANIMAL);
+        starterResources.add(CornerEnum.ResourceEnum.FUNGI);
+
+        ArrayList<Corner> empty = new ArrayList<>();
+        empty.add(new Corner(CornerEnum.EMPTY));
+        empty.add(new Corner(CornerEnum.EMPTY));
+        empty.add(new Corner(CornerEnum.EMPTY));
+        empty.add(new Corner(CornerEnum.EMPTY));
+
+        Card starterCard = new StarterCard(cornersStarter, empty, starterResources, "", "");
+
+        gameBoard.getBoard().put(new Coordinates(0, 0), starterCard);
+
+        assertFalse(testingCondition.isSatisfied(gameBoard));
+    }
 }
