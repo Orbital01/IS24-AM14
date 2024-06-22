@@ -18,12 +18,12 @@ This Java project is a porting of the boardgame *CODEX* by [Cranio Creations](ht
 | Functionality | Status | 
 | --- | --- |
 | Basic rules | :white_check_mark: |
-| Complete rules | ::white_check_mark:: |
-| Socket connection | ::white_check_mark:: |
-| RMI connection | ::white_check_mark:: |
+| Complete rules | :white_check_mark: |
+| Socket connection | :white_check_mark: |
+| RMI connection | :white_check_mark: |
 | CLI | :ballot_box_with_check: |
 | GUI | :ballot_box_with_check: |
-| Multiple games | ::white_check_mark::|
+| Multiple games | :white_check_mark:|
 | Persistence | :x: |
 | Resilience | :x: |
 | Chat | ::white_check_mark:: |
