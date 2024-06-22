@@ -471,7 +471,8 @@ public class GameController {
         //mostro la finestra modale
         Scene modalScene = new Scene(modalLayout, 600, 500);
         modalStage.setScene(modalScene);
-        modalStage.showAndWait();
+        Platform.runLater(modalStage::showAndWait);
+        //modalStage.showAndWait();
     }
 
     private void endGame() {
