@@ -2,7 +2,6 @@ package it.polimi.ingsw.is24am14.client.GUI;
 
 import it.polimi.ingsw.is24am14.client.GUI.GUIFactory.Guifactory;
 import it.polimi.ingsw.is24am14.client.GUI.GuiHelper.GuiHelper;
-import it.polimi.ingsw.is24am14.client.GUI.GuiHelper.PointBoardController;
 import it.polimi.ingsw.is24am14.client.view.printer.RenderBoard;
 import it.polimi.ingsw.is24am14.server.controller.GameStateEnum;
 import it.polimi.ingsw.is24am14.server.model.card.Card;
@@ -374,6 +373,13 @@ public class GameController {
                 //aggiorno la mano del giocatore
                 makeMove();
             } catch (Exception e) {
+                //mostro un messaggio di errore
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Mossa non concessa");
+                alert.setHeaderText(null);
+                alert.setContentText("Non puoi piazzare la carta in questa posizione");
+                alert.showAndWait();
+                modalStage.close();
                 throw new RuntimeException(e);
             }
             // Chiudi la finestra modale
