@@ -17,16 +17,16 @@ This Java project is a porting of the boardgame *CODEX* by [Cranio Creations](ht
 ## Status of the work
 | Functionality | Status | 
 | --- | --- |
-| Basic rules | Completed |
-| Complete rules | :construction: |
-| Socket connection | :construction: |
-| RMI connection | :construction: |
-| CLI | :ballot_box_with_check: |
-| GUI | :ballot_box_with_check: |
-| Multiple games | :construction:|
+| Basic rules | :white_check_mark: |
+| Complete rules | :white_check_mark: |
+| Socket connection | :white_check_mark: |
+| RMI connection | :white_check_mark: |
+| CLI | :construction: |
+| GUI | :construction: |
+| Multiple games | :white_check_mark:|
 | Persistence | :x: |
 | Resilience | :x: |
-| Chat | :ballot_box_with_check: |
+| Chat | :white_check_mark: |
 
 **Legend**
 | Symbol | Functionality status |

@@ -2,6 +2,7 @@ package it.polimi.ingsw.is24am14.client.GUI;
 
 import it.polimi.ingsw.is24am14.client.GUI.GUIFactory.Guifactory;
 import it.polimi.ingsw.is24am14.client.GUI.GuiHelper.GuiHelper;
+import it.polimi.ingsw.is24am14.client.GUI.GuiHelper.PointBoardController;
 import it.polimi.ingsw.is24am14.client.view.printer.RenderBoard;
 import it.polimi.ingsw.is24am14.server.controller.GameStateEnum;
 import it.polimi.ingsw.is24am14.server.model.card.Card;
@@ -107,7 +108,8 @@ public class GameController {
                 case Draw:
                     System.out.println("Draw stage");
                     makeDraw();
-                    createPointBoard();
+                    //createPointBoard();
+                    printScore();
                     break;
                 case LastMove:
                     System.out.println("Last move stage");
@@ -544,26 +546,32 @@ public class GameController {
         layout.setRight(chatContainer);
     }
 
-    //TODO: implementare la visualizzazione della board dei punti
     private void createPointBoard(){
-        VBox pointBoard = new VBox();
-        //creo la board passando due array, uno per i colori e uno per i punti
-        ArrayList<Integer> points = new ArrayList<>();
-        ArrayList<TokenColour> colours = new ArrayList<>();
-        try {
-            for (Player player : context.getClient().getGameContext().getGame().getPlayers()) {
-                colours.add(player.getColour());
-                points.add(player.getScore());
-            }
 
+        ScheduledExecutorService pointBoardExecutorService;
+        pointBoardExecutorService = Executors.newSingleThreadScheduledExecutor();
+        pointBoardExecutorService.scheduleAtFixedRate(() -> {
+            Platform.runLater(() -> {
+                try {
+                    Pane pointBoard = GuiHelper.getPointBoard(context.getClient().getGameContext().getGame());
+                    layout.setLeft(pointBoard);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }); }, 0, 1, TimeUnit.SECONDS);
+
+    }
+
+    //TODO: delete this method
+    private void printScore(){
+        //mostro il punteggio del giocatore
+        Label score;
+        try {
+            score = Guifactory.printLabel("Score: " + context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()).getScore(), 50);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        //chiamo il metodo per la creazione della board
-
-
-        //aggiorno la board dei punti
-        Platform.runLater(() -> layout.setLeft(pointBoard));
+        Platform.runLater(() -> layout.setLeft(score));
     }
 
     //TODO: implementare la visualizzazione delle board degli altri giocatori
