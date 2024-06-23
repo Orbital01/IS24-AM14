@@ -2,6 +2,7 @@ package it.polimi.ingsw.is24am14.client;
 import it.polimi.ingsw.is24am14.server.controller.GameStateEnum;
 import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
 import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
+import it.polimi.ingsw.is24am14.server.model.card.StarterCard;
 import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
@@ -61,7 +62,7 @@ public class TUIViewLauncher {
         }
 
         //Visualize the lobbies
-        tui.printLobbyOption(client.getLobbyList());
+        //tui.printLobbyOption(client.getLobbyList());
 
         while (true) {
             client.updateGameContext();
@@ -103,23 +104,29 @@ public class TUIViewLauncher {
                     client.pickObjectiveCard(client.getGameContext().getObjectiveCardChoices(username).get(tui.chooseSecretObjective(firstObjective, secondObjective)));
 
                     //After all clients have chosen their secret objectives, the black token for the first player is assigned
-                    if (client.getGameContext().getGame().getPlayer(username).isFirstPlayer()){
-                        tui.printBlackToken();
-                    }
+//                    if (client.getGameContext().getGame().getPlayer(username).isFirstPlayer()){
+//                        tui.printBlackToken();
+//                    }
 
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.Move) {
 
+                    int counter = 0;
+                    while (counter < 1){
+                        if (client.getGameContext().getGame().getPlayer(username).isFirstPlayer()){
+                            tui.printBlackToken();
+                        }
+                        counter++;
+                    }
+
                     if (client.getGameContext().getGame().getActivePlayer().getPlayerNickname().equals(username)) {
-                        //System.out.println("It's my turn");
+                        tui.printBoard(client.getGameContext().getGame().getPlayer(username).getPlayerBoard());
                         int moveChoice = tui.moveChoice();
                         if (moveChoice == 0){
-                            System.out.println("Your hand:");
                             tui.printHand(client.getGameContext().getGame().getPlayer(username).getPlayerHand());
                             int cardToFlip = tui.chooseCardToFlip(client.getGameContext().getGame().getPlayer(username).getPlayerHand());
                             client.flipCard(cardToFlip);
                         }
                         else{
-                            System.out.println("Your hand:");
                             tui.printHand(client.getGameContext().getGame().getPlayer(username).getPlayerHand());
                             int cardToPlay = tui.chooseCardToPlay(client.getGameContext().getGame().getPlayer(username).getPlayerHand());
                             Coordinates cardToOverlap = tui.chooseCardToOverlap(client.getGameContext().getGame().getPlayer(username).getPlayerBoard());
@@ -149,11 +156,18 @@ public class TUIViewLauncher {
                         client.drawFaceUpCard(faceUpChoice);
                     }
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.ChoosingStarterCard) {
-                    System.out.println("What side of the starterd card would you like to use?");
+                    StarterCard starterCard = client.getGameContext().getGame().getPlayer(username).getStarterCard();
+                    System.out.println("Your starter card:");
+                    for (String line : starterCard.drawCard()) {
+                        System.out.println(line);
+                    }
+                    System.out.println("What side of the starter card would you like to use?");
                     System.out.println("Digit: \n 0 for the front side \n 1 for the back side");
                     int side = scanner.nextInt();
-                    client.flipCard(side);
-                    client.setStarterCard(client.getGameContext().getGame().getPlayer(username).getStarterCard());
+                    if (side == 1){
+                        starterCard.flipSide();
+                    }
+                    client.setStarterCard(starterCard);
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.EndGame) {
                     String winner = tui.getWinner(client);
                     tui.printWinner(winner);

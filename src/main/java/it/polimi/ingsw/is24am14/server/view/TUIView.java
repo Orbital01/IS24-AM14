@@ -117,8 +117,14 @@ public class TUIView implements VirtualView{
 
     @Override
     public void printSecretObjective(ObjectiveCard card1, ObjectiveCard card2) {
-        System.out.println("0) " + card1.drawCard());
-        System.out.println("1) " + card2.drawCard());
+        System.out.println("First Objective Card (0):");
+        for (String s : card1.drawCard()) {
+            System.out.println(s);
+        }
+        System.out.println("Second Objective Card (1):");
+        for (String s : card2.drawCard()) {
+            System.out.println(s);
+        }
     }
 
 //    //toString() version
@@ -151,14 +157,14 @@ public class TUIView implements VirtualView{
 
     @Override
     public void printBoard(GameArea board) {
-        System.out.println("Your board");
+        System.out.println("Your board:");
         RenderBoard render = new RenderBoard(board);
         render.printBoard();
     }
 
     @Override
     public void printHand(ArrayList<PlayableCard> hand) {
-        System.out.println("Your hand");
+        System.out.println("Your hand:");
         for (PlayableCard card : hand) {
             for (String s : card.drawCard()) {
                 System.out.println(s);
