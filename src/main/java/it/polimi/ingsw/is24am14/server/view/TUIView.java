@@ -4,9 +4,12 @@ package it.polimi.ingsw.is24am14.server.view;
 import it.polimi.ingsw.is24am14.client.view.printer.RenderBoard;
 import it.polimi.ingsw.is24am14.server.model.card.*;
 import it.polimi.ingsw.is24am14.server.model.game.GameArea;
+import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
+import it.polimi.ingsw.is24am14.server.network.ClientInterface;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,6 +19,19 @@ public class TUIView implements VirtualView{
         System.out.println("Choose a username");
         Scanner in = new Scanner(System.in);
         return in.nextLine();
+    }
+
+    //@Override
+    public int connectionIndex(){
+        int index;
+        Scanner in = new Scanner(System.in);
+        System.out.println("Choose a connection method:\n0) Socket\n1) RMI");
+        index = in.nextInt();
+        while (index < 0 || index > 1) {
+            System.out.println("Invalid index. Try again.");
+            index = in.nextInt();
+        }
+        return index;
     }
 
     @Override
@@ -101,9 +117,16 @@ public class TUIView implements VirtualView{
 
     @Override
     public void printSecretObjective(ObjectiveCard card1, ObjectiveCard card2) {
-        System.out.println("0) " + card1.toString());
-        System.out.println("1) " + card2.toString());
+        System.out.println("0) " + card1.drawCard());
+        System.out.println("1) " + card2.drawCard());
     }
+
+//    //toString() version
+//    @Override
+//    public void printSecretObjective(ObjectiveCard card1, ObjectiveCard card2) {
+//        System.out.println("0) " + card1.toString());
+//        System.out.println("1) " + card2.toString());
+//    }
 
     @Override
     public int chooseSecretObjective(ObjectiveCard card1, ObjectiveCard card2) {
@@ -288,9 +311,17 @@ public class TUIView implements VirtualView{
     @Override
     public void showFaceUpCards(ArrayList<PlayableCard> faceUpCards) {
         for (PlayableCard card : faceUpCards) {
-            System.out.println(card.toString());
+            System.out.println(card.drawCard());
         }
     }
+
+//toString() versione
+//    @Override
+//    public void showFaceUpCards(ArrayList<PlayableCard> faceUpCards) {
+//        for (PlayableCard card : faceUpCards) {
+//            System.out.println(card.toString());
+//        }
+//    }
 
     @Override
     public void printScore(int score) {
@@ -300,5 +331,14 @@ public class TUIView implements VirtualView{
     @Override
     public void printWinner(String winner) {
         System.out.println("The winner is " + winner + "!!!");
+    }
+
+    public String getWinner(ClientInterface client) throws Exception {
+        ArrayList<Player> gamePlayers = new ArrayList<>();
+        gamePlayers = client.getGameContext().getGame().getPlayers();
+        Player winner = gamePlayers.stream()
+                .max(Comparator.comparing(Player::getScore))
+                .orElse(null);
+        return winner.getPlayerNickname();
     }
 }
