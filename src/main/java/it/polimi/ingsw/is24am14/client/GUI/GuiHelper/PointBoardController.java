@@ -1,4 +1,4 @@
-package it.polimi.ingsw.is24am14.client.GUI;
+package it.polimi.ingsw.is24am14.client.GUI.GuiHelper;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;

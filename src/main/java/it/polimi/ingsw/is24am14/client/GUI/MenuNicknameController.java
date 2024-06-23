@@ -87,10 +87,7 @@ public class MenuNicknameController {
                     //vado alla decisione sulla lobby
                     goToLobbyChoice();
                 } catch (Exception e) {
-                    System.out.println("Username già in uso");
-                    //username non valido
-                    //mostro un messaggio di errore
-                    //e chiedo di inserire un nuovo username
+                    e.printStackTrace();
                     MenuNicknameController menuNicknameController = new MenuNicknameController(context);
                     menuNicknameController.showScene();
                 }

@@ -16,11 +16,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.nio.channels.AlreadyConnectedException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 public class SocketMediator implements ClientHandler {
     public PrintWriter socketOut;
@@ -87,6 +83,7 @@ public class SocketMediator implements ClientHandler {
                     break;
                 case "putCard":
                     this.putCard(Integer.parseInt(message.strings.getFirst()), gson.fromJson(message.strings.get(1), Coordinates.class), Integer.parseInt(message.strings.get(2)));
+                    break;
                 case "drawGoldCard":
                     this.drawGoldCard();
                     break;
@@ -121,7 +118,7 @@ public class SocketMediator implements ClientHandler {
         this.username = user;
         this.lobbyList.addClientHandler(this);
 
-        send(new SocketResponse(200, "ok"));
+        send(new SocketResponse(200, "connectionAccepted"));
         System.out.println("Socket Client connected");
     }
 
@@ -133,7 +130,7 @@ public class SocketMediator implements ClientHandler {
         this.lobbyList.createLobby(username, numPlayers);
         this.lobbyList.joinLobby(username, username);
 
-        send(new SocketResponse(200, "ok"));
+        send(new SocketResponse(200, "createdNewLobby"));
     }
 
     public void joinLobby(String lobbyHost) throws Exception {
@@ -143,13 +140,21 @@ public class SocketMediator implements ClientHandler {
 
         this.lobbyList.joinLobby(username, lobbyHost);
 
-        send(new SocketResponse(200, "ok"));
+        send(new SocketResponse(200, "joinedLobby"));
     }
 
     public void sendGameContext() throws Exception {
-        SocketResponse message = new SocketResponse(200, "game context");
-        GameContext context = lobbyList.getPlayersLobby(username).getGameContext();
-        message.strings.add(gson.toJson(context));
+        SocketResponse message = new SocketResponse();
+        try {
+            GameContext context = lobbyList.getPlayersLobby(username).getGameContext();
+            message.code = 200;
+            message.message = "gameContext";
+            message.strings.add(gson.toJson(context));
+            if (message.strings.isEmpty()) throw new RuntimeException("No game context");
+        } catch (Exception e) {
+            message.code = 409;
+            message.message = "errorSendingGameContext";
+        }
         send(message);
     }
 
@@ -167,13 +172,13 @@ public class SocketMediator implements ClientHandler {
     public void setColor(String color) throws Exception {
         TokenColour colorValue = TokenColour.valueOf(color);
         this.lobbyList.getPlayersLobby(username).setColor(username, colorValue);
-        send(new SocketResponse(200, "ok"));
+        send(new SocketResponse(200, "colorSet"));
     }
 
     public void setStarterCard(StarterCard card) throws Exception {
         Lobby lobby = this.lobbyList.getPlayersLobby(username);
         lobby.getGameContext().placeStarterCard(username, card);
-        send(new SocketResponse(200, "ok"));
+        send(new SocketResponse(200, "starterCardSet"));
     }
 
     public void setObjectiveCard(ObjectiveCard card) throws Exception {
@@ -181,7 +186,7 @@ public class SocketMediator implements ClientHandler {
         Player player = lobby.getGameContext().getGame().getPlayer(username);
 
         lobby.getGameContext().setObjectiveCard(player, card);
-        send(new SocketResponse(200, "ok"));
+        send(new SocketResponse(200, "objectiveCardSet"));
     }
 
     public void flipCard(int index) throws Exception {
@@ -189,7 +194,7 @@ public class SocketMediator implements ClientHandler {
             Lobby lobby = this.lobbyList.getPlayersLobby(username);
             lobby.getGameContext().getGame().getPlayer(username).getPlayerHand().get(index).flipSide();
 
-            send(new SocketResponse(200, "ok"));
+            send(new SocketResponse(200, "cardFlipped"));
         } catch (Exception e) {
             send(new SocketResponse(400, "flipCardException", e.getMessage()));
         }
@@ -199,7 +204,7 @@ public class SocketMediator implements ClientHandler {
         try {
             this.lobbyList.getPlayersLobby(username).getGameContext().putCard(username, handCardIndex, cardToOverlap, cornerIndex);
 
-            send(new SocketResponse(200, "ok"));
+            send(new SocketResponse(200, "cardPut"));
         } catch (Exception e) {
             send(new SocketResponse(400, "putCardException", e.getMessage()));
         }
@@ -209,7 +214,7 @@ public class SocketMediator implements ClientHandler {
         try {
             this.lobbyList.getPlayersLobby(username).getGameContext().drawGoldCard(username);
 
-            send(new SocketResponse(200, "ok"));
+            send(new SocketResponse(200, "goldCardDraw"));
         } catch (Exception e) {
             send(new SocketResponse(400, "drawGoldCardException", e.getMessage()));
         }
@@ -217,9 +222,9 @@ public class SocketMediator implements ClientHandler {
 
     public void drawResourceCard() throws Exception {
         try {
-            this.lobbyList.getPlayersLobby(username).getGameContext().drawGoldCard(username);
+            this.lobbyList.getPlayersLobby(username).getGameContext().drawResourceCard(username);
 
-            send(new SocketResponse(200, "ok"));
+            send(new SocketResponse(200, "resourceCardDraw"));
         } catch (Exception e) {
             send(new SocketResponse(400, "drawResourceCardException", e.getMessage()));
         }
@@ -229,7 +234,7 @@ public class SocketMediator implements ClientHandler {
         try {
             this.lobbyList.getPlayersLobby(username).getGameContext().drawFaceUpCard(username, index);
 
-            send(new SocketResponse(200, "ok"));
+            send(new SocketResponse(200, "faceUpCardDraw"));
         } catch (Exception e) {
             send(new SocketResponse(400, "drawFaceUpCardException", e.getMessage()));
         }
@@ -240,7 +245,7 @@ public class SocketMediator implements ClientHandler {
             Lobby lobby = this.lobbyList.getPlayersLobby(username);
             lobby.getGameContext().addMessage(username, receiver, message);
 
-            send(new SocketResponse(200, "ok"));
+            send(new SocketResponse(200, "addedMessage"));
         } catch (Exception e) {
             send(new SocketResponse(400, "addMessageException", e.getMessage()));
         }

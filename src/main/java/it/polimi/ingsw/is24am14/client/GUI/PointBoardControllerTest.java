@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/*
 public class PointBoardControllerTest extends Application {
 
     @Override
@@ -107,3 +108,4 @@ public class PointBoardControllerTest extends Application {
         launch(args);
     }
 }
+*/

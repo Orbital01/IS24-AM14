@@ -78,6 +78,12 @@ public class GameController {
     private void checkGameStatus() {
         try {
             context.getClient().updateGameContext();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
+        }
+
+        try {
             if (context.getClient().getGameContext() != null) {
                 GameStateEnum currentGameState = context.getClient().getGameContext().getGameStateEnum();
                 //aggiorno anche se è il mio turno
@@ -107,7 +113,8 @@ public class GameController {
                 case Draw:
                     System.out.println("Draw stage");
                     makeDraw();
-                    createPointBoard();
+                    //createPointBoard();
+                    printScore();
                     break;
                 case LastMove:
                     System.out.println("Last move stage");
@@ -361,6 +368,7 @@ public class GameController {
                 context.getClient().putCard(cardIndex, new Coordinates(realRow, realColumn), corner);
 
                 //aggiungo la carta alla board
+                //questa operazione deve essere fatta solo se la carta è stata effettivamente posizionata
                 Guifactory.addCard(board, playerHand.get(cardIndex), row, column, corner, index);
                 index++;
 
@@ -368,6 +376,13 @@ public class GameController {
                 //aggiorno la mano del giocatore
                 makeMove();
             } catch (Exception e) {
+                //mostro un messaggio di errore
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Mossa non concessa");
+                alert.setHeaderText(null);
+                alert.setContentText("Non puoi piazzare la carta in questa posizione");
+                alert.showAndWait();
+                modalStage.close();
                 throw new RuntimeException(e);
             }
             // Chiudi la finestra modale
@@ -456,7 +471,11 @@ public class GameController {
         //mostro la finestra modale
         Scene modalScene = new Scene(modalLayout, 600, 500);
         modalStage.setScene(modalScene);
-        modalStage.showAndWait();
+
+        Platform.runLater(()-> {
+            modalStage.requestFocus();
+            modalStage.showAndWait();
+        });
     }
 
     private void endGame() {
@@ -544,26 +563,33 @@ public class GameController {
         layout.setRight(chatContainer);
     }
 
-    //TODO: implementare la visualizzazione della board dei punti
     private void createPointBoard(){
-        VBox pointBoard = new VBox();
-        //creo la board passando due array, uno per i colori e uno per i punti
-        ArrayList<Integer> points = new ArrayList<>();
-        ArrayList<TokenColour> colours = new ArrayList<>();
-        try {
-            for (Player player : context.getClient().getGameContext().getGame().getPlayers()) {
-                colours.add(player.getColour());
-                points.add(player.getScore());
-            }
 
+        ScheduledExecutorService pointBoardExecutorService;
+        pointBoardExecutorService = Executors.newSingleThreadScheduledExecutor();
+        pointBoardExecutorService.scheduleAtFixedRate(() -> {
+            Platform.runLater(() -> {
+                try {
+                    Pane pointBoard = GuiHelper.getPointBoard(context.getClient().getGameContext().getGame());
+                    layout.setLeft(pointBoard);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }); }, 0, 1, TimeUnit.SECONDS);
+
+    }
+
+    //TODO: delete this method
+    private void printScore(){
+        //mostro il punteggio del giocatore
+        Label score;
+        try {
+            score = Guifactory.printLabel("Score: " + context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()).getScore(), 50);
+            System.out.println("Score: " + context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()).getScore()); //debug line
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        //chiamo il metodo per la creazione della board
-
-
-        //aggiorno la board dei punti
-        Platform.runLater(() -> layout.setLeft(pointBoard));
+        Platform.runLater(() -> layout.setLeft(score));
     }
 
     //TODO: implementare la visualizzazione delle board degli altri giocatori

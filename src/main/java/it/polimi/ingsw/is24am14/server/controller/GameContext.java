@@ -151,6 +151,9 @@ public class GameContext implements Serializable {
             } else if (gameStateEnum == GameStateEnum.LastMove) {
                 gameStateEnum = GameStateEnum.LastDraw;
             }
+        } else {
+            System.out.println("Illegal state");
+            throw new IllegalStateException("Illegal state");
         }
     }
 
@@ -195,16 +198,13 @@ public class GameContext implements Serializable {
         }
     }
 
-    private void updateScore(){
-        Condition pointsCondition = lastPlayedCard.getPointCondition();
-        int earnedPoints;
-        if(lastPlayedCard.getPointCondition()!=null)
-            //earnedPoints = lastPlayedCard.getPoints() * lastPlayedCard.getPointCondition().numSatisfied(currentPlayer.getPlayerBoard()); da rimettere con le conditions
-            earnedPoints = 0;
-        else
-            earnedPoints = lastPlayedCard.getPoints();
-        //Sets player score to his old score + the points given by the satisfied condition on the gold card
-        game.getActivePlayer().setScore(game.getActivePlayer().getScore() + earnedPoints);
+    private void updateScore() {
+            System.out.println("Updating score");
+            int earnedPoints = lastPlayedCard.getPoints() * lastPlayedCard.getPointCondition().numSatisfied(game.getActivePlayer().getPlayerBoard());
+            System.out.println("Earned points: " + earnedPoints);
+            //Sets player score to his old score + the points given by the satisfied condition on the gold card
+            game.getActivePlayer().setScore(game.getActivePlayer().getScore() + earnedPoints);
+            System.out.println(game.getActivePlayer().getPlayerNickname() + " has " + game.getActivePlayer().getScore() + " points");
     }
 
     private boolean someoneHas20points() {
