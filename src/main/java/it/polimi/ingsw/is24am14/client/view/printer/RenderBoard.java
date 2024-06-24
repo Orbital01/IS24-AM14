@@ -1,4 +1,4 @@
-package it.polimi.ingsw.is24am14.client.printer;
+package it.polimi.ingsw.is24am14.client.view.printer;
 
 import it.polimi.ingsw.is24am14.server.model.card.Card;
 import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RenderBoard {
-    //prendo la hasmap nel costruttore
+    //prendo la hashmap nel costruttore
     GameArea board;
     public RenderBoard(GameArea board) {
         this.board = board;
@@ -38,23 +38,46 @@ public class RenderBoard {
         return minRow;
     }
 
+    private ArrayList<String> drawEmptyCard() {
+        ArrayList<String> emptyCard = new ArrayList<>();
+        emptyCard.add("                         ");
+        emptyCard.add("                         ");
+        emptyCard.add("                         ");
+        emptyCard.add("                         ");
+        emptyCard.add("                         ");
+        emptyCard.add("                         ");
+        emptyCard.add("                         ");
+        return emptyCard;
+    }
+
     //creo un metodo per stampare la singola riga della hashmap
     private ArrayList<String> printRow(int rowNumber) {
         ArrayList<String> row = new ArrayList<>();
         //inizializzo le righe della riga da stampare
-        for(int i=0; i<=7 ;i++){
-            row.add(" ");
+        for(int i=0; i<7 ;i++){
+            row.add("");
         }
         //per ogni carta nella riga aggiungo tutte le righe della carta
         for(int j=boardMinColumn(); j<=boardMaxColumn(); j++){
+
             if(board.getCard(new Coordinates(rowNumber, j)) != null){
                 Card card = board.getCard(new Coordinates(rowNumber, j));
                 ArrayList<String> cardRow = card.drawCard();
+
+                int counter=0;
                 for (String s : cardRow) {
-                    row.add(s);
+                    row.set(counter, row.get(counter).concat(s));
+                    counter++;
                 }
             } else {
-                System.out.print(" white spaces"); // ci saranno degli spazi vuoti di un posto vuoto
+                //stampo la carta vuota
+                ArrayList<String> emptyCard = drawEmptyCard();
+                int counter=0;
+                for (String s : emptyCard) {
+                    row.set(counter, row.get(counter).concat(s));
+                    counter++;
+                }
+
             }
         }
     return row;
@@ -63,13 +86,12 @@ public class RenderBoard {
     //il metodo sopra va iterato per tutte le righe della hashmap in un metodo printBoard
     // e poi vanno tutte stampate in ordine
     public void printBoard(){
-        for(int i=boardMinRow(); i<=boardMaxRow(); i++){
+        for(int i=boardMaxRow(); i>=boardMinRow(); i--) {
             ArrayList<String> render = printRow(i);
-            for(String s : render){
-                System.out.println(s);
-            }
+                for (String s : render) {
+                    System.out.println(s);
+                }
         }
     }
-
 
 }

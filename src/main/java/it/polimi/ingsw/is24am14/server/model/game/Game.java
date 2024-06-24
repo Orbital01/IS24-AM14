@@ -4,23 +4,64 @@ import it.polimi.ingsw.is24am14.server.model.game.exceptions.MaximumNumberOfFace
 import it.polimi.ingsw.is24am14.server.model.game.exceptions.MaximumNumberOfPlayersReachedException;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.model.card.*;
+import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
+import it.polimi.ingsw.is24am14.server.utils.GoldCardDeckCreator;
+import it.polimi.ingsw.is24am14.server.utils.ObjectiveCardDeckCreator;
+import it.polimi.ingsw.is24am14.server.utils.ResourceCardDeckCreator;
+import it.polimi.ingsw.is24am14.server.utils.StarterCardDeckCreator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Game implements Serializable {
+    private ArrayList<Player> players;
+    private int numPlayers;
+
+    private Deck<ResourceCard> resourceDeck;
+    private Deck<GoldCard> goldDeck;
+    private ArrayList<PlayableCard> faceUpCards;
+    private Deck<ObjectiveCard> objectiveDeck;
+    private final Deck<StarterCard> starterCards;
+
+    private boolean isEndGame;
+    private int indexActivePlayer;
+    private List<TokenColour> colors;
+
     public Game(int numPlayers) {
         this.players = new ArrayList<>();
         this.numPlayers = numPlayers;
+
+        this.starterCards = new StarterCardDeckCreator().createStarterCardDeck();
+        this.goldDeck = new GoldCardDeckCreator().createGoldCardDeck();
+        this.resourceDeck = new ResourceCardDeckCreator().createResourceCardDeck();
+        this.objectiveDeck = new ObjectiveCardDeckCreator().createObjectiveCardDeck();
+
+        this.faceUpCards = new ArrayList<>();
     }
-    private ArrayList<Player> players;
-    private int numPlayers;
-    private Deck<ResourceCard> resourceDeck;
-    private Deck<GoldCard> goldDeck;
-    private ArrayList<PlayableCard> faceUpCards; //modificato da Card a PlayableCard
-    private Deck<ObjectiveCard> objectiveDeck; //modificato da Card a ObjectiveCard
-    private boolean isEndGame;
-    private int indexActivePlayer;
+
+    public void init() {
+        //Shuffle all decks
+        this.starterCards.shuffle();
+        this.goldDeck.shuffle();
+        this.resourceDeck.shuffle();
+        this.objectiveDeck.shuffle();
+
+        //FaceUpCards assignment: we need to take two cards from resourceDeck and two from goldDeck and insert them in the faceUpCards array list
+        for (int i = 0; i < 2; i++){
+            this.addFaceUpCard(resourceDeck.removeTop());
+        }
+        for (int i = 0; i < 2; i++){
+            this.addFaceUpCard(goldDeck.removeTop());
+        }
+
+        for (Player player : this.players) {
+            //Initialize player's board and hand
+            player.setPlayerBoard(new GameArea());
+            player.setPlayerHand(new ArrayList<>());
+        }
+    }
+
 
     public void addPlayer(Player newPlayer) throws IllegalArgumentException, MaximumNumberOfPlayersReachedException {
         if (players.size() >= numPlayers) throw new MaximumNumberOfPlayersReachedException("Maximum number of players already reached");
@@ -56,6 +97,10 @@ public class Game implements Serializable {
         return resourceDeck;
     }
 
+    public Deck<StarterCard> getStarterCards() {
+        return starterCards;
+    }
+
     public ArrayList<PlayableCard> getFaceUpCards() {
         return faceUpCards;
     }
@@ -66,6 +111,21 @@ public class Game implements Serializable {
 
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    public Player getPlayer(int index) {
+        return players.get(index);
+    }
+
+    public Player getPlayer(String playerName) {
+        for (Player player : players) {
+            if (player.getPlayerNickname().equals(playerName)) return player;
+        }
+        return null;
+    }
+
+    public Player getActivePlayer() {
+        return players.get(indexActivePlayer);
     }
 
     public void addFaceUpCard(PlayableCard newCard) throws MaximumNumberOfFaceUpCardsReachedException {
@@ -125,5 +185,13 @@ public class Game implements Serializable {
 
     public void setFaceUpCards(ArrayList<PlayableCard> faceUpCards) {
         this.faceUpCards = faceUpCards;
+    }
+
+    public void setColors(List<TokenColour> colors) {
+        this.colors = colors;
+    }
+
+    public void removeColor(TokenColour color) {
+        this.colors.remove(color);
     }
 }

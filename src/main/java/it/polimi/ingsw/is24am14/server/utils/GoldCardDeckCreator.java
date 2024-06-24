@@ -17,7 +17,7 @@ public class GoldCardDeckCreator {
 
         // placeholders
         CornerCondition cornerCondition = new CornerCondition();
-        Condition noCondition = null;
+        NoCondition noCondition = new NoCondition();
 
         ObjectCondition quillCondition = new ObjectCondition();
         quillCondition.addClause(CornerEnum.ObjectEnum.QUILL);
@@ -39,7 +39,7 @@ public class GoldCardDeckCreator {
         twoFungiOneAnimal.addClause(CornerEnum.ResourceEnum.FUNGI);
         twoFungiOneAnimal.addClause(CornerEnum.ResourceEnum.FUNGI);
         twoFungiOneAnimal.addClause(CornerEnum.ResourceEnum.ANIMAL);
-        content.add(new GoldCard(1, quillCondition, CornerEnum.ResourceEnum.FUNGI, twoFungiOneAnimal, hidEmpEmpQui, "src/main/resources/images/cards/gold_cards/red_fronts/page_41.png", "src/main/resources/images/cards/gold_cards/red_backs/page_41.png"));
+        content.add(new GoldCard(1, quillCondition, CornerEnum.ResourceEnum.FUNGI, twoFungiOneAnimal, hidEmpEmpQui, "/images/cards/gold_cards/red_fronts/page_41.png", "/images/cards/gold_cards/red_backs/page_41.png"));
 
 
         ArrayList<Corner> empInkHidEmp = new ArrayList<>();
@@ -51,7 +51,7 @@ public class GoldCardDeckCreator {
         twoFungiOnePlant.addClause(CornerEnum.ResourceEnum.FUNGI);
         twoFungiOnePlant.addClause(CornerEnum.ResourceEnum.FUNGI);
         twoFungiOnePlant.addClause(CornerEnum.ResourceEnum.PLANT);
-        content.add(new GoldCard(1, inkwellCondition, CornerEnum.ResourceEnum.FUNGI, twoFungiOnePlant, empInkHidEmp, "src/main/resources/images/cards/gold_cards/red_fronts/page_42.png", "src/main/resources/images/cards/gold_cards/red_backs/page_42.png"));
+        content.add(new GoldCard(1, inkwellCondition, CornerEnum.ResourceEnum.FUNGI, twoFungiOnePlant, empInkHidEmp, "/images/cards/gold_cards/red_fronts/page_42.png", "/images/cards/gold_cards/red_backs/page_42.png"));
         
 
         ArrayList<Corner> manEmpEmpHid = new ArrayList<>();
@@ -63,7 +63,7 @@ public class GoldCardDeckCreator {
         twoFungiOneInsect.addClause(CornerEnum.ResourceEnum.FUNGI);
         twoFungiOneInsect.addClause(CornerEnum.ResourceEnum.FUNGI);
         twoFungiOneInsect.addClause(CornerEnum.ResourceEnum.INSECT);
-        content.add(new GoldCard(1, manuscriptCondition, CornerEnum.ResourceEnum.FUNGI, twoFungiOneInsect, manEmpEmpHid, "src/main/resources/images/cards/gold_cards/red_fronts/page_43.png", "src/main/resources/images/cards/gold_cards/red_backs/page_43.png"));
+        content.add(new GoldCard(1, manuscriptCondition, CornerEnum.ResourceEnum.FUNGI, twoFungiOneInsect, manEmpEmpHid, "/images/cards/gold_cards/red_fronts/page_43.png", "/images/cards/gold_cards/red_backs/page_43.png"));
         
 
 
@@ -77,7 +77,7 @@ public class GoldCardDeckCreator {
         threeFungiOneAnimal.addClause(CornerEnum.ResourceEnum.FUNGI);
         threeFungiOneAnimal.addClause(CornerEnum.ResourceEnum.FUNGI);
         threeFungiOneAnimal.addClause(CornerEnum.ResourceEnum.ANIMAL);
-        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.FUNGI, threeFungiOneAnimal, empEmpHidEmp, "src/main/resources/images/cards/gold_cards/red_fronts/page_44.png", "src/main/resources/images/cards/gold_cards/red_backs/page_44.png"));
+        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.FUNGI, threeFungiOneAnimal, empEmpHidEmp, "/images/cards/gold_cards/red_fronts/page_44.png", "/images/cards/gold_cards/red_backs/page_44.png"));
         
 
         ArrayList<Corner> empEmpEmpHid = new ArrayList<>();
@@ -90,7 +90,7 @@ public class GoldCardDeckCreator {
         threeFungiOnePlant.addClause(CornerEnum.ResourceEnum.FUNGI);
         threeFungiOnePlant.addClause(CornerEnum.ResourceEnum.FUNGI);
         threeFungiOnePlant.addClause(CornerEnum.ResourceEnum.PLANT);
-        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.FUNGI, threeFungiOnePlant, empEmpEmpHid, "src/main/resources/images/cards/gold_cards/red_fronts/page_45.png", "src/main/resources/images/cards/gold_cards/red_backs/page_45.png"));
+        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.FUNGI, threeFungiOnePlant, empEmpEmpHid, "/images/cards/gold_cards/red_fronts/page_45.png", "/images/cards/gold_cards/red_backs/page_45.png"));
         
 
         ArrayList<Corner> empHidEmpEmp = new ArrayList<>();
@@ -102,8 +102,8 @@ public class GoldCardDeckCreator {
         threeFungiOneInsect.addClause(CornerEnum.ResourceEnum.FUNGI);
         threeFungiOneInsect.addClause(CornerEnum.ResourceEnum.FUNGI);
         threeFungiOneInsect.addClause(CornerEnum.ResourceEnum.FUNGI);
-        threeFungiOneInsect.addClause(CornerEnum.ResourceEnum.PLANT);
-        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.FUNGI, threeFungiOneInsect, empHidEmpEmp, "src/main/resources/images/cards/gold_cards/red_fronts/page_46.png", "src/main/resources/images/cards/gold_cards/red_backs/page_46.png"));
+        threeFungiOneInsect.addClause(CornerEnum.ResourceEnum.INSECT);
+        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.FUNGI, threeFungiOneInsect, empHidEmpEmp, "/images/cards/gold_cards/red_fronts/page_46.png", "/images/cards/gold_cards/red_backs/page_46.png"));
         
 
 
@@ -118,15 +118,15 @@ public class GoldCardDeckCreator {
         threeFungi.addClause(CornerEnum.ResourceEnum.FUNGI);
         threeFungi.addClause(CornerEnum.ResourceEnum.FUNGI);
         threeFungi.addClause(CornerEnum.ResourceEnum.FUNGI);
-        content.add(new GoldCard(3, cornerCondition, CornerEnum.ResourceEnum.FUNGI, threeFungi, empHidInkHid, "src/main/resources/images/cards/gold_cards/red_fronts/page_47.png", "src/main/resources/images/cards/gold_cards/red_backs/page_47.png"));
+        content.add(new GoldCard(3, cornerCondition, CornerEnum.ResourceEnum.FUNGI, threeFungi, empHidInkHid, "/images/cards/gold_cards/red_fronts/page_47.png", "/images/cards/gold_cards/red_backs/page_47.png"));
         
 
-        ArrayList<Corner> inkEmpHidHid = new ArrayList<>();
-        inkEmpHidHid.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
-        inkEmpHidHid.add(new Corner(CornerEnum.EMPTY));
-        inkEmpHidHid.add(new Corner(CornerEnum.HIDDEN));
-        inkEmpHidHid.add(new Corner(CornerEnum.HIDDEN));
-        content.add(new GoldCard(3, cornerCondition, CornerEnum.ResourceEnum.FUNGI, threeFungi, inkEmpHidHid, "src/main/resources/images/cards/gold_cards/red_fronts/page_48.png", "src/main/resources/images/cards/gold_cards/red_backs/page_48.png"));
+        ArrayList<Corner> quiEmpHidHid = new ArrayList<>();
+        quiEmpHidHid.add(new Corner(CornerEnum.ObjectEnum.QUILL));
+        quiEmpHidHid.add(new Corner(CornerEnum.EMPTY));
+        quiEmpHidHid.add(new Corner(CornerEnum.HIDDEN));
+        quiEmpHidHid.add(new Corner(CornerEnum.HIDDEN));
+        content.add(new GoldCard(3, cornerCondition, CornerEnum.ResourceEnum.FUNGI, threeFungi, quiEmpHidHid, "/images/cards/gold_cards/red_fronts/page_48.png", "/images/cards/gold_cards/red_backs/page_48.png"));
 
 
         ArrayList<Corner> hidManHidEmp = new ArrayList<>();
@@ -134,7 +134,7 @@ public class GoldCardDeckCreator {
         hidManHidEmp.add(new Corner(CornerEnum.ObjectEnum.MANUSCRIPT));
         hidManHidEmp.add(new Corner(CornerEnum.HIDDEN));
         hidManHidEmp.add(new Corner(CornerEnum.EMPTY));
-        content.add(new GoldCard(3, cornerCondition, CornerEnum.ResourceEnum.FUNGI, threeFungi, hidManHidEmp, "src/main/resources/images/cards/gold_cards/red_fronts/page_49.png", "src/main/resources/images/cards/gold_cards/red_backs/page_49.png"));
+        content.add(new GoldCard(3, cornerCondition, CornerEnum.ResourceEnum.FUNGI, threeFungi, hidManHidEmp, "/images/cards/gold_cards/red_fronts/page_49.png", "/images/cards/gold_cards/red_backs/page_49.png"));
         
 
 
@@ -149,7 +149,7 @@ public class GoldCardDeckCreator {
         empHidEmpHid.add(new Corner(CornerEnum.HIDDEN));
         empHidEmpHid.add(new Corner(CornerEnum.EMPTY));
         empHidEmpHid.add(new Corner(CornerEnum.HIDDEN));
-        content.add(new GoldCard(5, noCondition, CornerEnum.ResourceEnum.FUNGI, fiveFungi, empHidEmpHid, "src/main/resources/images/cards/gold_cards/red_fronts/page_50.png", "src/main/resources/images/cards/gold_cards/red_backs/page_50.png"));
+        content.add(new GoldCard(5, noCondition, CornerEnum.ResourceEnum.FUNGI, fiveFungi, empHidEmpHid, "/images/cards/gold_cards/red_fronts/page_50.png", "/images/cards/gold_cards/red_backs/page_50.png"));
         
 
         // Green cards
@@ -164,7 +164,7 @@ public class GoldCardDeckCreator {
         quiEmpEmpHid.add(new Corner(CornerEnum.EMPTY));
         quiEmpEmpHid.add(new Corner(CornerEnum.EMPTY));
         quiEmpEmpHid.add(new Corner(CornerEnum.HIDDEN));
-        content.add(new GoldCard(1, quillCondition, CornerEnum.ResourceEnum.PLANT, twoPlantOneInsect, quiEmpEmpHid, "src/main/resources/images/cards/gold_cards/green_fronts/page_51.png", "src/main/resources/images/cards/gold_cards/green_backs/page_51.png"));
+        content.add(new GoldCard(1, quillCondition, CornerEnum.ResourceEnum.PLANT, twoPlantOneInsect, quiEmpEmpHid, "/images/cards/gold_cards/green_fronts/page_51.png", "/images/cards/gold_cards/green_backs/page_51.png"));
         
 
         ResourceCondition twoPlantOneFungi = new ResourceCondition();
@@ -176,7 +176,7 @@ public class GoldCardDeckCreator {
         empManHidEmp.add(new Corner(CornerEnum.ObjectEnum.MANUSCRIPT));
         empManHidEmp.add(new Corner(CornerEnum.HIDDEN));
         empManHidEmp.add(new Corner(CornerEnum.EMPTY));
-        content.add(new GoldCard(1, manuscriptCondition, CornerEnum.ResourceEnum.PLANT, twoPlantOneFungi, empManHidEmp, "src/main/resources/images/cards/gold_cards/green_fronts/page_52.png", "src/main/resources/images/cards/gold_cards/green_backs/page_52.png"));
+        content.add(new GoldCard(1, manuscriptCondition, CornerEnum.ResourceEnum.PLANT, twoPlantOneFungi, empManHidEmp, "/images/cards/gold_cards/green_fronts/page_52.png", "/images/cards/gold_cards/green_backs/page_52.png"));
         
 
         ResourceCondition twoPlantOneAnimal = new ResourceCondition();
@@ -188,7 +188,7 @@ public class GoldCardDeckCreator {
         empHidInkEmp.add(new Corner(CornerEnum.HIDDEN));
         empHidInkEmp.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
         empHidInkEmp.add(new Corner(CornerEnum.EMPTY));
-        content.add(new GoldCard(1, inkwellCondition, CornerEnum.ResourceEnum.PLANT, twoPlantOneAnimal, empHidInkEmp, "src/main/resources/images/cards/gold_cards/green_fronts/page_53.png", "src/main/resources/images/cards/gold_cards/green_backs/page_53.png"));
+        content.add(new GoldCard(1, inkwellCondition, CornerEnum.ResourceEnum.PLANT, twoPlantOneAnimal, empHidInkEmp, "/images/cards/gold_cards/green_fronts/page_53.png", "/images/cards/gold_cards/green_backs/page_53.png"));
         
 
 
@@ -202,7 +202,7 @@ public class GoldCardDeckCreator {
         hidEmpEmpEmp.add(new Corner(CornerEnum.EMPTY));
         hidEmpEmpEmp.add(new Corner(CornerEnum.EMPTY));
         hidEmpEmpEmp.add(new Corner(CornerEnum.EMPTY));
-        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.PLANT, threePlantOneInsect, hidEmpEmpEmp, "src/main/resources/images/cards/gold_cards/green_fronts/page_54.png", "src/main/resources/images/cards/gold_cards/green_backs/page_54.png"));
+        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.PLANT, threePlantOneInsect, hidEmpEmpEmp, "/images/cards/gold_cards/green_fronts/page_54.png", "/images/cards/gold_cards/green_backs/page_54.png"));
         
 
         ResourceCondition threePlantOneAnimal = new ResourceCondition();
@@ -211,7 +211,7 @@ public class GoldCardDeckCreator {
         threePlantOneAnimal.addClause(CornerEnum.ResourceEnum.PLANT);
         threePlantOneAnimal.addClause(CornerEnum.ResourceEnum.ANIMAL);
 
-        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.PLANT, threePlantOneAnimal, empEmpEmpHid, "src/main/resources/images/cards/gold_cards/green_fronts/page_55.png", "src/main/resources/images/cards/gold_cards/green_backs/page_55.png"));
+        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.PLANT, threePlantOneAnimal, empEmpEmpHid, "/images/cards/gold_cards/green_fronts/page_55.png", "/images/cards/gold_cards/green_backs/page_55.png"));
         
 
         ResourceCondition threePlantOneFungi = new ResourceCondition();
@@ -220,7 +220,7 @@ public class GoldCardDeckCreator {
         threePlantOneFungi.addClause(CornerEnum.ResourceEnum.PLANT);
         threePlantOneFungi.addClause(CornerEnum.ResourceEnum.FUNGI);
 
-        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.PLANT, threePlantOneFungi, empHidEmpEmp, "src/main/resources/images/cards/gold_cards/green_fronts/page_56.png", "src/main/resources/images/cards/gold_cards/green_backs/page_56.png"));
+        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.PLANT, threePlantOneFungi, empHidEmpEmp, "/images/cards/gold_cards/green_fronts/page_56.png", "/images/cards/gold_cards/green_backs/page_56.png"));
         
 
 
@@ -234,7 +234,7 @@ public class GoldCardDeckCreator {
         empHidQuiHid.add(new Corner(CornerEnum.HIDDEN));
         empHidQuiHid.add(new Corner(CornerEnum.ObjectEnum.QUILL));
         empHidQuiHid.add(new Corner(CornerEnum.HIDDEN));
-        content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.PLANT, threePlant, empHidQuiHid, "src/main/resources/images/cards/gold_cards/green_fronts/page_57.png", "src/main/resources/images/cards/gold_cards/green_backs/page_57.png"));
+        content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.PLANT, threePlant, empHidQuiHid, "/images/cards/gold_cards/green_fronts/page_57.png", "/images/cards/gold_cards/green_backs/page_57.png"));
         
 
 
@@ -243,7 +243,7 @@ public class GoldCardDeckCreator {
         manEmpHidHid.add(new Corner(CornerEnum.EMPTY));
         manEmpHidHid.add(new Corner(CornerEnum.HIDDEN));
         manEmpHidHid.add(new Corner(CornerEnum.HIDDEN));
-        content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.PLANT, threePlant, manEmpHidHid, "src/main/resources/images/cards/gold_cards/green_fronts/page_58.png", "src/main/resources/images/cards/gold_cards/green_backs/page_58.png"));
+        content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.PLANT, threePlant, manEmpHidHid, "/images/cards/gold_cards/green_fronts/page_58.png", "/images/cards/gold_cards/green_backs/page_58.png"));
         
 
         ArrayList<Corner> hidInkHidEmp = new ArrayList<>();
@@ -251,7 +251,7 @@ public class GoldCardDeckCreator {
         hidInkHidEmp.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
         hidInkHidEmp.add(new Corner(CornerEnum.HIDDEN));
         hidInkHidEmp.add(new Corner(CornerEnum.EMPTY));
-        content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.PLANT, threePlant, hidInkHidEmp, "src/main/resources/images/cards/gold_cards/green_fronts/page_59.png", "src/main/resources/images/cards/gold_cards/green_backs/page_59.png"));
+        content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.PLANT, threePlant, hidInkHidEmp, "/images/cards/gold_cards/green_fronts/page_59.png", "/images/cards/gold_cards/green_backs/page_59.png"));
         
 
 
@@ -262,7 +262,7 @@ public class GoldCardDeckCreator {
         fivePlant.addClause(CornerEnum.ResourceEnum.PLANT);
         fivePlant.addClause(CornerEnum.ResourceEnum.PLANT);
 
-        content.add(new GoldCard(5, noCondition, CornerEnum.ResourceEnum.PLANT, fivePlant, manEmpHidHid, "src/main/resources/images/cards/gold_cards/green_fronts/page_60.png", "src/main/resources/images/cards/gold_cards/green_backs/page_60.png"));
+        content.add(new GoldCard(5, noCondition, CornerEnum.ResourceEnum.PLANT, fivePlant, manEmpHidHid, "/images/cards/gold_cards/green_fronts/page_60.png", "/images/cards/gold_cards/green_backs/page_60.png"));
         
 
 
@@ -280,7 +280,7 @@ public class GoldCardDeckCreator {
         inkEmpEmpHid.add(new Corner(CornerEnum.EMPTY));
         inkEmpEmpHid.add(new Corner(CornerEnum.EMPTY));
         inkEmpEmpHid.add(new Corner(CornerEnum.HIDDEN));
-        content.add(new GoldCard(1, inkwellCondition, CornerEnum.ResourceEnum.ANIMAL, twoAnimalOneInsect, inkEmpEmpHid, "src/main/resources/images/cards/gold_cards/blue_fronts/page_61.png", "src/main/resources/images/cards/gold_cards/blue_backs/page_61.png"));
+        content.add(new GoldCard(1, inkwellCondition, CornerEnum.ResourceEnum.ANIMAL, twoAnimalOneInsect, inkEmpEmpHid, "/images/cards/gold_cards/blue_fronts/page_61.png", "/images/cards/gold_cards/blue_backs/page_61.png"));
 
 
         ResourceCondition twoAnimalOnePlant = new ResourceCondition();
@@ -293,7 +293,7 @@ public class GoldCardDeckCreator {
         hidEmpEmpMan.add(new Corner(CornerEnum.EMPTY));
         hidEmpEmpMan.add(new Corner(CornerEnum.EMPTY));
         hidEmpEmpMan.add(new Corner(CornerEnum.ObjectEnum.MANUSCRIPT));
-        content.add(new GoldCard(1, manuscriptCondition, CornerEnum.ResourceEnum.ANIMAL, twoAnimalOnePlant, hidEmpEmpMan, "src/main/resources/images/cards/gold_cards/blue_fronts/page_62.png", "src/main/resources/images/cards/gold_cards/blue_backs/page_62.png"));
+        content.add(new GoldCard(1, manuscriptCondition, CornerEnum.ResourceEnum.ANIMAL, twoAnimalOnePlant, hidEmpEmpMan, "/images/cards/gold_cards/blue_fronts/page_62.png", "/images/cards/gold_cards/blue_backs/page_62.png"));
 
 
         ResourceCondition twoAnimalOneFungi = new ResourceCondition();
@@ -301,18 +301,18 @@ public class GoldCardDeckCreator {
         twoAnimalOneFungi.addClause(CornerEnum.ResourceEnum.ANIMAL);
         twoAnimalOneFungi.addClause(CornerEnum.ResourceEnum.FUNGI);
 
-        content.add(new GoldCard(1, inkwellCondition, CornerEnum.ResourceEnum.ANIMAL, twoAnimalOneFungi, empHidInkEmp, "src/main/resources/images/cards/gold_cards/blue_fronts/page_63.png", "src/main/resources/images/cards/gold_cards/blue_backs/page_63.png"));
+        content.add(new GoldCard(1, inkwellCondition, CornerEnum.ResourceEnum.ANIMAL, twoAnimalOneFungi, empHidInkEmp, "/images/cards/gold_cards/blue_fronts/page_63.png", "/images/cards/gold_cards/blue_backs/page_63.png"));
         
 
 
         ResourceCondition threeAnimalOneInsect = new ResourceCondition();
-        twoAnimalOneFungi.addClause(CornerEnum.ResourceEnum.ANIMAL);
-        twoAnimalOneFungi.addClause(CornerEnum.ResourceEnum.ANIMAL);
-        twoAnimalOneFungi.addClause(CornerEnum.ResourceEnum.ANIMAL);
-        twoAnimalOneFungi.addClause(CornerEnum.ResourceEnum.INSECT);
+        threeAnimalOneInsect.addClause(CornerEnum.ResourceEnum.ANIMAL);
+        threeAnimalOneInsect.addClause(CornerEnum.ResourceEnum.ANIMAL);
+        threeAnimalOneInsect.addClause(CornerEnum.ResourceEnum.ANIMAL);
+        threeAnimalOneInsect.addClause(CornerEnum.ResourceEnum.INSECT);
 
 
-        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.ANIMAL, threeAnimalOneInsect, empEmpHidEmp, "src/main/resources/images/cards/gold_cards/blue_fronts/page_64.png", "src/main/resources/images/cards/gold_cards/blue_backs/page_64.png"));
+        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.ANIMAL, threeAnimalOneInsect, empEmpHidEmp, "/images/cards/gold_cards/blue_fronts/page_64.png", "/images/cards/gold_cards/blue_backs/page_64.png"));
         
 
         ResourceCondition threeAnimalOneFungi = new ResourceCondition();
@@ -322,24 +322,24 @@ public class GoldCardDeckCreator {
         threeAnimalOneFungi.addClause(CornerEnum.ResourceEnum.FUNGI);
 
 
-        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.ANIMAL, threeAnimalOneFungi, empHidEmpEmp, "src/main/resources/images/cards/gold_cards/blue_fronts/page_65.png", "src/main/resources/images/cards/gold_cards/blue_backs/page_65.png"));
+        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.ANIMAL, threeAnimalOneFungi, empHidEmpEmp, "/images/cards/gold_cards/blue_fronts/page_65.png", "/images/cards/gold_cards/blue_backs/page_65.png"));
         
 
 
         ResourceCondition threeAnimalOnePlant = new ResourceCondition();
-        twoAnimalOnePlant.addClause(CornerEnum.ResourceEnum.ANIMAL);
-        twoAnimalOnePlant.addClause(CornerEnum.ResourceEnum.ANIMAL);
-        twoAnimalOnePlant.addClause(CornerEnum.ResourceEnum.ANIMAL);
-        twoAnimalOnePlant.addClause(CornerEnum.ResourceEnum.PLANT);
+        threeAnimalOnePlant.addClause(CornerEnum.ResourceEnum.ANIMAL);
+        threeAnimalOnePlant.addClause(CornerEnum.ResourceEnum.ANIMAL);
+        threeAnimalOnePlant.addClause(CornerEnum.ResourceEnum.ANIMAL);
+        threeAnimalOnePlant.addClause(CornerEnum.ResourceEnum.PLANT);
 
-        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.ANIMAL, threeAnimalOnePlant, hidEmpEmpEmp, "src/main/resources/images/cards/gold_cards/blue_fronts/page_66.png", "src/main/resources/images/cards/gold_cards/blue_backs/page_66.png"));
+        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.ANIMAL, threeAnimalOnePlant, hidEmpEmpEmp, "/images/cards/gold_cards/blue_fronts/page_66.png", "/images/cards/gold_cards/blue_backs/page_66.png"));
         
 
 
 
         ResourceCondition threeAnimal= new ResourceCondition();
         threeAnimal.addClause(CornerEnum.ResourceEnum.ANIMAL);
-        threeAnimalOneInsect.addClause(CornerEnum.ResourceEnum.ANIMAL);
+        threeAnimal.addClause(CornerEnum.ResourceEnum.ANIMAL);
         threeAnimal.addClause(CornerEnum.ResourceEnum.ANIMAL);
 
 
@@ -348,21 +348,21 @@ public class GoldCardDeckCreator {
         empHidManHid.add(new Corner(CornerEnum.HIDDEN));
         empHidManHid.add(new Corner(CornerEnum.ObjectEnum.MANUSCRIPT));
         empHidManHid.add(new Corner(CornerEnum.HIDDEN));
-        content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.ANIMAL, threeAnimal, empHidManHid, "src/main/resources/images/cards/gold_cards/blue_fronts/page_67.png", "src/main/resources/images/cards/gold_cards/blue_backs/page_67.png"));
+        content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.ANIMAL, threeAnimal, empHidManHid, "/images/cards/gold_cards/blue_fronts/page_67.png", "/images/cards/gold_cards/blue_backs/page_67.png"));
 
         ArrayList<Corner> empInkHidHid = new ArrayList<>();
         empInkHidHid.add(new Corner(CornerEnum.EMPTY));
         empInkHidHid.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
         empInkHidHid.add(new Corner(CornerEnum.HIDDEN));
         empInkHidHid.add(new Corner(CornerEnum.HIDDEN));
-        content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.ANIMAL, threeAnimal, empInkHidHid, "src/main/resources/images/cards/gold_cards/blue_fronts/page_68.png", "src/main/resources/images/cards/gold_cards/blue_backs/page_68.png"));
+        content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.ANIMAL, threeAnimal, empInkHidHid, "/images/cards/gold_cards/blue_fronts/page_68.png", "/images/cards/gold_cards/blue_backs/page_68.png"));
 
         ArrayList<Corner> hidEmpHidQui = new ArrayList<>();
         hidEmpHidQui.add(new Corner(CornerEnum.EMPTY));
         hidEmpHidQui.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
         hidEmpHidQui.add(new Corner(CornerEnum.HIDDEN));
         hidEmpHidQui.add(new Corner(CornerEnum.HIDDEN));
-        content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.ANIMAL, threeAnimal, hidEmpHidQui, "src/main/resources/images/cards/gold_cards/blue_fronts/page_69.png", "src/main/resources/images/cards/gold_cards/blue_backs/page_69.png"));
+        content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.ANIMAL, threeAnimal, hidEmpHidQui, "/images/cards/gold_cards/blue_fronts/page_69.png", "/images/cards/gold_cards/blue_backs/page_69.png"));
 
 
         ResourceCondition fiveAnimal = new ResourceCondition();
@@ -377,7 +377,7 @@ public class GoldCardDeckCreator {
         hidEmpHidEmp.add(new Corner(CornerEnum.EMPTY));
         hidEmpHidEmp.add(new Corner(CornerEnum.HIDDEN));
         hidEmpHidEmp.add(new Corner(CornerEnum.EMPTY));
-        content.add(new GoldCard(5, noCondition, CornerEnum.ResourceEnum.ANIMAL, fiveAnimal, hidEmpHidEmp, "src/main/resources/images/cards/gold_cards/blue_fronts/page_70.png", "src/main/resources/images/cards/gold_cards/purple_backs/page_70.png"));
+        content.add(new GoldCard(5, noCondition, CornerEnum.ResourceEnum.ANIMAL, fiveAnimal, hidEmpHidEmp, "/images/cards/gold_cards/blue_fronts/page_70.png", "/images/cards/gold_cards/blue_backs/page_70.png"));
 
 
         // Purple Cards
@@ -393,20 +393,20 @@ public class GoldCardDeckCreator {
         empQuiHidEmp.add(new Corner(CornerEnum.ObjectEnum.QUILL));
         empQuiHidEmp.add(new Corner(CornerEnum.HIDDEN));
         empQuiHidEmp.add(new Corner(CornerEnum.EMPTY));
-        content.add(new GoldCard(1, quillCondition, CornerEnum.ResourceEnum.INSECT, twoInsectOnePlant, empQuiHidEmp, "src/main/resources/images/cards/gold_cards/purple_fronts/page_71.png", "src/main/resources/images/cards/gold_cards/purple_backs/page_71.png"));
+        content.add(new GoldCard(1, quillCondition, CornerEnum.ResourceEnum.INSECT, twoInsectOnePlant, empQuiHidEmp, "/images/cards/gold_cards/purple_fronts/page_71.png", "/images/cards/gold_cards/purple_backs/page_71.png"));
 
 
         ResourceCondition twoInsectOneAnimal = new ResourceCondition();
-        twoInsectOnePlant.addClause(CornerEnum.ResourceEnum.INSECT);
-        twoInsectOnePlant.addClause(CornerEnum.ResourceEnum.INSECT);
-        twoInsectOnePlant.addClause(CornerEnum.ResourceEnum.ANIMAL);
+        twoInsectOneAnimal.addClause(CornerEnum.ResourceEnum.INSECT);
+        twoInsectOneAnimal.addClause(CornerEnum.ResourceEnum.INSECT);
+        twoInsectOneAnimal.addClause(CornerEnum.ResourceEnum.ANIMAL);
 
         ArrayList<Corner> empHidManEmp = new ArrayList<>();
         empHidManEmp.add(new Corner(CornerEnum.EMPTY));
-        empHidManEmp.add(new Corner(CornerEnum.ObjectEnum.QUILL));
         empHidManEmp.add(new Corner(CornerEnum.HIDDEN));
+        empHidManEmp.add(new Corner(CornerEnum.ObjectEnum.MANUSCRIPT));
         empHidManEmp.add(new Corner(CornerEnum.EMPTY));
-        content.add(new GoldCard(1, manuscriptCondition, CornerEnum.ResourceEnum.INSECT, twoInsectOneAnimal, empHidManEmp, "src/main/resources/images/cards/gold_cards/purple_fronts/page_72.png", "src/main/resources/images/cards/gold_cards/purple_backs/page_72.png"));
+        content.add(new GoldCard(1, manuscriptCondition, CornerEnum.ResourceEnum.INSECT, twoInsectOneAnimal, empHidManEmp, "/images/cards/gold_cards/purple_fronts/page_72.png", "/images/cards/gold_cards/purple_backs/page_72.png"));
 
 
         ResourceCondition twoInsectOneFungi = new ResourceCondition();
@@ -415,11 +415,11 @@ public class GoldCardDeckCreator {
         twoInsectOneFungi.addClause(CornerEnum.ResourceEnum.FUNGI);
 
         ArrayList<Corner> hidEmpEmpInk = new ArrayList<>();
-        hidEmpEmpInk.add(new Corner(CornerEnum.EMPTY));
-        hidEmpEmpInk.add(new Corner(CornerEnum.ObjectEnum.QUILL));
         hidEmpEmpInk.add(new Corner(CornerEnum.HIDDEN));
+        hidEmpEmpInk.add(new Corner(CornerEnum.ObjectEnum.EMPTY));
         hidEmpEmpInk.add(new Corner(CornerEnum.EMPTY));
-        content.add(new GoldCard(1, inkwellCondition, CornerEnum.ResourceEnum.INSECT, twoInsectOnePlant, hidEmpEmpInk, "src/main/resources/images/cards/gold_cards/purple_fronts/page_73.png", "src/main/resources/images/cards/gold_cards/purple_backs/page_73.png"));
+        hidEmpEmpInk.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
+        content.add(new GoldCard(1, inkwellCondition, CornerEnum.ResourceEnum.INSECT, twoInsectOneFungi, hidEmpEmpInk, "/images/cards/gold_cards/purple_fronts/page_73.png", "/images/cards/gold_cards/purple_backs/page_73.png"));
 
 
 
@@ -430,7 +430,7 @@ public class GoldCardDeckCreator {
         threeInsectOneAnimal.addClause(CornerEnum.ResourceEnum.INSECT);
         threeInsectOneAnimal.addClause(CornerEnum.ResourceEnum.ANIMAL);
 
-        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.INSECT, threeInsectOneAnimal, empEmpHidEmp, "src/main/resources/images/cards/gold_cards/purple_fronts/page_74.png", "src/main/resources/images/cards/gold_cards/purple_backs/page_74.png"));
+        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.INSECT, threeInsectOneAnimal, empEmpHidEmp, "/images/cards/gold_cards/purple_fronts/page_74.png", "/images/cards/gold_cards/purple_backs/page_74.png"));
 
 
         ResourceCondition threeInsectOnePlant = new ResourceCondition();
@@ -439,7 +439,7 @@ public class GoldCardDeckCreator {
         threeInsectOnePlant.addClause(CornerEnum.ResourceEnum.INSECT);
         threeInsectOnePlant.addClause(CornerEnum.ResourceEnum.PLANT);
 
-        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.INSECT, threeInsectOnePlant, empEmpEmpHid, "src/main/resources/images/cards/gold_cards/purple_fronts/page_75.png", "src/main/resources/images/cards/gold_cards/purple_backs/page_75.png"));
+        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.INSECT, threeInsectOnePlant, empEmpEmpHid, "/images/cards/gold_cards/purple_fronts/page_75.png", "/images/cards/gold_cards/purple_backs/page_75.png"));
 
 
         ResourceCondition threeInsectOneFungi = new ResourceCondition();
@@ -448,7 +448,7 @@ public class GoldCardDeckCreator {
         threeInsectOneFungi.addClause(CornerEnum.ResourceEnum.INSECT);
         threeInsectOneFungi.addClause(CornerEnum.ResourceEnum.FUNGI);
 
-        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.INSECT, threeInsectOneFungi, empHidEmpEmp, "src/main/resources/images/cards/gold_cards/purple_fronts/page_76.png", "src/main/resources/images/cards/gold_cards/purple_backs/page_76.png"));
+        content.add(new GoldCard(2, cornerCondition, CornerEnum.ResourceEnum.INSECT, threeInsectOneFungi, empHidEmpEmp, "/images/cards/gold_cards/purple_fronts/page_76.png", "/images/cards/gold_cards/purple_backs/page_76.png"));
 
 
 
@@ -462,7 +462,7 @@ public class GoldCardDeckCreator {
         inkHidEmpHid.add(new Corner(CornerEnum.HIDDEN));
         inkHidEmpHid.add(new Corner(CornerEnum.EMPTY));
         inkHidEmpHid.add(new Corner(CornerEnum.HIDDEN));
-        content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.INSECT, threeInsect, inkHidEmpHid, "src/main/resources/images/cards/gold_cards/purple_fronts/page_77.png", "src/main/resources/images/cards/gold_cards/purple_backs/page_77.png"));
+        content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.INSECT, threeInsect, inkHidEmpHid, "/images/cards/gold_cards/purple_fronts/page_77.png", "/images/cards/gold_cards/purple_backs/page_77.png"));
 
 
         ArrayList<Corner> empManHidHid = new ArrayList<>();
@@ -470,7 +470,7 @@ public class GoldCardDeckCreator {
         empManHidHid.add(new Corner(CornerEnum.ObjectEnum.MANUSCRIPT));
         empManHidHid.add(new Corner(CornerEnum.HIDDEN));
         empManHidHid.add(new Corner(CornerEnum.HIDDEN));
-        content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.INSECT, threeInsect, empManHidHid, "src/main/resources/images/cards/gold_cards/purple_fronts/page_78.png", "src/main/resources/images/cards/gold_cards/purple_backs/page_78.png"));
+        content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.INSECT, threeInsect, empManHidHid, "/images/cards/gold_cards/purple_fronts/page_78.png", "/images/cards/gold_cards/purple_backs/page_78.png"));
 
 
         ArrayList<Corner> hidHidQuiEmp = new ArrayList<>();
@@ -478,7 +478,7 @@ public class GoldCardDeckCreator {
         hidHidQuiEmp.add(new Corner(CornerEnum.ObjectEnum.HIDDEN));
         hidHidQuiEmp.add(new Corner(CornerEnum.ObjectEnum.QUILL));
         hidHidQuiEmp.add(new Corner(CornerEnum.EMPTY));
-        content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.INSECT, threeInsect, hidHidQuiEmp, "src/main/resources/images/cards/gold_cards/purple_fronts/page_79.png", "src/main/resources/images/cards/gold_cards/purple_backs/page_79.png"));
+        content.add(new GoldCard(3, noCondition, CornerEnum.ResourceEnum.INSECT, threeInsect, hidHidQuiEmp, "/images/cards/gold_cards/purple_fronts/page_79.png", "/images/cards/gold_cards/purple_backs/page_79.png"));
 
 
 
@@ -495,7 +495,7 @@ public class GoldCardDeckCreator {
         empEmpHidHid.add(new Corner(CornerEnum.HIDDEN));
         empEmpHidHid.add(new Corner(CornerEnum.HIDDEN));
 
-        content.add(new GoldCard(5, noCondition, CornerEnum.ResourceEnum.INSECT, fiveInsect, empEmpHidHid, "src/main/resources/images/cards/gold_cards/purple_fronts/page_80.png", "src/main/resources/images/cards/gold_cards/purple_backs/page_80.png"));
+        content.add(new GoldCard(5, noCondition, CornerEnum.ResourceEnum.INSECT, fiveInsect, empEmpHidHid, "/images/cards/gold_cards/purple_fronts/page_80.png", "/images/cards/gold_cards/purple_backs/page_80.png"));
 
         return new Deck<>(content);
     }

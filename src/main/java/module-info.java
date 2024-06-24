@@ -10,10 +10,10 @@ module it.polimi.ingsw.is24am14 {
     requires net.fellbaum.jemoji;
     requires java.naming;
 
-    opens it.polimi.ingsw.is24am14 to javafx.fxml;
+    opens it.polimi.ingsw.is24am14.server;
     exports it.polimi.ingsw.is24am14.server;
-    opens it.polimi.ingsw.is24am14.server.model.player to javafx.fxml;
-    opens it.polimi.ingsw.is24am14.server.model.game to javafx.fxml;
+    opens it.polimi.ingsw.is24am14.server.model.player to javafx.fxml, com.google.gson;
+    opens it.polimi.ingsw.is24am14.server.model.game to javafx.fxml, com.google.gson;
     opens it.polimi.ingsw.is24am14.server.model.game.exceptions to javafx.fxml;
 
     exports it.polimi.ingsw.is24am14.server.model.card to com.google.gson;
@@ -23,4 +23,20 @@ module it.polimi.ingsw.is24am14 {
     exports it.polimi.ingsw.is24am14.server.model.game to java.rmi;
     exports it.polimi.ingsw.is24am14.server.model.game.exceptions to java.rmi;
     exports it.polimi.ingsw.is24am14.server.controller to java.rmi;
+
+    opens it.polimi.ingsw.is24am14.server.network to com.google.gson, java.rmi;
+    opens it.polimi.ingsw.is24am14.server.controller to com.google.gson;
+  
+    opens it.polimi.ingsw.is24am14.server.model.card to com.google.gson;
+    exports it.polimi.ingsw.is24am14.server.view;
+    exports it.polimi.ingsw.is24am14.server.utils to java.rmi;
+  
+    opens it.polimi.ingsw.is24am14.server.utils to com.google.gson, java.rmi;
+    exports it.polimi.ingsw.is24am14.server.utils.GSONAdapters to java.rmi;
+    opens it.polimi.ingsw.is24am14.server.utils.GSONAdapters to com.google.gson, java.rmi;
+
+    opens it.polimi.ingsw.is24am14.client.GUI to javafx.fxml;
+    exports it.polimi.ingsw.is24am14.client.GUI;
+    exports it.polimi.ingsw.is24am14.client.GUI.GuiHelper;
+    opens it.polimi.ingsw.is24am14.client.GUI.GuiHelper to javafx.fxml;
 }

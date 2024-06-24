@@ -3,22 +3,24 @@ package it.polimi.ingsw.is24am14.server.controller;
 import it.polimi.ingsw.is24am14.server.model.game.Game;
 import it.polimi.ingsw.is24am14.server.model.game.exceptions.MaximumNumberOfPlayersReachedException;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
-import it.polimi.ingsw.is24am14.server.network.ClientConnection;
+import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 import it.polimi.ingsw.is24am14.server.network.ClientHandler;
+import it.polimi.ingsw.is24am14.server.network.ClientHandlerList;
+import it.polimi.ingsw.is24am14.server.network.NotYourColorTurnException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class Lobby implements Serializable {
-    private final ArrayList<ClientHandler> players;
+    private final ClientHandlerList players;
     private final int maxPlayers;
     private GameContext gameContext;
     private final String host;
 
     public Lobby(String host, int maxPlayers) {
         this.maxPlayers = maxPlayers;
-        this.players = new ArrayList<>();
+        this.players = new ClientHandlerList();
         this.host = host;
     }
 
@@ -26,7 +28,11 @@ public class Lobby implements Serializable {
         return host;
     }
 
-    public ArrayList<ClientHandler> getPlayers() {
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public ClientHandlerList getPlayers() {
         return players;
     }
 
@@ -34,50 +40,46 @@ public class Lobby implements Serializable {
         return gameContext;
     }
 
-    public ClientHandler getClientHandler(String username) {
+    public ClientHandler getClientHandler(String username) throws Exception {
         for (ClientHandler clientHandler : players) {
-            try {
-                if (Objects.equals(clientHandler.getClientConnection().getUsername(), username)) return clientHandler;
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            if (Objects.equals(clientHandler.getUsername(), username)) return clientHandler;
         }
         return null;
     }
 
-    public void joinLobby(ClientHandler player) {
+    public void joinLobby(ClientHandler player) throws Exception {
         this.players.add(player);
-        if(this.players.size() == maxPlayers){
-            System.out.println("Starting the game");
-            startGame();
+        printPlayers();
+    }
+
+    public void printPlayers() throws Exception {
+        System.out.println("Players in lobby: ");
+        for (ClientHandler player : this.players) {
+            System.out.println(player.getUsername());
         }
     }
 
-    public void startGame() {
-        //questo metodo avvia la partita chiamando il pattern state del game
+    public void setColor(String player, TokenColour color) throws Exception {
+        this.gameContext.setColor(player, color);
+    }
+
+    public void startGame() throws Exception {
         this.gameContext = new GameContext(new Game(maxPlayers));
-        GameStateScheduler scheduler = new GameStateScheduler(gameContext);
-        //creo n players in base al numero impostato dall'utente
-        // e li associo a dei player
+
         for (ClientHandler player : players) {
-            Player newPlayer = null;
             try {
-                newPlayer = new Player(player.getClientUsername(), player);
-                newPlayer.getConnection().setGameContext(gameContext);
-            } catch (Exception e) {
+                this.gameContext.game.addPlayer(new Player(player.getUsername()));
+            } catch (MaximumNumberOfPlayersReachedException e) {
                 throw new RuntimeException(e);
             }
-            //va aggiunto questo metodo al server TCP RMI
-            try {
-                this.gameContext.game.addPlayer(newPlayer);
-            } catch (MaximumNumberOfPlayersReachedException e) {
-                System.out.println("Maximum number of players reached, returning to start"); // ma dove finisco??
-                break;
-            }
         }
-        //creo il contesto del gioco e setto lo stato iniziale
 
-        scheduler.run();
+        gameContext.getGame().init();
+
+        gameContext.setGameStateEnum(GameStateEnum.DeckInit);
+        System.out.println("Game initialized");
+
+        gameContext.setGameStateEnum(GameStateEnum.ChoosingColor);
+        System.out.println("Choosing color");
     }
-
 }

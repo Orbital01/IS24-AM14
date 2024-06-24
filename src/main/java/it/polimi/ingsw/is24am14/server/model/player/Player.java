@@ -1,12 +1,14 @@
 package it.polimi.ingsw.is24am14.server.model.player;
 
 
+import it.polimi.ingsw.is24am14.server.controller.GameContext;
 import it.polimi.ingsw.is24am14.server.model.card.*;
 import it.polimi.ingsw.is24am14.server.model.game.*;
 import it.polimi.ingsw.is24am14.server.network.ClientHandler;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a player in the game.
@@ -22,8 +24,6 @@ public class Player implements Serializable {
     private ObjectiveCard secretObjective;
     private GameArea playerBoard;
 
-    private ClientHandler connection;
-
     //Constructor
     /**
      * Constructs a Player object with the given nickname and colour.
@@ -32,16 +32,14 @@ public class Player implements Serializable {
      *
      * @param nickname The nickname of the player.
      */
-    public Player(String nickname, ClientHandler connection) {
+    public Player(String nickname) {
         this.nickname = nickname;
         this.points = 0;
         this.isFirstPlayer = false;
-        this.playerHand = new ArrayList<PlayableCard>();
+        this.playerHand = new ArrayList<>();
         this.starterCard = null;
         this.secretObjective = null;
         this.playerBoard = new GameArea();
-
-        this.connection = connection;
     }
 
     //Getters
@@ -181,8 +179,17 @@ public class Player implements Serializable {
      * @param cardToPlace The new card that the player wants to place on the board.
      * @param cornerIndex The index of the corner where the new card is goin to be placed upon the old card.
      */
+
+    //  Second row added by Stefan. Must be checked and documented
     public void placeCard(Card cardToOverlap, Card cardToPlace, int cornerIndex) {
-        playerBoard.addCard(cardToOverlap, cardToPlace, cornerIndex);
+        this.playerBoard.addCard(cardToOverlap, cardToPlace, cornerIndex);
+        this.playerHand.remove(cardToPlace);
+    }
+
+    public void placeCard(Coordinates coordinatesToOverlap, Card cardToPlace, int cornerIndex) {
+        Card cardToOverlap = this.getPlayerBoard().getCard(coordinatesToOverlap);
+        this.playerBoard.addCard(cardToOverlap, cardToPlace, cornerIndex);
+        this.playerHand.remove(cardToPlace);
     }
 
     /**
@@ -227,11 +234,4 @@ public class Player implements Serializable {
     public void setFirstPlayer(boolean firstPlayer) {
         this.isFirstPlayer = firstPlayer;
     }
-
-    /**
-     * Retrieves the player's connection.
-     *
-     * @return The connection of the player.
-     */
-    public ClientHandler getConnection() {return this.connection;}
 }

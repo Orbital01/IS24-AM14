@@ -1,6 +1,6 @@
 package it.polimi.ingsw.is24am14.server.model.card;
 
-import it.polimi.ingsw.is24am14.client.printer.EmojiConverter;
+import it.polimi.ingsw.is24am14.client.view.printer.EmojiConverter;
 import net.fellbaum.jemoji.Emoji;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class ObjectiveCard extends Card {
     private final Condition condition;
-    private int points;
+    private final int points;
 
     public ObjectiveCard(Condition condition, String frontImage, String backImage, int points) {
 
@@ -37,12 +37,12 @@ public class ObjectiveCard extends Card {
 
     public ArrayList<String> drawCard() {
         ArrayList<String> cardString = new ArrayList<>();
-        if (this.getCondition().toString().equals("CornerCondition")){
-            ArrayList<Emoji> corners;
+        if (this.getCondition().toString().equals("ObjectCondition") || this.getCondition().toString().equals("ResourceCondition")){
+            ArrayList<String> corners;
             corners = EmojiConverter.drawCorners(this);
 
-            EmojiConverter conditionConverter = null;
-            ArrayList<Emoji> condition = conditionConverter.drawCondition(this.getCondition());
+            EmojiConverter conditionConverter = new EmojiConverter();
+            ArrayList<String> condition = conditionConverter.drawCondition(this.getCondition());
             int points = this.getPoints();
 
             //Each card has 7 rows
@@ -53,11 +53,15 @@ public class ObjectiveCard extends Card {
             //Third Row
             cardString.add("|                        |");
             //Fourth Row
-            cardString.add("|		  ");
-            for (Emoji e : condition) {
-                cardString.set(3, cardString.get(3) + e.getEmoji());
+            cardString.add("|		");
+//            for (String e : condition) {
+//                cardString.set(3, cardString.get(3) + e);
+//            }
+//            cardString.set(3, cardString.get(3) + "		 |");
+            for (String e : condition){
+                cardString.set(3, cardString.get(3) + e);
             }
-            cardString.set(3, cardString.get(3) + "		 |");
+            cardString.set(3, cardString.get(3) + "      |");
             //Fifth Row
             cardString.add("|                        |");
             //Sixth Row
@@ -73,12 +77,11 @@ public class ObjectiveCard extends Card {
             EmojiConverter conditionConverter = new EmojiConverter();
             ArrayList<ArrayList<String>> cardCondition = conditionConverter.drawCardCondition(this.getCondition());
 
-            //cardCondition = cardCondition.get(0).replaceAll(" ", "").split("\n";
-
             cardString.add("|------------------------|");
             cardString.add("|            "  + points +  "           |");
 
             cardString.add("|         ");
+            int i = 0;
             for (String e : cardCondition.get(0)) {
                 cardString.set(2, cardString.get(2) + e);
             }
@@ -96,10 +99,6 @@ public class ObjectiveCard extends Card {
             }
             cardString.set(4, cardString.get(4) + "		 |");
 
-
-            //cardString.add("|        " + cardCondition.get(0).get(i) +     "         |");
-            //cardString.add("|            " + cardCondition.get(1) + "           |");
-            //cardString.add("|            " + cardCondition.get(2) + "           |");
             cardString.add("|                        |");
             cardString.add("|------------------------|");
         }

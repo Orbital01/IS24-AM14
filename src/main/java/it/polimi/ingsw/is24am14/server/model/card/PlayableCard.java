@@ -17,4 +17,10 @@ public abstract class PlayableCard extends Card {
      * @return the resource of the card
      */
     public abstract CornerEnum.ResourceEnum getResource();
+
+    public abstract Condition getPointCondition();
+
+    public abstract Condition getPlacementCondition();
+
+    public abstract int getPoints();
 }

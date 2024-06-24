@@ -5,6 +5,7 @@ import it.polimi.ingsw.is24am14.server.network.ClientHandlerList;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LobbyList implements Serializable {
   ClientHandlerList clients;
@@ -15,23 +16,35 @@ public class LobbyList implements Serializable {
         this.lobbies = new ArrayList<>();
     }
 
-    public void createLobby(Lobby lobby) {
-        lobbies.add(lobby);
+    public void addClientHandler(ClientHandler client) {
+        this.clients.add(client);
+    }
+
+    public ClientHandler getClientHandler(String name) {
+        return this.clients.getClientHandler(name);
+    }
+
+    public void createLobby(String host, int maxPlayers) {
+        this.lobbies.add(new Lobby(host, maxPlayers));
     }
 
     public void removeLobby(Lobby lobby) {
         lobbies.remove(lobby);
     }
 
-    public ArrayList<Lobby> getLobbies() {
-        return lobbies;
+    public void joinLobby(ClientHandler client, String host) throws Exception {
+        this.getLobbyByHost(host).joinLobby(client);
+    }
+
+    public void joinLobby(String client, String host) throws Exception {
+        this.getLobbyByHost(host).joinLobby(this.getClientHandler(client));
     }
 
     public Lobby getPlayersLobby(String playerName) {
         for (Lobby lobby : lobbies) {
             for (ClientHandler client : lobby.getPlayers()) {
                 try {
-                    if (client.getClientUsername().equals(playerName)) return lobby;
+                    if (client.getUsername().equals(playerName)) return lobby;
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -45,5 +58,27 @@ public class LobbyList implements Serializable {
             if (lobby.getHost().equals(host)) return lobby;
         }
         return null;
+    }
+
+    public ArrayList<String> getLobbiesNames() {
+        ArrayList<String> names = new ArrayList<>();
+        for (Lobby lobby : lobbies) {
+            names.add(lobby.getHost());
+        }
+        return names;
+    }
+
+    public HashMap<String, String> getLobbiesInfo() {
+        HashMap<String, String> info = new HashMap<>();
+        for (Lobby lobby : lobbies) {
+            info.put(lobby.getHost(), Integer.toString(lobby.getMaxPlayers()));
+        }
+        return info;
+    }
+
+    public void printHosts() {
+        for (Lobby lobby : lobbies) {
+            System.out.println(lobby.getHost());
+        }
     }
 }

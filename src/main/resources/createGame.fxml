@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
+            <image>
+                <Image url="@images/background.jpg" />
+            </image>
+        </ImageView>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" height="115.0" layoutX="202.0" layoutY="16.0" stroke="BLACK" strokeType="INSIDE" width="196.0">
+            <fill>
+                <LinearGradient endX="0.55681815291896" endY="0.05681818181818182" startX="0.5265151280345339" startY="0.8409090891028896">
+                    <stops>
+                        <Stop>
+                            <color>
+                                <Color red="0.658823549747467" green="0.4901960790157318" blue="0.3333333432674408" />
+                            </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                            <color>
+                                <Color red="0.8745098114013672" green="0.7411764860153198" blue="0.5764706134796143" />
+                            </color>
+                        </Stop>
+                    </stops>
+                </LinearGradient>
+            </fill>
+        </Rectangle>
+        <ImageView fitHeight="172.0" fitWidth="191.0" layoutX="214.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@images/codexlogo.png"/>
+            </image>
+        </ImageView>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" height="38.0" layoutX="200.0" layoutY="149.0" strokeType="INSIDE" width="200.0">
+            <stroke>
+                <LinearGradient endX="0.44696968252008606" endY="1.0" startY="1.0">
+                    <stops>
+                        <Stop>
+                            <color>
+                                <Color />
+                            </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                            <color>
+                                <Color red="0.7473683953285217" green="0.5749200582504272" blue="0.25465887784957886" />
+                            </color>
+                        </Stop>
+                    </stops>
+                </LinearGradient>
+            </stroke>
+            <fill>
+                <LinearGradient endX="0.49621215011134284" endY="0.08712118322199042" startX="0.4962121221152219" startY="1.0">
+                    <stops>
+                        <Stop>
+                            <color>
+                                <Color />
+                            </color>
+                        </Stop>
+                        <Stop offset="0.006729475100942127">
+                            <color>
+                                <Color />
+                            </color>
+                        </Stop>
+                        <Stop offset="0.006729475100942127">
+                            <color>
+                                <Color red="0.8100000023841858" green="0.6237000226974487" blue="0.06480000168085098" />
+                            </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                            <color>
+                                <Color red="0.8745098114013672" green="0.7411764860153198" blue="0.5764706134796143" />
+                            </color>
+                        </Stop>
+                    </stops>
+                </LinearGradient>
+            </fill>
+        </Rectangle>
+        <Text layoutX="209.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose the number of players">
+            <font>
+                <Font size="18.0" />
+            </font></Text>
+        <TextField fx:id="numPlayers" layoutX="163.0" layoutY="195.0" prefHeight="46.0" prefWidth="196.0" promptText="Nickname">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </TextField>
+        <Button fx:id="confirmButton" layoutX="372.0" layoutY="195.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="78.0" style="-fx-background-color: #dfbd93; -fx-border-color: #645135;" text="Confirm">
+            <font>
+                <Font size="14.0" />
+            </font></Button>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" height="38.0" layoutX="200.0" layoutY="259.0" strokeType="INSIDE" width="200.0">
+            <stroke>
+                <LinearGradient endX="0.44696968252008606" endY="1.0" startY="1.0">
+                    <stops>
+                        <Stop>
+                            <color>
+                                <Color />
+                            </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                            <color>
+                                <Color red="0.7473683953285217" green="0.5749200582504272" blue="0.25465887784957886" />
+                            </color>
+                        </Stop>
+                    </stops>
+                </LinearGradient>
+            </stroke>
+            <fill>
+                <LinearGradient endX="0.49621215011134284" endY="0.08712118322199042" startX="0.4962121221152219" startY="1.0">
+                    <stops>
+                        <Stop>
+                            <color>
+                                <Color red="0.8196078538894653" green="0.6313725709915161" blue="0.062745101749897" />
+                            </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                            <color>
+                                <Color red="0.8745098114013672" green="0.7411764860153198" blue="0.5764706134796143" />
+                            </color>
+                        </Stop>
+                    </stops>
+                </LinearGradient>
+            </fill>
+        </Rectangle>
+        <Text layoutX="227.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="It must be between 2 and 4 players!">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Text>
+    </children>
+</AnchorPane>
