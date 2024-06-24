@@ -109,20 +109,20 @@ public class GameController {
                 case Move:
                     System.out.println("Move stage");
                     makeMove();
-                    //createPointBoard();
-                    printScore();
+                    createPointBoard();
+                    //printScore();
                     break;
                 case Draw:
                     System.out.println("Draw stage");
                     makeDraw();
-                    //createPointBoard();
-                    printScore();
+                    createPointBoard();
+                    //printScore();
                     break;
                 case LastMove:
                     System.out.println("Last move stage");
                     makeMove();
-                    //createPointBoard();
-                    printScore();
+                    createPointBoard();
+                    //printScore();
                     break;
                 case EndGame:
                     System.out.println("End game stage");
@@ -475,11 +475,7 @@ public class GameController {
         //mostro la finestra modale
         Scene modalScene = new Scene(modalLayout, 600, 500);
         modalStage.setScene(modalScene);
-
-        Platform.runLater(()-> {
-            modalStage.requestFocus();
-            modalStage.showAndWait();
-        });
+        modalStage.showAndWait();
     }
 
     private void endGame() {
@@ -570,25 +566,12 @@ public class GameController {
     private void createPointBoard(){
 
         try {
-            Pane pointBoard = GuiHelper.getPointBoard(context.getClient().getGameContext().getGame());
-            layout.setLeft(pointBoard);
+            StackPane pointBoard = GuiHelper.getPointBoard(context.getClient().getGameContext().getGame());
+            Platform.runLater(() -> layout.setLeft(pointBoard));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-    }
-
-    //TODO: delete this method
-    private void printScore(){
-        //mostro il punteggio del giocatore
-        Label score;
-        try {
-            score = Guifactory.printLabel("Score: " + context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()).getScore(), 50);
-            System.out.println("Score: " + context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()).getScore()); //debug line
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Platform.runLater(() -> layout.setLeft(score));
     }
 
     //TODO: implementare la visualizzazione delle board degli altri giocatori

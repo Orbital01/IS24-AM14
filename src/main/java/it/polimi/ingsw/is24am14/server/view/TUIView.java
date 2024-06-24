@@ -238,10 +238,10 @@ public class TUIView{
         int choice;
         Scanner in = new Scanner(System.in);
         System.out.println("It's your turn!");
-        System.out.println("Digit:\n0 to flip a Card in your hand.\n1 to put a card on the board.");
+        System.out.println("Digit:\n0 to flip a Card in your hand.\n1 to put a card on the board. \n2 to print the legend. \n3 to see the chat.");
 
         choice = in.nextInt();
-        while (choice < 0 || choice > 1) {
+        while (choice < 0 || choice > 3) {
             System.out.println("Invalid choice. Try again.");
             choice = in.nextInt();
         }
