@@ -1,12 +1,11 @@
-package it.polimi.ingsw.is24am14.server.view;
+package it.polimi.ingsw.is24am14.client;
 
 import it.polimi.ingsw.is24am14.client.GUI.MenuConnectionController;
 import it.polimi.ingsw.is24am14.server.network.ClientInterface;
 import javafx.application.Application;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-public class GUIView extends Application {
+public class GUIViewLauncher extends Application {
 
     //questa classe deve far partire la GUI
     //stage è la finestra

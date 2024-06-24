@@ -2,18 +2,15 @@ package it.polimi.ingsw.is24am14.client.GUI;
 
 import it.polimi.ingsw.is24am14.client.GUI.GUIFactory.Guifactory;
 import it.polimi.ingsw.is24am14.client.GUI.GuiHelper.GuiHelper;
-import it.polimi.ingsw.is24am14.client.view.printer.RenderBoard;
+import it.polimi.ingsw.is24am14.client.GUIViewLauncher;
 import it.polimi.ingsw.is24am14.server.controller.GameStateEnum;
 import it.polimi.ingsw.is24am14.server.model.card.Card;
 import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
+import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
 import it.polimi.ingsw.is24am14.server.model.card.PlayableCard;
-import it.polimi.ingsw.is24am14.server.model.game.Game;
 import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
-import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 import it.polimi.ingsw.is24am14.server.network.Message;
-import it.polimi.ingsw.is24am14.server.view.GUIView;
-import it.polimi.ingsw.is24am14.server.view.TUIView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -22,7 +19,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
@@ -33,16 +29,17 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class GameController {
 
-    private GUIView context;
+    private GUIViewLauncher context;
     private Scene scene;
+
     private BorderPane layout = new BorderPane();
+    private BorderPane leftLayout = new BorderPane();
 
     GridPane board;
     int index = 1;
@@ -58,12 +55,13 @@ public class GameController {
 
     private final GuiHelper GuiHelper = new GuiHelper();
 
-    public GameController(GUIView context) {
+    public GameController(GUIViewLauncher context) {
         this.context = context;
         scene = new Scene(layout, 1920, 1080);
         Guifactory.setAutomaticBackground(layout);
+        layout.setLeft(leftLayout);
         createChatInterface();
-
+        printObjectives();
         gameStatusExecutorService = Executors.newSingleThreadScheduledExecutor();
         gameStatusExecutorService.scheduleAtFixedRate(this::checkGameStatus, 0, 1, TimeUnit.SECONDS);
 
@@ -209,6 +207,35 @@ public class GameController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void printObjectives(){
+
+        ArrayList<ObjectiveCard> commonObj = new ArrayList<>();
+
+        //recupero gli obbiettivi comuni
+        //commonObj = GuiHelper.getCommonObjectives(context);
+
+        //aggiungo l'obbiettivo privato
+        try{
+         commonObj.add(context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()).getSecretObjective());
+        }catch(Exception e){
+            System.out.println("Errore nel recupero degli obbiettivi");
+        }
+
+        //aggiungo le carte a una HBox
+        HBox objectives = new HBox();
+        for(ObjectiveCard card : commonObj){
+            ImageView cardView = Guifactory.displayCardImage(card);
+            cardView.setPreserveRatio(true);
+            cardView.setFitWidth(150);
+            objectives.getChildren().add(cardView);
+        }
+
+        //aggiungo le carte alla view
+        objectives.setAlignment(Pos.BOTTOM_CENTER);
+        Platform.runLater(() -> leftLayout.setLeft(objectives));
+
     }
 
     private void itsYourTurn(Boolean myTurn) {
@@ -564,14 +591,14 @@ public class GameController {
     }
 
     private void createPointBoard(){
-
         try {
             StackPane pointBoard = GuiHelper.getPointBoard(context.getClient().getGameContext().getGame());
-            Platform.runLater(() -> layout.setLeft(pointBoard));
+            pointBoard.setAlignment(Pos.CENTER_LEFT);
+            Platform.runLater(() -> leftLayout.setCenter(pointBoard));
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     //TODO: implementare la visualizzazione delle board degli altri giocatori

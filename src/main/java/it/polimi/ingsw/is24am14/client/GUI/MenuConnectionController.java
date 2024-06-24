@@ -1,36 +1,27 @@
 package it.polimi.ingsw.is24am14.client.GUI;
 
 import it.polimi.ingsw.is24am14.client.GUI.GUIFactory.Guifactory;
+import it.polimi.ingsw.is24am14.client.GUIViewLauncher;
 import it.polimi.ingsw.is24am14.server.network.ClientInterface;
 import it.polimi.ingsw.is24am14.server.network.RMIClient;
 import it.polimi.ingsw.is24am14.server.network.SocketClient;
-import it.polimi.ingsw.is24am14.server.view.GUIView;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class MenuConnectionController {
 
-    private GUIView context;
+    private GUIViewLauncher context;
     private Scene scene;
     private ClientInterface client;
     private BorderPane layout = new BorderPane();
 
-    public MenuConnectionController(GUIView context){
+    public MenuConnectionController(GUIViewLauncher context){
         this.context = context;
         scene = new Scene(layout, 1920, 1080);
         Guifactory.setAutomaticBackground(layout);

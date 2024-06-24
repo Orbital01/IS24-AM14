@@ -39,4 +39,7 @@ module it.polimi.ingsw.is24am14 {
     exports it.polimi.ingsw.is24am14.client.GUI;
     exports it.polimi.ingsw.is24am14.client.GUI.GuiHelper;
     opens it.polimi.ingsw.is24am14.client.GUI.GuiHelper to javafx.fxml;
+    exports it.polimi.ingsw.is24am14.client.TUIFactory;
+    exports it.polimi.ingsw.is24am14.client;
+    opens it.polimi.ingsw.is24am14.client to javafx.fxml;
 }

@@ -1,8 +1,8 @@
 package it.polimi.ingsw.is24am14.client.GUI;
 
+import it.polimi.ingsw.is24am14.client.GUIViewLauncher;
 import it.polimi.ingsw.is24am14.server.controller.GameStateEnum;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
-import it.polimi.ingsw.is24am14.server.view.GUIView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +15,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -23,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MenuTokenController {
 
-    private GUIView context;
+    private GUIViewLauncher context;
     private Scene scene;
 
     @FXML
@@ -76,7 +75,7 @@ public class MenuTokenController {
 
     }
 
-    public MenuTokenController(GUIView context){
+    public MenuTokenController(GUIViewLauncher context){
         this.context = context;
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("MenuTokenChoice.fxml"));
         loader.setController(this);

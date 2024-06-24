@@ -1,16 +1,13 @@
 package it.polimi.ingsw.is24am14.client.GUI;
 
 import it.polimi.ingsw.is24am14.client.GUI.GUIFactory.Guifactory;
-import it.polimi.ingsw.is24am14.server.controller.GameContext;
+import it.polimi.ingsw.is24am14.client.GUIViewLauncher;
 import it.polimi.ingsw.is24am14.server.controller.GameStateEnum;
 import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
-import it.polimi.ingsw.is24am14.server.model.card.StarterCard;
-import it.polimi.ingsw.is24am14.server.view.GUIView;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -22,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ObjectiveCardController {
 
-    private GUIView context;
+    private GUIViewLauncher context;
     private Scene scene;
     private VBox layout;
 
@@ -38,7 +35,7 @@ public class ObjectiveCardController {
     private ScheduledExecutorService gameStatusExecutorService;
     private GameStateEnum previousGameState = null;
 
-    public ObjectiveCardController(GUIView context){
+    public ObjectiveCardController(GUIViewLauncher context){
         this.context = context;
         try{
             context.getClient().updateGameContext();

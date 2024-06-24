@@ -1,23 +1,19 @@
 package it.polimi.ingsw.is24am14.client.GUI;
 
-import it.polimi.ingsw.is24am14.server.view.GUIView;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import it.polimi.ingsw.is24am14.client.GUIViewLauncher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class CreateGameController {
-    private GUIView context;
+    private GUIViewLauncher context;
     private Scene scene;
 
     @FXML
@@ -37,7 +33,7 @@ public class CreateGameController {
         confirmButton.setOnAction(this::handleConfirmButtonAction);
     }
 
-    public CreateGameController(GUIView context){
+    public CreateGameController(GUIViewLauncher context){
         this.context = context;
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("createGame.fxml"));
         loader.setController(this);

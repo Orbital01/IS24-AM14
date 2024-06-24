@@ -1,18 +1,15 @@
 package it.polimi.ingsw.is24am14.client.GUI.GuiHelper;
 
+import it.polimi.ingsw.is24am14.server.model.card.Deck;
+import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
 import it.polimi.ingsw.is24am14.server.model.game.Game;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.network.Message;
-import it.polimi.ingsw.is24am14.server.view.GUIView;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
+import it.polimi.ingsw.is24am14.client.GUIViewLauncher;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class GuiHelper {
@@ -31,7 +28,7 @@ public class GuiHelper {
         return winner;
     }
 
-    public void updateMessages(TextArea messageArea, GUIView context) {
+    public void updateMessages(TextArea messageArea, GUIViewLauncher context) {
         ArrayList<Message> messaggi;
 
         try {
@@ -63,4 +60,23 @@ public class GuiHelper {
         }
         return PointBoardController.getPointBoardStackPane(tokenImages, scores);
     }
+
+    public ArrayList<ObjectiveCard> getCommonObjectives(GUIViewLauncher context) {
+
+        Deck<ObjectiveCard> commonObjectives;
+        ArrayList<ObjectiveCard> commonObjectivesList = new ArrayList<>();
+
+        try {
+            commonObjectives = context.getClient().getGameContext().getGame().getObjectiveDeck();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        while (!commonObjectives.isEmpty()) {
+            commonObjectivesList.add(commonObjectives.removeTop());
+        }
+
+        return commonObjectivesList;
+    }
+
 }
