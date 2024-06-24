@@ -1,5 +1,6 @@
 package it.polimi.ingsw.is24am14.client.GUI;
 
+import it.polimi.ingsw.is24am14.client.GUI.GuiHelper.PointBoardController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,35 +14,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/*
+
 public class PointBoardControllerTest extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // FXML file path
-        String fxmlPath = "/PointBoard.fxml";
-        System.out.println("FXML Path: " + getClass().getResource(fxmlPath));
-
-        // Load GUI from FXML
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-        if (loader.getLocation() == null) {
-            System.err.println("FXML file not found!");
-            return;
-        }
-        Parent root = loader.load();
-        PointBoardController controller = loader.getController();
-
-//        // Set background image (unneeded)
-//        URL backgroundImageURL = getClass().getResource("/images/background.png");
-//        if (backgroundImageURL != null) {
-//            Image backgroundImage = new Image(backgroundImageURL.toString());
-//            controller.setBackgroundImage(backgroundImage);
-//        } else {
-//            System.err.println("Background image not found!");
-//        }
-
-
-
+        System.out.println("Application started");
 
         // Adding images and scores in the arrays
         ArrayList<Image> tokenImages = new ArrayList<>();
@@ -91,21 +69,17 @@ public class PointBoardControllerTest extends Application {
             tokenImages.add(new Image(imageUrl.toString()));
         }
 
-        ArrayList<Integer> scores = new ArrayList<>(Arrays.asList(10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29));    ;
+        ArrayList<Integer> scores = new ArrayList<>(Arrays.asList(10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29));
 
-        // Updating the board
-        controller.updateBoard(tokenImages, scores);
 
-        StackPane gameBoardStackPane = controller.getPointBoardStackPane(tokenImages, scores);
-        System.out.println("StackPane aggiornato: " + gameBoardStackPane);
-        // Visualizing the scene
-        Scene scene = new Scene(root);
+
+        StackPane pointBoard = PointBoardController.getPointBoardStackPane(tokenImages, scores);
+        Scene scene = new Scene(pointBoard, 250, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
 
-    public static void main(String[] args) {
-        launch(args);
+
     }
 }
-*/
+
+
