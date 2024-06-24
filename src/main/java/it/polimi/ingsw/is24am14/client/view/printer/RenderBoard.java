@@ -86,11 +86,11 @@ public class RenderBoard {
     //il metodo sopra va iterato per tutte le righe della hashmap in un metodo printBoard
     // e poi vanno tutte stampate in ordine
     public void printBoard(){
-        for(int i=boardMaxRow(); i>=boardMinRow(); i--) {
+        for(int i=boardMaxRow(); i>=boardMinRow(); i--){
             ArrayList<String> render = printRow(i);
-                for (String s : render) {
-                    System.out.println(s);
-                }
+            for(String s : render){
+                System.out.println(s);
+            }
         }
     }
 

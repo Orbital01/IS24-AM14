@@ -7,21 +7,78 @@ import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 import it.polimi.ingsw.is24am14.server.network.ClientInterface;
+import net.fellbaum.jemoji.Emoji;
+import net.fellbaum.jemoji.Emojis;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
-public class TUIView implements VirtualView{
-    @Override
+public class TUIView{
+
+    public void startScreen(){
+        String green = "\033[32m";
+        String reset = "\033[0m";
+
+        System.out.println(green + "                                                                                                                                                                                ");
+        System.out.println("      * ***                    **                                     ***** *     **                                                               ***                        ");
+        System.out.println("    *  ****  *                  **                                 ******  **    **** *                *                                            ***      *                ");
+        System.out.println("   *  *  ****                   **                                **   *  * **    ****                **                                             **     ***               ");
+        System.out.println("  *  **   **                    **                               *    *  *  **    * *                 **                                             **      *                ");
+        System.out.println(" *  ***           ****          **              ***    ***           *  *    **   *                 ******** **   ****     ***  ****                 **               ****    ");
+        System.out.println("**   **          * ***  *   *** **      ***    * ***  **** *        ** **    **   *        ****    ********   **    ***  *  **** **** *    ****      **    ***       * **** * ");
+        System.out.println("**   **         *   ****   *********   * ***      *** *****         ** **     **  *       * ***  *    **      **     ****    **   ****    * ***  *   **     ***     **  ****  ");
+        System.out.println("**   **        **    **   **   ****   *   ***      ***  **          ** **     **  *      *   ****     **      **      **     **          *   ****    **      **    ****       ");
+        System.out.println("**   **        **    **   **    **   **    ***      ***             ** **      ** *     **    **      **      **      **     **         **    **     **      **      ***      ");
+        System.out.println("**   **        **    **   **    **   ********      * ***            ** **      ** *     **    **      **      **      **     **         **    **     **      **        ***    ");
+        System.out.println(" **  **        **    **   **    **   *******      *   ***           *  **       ***     **    **      **      **      **     **         **    **     **      **          ***  ");
+        System.out.println("  ** *      *  **    **   **    **   **          *     ***             *        ***     **    **      **      **      **     **         **    **     **      **     ****  **  ");
+        System.out.println("   ***     *    ******    **    **   ****    *  *       *** *      ****          **     **    **      **       ******* **    ***        **    **     **      **    * **** *   ");
+        System.out.println("    *******      ****      *****      *******  *         ***      *  *****               ***** **      **       *****   **    ***        ***** **    *** *   *** *    ****    ");
+        System.out.println("      ***                   ***        *****                     *     **                 ***   **                                        ***   **    ***     ***             ");
+        System.out.println("                                                         *                                                                                                            ");
+        System.out.println("                                                          **"+ reset);
+    }
+
+    public void printLegend(){
+        String fungi = Emojis.MUSHROOM.getEmoji();
+        String plant = Emojis.SHAMROCK.getEmoji();
+        String animal = Emojis.WOLF.getEmoji();
+        String insect = Emojis.BUTTERFLY.getEmoji();
+        String hidden = Emojis.PROHIBITED.getEmoji();
+        String empty = Emojis.WHITE_MEDIUM_SQUARE.getEmoji();
+        String overlapped = Emojis.REPEAT_BUTTON.getEmoji();
+        String noElement = Emojis.WHITE_LARGE_SQUARE.getEmoji();
+        String inkwell = Emojis.BLACK_NIB.getEmoji();
+        String manuscript = Emojis.SCROLL.getEmoji();
+        String quill = Emojis.FEATHER.getEmoji();
+        System.out.println("############### LEGEND ##################");
+        //System.out.println("The following is the legend of the game");
+        System.out.println("Description of types&corners:");
+        System.out.println(fungi + ": Fungi");
+        System.out.println(plant + ": Plant");
+        System.out.println(animal + ": Animal");
+        System.out.println(insect + ": Insect");
+        System.out.println(hidden + ": Hidden corner");
+        System.out.println(empty + ": Empty corner");
+        System.out.println(noElement + ": No element");
+        System.out.println(overlapped + ": Overlapped corner");
+        System.out.println("Description of the objects:");
+        System.out.println(inkwell + ": Inkwell");
+        System.out.println(manuscript + ": Manuscript");
+        System.out.println(quill + ": Quill");
+        System.out.println("#######################################");
+    }
+
+    
     public String askForUsername() {
         System.out.println("Choose a username");
         Scanner in = new Scanner(System.in);
         return in.nextLine();
     }
 
-    //@Override
+    //
     public int connectionIndex(){
         int index;
         Scanner in = new Scanner(System.in);
@@ -34,7 +91,7 @@ public class TUIView implements VirtualView{
         return index;
     }
 
-    @Override
+    
     public void printLobbyOption(ArrayList<String> lobbiesNames) {
         System.out.println("There are " + lobbiesNames.size() + " lobbies");
         for (int i = 0; i < lobbiesNames.size(); i++) {
@@ -42,7 +99,7 @@ public class TUIView implements VirtualView{
         }
     }
 
-    @Override
+    
     public int getLobbyOption() {
         int option;
         Scanner in = new Scanner(System.in);
@@ -57,7 +114,7 @@ public class TUIView implements VirtualView{
         return option;
     }
 
-    @Override
+    
     public int getLobbyIndex(ArrayList<String> lobbiesNames) {
         int index;
         Scanner in = new Scanner(System.in);
@@ -72,7 +129,7 @@ public class TUIView implements VirtualView{
         return index;
     }
 
-    @Override
+    
     public int getLobbyNumPlayers() {
         System.out.println("Enter number of players (must be between 1 and 4)");
         Scanner in = new Scanner(System.in);
@@ -84,7 +141,7 @@ public class TUIView implements VirtualView{
         return numPlayers;
     }
 
-    @Override
+    
     public void printPlayersInLobby(ArrayList<String> players) {
         System.out.println("Players in the lobby:");
         for (String player : players) {
@@ -92,7 +149,7 @@ public class TUIView implements VirtualView{
         }
     }
 
-    @Override
+    
     public void printColors(List<TokenColour> colors) {
         System.out.println("The available colors are:");
         for (int i = 0; i < colors.size(); i++) {
@@ -100,7 +157,7 @@ public class TUIView implements VirtualView{
         }
     }
 
-    @Override
+    
     public TokenColour chooseColor(List<TokenColour> colors) {
         int colorIndex;
         Scanner in = new Scanner(System.in);
@@ -115,7 +172,7 @@ public class TUIView implements VirtualView{
         return colors.get(colorIndex);
     }
 
-    @Override
+    
     public void printSecretObjective(ObjectiveCard card1, ObjectiveCard card2) {
         System.out.println("First Objective Card (0):");
         for (String s : card1.drawCard()) {
@@ -128,41 +185,45 @@ public class TUIView implements VirtualView{
     }
 
 //    //toString() version
-//    @Override
+//    
 //    public void printSecretObjective(ObjectiveCard card1, ObjectiveCard card2) {
 //        System.out.println("0) " + card1.toString());
 //        System.out.println("1) " + card2.toString());
 //    }
 
-    @Override
-    public int chooseSecretObjective(ObjectiveCard card1, ObjectiveCard card2) {
+    
+    public String chooseSecretObjective(ObjectiveCard card1, ObjectiveCard card2) {
 
-        int secretObjectiveChoice;
+        String secretObjectiveChoice;
         Scanner in = new Scanner(System.in);
         System.out.println("Choose a secret objective");
 
-        secretObjectiveChoice = in.nextInt();
-        while (secretObjectiveChoice < 0 || secretObjectiveChoice > 1) {
+        secretObjectiveChoice = in.nextLine();
+        while (!secretObjectiveChoice.equals("0") && !secretObjectiveChoice.equals("1")) {
             System.out.println("Invalid index. Try again.");
-            secretObjectiveChoice = in.nextInt();
+            secretObjectiveChoice = in.nextLine();
         }
+//        while (secretObjectiveChoice < 0 || secretObjectiveChoice > 1) {
+//            System.out.println("Invalid index. Try again.");
+//            secretObjectiveChoice = in.nextInt();
+//        }
 
         return secretObjectiveChoice;
     }
 
-    @Override
+    
     public void printBlackToken() {
         System.out.println("You have the black token, that means that you're the first player");
     }
 
-    @Override
+    
     public void printBoard(GameArea board) {
         System.out.println("Your board:");
         RenderBoard render = new RenderBoard(board);
         render.printBoard();
     }
 
-    @Override
+    
     public void printHand(ArrayList<PlayableCard> hand) {
         System.out.println("Your hand:");
         for (PlayableCard card : hand) {
@@ -172,7 +233,7 @@ public class TUIView implements VirtualView{
         }
     }
 
-    @Override
+    
     public int moveChoice() {
         int choice;
         Scanner in = new Scanner(System.in);
@@ -188,7 +249,7 @@ public class TUIView implements VirtualView{
         return choice;
     }
 
-    @Override
+    
     public int chooseCardToFlip(ArrayList<PlayableCard> hand) {
         int choice;
         Scanner scanner = new Scanner(System.in);
@@ -203,7 +264,7 @@ public class TUIView implements VirtualView{
         return choice;
     }
 
-    @Override
+    
     public int chooseCardToPlay(ArrayList<PlayableCard> hand) {
         int choice;
         Scanner scanner = new Scanner(System.in);
@@ -216,7 +277,7 @@ public class TUIView implements VirtualView{
         return choice;
     }
 
-    @Override
+    
     public Coordinates chooseCardToOverlap(GameArea board) {
         int x, y;
         Coordinates coordinates;
@@ -234,7 +295,7 @@ public class TUIView implements VirtualView{
         return coordinates;
     }
 
-    @Override
+    
     public int chooseCornerIndex(GameArea board) {
         int choice;
         Scanner in = new Scanner(System.in);
@@ -247,7 +308,7 @@ public class TUIView implements VirtualView{
         return choice;
     }
 
-    @Override
+    
     public int pickChoices(Deck<GoldCard> goldDeck, Deck<ResourceCard> resourceDeck, ArrayList<PlayableCard> faceUpCards) {
         Scanner scanner = new Scanner(System.in);
         int option;
@@ -275,7 +336,7 @@ public class TUIView implements VirtualView{
         return option;
     }
 
-    @Override
+    
     public int pickChoices(boolean goldDeckEmpty, boolean resourceDeckEmpty, ArrayList<PlayableCard> faceUpCards) {
         Scanner scanner = new Scanner(System.in);
         int option;
@@ -303,7 +364,7 @@ public class TUIView implements VirtualView{
         return option;
     }
 
-    @Override
+    
     public int chooseFaceUpCard(ArrayList<PlayableCard> faceUpCards) {
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
@@ -314,7 +375,7 @@ public class TUIView implements VirtualView{
         return choice;
     }
 
-    @Override
+    
     public void showFaceUpCards(ArrayList<PlayableCard> faceUpCards) {
         for (PlayableCard card : faceUpCards) {
             System.out.println(card.drawCard());
@@ -322,19 +383,19 @@ public class TUIView implements VirtualView{
     }
 
 //toString() versione
-//    @Override
+//    
 //    public void showFaceUpCards(ArrayList<PlayableCard> faceUpCards) {
 //        for (PlayableCard card : faceUpCards) {
 //            System.out.println(card.toString());
 //        }
 //    }
 
-    @Override
+    
     public void printScore(int score) {
         System.out.println("Your score is " + score);
     }
 
-    @Override
+    
     public void printWinner(String winner) {
         System.out.println("The winner is " + winner + "!!!");
     }

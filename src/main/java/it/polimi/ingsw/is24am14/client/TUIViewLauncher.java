@@ -19,6 +19,10 @@ import java.util.concurrent.TimeUnit;
 public class TUIViewLauncher {
     public static void main(String[] args) throws Exception {
         TUIView tui = new TUIView();
+
+        //Print the start screen
+        tui.startScreen();
+
         //Let the client choose the type of connection
         ClientInterface client;
         int connectionIndex = tui.connectionIndex();
@@ -64,11 +68,12 @@ public class TUIViewLauncher {
         //Game loop
         int counter = 0;
 
+        //Print the legend
+        tui.printLegend();
+
         while (true) {
             client.updateGameContext();
             if (client.getGameContext() != null) {
-
-                //ciclo principale della partita
 
                 if (client.getGameContext().getGameStateEnum() == GameStateEnum.DeckInit) {
 
@@ -99,10 +104,13 @@ public class TUIViewLauncher {
                     ObjectiveCard firstObjective = client.getGameContext().getObjectiveCardChoices(username).get(0);
                     ObjectiveCard secondObjective = client.getGameContext().getObjectiveCardChoices(username).get(1);
                     tui.printSecretObjective(firstObjective, secondObjective);
-                    client.pickObjectiveCard(client.getGameContext().getObjectiveCardChoices(username).get(tui.chooseSecretObjective(firstObjective, secondObjective)));
+                    int objectiveChoice = Integer.parseInt(tui.chooseSecretObjective(firstObjective, secondObjective));
+                    client.pickObjectiveCard(client.getGameContext().getObjectiveCardChoices(username).get(objectiveChoice));
 
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.Move) {
-                    //TODO: ripulisco il terminale
+                    //flush the terminal
+                    System.out.print("\033[H\033[2J");
+                    System.out.flush();
 
                     //verifico se il giocatore è il primo e gli dico che è il primo
                     while (counter < 1){
@@ -175,7 +183,7 @@ public class TUIViewLauncher {
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.EndGame) {
                     String winner = tui.getWinner(client);
                     tui.printWinner(winner);
-                    //devo far terminare il gioco
+                    System.exit(0);
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.LastMove){
                     System.out.println("Last move:");
                     if (client.getGameContext().getGame().getActivePlayer().getPlayerNickname().equals(username)) {
