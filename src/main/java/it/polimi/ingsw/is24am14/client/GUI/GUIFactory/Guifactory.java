@@ -3,25 +3,19 @@ package it.polimi.ingsw.is24am14.client.GUI.GUIFactory;
 import it.polimi.ingsw.is24am14.server.model.card.Card;
 import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
 import it.polimi.ingsw.is24am14.server.model.card.PlayableCard;
-import it.polimi.ingsw.is24am14.server.model.game.Game;
 import it.polimi.ingsw.is24am14.server.model.game.GameArea;
-import javafx.animation.ScaleTransition;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 
 import java.util.*;
 
@@ -48,14 +42,16 @@ public class Guifactory {
 
     public static ImageView displayCardImage(Card Card) {
         String imagePath = Card.getImage();
-        Image image = new Image("file:"+ imagePath);
+        Image image = new Image(Guifactory.class.getResource(imagePath).toExternalForm());
+        //Image image = new Image("file:"+ imagePath);
         ImageView imageView = new ImageView(image);
         applyShadow(imageView);
         return imageView;
     }
 
     public static ImageView displayLogo() {
-        Image image = new Image("file:" + "src/main/resources/images/codexlogo.png");
+
+        Image image = new Image(Guifactory.class.getResource("/images/codexlogo.png").toExternalForm());
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(300);
         imageView.setPreserveRatio(true);
@@ -72,21 +68,36 @@ public class Guifactory {
     }
 
     public static void setAutomaticBackground(VBox layout) {
-        Image image = new Image("file:" + "src/main/resources/images/background.jpg");
 
-        BackgroundSize BackgroundSize = new BackgroundSize(1920, 1080, true, true, true, true);
+        Image image = null;
+        try {
+            image = new Image(Guifactory.class.getResource("/images/background.jpg").toExternalForm());
+            System.out.println("JPG Image loaded successfully: " + "/images/background.jpg");
+        } catch (NullPointerException e) {
+            System.out.println("JPG Resource not found: " + "/images/background.jpg");
+        }
+
+        BackgroundSize backgroundSize = new BackgroundSize(1920, 1080, true, true, true, true);
 
         BackgroundImage backgroundImage = new BackgroundImage(image,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT,
-                BackgroundSize);
+                backgroundSize);
 
-        layout.setBackground(new Background(backgroundImage));
+        Platform.runLater(() -> layout.setBackground(new Background(backgroundImage)));
+        //layout.setBackground(new Background(backgroundImage));
     }
 
     public static void setAutomaticBackground(BorderPane layout) {
-        Image image = new Image("file:" + "src/main/resources/images/background.jpg");
+
+        Image image = null;
+        try {
+            image = new Image(Guifactory.class.getResource("/images/background.jpg").toExternalForm());
+            System.out.println("JPG Image loaded successfully: " + "/images/background.jpg");
+        } catch (NullPointerException e) {
+            System.out.println("JPG Resource not found: " + "/images/background.jpg");
+        }
 
         BackgroundSize BackgroundSize = new BackgroundSize(600, 400, true, true, true, true);
 

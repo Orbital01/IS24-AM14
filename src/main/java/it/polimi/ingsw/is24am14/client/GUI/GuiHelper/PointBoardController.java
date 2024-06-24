@@ -1,16 +1,15 @@
 package it.polimi.ingsw.is24am14.client.GUI.GuiHelper;
 
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,26 +17,48 @@ import java.util.Map;
 public class PointBoardController {
 
     @FXML
-    public StackPane pointBoardStackPane;
+    private StackPane pointBoardStackPane;
     @FXML
-    public Pane pointBoardPane;
-    
+    private Pane pointBoardPane;
     @FXML
     private ImageView backgroundImage;
 
-    @FXML
-    private ImageView gameBoardImage;
-
-    private Map<Integer, double[]> positionsMap; // Map to hold cell centers as percentages
-
+    private Map<Integer, double[]> positionsMap;
     private ArrayList<Image> tokenImages;
     private ArrayList<Integer> scores;
 
-    public void initialize() {
+    public PointBoardController() {
+    }
+
+    @FXML
+    private void initialize() {
+        initializePointBoard();
+        setFixedSizes();
+    }
+
+    private void setFixedSizes() {
+        double maxWidth = 250;
+        double aspectRatio = 493.0 / 250.0;
+        double maxHeight = maxWidth * aspectRatio;
 
 
+        pointBoardStackPane.setMaxWidth(maxWidth);
+        pointBoardStackPane.setMaxHeight(maxHeight);
+        pointBoardPane.setMaxWidth(maxWidth);
+        pointBoardPane.setMaxHeight(maxHeight);
 
-        // Initialize positions map with percentages
+
+        pointBoardPane.prefWidthProperty().bind(Bindings.min(maxWidth, pointBoardPane.heightProperty().divide(aspectRatio)));
+        pointBoardPane.prefHeightProperty().bind(Bindings.min(maxHeight, pointBoardPane.widthProperty().multiply(aspectRatio)));
+
+        backgroundImage.fitWidthProperty().bind(pointBoardPane.prefWidthProperty());
+        backgroundImage.fitHeightProperty().bind(pointBoardPane.prefHeightProperty());
+
+        pointBoardPane.prefWidthProperty().addListener((obs, oldVal, newVal) -> updateTokenPositions(tokenImages, scores));
+        pointBoardPane.prefHeightProperty().addListener((obs, oldVal, newVal) -> updateTokenPositions(tokenImages, scores));
+    }
+
+    public void initializePointBoard() {
         positionsMap = new HashMap<>();
         positionsMap.put(0, new double[]{0.27, 0.92});
         positionsMap.put(1, new double[]{0.50, 0.92});
@@ -69,38 +90,13 @@ public class PointBoardController {
         positionsMap.put(27, new double[]{0.85, 0.18});
         positionsMap.put(28, new double[]{0.85, 0.285});
         positionsMap.put(29, new double[]{0.50, 0.2});
-
-
-
-        // Add listeners for width and height properties of pointBoardPane
-        ChangeListener<Number> sizeChangeListener = (observable, oldValue, newValue) -> updateTokenPositions();
-        pointBoardPane.widthProperty().addListener(sizeChangeListener);
-        pointBoardPane.heightProperty().addListener(sizeChangeListener);
     }
 
-    public void updateBoard(ArrayList<Image> tokenImages, ArrayList<Integer> scores) {
-        this.tokenImages = tokenImages;
-        this.scores = scores;
-        Platform.runLater(this::updateTokenPositions);
-    }
+    private void updateTokenPositions(ArrayList<Image> tokenImages, ArrayList<Integer> scores) {
+        pointBoardPane.getChildren().clear();
 
-    public void setBackgroundImage(Image image) {
-        backgroundImage.setImage(image);
-    }
+        if (tokenImages == null || scores == null) return;
 
-
-    private void updateTokenPositions() {
-        if (tokenImages == null || scores == null || pointBoardPane.getWidth() <= 0 || pointBoardPane.getHeight() <= 0) {
-            return;
-        }
-
-//        // Debug: stampa le dimensioni del pointBoardPane
-//        System.out.println("pointBoardPane width: " + pointBoardPane.getWidth() + ", height: " + pointBoardPane.getHeight());
-
-        // Clear existing tokens by removing nodes with IDs that start with "token_"
-        pointBoardPane.getChildren().removeIf(node -> node.getId() != null && node.getId().startsWith("token_"));
-
-        // Use a map to count tokens at each score position
         Map<Integer, Integer> tokenCount = new HashMap<>();
 
         for (int i = 0; i < tokenImages.size(); i++) {
@@ -109,18 +105,14 @@ public class PointBoardController {
             double[] position = positionsMap.get(score);
 
             if (position != null) {
-                double boardWidth = pointBoardPane.getWidth();
-                double boardHeight = pointBoardPane.getHeight();
+                double imageWidth = pointBoardPane.getWidth();
+                double imageHeight = pointBoardPane.getHeight();
 
-                int count = tokenCount.getOrDefault(score, 0); // Get current count of tokens at this score position
-                // Adjust token size
-                double OFFSET_Y = boardHeight / 128;
-                double TOKEN_SIZE = boardHeight / 16;
-                double x = position[0] * boardWidth - TOKEN_SIZE / 2; // Adjust by half of the token size
-                double y = position[1] * boardHeight - TOKEN_SIZE / 2 - (count * OFFSET_Y); // Adjust by half of the token height and apply offset
-
-//                // Debug: stampa le coordinate calcolate
-//                System.out.println("Token " + i + " (score: " + score + ") -> x: " + x + ", y: " + y);
+                int count = tokenCount.getOrDefault(score, 0);
+                double OFFSET_Y = imageHeight / 128;
+                double TOKEN_SIZE = imageHeight / 16;
+                double x = position[0] * imageWidth - TOKEN_SIZE / 2;
+                double y = position[1] * imageHeight - TOKEN_SIZE / 2 - (count * OFFSET_Y);
 
                 ImageView tokenImageView = new ImageView(tokenImage);
                 tokenImageView.setLayoutX(x);
@@ -128,39 +120,37 @@ public class PointBoardController {
                 tokenImageView.setFitWidth(TOKEN_SIZE);
                 tokenImageView.setFitHeight(TOKEN_SIZE);
                 tokenImageView.setPreserveRatio(true);
-                tokenImageView.setId("token_" + i);
 
                 pointBoardPane.getChildren().add(tokenImageView);
 
-                tokenCount.put(score, count + 1); // Increment the count for this score position
+                tokenCount.put(score, count + 1);
             } else {
                 System.out.println("Position not found for score: " + score);
             }
         }
-
-//        // Debug: Log after token positioning
-//        System.out.println("Updated token positions:");
-//        pointBoardPane.getChildren().forEach(node -> {
-//            if (node instanceof ImageView && node.getId().startsWith("token_")) {
-//                System.out.println(node.getId() + " at x: " + node.getLayoutX() + ", y: " + node.getLayoutY());
-//            }
-//        });
-
     }
 
-    public StackPane getPointBoardStackPane(ArrayList<Image> tokenImages, ArrayList<Integer> scores){
-        updateBoard(tokenImages, scores);
-        return pointBoardStackPane;
+    public void setTokenData(ArrayList<Image> tokenImages, ArrayList<Integer> scores) {
+        this.tokenImages = tokenImages;
+        this.scores = scores;
+        updateTokenPositions(tokenImages, scores);
     }
 
-    public Pane getPointBoardPane(ArrayList<Image> tokenImages, ArrayList<Integer> scores) {
-        updateBoard(tokenImages, scores);
-        return pointBoardPane;
+    public void setStageDimensions(Stage stage) {
+        stage.setMinWidth(pointBoardStackPane.getPrefWidth());
+        stage.setMinHeight(pointBoardStackPane.getPrefHeight());
     }
 
-    public static PointBoardController createInstance() throws IOException {
-        FXMLLoader loader = new FXMLLoader(PointBoardController.class.getResource("PointBoard.fxml"));
-        loader.load();
-        return loader.getController();
+    public static StackPane getPointBoardStackPane(ArrayList<Image> tokenImages, ArrayList<Integer> scores) {
+        try {
+            FXMLLoader loader = new FXMLLoader(PointBoardController.class.getClassLoader().getResource("PointBoard.fxml"));
+            StackPane stackPane = loader.load();
+            PointBoardController controller = loader.getController();
+            controller.setTokenData(tokenImages, scores);
+            return stackPane;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

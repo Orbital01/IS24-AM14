@@ -69,7 +69,9 @@ public class ResourceCard extends PlayableCard {
             //First Row
             cardString.add("|-----|------------|-----|");
             //Second Row
-            cardString.add("| " + corners.get(0) + " |      " + points + "      | " + corners.get(1) + " |");
+            String NW = this.getCorners().get(0).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(0);
+            String NE = this.getCorners().get(1).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(1);
+            cardString.add("| " + NW + " |      " + points + "      | " + NE + " |");
             //Third Row
             cardString.add("|-----|		       |-----|");
             //Fourth Row
@@ -77,7 +79,9 @@ public class ResourceCard extends PlayableCard {
             //Fifth Row
             cardString.add("|-----|		       |-----|");
             //Sixth Row
-            cardString.add("| " + corners.get(2) + " |" + "             | " + corners.get(3) + " |");
+            String SW = this.getCorners().get(2).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(2);
+            String SE = this.getCorners().get(3).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(3);
+            cardString.add("| " + SW + " |" + "             | " + SE + " |");
             //Seventh Row
             cardString.add("|-----|------------|-----|");
         }
@@ -93,7 +97,9 @@ public class ResourceCard extends PlayableCard {
             //First Row
             cardString.add("|-----|------------|-----|");
             //Second Row
-            cardString.add("| " + corners.get(0) + " |         " + "    | " + corners.get(1) + " |");
+            String NW = this.getCorners().get(0).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(0);
+            String NE = this.getCorners().get(1).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(1);
+            cardString.add("| " + NW + " |         " + "    | " + NE + " |");
             //Third Row
             cardString.add("|-----|		       |-----|");
             //Fourth Row
@@ -101,7 +107,9 @@ public class ResourceCard extends PlayableCard {
             //Fifth Row
             cardString.add("|-----|		       |-----|");
             //Sixth Row
-            cardString.add("| " + corners.get(2) + " |" + "             | " + corners.get(3) + " |");
+            String SW = this.getCorners().get(2).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(2);
+            String SE = this.getCorners().get(3).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(3);
+            cardString.add("| " + SW + " |" + "             | " + SE + " |");
             //Seventh Row
             cardString.add("|-----|------------|-----|");
         }

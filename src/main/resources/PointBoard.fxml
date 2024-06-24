@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="pointBoardStackPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="it.polimi.ingsw.is24am14.client.GUI.PointBoardController">
-    <ImageView fx:id="backgroundImage" pickOnBounds="true" preserveRatio="true" >
-      <image>
-         <Image url="@images/PointBoard.png" />
-
-      </image></ImageView>
-        <Pane fx:id="pointBoardPane" style="-fx-background-color: transparent;" />
+<StackPane fx:id="pointBoardStackPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="it.polimi.ingsw.is24am14.client.GUI.GuiHelper.PointBoardController">
+    <ImageView fx:id="backgroundImage" pickOnBounds="true" preserveRatio="true" fitWidth="250" >
+        <image>
+            <Image url="@images/PointBoard.png" />
+        </image>
+    </ImageView>
+    <Pane fx:id="pointBoardPane" style="-fx-background-color: transparent;"/>
 </StackPane>

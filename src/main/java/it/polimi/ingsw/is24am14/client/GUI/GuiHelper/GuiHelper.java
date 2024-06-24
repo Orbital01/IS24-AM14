@@ -19,8 +19,6 @@ public class GuiHelper {
 
     private int lastMessageIndex=0;
 
-    private final PointBoardController pointBoardController = new PointBoardController();
-
     public Player getWinner(Game game){
         Player winner = null;
         int max = 0;
@@ -54,18 +52,15 @@ public class GuiHelper {
         }
     }
 
-    public Pane getPointBoard(Game game){
+    public StackPane getPointBoard(Game game){
         ArrayList<Image> tokenImages = new ArrayList<>();
         ArrayList<Integer> scores = new ArrayList<>();
+
         for(Player player : game.getPlayers()){
+            //TODO: change URI
             tokenImages.add(new Image("file:src/main/resources/images.tokens/" + player.getColour().toString().toLowerCase() +"_token.png" ));
             scores.add(player.getScore());
         }
-        try {
-            pointBoardController.createInstance();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return pointBoardController.getPointBoardPane(tokenImages, scores);
+        return PointBoardController.getPointBoardStackPane(tokenImages, scores);
     }
 }
