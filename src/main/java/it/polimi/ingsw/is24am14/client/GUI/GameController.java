@@ -109,6 +109,8 @@ public class GameController {
                 case Move:
                     System.out.println("Move stage");
                     makeMove();
+                    //createPointBoard();
+                    printScore();
                     break;
                 case Draw:
                     System.out.println("Draw stage");
@@ -119,6 +121,8 @@ public class GameController {
                 case LastMove:
                     System.out.println("Last move stage");
                     makeMove();
+                    //createPointBoard();
+                    printScore();
                     break;
                 case EndGame:
                     System.out.println("End game stage");
@@ -565,17 +569,12 @@ public class GameController {
 
     private void createPointBoard(){
 
-        ScheduledExecutorService pointBoardExecutorService;
-        pointBoardExecutorService = Executors.newSingleThreadScheduledExecutor();
-        pointBoardExecutorService.scheduleAtFixedRate(() -> {
-            Platform.runLater(() -> {
-                try {
-                    Pane pointBoard = GuiHelper.getPointBoard(context.getClient().getGameContext().getGame());
-                    layout.setLeft(pointBoard);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }); }, 0, 1, TimeUnit.SECONDS);
+        try {
+            Pane pointBoard = GuiHelper.getPointBoard(context.getClient().getGameContext().getGame());
+            layout.setLeft(pointBoard);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

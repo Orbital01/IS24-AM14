@@ -18,7 +18,7 @@ This Java project is a porting of the boardgame *CODEX* by [Cranio Creations](ht
 | Functionality | Status | 
 | --- | --- |
 | Basic rules | :white_check_mark: |
-| Complete rules | :white_check_mark: |
+| Complete rules | :construction: |
 | Socket connection | :white_check_mark: |
 | RMI connection | :white_check_mark: |
 | CLI | :construction: |
