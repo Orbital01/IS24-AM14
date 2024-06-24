@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -74,7 +75,9 @@ public class PointBoardControllerTest extends Application {
 
 
         StackPane pointBoard = PointBoardController.getPointBoardStackPane(tokenImages, scores);
-        Scene scene = new Scene(pointBoard, 250, 500);
+        BorderPane root = new BorderPane();
+        root.setLeft(pointBoard);
+        Scene scene = new Scene(root, 800, 600);
         primaryStage.setScene(scene);
         primaryStage.show();
 

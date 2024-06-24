@@ -1,7 +1,6 @@
 package it.polimi.ingsw.is24am14.client.GUI.GuiHelper;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
@@ -34,53 +33,32 @@ public class PointBoardController {
     @FXML
     private void initialize() {
         initializePointBoard();
-        bindSizes();
-        ChangeListener<Number> sizeChangeListener = (observable, oldValue, newValue) -> updateTokenPositions(tokenImages, scores);
-        backgroundImage.fitWidthProperty().addListener(sizeChangeListener);
-        backgroundImage.fitHeightProperty().addListener(sizeChangeListener);
+        setFixedSizes();
     }
 
-    private void bindSizes() {
-        backgroundImage.fitWidthProperty().bind(pointBoardStackPane.widthProperty());
-        backgroundImage.fitHeightProperty().bind(pointBoardStackPane.heightProperty());
-        pointBoardPane.prefWidthProperty().bind(pointBoardStackPane.widthProperty());
-        pointBoardPane.prefHeightProperty().bind(pointBoardStackPane.heightProperty());
+    private void setFixedSizes() {
+        double maxWidth = 250;
+        double aspectRatio = 493.0 / 250.0;
+        double maxHeight = maxWidth * aspectRatio;
 
-        pointBoardStackPane.setMinWidth(200);  // Imposta la larghezza minima desiderata
-        pointBoardStackPane.setMinHeight(200); // Imposta l'altezza minima desiderata
 
-        backgroundImage.imageProperty().addListener(new ChangeListener<Image>() {
-            @Override
-            public void changed(ObservableValue<? extends Image> observable, Image oldValue, Image newValue) {
-                if (newValue != null) {
-                    updateAspectRatio(newValue);
-                }
-            }
-        });
-    }
+        pointBoardStackPane.setMaxWidth(maxWidth);
+        pointBoardStackPane.setMaxHeight(maxHeight);
+        pointBoardPane.setMaxWidth(maxWidth);
+        pointBoardPane.setMaxHeight(maxHeight);
 
-    private void updateAspectRatio(Image image) {
-        double aspectRatio = image.getWidth() / image.getHeight();
 
-        pointBoardStackPane.widthProperty().addListener((observable, oldWidth, newWidth) -> {
-            double newHeight = newWidth.doubleValue() / aspectRatio;
-            pointBoardStackPane.setMinHeight(newHeight);
-            pointBoardStackPane.setPrefHeight(newHeight);
-            pointBoardPane.setMinHeight(newHeight);
-            pointBoardPane.setPrefHeight(newHeight);
-        });
+        pointBoardPane.prefWidthProperty().bind(Bindings.min(maxWidth, pointBoardPane.heightProperty().divide(aspectRatio)));
+        pointBoardPane.prefHeightProperty().bind(Bindings.min(maxHeight, pointBoardPane.widthProperty().multiply(aspectRatio)));
 
-        pointBoardStackPane.heightProperty().addListener((observable, oldHeight, newHeight) -> {
-            double newWidth = newHeight.doubleValue() * aspectRatio;
-            pointBoardStackPane.setMinWidth(newWidth);
-            pointBoardStackPane.setPrefWidth(newWidth);
-            pointBoardPane.setMinWidth(newWidth);
-            pointBoardPane.setPrefWidth(newWidth);
-        });
+        backgroundImage.fitWidthProperty().bind(pointBoardPane.prefWidthProperty());
+        backgroundImage.fitHeightProperty().bind(pointBoardPane.prefHeightProperty());
+
+        pointBoardPane.prefWidthProperty().addListener((obs, oldVal, newVal) -> updateTokenPositions(tokenImages, scores));
+        pointBoardPane.prefHeightProperty().addListener((obs, oldVal, newVal) -> updateTokenPositions(tokenImages, scores));
     }
 
     public void initializePointBoard() {
-        positionsMap = new HashMap<>();
         positionsMap = new HashMap<>();
         positionsMap.put(0, new double[]{0.27, 0.92});
         positionsMap.put(1, new double[]{0.50, 0.92});
@@ -112,14 +90,12 @@ public class PointBoardController {
         positionsMap.put(27, new double[]{0.85, 0.18});
         positionsMap.put(28, new double[]{0.85, 0.285});
         positionsMap.put(29, new double[]{0.50, 0.2});
-   }
+    }
 
     private void updateTokenPositions(ArrayList<Image> tokenImages, ArrayList<Integer> scores) {
-        if (backgroundImage.getFitWidth() <= 0 || backgroundImage.getFitHeight() <= 0) {
-            return;
-        }
-
         pointBoardPane.getChildren().clear();
+
+        if (tokenImages == null || scores == null) return;
 
         Map<Integer, Integer> tokenCount = new HashMap<>();
 
@@ -129,8 +105,8 @@ public class PointBoardController {
             double[] position = positionsMap.get(score);
 
             if (position != null) {
-                double imageWidth = backgroundImage.getFitWidth();
-                double imageHeight = backgroundImage.getFitHeight();
+                double imageWidth = pointBoardPane.getWidth();
+                double imageHeight = pointBoardPane.getHeight();
 
                 int count = tokenCount.getOrDefault(score, 0);
                 double OFFSET_Y = imageHeight / 128;
@@ -147,8 +123,6 @@ public class PointBoardController {
 
                 pointBoardPane.getChildren().add(tokenImageView);
 
-                System.out.println("Token added at: " + x + ", " + y);
-
                 tokenCount.put(score, count + 1);
             } else {
                 System.out.println("Position not found for score: " + score);
@@ -163,12 +137,8 @@ public class PointBoardController {
     }
 
     public void setStageDimensions(Stage stage) {
-        backgroundImage.imageProperty().addListener((obs, oldImage, newImage) -> {
-            if (newImage != null) {
-                stage.setMinWidth(pointBoardStackPane.getMinWidth());
-                stage.setMinHeight(pointBoardStackPane.getMinHeight());
-            }
-        });
+        stage.setMinWidth(pointBoardStackPane.getPrefWidth());
+        stage.setMinHeight(pointBoardStackPane.getPrefHeight());
     }
 
     public static StackPane getPointBoardStackPane(ArrayList<Image> tokenImages, ArrayList<Integer> scores) {
@@ -184,4 +154,3 @@ public class PointBoardController {
         }
     }
 }
-
