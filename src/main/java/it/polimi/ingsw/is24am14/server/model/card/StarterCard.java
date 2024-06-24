@@ -26,6 +26,17 @@ public class StarterCard extends Card {
         return resources;
     }
 
+    public ArrayList<CornerEnum> getCornerEnums() {
+        ArrayList<CornerEnum> items = new ArrayList<>();
+
+        for (int i = 0; i < 4; i++) {
+            if (!getCorners().get(i).isOverlapped()) items.add(getCorners().get(i).getType());
+        }
+
+        if (getSide() == EnumSide.BACK) items.addAll(resources);
+        return items;
+    }
+
     public ArrayList<String> drawCard() {
         if (this.getSide().equals(EnumSide.FRONT)) {
             ArrayList<String> cardString = new ArrayList<>();

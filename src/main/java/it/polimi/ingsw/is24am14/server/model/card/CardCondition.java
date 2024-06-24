@@ -50,7 +50,7 @@ public class CardCondition implements Condition {
             }
             */
 
-            if (listCardIndex >= listCard.size()) return true;
+            if (listCardIndex == listCard.size()) return true;
         }
 
         return false;

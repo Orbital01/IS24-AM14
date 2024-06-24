@@ -57,7 +57,7 @@ public class GoldCard extends PlayableCard {
         ArrayList<Corner> corners = getCorners();
 
         for (int i = 0; i < 4; i++) {
-            items.add(corners.get(i).getType());
+            if (!corners.get(i).isOverlapped()) items.add(corners.get(i).getType());
         }
 
         if (getSide() == EnumSide.BACK) items.add(getResource());

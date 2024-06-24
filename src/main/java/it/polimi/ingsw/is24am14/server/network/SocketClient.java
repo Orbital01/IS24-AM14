@@ -35,16 +35,13 @@ public class SocketClient implements ClientInterface {
     }
 
     public synchronized void send(SocketResponse message) throws Exception {
-        System.out.println("Want to lock for " + message.message);
         lock.writeLock().lock();
-        System.out.println("Locked write lock for " + message.message);
         this.socketOut.println(this.gson.toJson(message));
     }
 
     public synchronized SocketResponse receive() throws Exception {
         String response = this.socketIn.readLine();
         lock.writeLock().unlock();
-        System.out.println("Unlocked when received " + this.gson.fromJson(response, SocketResponse.class).message);
         return this.gson.fromJson(response, SocketResponse.class);
     }
 

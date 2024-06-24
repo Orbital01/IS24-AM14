@@ -2,20 +2,9 @@ package it.polimi.ingsw.is24am14.server.model.card;
 
 import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 
+import java.util.Map;
+
 public class CornerCondition implements Condition {
-    private Coordinates coordinates;
-
-    public CornerCondition() {
-    }
-
-    public void setCoodinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
-    }
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
-
 
     @Override
     public boolean isSatisfied(GameArea board) {
@@ -26,10 +15,13 @@ public class CornerCondition implements Condition {
     public int numSatisfied(GameArea board) {
         int num = 0;
         Coordinates tmpCoordinates;
+        Coordinates coordinates = getCoordinates(board);
 
+        if (coordinates == null) throw new IllegalArgumentException("Corner condition null");
+        System.out.println("x: " + coordinates.getRow() + " y: " + coordinates.getColumn());
         //  top left
         tmpCoordinates = Coordinates.newCoordinates(coordinates, 0);
-        if (board.getCard(tmpCoordinates) != null && board.getCard(tmpCoordinates).getCorners().get(2).isOverlapped()) {
+        if (board.getCard(tmpCoordinates) != null && board.getCard(tmpCoordinates).getCorners().get(3).isOverlapped()) {
             num++;
         }
 
@@ -56,5 +48,12 @@ public class CornerCondition implements Condition {
     @Override
     public String toString() {
         return "CornerCondition";
+    }
+
+    public Coordinates getCoordinates(GameArea board) {
+        for (Map.Entry<Coordinates, Card> entry : board.getBoard().entrySet()) {
+            if (entry.getValue().getPointCondition() == this) return entry.getKey();
+        }
+        return null;
     }
 }
