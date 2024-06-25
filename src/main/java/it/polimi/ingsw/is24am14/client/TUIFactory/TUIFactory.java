@@ -1,4 +1,4 @@
-package it.polimi.ingsw.is24am14.server.view;
+package it.polimi.ingsw.is24am14.client.TUIFactory;
 
 
 import it.polimi.ingsw.is24am14.client.view.printer.RenderBoard;
@@ -7,7 +7,7 @@ import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 import it.polimi.ingsw.is24am14.server.network.ClientInterface;
-import net.fellbaum.jemoji.Emoji;
+import it.polimi.ingsw.is24am14.server.network.Message;
 import net.fellbaum.jemoji.Emojis;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
-public class TUIView{
+public class TUIFactory {
 
     public void startScreen(){
         String green = "\033[32m";
@@ -78,7 +78,6 @@ public class TUIView{
         return in.nextLine();
     }
 
-    //
     public int connectionIndex(){
         int index;
         Scanner in = new Scanner(System.in);
@@ -238,10 +237,11 @@ public class TUIView{
         int choice;
         Scanner in = new Scanner(System.in);
         System.out.println("It's your turn!");
-        System.out.println("Digit:\n0 to flip a Card in your hand.\n1 to put a card on the board. \n2 to print the legend. \n3 to see the chat.");
+        System.out.println("Digit:\n0 to flip a Card in your hand.\n1 to put a card on the board. \n2 to print the legend. " +
+                "\n3 to see the chat. \n4 to send a message. \n5 punteggi. \n6 board degli altri player");
 
         choice = in.nextInt();
-        while (choice < 0 || choice > 3) {
+        while (choice < 0 || choice > 6) {
             System.out.println("Invalid choice. Try again.");
             choice = in.nextInt();
         }
@@ -249,7 +249,11 @@ public class TUIView{
         return choice;
     }
 
-    
+    //TODO: add the possibility to see objective cards
+    public void getObjectiveCards() {
+
+    }
+
     public int chooseCardToFlip(ArrayList<PlayableCard> hand) {
         int choice;
         Scanner scanner = new Scanner(System.in);
@@ -264,7 +268,6 @@ public class TUIView{
         return choice;
     }
 
-    
     public int chooseCardToPlay(ArrayList<PlayableCard> hand) {
         int choice;
         Scanner scanner = new Scanner(System.in);
@@ -277,7 +280,6 @@ public class TUIView{
         return choice;
     }
 
-    
     public Coordinates chooseCardToOverlap(GameArea board) {
         int x, y;
         Coordinates coordinates;
@@ -295,7 +297,6 @@ public class TUIView{
         return coordinates;
     }
 
-    
     public int chooseCornerIndex(GameArea board) {
         int choice;
         Scanner in = new Scanner(System.in);
@@ -308,7 +309,6 @@ public class TUIView{
         return choice;
     }
 
-    
     public int pickChoices(Deck<GoldCard> goldDeck, Deck<ResourceCard> resourceDeck, ArrayList<PlayableCard> faceUpCards) {
         Scanner scanner = new Scanner(System.in);
         int option;
@@ -336,7 +336,6 @@ public class TUIView{
         return option;
     }
 
-    
     public int pickChoices(boolean goldDeckEmpty, boolean resourceDeckEmpty, ArrayList<PlayableCard> faceUpCards) {
         Scanner scanner = new Scanner(System.in);
         int option;
@@ -364,7 +363,6 @@ public class TUIView{
         return option;
     }
 
-    
     public int chooseFaceUpCard(ArrayList<PlayableCard> faceUpCards) {
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
@@ -374,28 +372,17 @@ public class TUIView{
         }
         return choice;
     }
-
     
     public void showFaceUpCards(ArrayList<PlayableCard> faceUpCards) {
         for (PlayableCard card : faceUpCards) {
             System.out.println(card.drawCard());
         }
     }
-
-//toString() versione
-//    
-//    public void showFaceUpCards(ArrayList<PlayableCard> faceUpCards) {
-//        for (PlayableCard card : faceUpCards) {
-//            System.out.println(card.toString());
-//        }
-//    }
-
     
     public void printScore(int score) {
         System.out.println("Your score is " + score);
     }
 
-    
     public void printWinner(String winner) {
         System.out.println("The winner is " + winner + "!!!");
     }
@@ -408,4 +395,90 @@ public class TUIView{
                 .orElse(null);
         return winner.getPlayerNickname();
     }
+
+    public int printChat(ClientInterface client, int index){
+        ArrayList<Message> messages;
+
+        try {
+            messages = client.getGameContext().getMessages();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("############### Last Messages Received ##################");
+
+        for (int i = index; i < messages.size(); i++) {
+            Message message = messages.get(i);
+
+            if(message.getReceiver().equals("")){
+                System.out.println(message.getSender() + ": " + message.getMessage());
+            }else {
+                System.out.println("private message from " + message.getSender() + ": " + message.getMessage());
+            }
+        }
+
+        return messages.size();
+    }
+
+    public void askForMessage(ClientInterface client) throws Exception {
+        System.out.println("type the number corresponding to the receiver of the message and type the massage or 5 to exit");
+
+        int counter = 1;
+        System.out.println("0 -> all players");
+        for (Player player : client.getGameContext().getGame().getPlayers()){
+            System.out.println(counter + " -> " + player.getPlayerNickname());
+            counter++;
+        }
+
+        System.out.println("Type the message");
+
+        Scanner in = new Scanner(System.in);
+        String input = in.nextLine();
+        if (input.isEmpty() || input.isBlank() || input.length()<2){
+            System.out.println("Invalid input");
+            return;
+        }
+
+        String[] parts = input.split(" ",2);
+
+        int receiver = Integer.parseInt(parts[0]);
+        String message = parts[1];
+
+        if(receiver == 5){
+            return;
+        }else if (receiver!=0) {
+            client.sendMessage(client.getGameContext().getGame().getPlayer(receiver-1).getPlayerNickname(), message);
+            System.out.println("Message sent");
+        }else if(receiver==0) {
+            client.sendMessage("", message);
+            System.out.println("Message sent");
+        }
+
+    }
+
+    public void getScores(ClientInterface client) throws Exception {
+        ArrayList<Player> gamePlayers;
+        gamePlayers = client.getGameContext().getGame().getPlayers();
+        System.out.println("############### Scores ##################");
+        for (Player player : gamePlayers) {
+            System.out.println(player.getPlayerNickname() + " -> " + player.getScore());
+        }
+    }
+
+    public void getOtherBoard(ClientInterface client) throws Exception {
+        //select the player
+        ArrayList<Player> gamePlayers = client.getGameContext().getGame().getPlayers();
+        int counter = 1;
+        for (Player player : gamePlayers){
+            System.out.println(counter + " -> " + player.getPlayerNickname());
+            counter++;
+        }
+        System.out.println("select the player to see their board");
+        Scanner in = new Scanner(System.in);
+        int playerIndex = in.nextInt();
+        GameArea board = gamePlayers.get(playerIndex-1).getPlayerBoard();
+        RenderBoard render = new RenderBoard(board);
+        render.printBoard();
+    }
+
 }

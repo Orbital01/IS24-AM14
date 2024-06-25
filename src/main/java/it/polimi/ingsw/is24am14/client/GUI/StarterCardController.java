@@ -1,34 +1,25 @@
 package it.polimi.ingsw.is24am14.client.GUI;
 
 import it.polimi.ingsw.is24am14.client.GUI.GUIFactory.Guifactory;
+import it.polimi.ingsw.is24am14.client.GUIViewLauncher;
 import it.polimi.ingsw.is24am14.server.controller.GameStateEnum;
 import it.polimi.ingsw.is24am14.server.model.card.StarterCard;
-import it.polimi.ingsw.is24am14.server.view.GUIView;
-import it.polimi.ingsw.is24am14.server.view.TUIView;
-import javafx.animation.RotateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
-import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class StarterCardController {
 
-    private GUIView context;
+    private GUIViewLauncher context;
     private Scene scene;
     private VBox layout;
 
@@ -49,7 +40,7 @@ public class StarterCardController {
         confirmButton.setOnAction(this::handleConfirmButtonAction);
     }
 
-    public StarterCardController(GUIView context){
+    public StarterCardController(GUIViewLauncher context){
         this.context = context;
 
         layout = new VBox();

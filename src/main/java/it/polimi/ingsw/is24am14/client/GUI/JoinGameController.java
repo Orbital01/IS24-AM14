@@ -1,9 +1,8 @@
 package it.polimi.ingsw.is24am14.client.GUI;
 
-import it.polimi.ingsw.is24am14.server.view.GUIView;
+import it.polimi.ingsw.is24am14.client.GUIViewLauncher;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,14 +11,13 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 public class JoinGameController {
 
-    private GUIView context;
+    private GUIViewLauncher context;
     private Scene scene;
 
     @FXML
@@ -38,7 +36,7 @@ public class JoinGameController {
         joinLobby();//?
     }
 
-    public JoinGameController(GUIView context){
+    public JoinGameController(GUIViewLauncher context){
         this.context = context;
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("JoinLobby.fxml"));
         loader.setController(this);
