@@ -32,6 +32,13 @@ import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+/**
+ * This class is responsible for controlling the game's GUI.
+ * It handles the game's state, player's turn, player's hand, and game board.
+ * It also manages the game's chat interface and point board.
+ */
 
 public class GameController {
 
@@ -55,6 +62,12 @@ public class GameController {
 
     private final GuiHelper GuiHelper = new GuiHelper();
 
+    /**
+     * Constructor for GameController.
+     * Initializes the GUI, chat interface, objectives, and game status executor service.
+     *
+     * @param context The client context.
+     */
     public GameController(GUIViewLauncher context) {
         this.context = context;
         scene = new Scene(layout, 1920, 1080);
@@ -67,16 +80,23 @@ public class GameController {
 
     }
 
+    /**
+     * Displays the game scene on the stage.
+     */
     public void showScene() {
         Stage stage = context.getStage();
         stage.setScene(scene);
         stage.show();
     }
 
+    /**
+     * Checks the game status and updates the game scene based on the current game state.
+     */
     private void checkGameStatus() {
         try {
             context.getClient().updateGameContext();
         } catch (Exception e) {
+            //todo: gestire l'eccezione in maniera più elegante
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
@@ -91,16 +111,21 @@ public class GameController {
                 } else {
                     myTurn = false;
                 }
+
                 if (currentGameState != previousGameState) {
                     previousGameState = currentGameState;
                     Platform.runLater(this::updateSceneBasedOnGameState);
                 }
+
             }
         } catch (Exception e) {
+            //todo: gestire l'eccezione in maniera più elegante
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Updates the game phase based on the server state.
+     */
     private void updateSceneBasedOnGameState() {
         try {
             switch (context.getClient().getGameContext().getGameStateEnum()) {
@@ -114,13 +139,12 @@ public class GameController {
                     System.out.println("Draw stage");
                     makeDraw();
                     createPointBoard();
-                    //printScore();
+                    System.out.println("Draw stage"); //debug line
                     break;
                 case LastMove:
                     System.out.println("Last move stage");
                     makeMove();
                     createPointBoard();
-                    //printScore();
                     break;
                 case EndGame:
                     System.out.println("End game stage");
@@ -132,6 +156,10 @@ public class GameController {
         }
     }
 
+    /**
+     * Handles the player's move.
+     * it displays the player's hand, board, and turn status.
+     */
     private void makeMove() {
         try {
             playerHand = context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()).getPlayerHand();
@@ -146,6 +174,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Prints the player's hand in a HBox placed at the bottom of the layout.
+     */
     private void printPlayerHand() {
         HBox hand = new HBox();
         try {
@@ -209,35 +240,53 @@ public class GameController {
         }
     }
 
+    /**
+     * Prints the objectives under the point board on the left side of the layout.
+     */
     private void printObjectives(){
 
-        ArrayList<ObjectiveCard> commonObj = new ArrayList<>();
+        ArrayList<ObjectiveCard> commonObj;
+        ObjectiveCard privateObj;
 
         //recupero gli obbiettivi comuni
-        //commonObj = GuiHelper.getCommonObjectives(context);
+        commonObj = GuiHelper.getCommonObjectives(context);
 
         //aggiungo l'obbiettivo privato
+        VBox objectives = new VBox();
         try{
-         commonObj.add(context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()).getSecretObjective());
+            privateObj = context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()).getSecretObjective();
+            //aggiungo l'obbiettivo privato a una HBox
+            ImageView privateObjView = Guifactory.displayCardImage(privateObj);
+            privateObjView.setPreserveRatio(true);
+            privateObjView.setFitWidth(150);
+            objectives.getChildren().add(privateObjView);
         }catch(Exception e){
             System.out.println("Errore nel recupero degli obbiettivi");
         }
 
-        //aggiungo le carte a una HBox
-        HBox objectives = new HBox();
+
+
+        //aggiungo le common alla HBox
+        HBox commonObjectives = new HBox();
         for(ObjectiveCard card : commonObj){
             ImageView cardView = Guifactory.displayCardImage(card);
             cardView.setPreserveRatio(true);
             cardView.setFitWidth(150);
-            objectives.getChildren().add(cardView);
+            commonObjectives.getChildren().add(cardView);
+            commonObjectives.setSpacing(10);
         }
 
         //aggiungo le carte alla view
-        objectives.setAlignment(Pos.BOTTOM_CENTER);
-        Platform.runLater(() -> leftLayout.setLeft(objectives));
+        objectives.getChildren().add(commonObjectives);
+        Platform.runLater(() -> leftLayout.setBottom(objectives));
 
     }
 
+    /**
+     * Displays a message indicating whether it's the player's turn.
+     *
+     * @param myTurn A boolean indicating whether it's the player's turn.
+     */
     private void itsYourTurn(Boolean myTurn) {
         //se il messaggio è già presente lo rimuovo
         if (layout.getTop() != null) {
@@ -264,6 +313,13 @@ public class GameController {
         Platform.runLater(() -> layout.setTop(messageContainer));
     }
 
+    /**
+     * Flips a card in the player's hand
+     * it updates the player's hand and also protracts the change on the server.
+     *
+     * @param event The ActionEvent.
+     * @param index The index of the card in the player's hand.
+     */
     private void flipHandCard(ActionEvent event, int index) {
         try {
             playerHand.get(index).flipSide();
@@ -275,6 +331,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Updates the player's board.
+     */
     private void updatePlayerBoard(){
         try {
             playerBoard = context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()).getPlayerBoard();
@@ -284,6 +343,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Updates the player's board in the center of the layout.
+     * it uses a local copy of the board to avoid unnecessary server calls and also to properly display card's Z axis.
+     * it also adds drag and drop handlers to the cells in the board.
+     */
     private void printPlayerBoard() {
 
         if(board == null) {
@@ -344,6 +408,12 @@ public class GameController {
         Platform.runLater(() -> layout.setCenter(scrollPane));
     }
 
+    /**
+     * Adds drag handlers to a card situated in the player's hand.
+     *
+     * @param cardView The ImageView of the card.
+     * @param index The index of the card.
+     */
     private void addDragHandlers(ImageView cardView, int index) {
         // Drag detected event handler
         cardView.setOnDragDetected(event -> {
@@ -365,6 +435,13 @@ public class GameController {
         });
     }
 
+    /**
+     * Handles the corner selection when dropping a hand card on a card placed on the board.
+     *
+     * @param cardIndex The index of the card.
+     * @param row The row of the cell.
+     * @param column The column of the cell.
+     */
     private void selectCorner(int cardIndex, int row, int column){
 
         //attenzione sono row e column della GRID non della BOARD
@@ -425,6 +502,12 @@ public class GameController {
         modalStage.showAndWait();
     }
 
+    /**
+     * Handles the player's draw
+     * it creates a modal window that allows the player to choose where to draw from.
+     * The player can choose to draw from gold cards, resource cards, or face up cards.
+     * The player can only draw if it's their turn.
+     */
     private void makeDraw() {
         //apro una finestra modale che mi fa scegliere da dove voglio pescare
         //devo fare questa operazione solo e soltanto se è il mio turno
@@ -432,79 +515,90 @@ public class GameController {
             return;
         }
 
-        Stage modalStage = new Stage();
-        modalStage.initModality(Modality.APPLICATION_MODAL);
-        BorderPane modalLayout = new BorderPane();
-        Label label = new Label("Da dove vuoi pescare?");
-        Button goldCardsButton = Guifactory.createButton("Gold Cards", 100, 50);
-        Button resourceCardsButton = Guifactory.createButton("Resource Cards", 100, 50);
-        Button faceUpCardsButton = Guifactory.createButton("Face up Cards", 100, 50);
+        AtomicBoolean drawn = new AtomicBoolean(false);
 
-        modalLayout.setTop(label);
-        HBox buttons = new HBox(goldCardsButton, resourceCardsButton, faceUpCardsButton);
-        buttons.setAlignment(Pos.CENTER);
-        buttons.setSpacing(10);
-        modalLayout.setCenter(buttons);
+        while (!drawn.get()) {
 
-        goldCardsButton.setOnAction(event -> {
-            try {
-                context.getClient().drawGoldCard();
-                System.out.println("Drawn from gold cards");
-                //aggiorno la mano del giocatore
-                makeMove();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            // Chiudi la finestra modale
-            modalStage.close();
-        });
+            Stage modalStage = new Stage();
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            BorderPane modalLayout = new BorderPane();
+            Label label = new Label("Da dove vuoi pescare?");
+            Button goldCardsButton = Guifactory.createButton("Gold Cards", 100, 50);
+            Button resourceCardsButton = Guifactory.createButton("Resource Cards", 100, 50);
+            Button faceUpCardsButton = Guifactory.createButton("Face up Cards", 100, 50);
 
-        resourceCardsButton.setOnAction(event -> {
-            try {
-                context.getClient().drawResourceCard();
-                System.out.println("Drawn from resource cards");
-                //aggiorno la mano del giocatore
-                makeMove();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            // Chiudi la finestra modale
-            modalStage.close();
-        });
+            modalLayout.setTop(label);
+            HBox buttons = new HBox(goldCardsButton, resourceCardsButton, faceUpCardsButton);
+            buttons.setAlignment(Pos.CENTER);
+            buttons.setSpacing(10);
+            modalLayout.setCenter(buttons);
 
-        faceUpCardsButton.setOnAction(event -> {
-            //mostro le face up cards
-            GridPane faceUpCards;
-
-            try {
-                faceUpCards = Guifactory.getFaceUpCards(context.getClient().getGameContext().getGame().getFaceUpCards());
-
-                //ogni face up cards ha un handler per il click
-                for (Node cell : faceUpCards.getChildren()) {
-                    cell.setOnMouseClicked(event1 -> {
-                        //chiamo il metodo draw sulla carta selezionata
-                        Integer column = GridPane.getColumnIndex(cell);
-                        try {
-                            context.getClient().drawFaceUpCard(column);
-                            System.out.println("Drawn from face up cards");
-                            modalStage.close();
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
-                    Platform.runLater(() -> modalLayout.setCenter(faceUpCards));
+            goldCardsButton.setOnAction(event -> {
+                try {
+                    context.getClient().drawGoldCard();
+                    drawn.set(true);
+                    System.out.println("Drawn from gold cards");
+                    //aggiorno la mano del giocatore
+                    makeMove();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
+                // Chiudi la finestra modale
+                modalStage.close();
+            });
 
-        //mostro la finestra modale
-        Scene modalScene = new Scene(modalLayout, 600, 500);
-        modalStage.setScene(modalScene);
-        modalStage.showAndWait();
+            resourceCardsButton.setOnAction(event -> {
+                try {
+                    context.getClient().drawResourceCard();
+                    drawn.set(true);
+                    System.out.println("Drawn from resource cards");
+                    //aggiorno la mano del giocatore
+                    makeMove();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                // Chiudi la finestra modale
+                modalStage.close();
+            });
+
+            faceUpCardsButton.setOnAction(event -> {
+                //mostro le face up cards
+                GridPane faceUpCards;
+
+                try {
+                    faceUpCards = Guifactory.getFaceUpCards(context.getClient().getGameContext().getGame().getFaceUpCards());
+
+                    //ogni face up cards ha un handler per il click
+                    for (Node cell : faceUpCards.getChildren()) {
+                        cell.setOnMouseClicked(event1 -> {
+                            //chiamo il metodo draw sulla carta selezionata
+                            Integer column = GridPane.getColumnIndex(cell);
+                            try {
+                                context.getClient().drawFaceUpCard(column);
+                                drawn.set(true);
+                                System.out.println("Drawn from face up cards");
+                                modalStage.close();
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                        Platform.runLater(() -> modalLayout.setCenter(faceUpCards));
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            //mostro la finestra modale
+            Scene modalScene = new Scene(modalLayout, 600, 500);
+            modalStage.setScene(modalScene);
+            modalStage.showAndWait();
+        }
     }
 
+    /**
+     * Ends the game by displaying a modal window with the winning player.
+     */
     private void endGame() {
         //mostro una finestra modale con il giocatore vincitore
         Stage modalStage = new Stage();
@@ -528,6 +622,9 @@ public class GameController {
         modalLayout.setBottom(closeButton);
     }
 
+    /**
+     * Creates the chat interface and places it on the right side of the layout.
+     */
     private void createChatInterface() {
         VBox chatContainer = new VBox();
         chatContainer.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -590,6 +687,9 @@ public class GameController {
         layout.setRight(chatContainer);
     }
 
+    /**
+     * Creates the point board and places it on the left side of the layout.
+     */
     private void createPointBoard(){
         try {
             StackPane pointBoard = GuiHelper.getPointBoard(context.getClient().getGameContext().getGame());
@@ -619,22 +719,11 @@ public class GameController {
                 Stage modalStage = new Stage();
                 modalStage.initModality(Modality.APPLICATION_MODAL);
                 BorderPane modalLayout = new BorderPane();
-                //mostro la board del giocatore selezionato
-                try {
-                    GridPane playerBoard = Guifactory.getBoard();
-                    for (int i = 0; i < 100; i++) {
-                        int row = i / 10;
-                        int column = i % 10;
-                        Card card = player.getPlayerBoard().getCard(new Coordinates(row, column));
-                        if (card != null) {
-                            ImageView cardView = Guifactory.displayCardImage(card);
-                            playerBoard.add(cardView, column, row);
-                        }
-                    }
-                    modalLayout.setCenter(playerBoard);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+
+                //creo la board del player selezionato
+
+
+
                 //mostro la finestra modale
                 Scene modalScene = new Scene(modalLayout, 500, 500);
                 modalStage.setScene(modalScene);

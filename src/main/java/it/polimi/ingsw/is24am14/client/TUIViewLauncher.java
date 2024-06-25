@@ -72,6 +72,8 @@ public class TUIViewLauncher {
             client.updateGameContext();
             if (client.getGameContext() != null) {
 
+                boolean myTurn = client.getGameContext().getGame().getActivePlayer().getPlayerNickname().equals(username);
+
                 if (client.getGameContext().getGameStateEnum() == GameStateEnum.DeckInit) {
 
                     System.out.println("Initializing");
@@ -79,14 +81,17 @@ public class TUIViewLauncher {
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.ChoosingColor) {
 
                     int myIndex = client.getGameContext().getGame().getPlayers().indexOf(client.getGameContext().getGame().getPlayer(client.getUsername()));
+
                     if (myIndex == -1) {throw new RuntimeException("Player not found");}
 
-                    boolean myTurn = true;
-                    for (int i = 0; i < myIndex; i++) {
-                        if (client.getGameContext().getGame().getPlayers().get(i).getColour() == null) {
-                            myTurn = false;
-                        }
-                    }
+                        myTurn = client.getGameContext().getGame().getActivePlayer().getPlayerNickname().equals(username);
+
+//                    boolean myTurn = true;
+//                    for (int i = 0; i < myIndex; i++) {
+//                        if (client.getGameContext().getGame().getPlayers().get(i).getColour() == null) {
+//                            myTurn = false;
+//                        }
+//                    }
 
                     if (myTurn && client.getGameContext().getGame().getPlayers().get(myIndex).getColour() == null) {
 
@@ -138,15 +143,16 @@ public class TUIViewLauncher {
                             Coordinates cardToOverlap = tui.chooseCardToOverlap(client.getGameContext().getGame().getPlayer(username).getPlayerBoard());
                             int cornerIndex = tui.chooseCornerIndex(client.getGameContext().getGame().getPlayer(username).getPlayerBoard());
 
-                            //mostro la board aggiornata
-                            client.updateGameContext();
-                            tui.printBoard(client.getGameContext().getGame().getPlayer(username).getPlayerBoard());
-
                             try {
                                 client.putCard(cardToPlay, cardToOverlap, cornerIndex);
                             } catch (Exception e) {
                                 System.out.println("Invalid move");
                             }
+
+                            //mostro la board aggiornata
+                            client.updateGameContext();
+                            tui.printBoard(client.getGameContext().getGame().getPlayer(username).getPlayerBoard());
+
                         }else if(moveChoice == 2){
                             tui.printLegend();
                         } else if (moveChoice == 3) {
@@ -168,18 +174,18 @@ public class TUIViewLauncher {
                     }
 
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.Draw) {
-                    int drawChoice = tui.pickChoices(client.getGameContext().getGame().getGoldDeck(), client.getGameContext().getGame().getResourceDeck(), client.getGameContext().getGame().getFaceUpCards());
-                    if (drawChoice == 0){ //draw from GoldDeck
-                        client.drawGoldCard();
-                    }
-                    else if (drawChoice == 1){ //draw from ResourceDeck
-                        client.drawResourceCard();
-                    }
-                    else{ //draw from FaceUpCards
-                        System.out.println("Face up cards:");
-                        tui.showFaceUpCards(client.getGameContext().getGame().getFaceUpCards());
-                        int faceUpChoice = tui.chooseFaceUpCard(client.getGameContext().getGame().getFaceUpCards());
-                        client.drawFaceUpCard(faceUpChoice);
+                    if (myTurn) {
+                        int drawChoice = tui.pickChoices(client.getGameContext().getGame().getGoldDeck(), client.getGameContext().getGame().getResourceDeck(), client.getGameContext().getGame().getFaceUpCards());
+                        if (drawChoice == 0) { //draw from GoldDeck
+                            client.drawGoldCard();
+                        } else if (drawChoice == 1) { //draw from ResourceDeck
+                            client.drawResourceCard();
+                        } else { //draw from FaceUpCards
+                            System.out.println("Face up cards:");
+                            tui.showFaceUpCards(client.getGameContext().getGame().getFaceUpCards());
+                            int faceUpChoice = tui.chooseFaceUpCard(client.getGameContext().getGame().getFaceUpCards());
+                            client.drawFaceUpCard(faceUpChoice);
+                        }
                     }
 
                     //Show points

@@ -44,8 +44,7 @@ public class CreateGameController {
             e.printStackTrace();
         }
     }
-
-
+    
     public void showScene() {
         Stage stage = context.getStage();
         stage.setScene(scene);
