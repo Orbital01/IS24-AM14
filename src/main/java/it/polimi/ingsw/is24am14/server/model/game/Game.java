@@ -23,6 +23,7 @@ public class Game implements Serializable {
     private ArrayList<PlayableCard> faceUpCards;
     private Deck<ObjectiveCard> objectiveDeck;
     private final Deck<StarterCard> starterCards;
+    private final ArrayList<ObjectiveCard> commonObjective;
 
     private boolean isEndGame;
     private int indexActivePlayer;
@@ -36,6 +37,8 @@ public class Game implements Serializable {
         this.goldDeck = new GoldCardDeckCreator().createGoldCardDeck();
         this.resourceDeck = new ResourceCardDeckCreator().createResourceCardDeck();
         this.objectiveDeck = new ObjectiveCardDeckCreator().createObjectiveCardDeck();
+
+        this.commonObjective = new ArrayList<>();
 
         this.faceUpCards = new ArrayList<>();
     }
@@ -181,6 +184,14 @@ public class Game implements Serializable {
 
     public void setObjectiveDeck(Deck<ObjectiveCard> objectiveDeck) {
         this.objectiveDeck = objectiveDeck;
+    }
+
+    public void addCommonObjective(ObjectiveCard card) {
+        this.commonObjective.add(card);
+    }
+
+    public ArrayList<ObjectiveCard> getCommonObjective() {
+        return this.commonObjective;
     }
 
     public void setFaceUpCards(ArrayList<PlayableCard> faceUpCards) {

@@ -93,7 +93,13 @@ public class GameContext implements Serializable {
             player.addCardToHand(game.popGoldDeck());
         }
 
+        System.out.println("Adding common objective");
+
+        game.addCommonObjective(game.getObjectiveDeck().removeTop());
+        game.addCommonObjective(game.getObjectiveDeck().removeTop());
+
         System.out.println("Choosing objective cards");
+
         //  I don't know if it's necessary or not to have 2 for loops (graphical reasons maybe?)
         for (Player player : game.getPlayers()) {
             ArrayList<ObjectiveCard> objCards = new ArrayList<>();
