@@ -138,6 +138,10 @@ public class TUIViewLauncher {
                             Coordinates cardToOverlap = tui.chooseCardToOverlap(client.getGameContext().getGame().getPlayer(username).getPlayerBoard());
                             int cornerIndex = tui.chooseCornerIndex(client.getGameContext().getGame().getPlayer(username).getPlayerBoard());
 
+                            //mostro la board aggiornata
+                            client.updateGameContext();
+                            tui.printBoard(client.getGameContext().getGame().getPlayer(username).getPlayerBoard());
+
                             try {
                                 client.putCard(cardToPlay, cardToOverlap, cornerIndex);
                             } catch (Exception e) {
@@ -159,11 +163,6 @@ public class TUIViewLauncher {
                             tui.getOtherBoard(client);
                         }
 
-                        //mostro la board aggiornata
-                        client.updateGameContext();
-                        tui.printBoard(client.getGameContext().getGame().getPlayer(username).getPlayerBoard());
-                        //Show points
-                        tui.printScore(client.getGameContext().getGame().getPlayer(username).getScore());
                     } else {
                         System.out.println("It's not your turn");
                     }
@@ -182,6 +181,11 @@ public class TUIViewLauncher {
                         int faceUpChoice = tui.chooseFaceUpCard(client.getGameContext().getGame().getFaceUpCards());
                         client.drawFaceUpCard(faceUpChoice);
                     }
+
+                    //Show points
+                    tui.printScore(client.getGameContext().getGame().getPlayer(username).getScore());
+
+
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.ChoosingStarterCard) {
                     StarterCard starterCard = client.getGameContext().getGame().getPlayer(username).getStarterCard();
                     System.out.println("Your starter card:");
@@ -204,6 +208,7 @@ public class TUIViewLauncher {
                     String winner = tui.getWinner(client);
                     tui.printWinner(winner);
                     System.exit(0);
+
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.LastMove){
                     System.out.println("Last move:");
                     if (client.getGameContext().getGame().getActivePlayer().getPlayerNickname().equals(username)) {
