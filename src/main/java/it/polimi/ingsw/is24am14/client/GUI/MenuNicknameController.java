@@ -12,6 +12,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * This class is responsible for managing the menu where the user can enter their nickname.
+ */
 public class MenuNicknameController {
 
     @FXML
@@ -24,7 +27,11 @@ public class MenuNicknameController {
     private Scene scene;
     private BorderPane layout = new BorderPane();
 
-
+    /**
+     * Constructor for the MenuNicknameController class.
+     * It initializes the scene and the layout of the menu.
+     * @param context The context of the GUI view.
+     */
     public MenuNicknameController(GUIViewLauncher context){
         this.context = context;
         scene = new Scene(layout, 1920, 1080);
@@ -55,19 +62,29 @@ public class MenuNicknameController {
 
     }
 
-
+    /**
+     * This method is responsible for showing the scene of the menu.
+     */
     public void showScene() {
         Stage stage = context.getStage();
         stage.setScene(scene);
         stage.show();
     }
 
+    /**
+     * This method is responsible for going to the scene where the user can choose what lobby to join or create.
+     */
     public void goToLobbyChoice(){
         //passo alla scena di decisione sulla lobby
         MenuLobbyController lobbyController = new MenuLobbyController(context);
         lobbyController.showScene();
     }
 
+    /**
+     * This method is responsible for handling the action of the confirm button.
+     * It sets the username and goes to the scene where the user can choose what lobby to join or create.
+     * @param event The event of the confirm button.
+     */
     private void handleConfirmButtonAction(ActionEvent event) {
         //setto lo username e passo alla scena di decisione sulla lobby
         String username = usernameField.getText();

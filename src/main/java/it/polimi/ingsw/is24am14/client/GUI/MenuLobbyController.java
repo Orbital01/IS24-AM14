@@ -8,13 +8,22 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
+/**
+ * This class is responsible for controlling the menu lobby.
+ * It provides the functionality to create and join a game lobby.
+ */
 public class MenuLobbyController {
 
     private GUIViewLauncher context;
     private Scene scene;
     private BorderPane layout = new BorderPane();
 
+    /**
+     * Constructor for the MenuLobbyController class.
+     * It initializes the scene and adds the necessary UI elements.
+     *
+     * @param context The GUIViewLauncher context.
+     */
     public MenuLobbyController(GUIViewLauncher context){
         this.context = context;
         scene = new Scene(layout, 1920, 1080);
@@ -40,27 +49,43 @@ public class MenuLobbyController {
 
     }
 
-
+    /**
+     * Shows the scene of the MenuLobbyController.
+     */
     public void showScene() {
         Stage stage = context.getStage();
         stage.setScene(scene);
         stage.show();
     }
 
+    /**
+     * Goes to the JoinGame scene.
+     */
     private void goToJoinLobby(){
         JoinGameController joinController = new JoinGameController(context);
         joinController.showScene();
     }
 
+    /**
+     * Goes to the CreateGame scene.
+     */
     private void goToCreateLobby(){
         CreateGameController createGameController = new CreateGameController(context);
         createGameController.showScene();
     }
 
+    /**
+     * Handles the action of the create button.
+     * @param event The event of the button.
+     */
     private void handleCreateButtonAction(ActionEvent event) {
         goToCreateLobby();
     }
 
+    /**
+     * Handles the action of the join button.
+     * @param event The event of the button.
+     */
     private void handleJoinButtonAction(ActionEvent event) {
         goToJoinLobby();
     }
