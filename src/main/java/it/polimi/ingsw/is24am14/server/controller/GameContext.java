@@ -149,7 +149,7 @@ public class GameContext implements Serializable {
             placementConditionSatisfied = true;
         }
 
-        if (gameStateEnum == GameStateEnum.Move && game.getActivePlayer().getPlayerNickname().equals(username) && placementConditionSatisfied) {
+        if ((gameStateEnum == GameStateEnum.Move || gameStateEnum == GameStateEnum.LastMove) && game.getActivePlayer().getPlayerNickname().equals(username) && placementConditionSatisfied) {
             player.placeCard(cardToOverlap, cardToPlay, cornerIndex);
             lastPlayedCard = cardToPlay;
 
@@ -166,7 +166,7 @@ public class GameContext implements Serializable {
 
     public void drawGoldCard(String username) {
         Player player = game.getPlayer(username);
-        if (gameStateEnum == GameStateEnum.Draw && game.getActivePlayer().getPlayerNickname().equals(username)) {
+        if ((gameStateEnum == GameStateEnum.Draw || gameStateEnum == GameStateEnum.LastDraw) && game.getActivePlayer().getPlayerNickname().equals(username)) {
             player.addCardToHand(game.popGoldDeck());
             this.endTurn();
         }
@@ -174,7 +174,7 @@ public class GameContext implements Serializable {
 
     public void drawResourceCard(String username) {
         Player player = game.getPlayer(username);
-        if (gameStateEnum == GameStateEnum.Draw && game.getActivePlayer().getPlayerNickname().equals(username)) {
+        if ((gameStateEnum == GameStateEnum.Draw || gameStateEnum == GameStateEnum.LastDraw) && game.getActivePlayer().getPlayerNickname().equals(username)) {
             player.addCardToHand(game.popResourceDeck());
             this.endTurn();
         }
@@ -182,7 +182,7 @@ public class GameContext implements Serializable {
 
     public void drawFaceUpCard(String username, int cardIndex) {
         Player player = game.getPlayer(username);
-        if (gameStateEnum == GameStateEnum.Draw && game.getActivePlayer().getPlayerNickname().equals(username)) {
+        if ((gameStateEnum == GameStateEnum.Draw || gameStateEnum == GameStateEnum.LastDraw) && game.getActivePlayer().getPlayerNickname().equals(username)) {
             player.addCardToHand(game.drawFaceUpCard(cardIndex));
             this.endTurn();
         }
@@ -191,7 +191,8 @@ public class GameContext implements Serializable {
     private void endTurn() {
         this.updateScore();
 
-        if (gameStateEnum == GameStateEnum.LastDraw && game.getIndexActivePlayer() == game.getNumPlayers()) {
+        if (gameStateEnum == GameStateEnum.LastDraw && game.getIndexActivePlayer() == game.getNumPlayers() - 1) {
+            System.out.println("Game ended");
             gameStateEnum = GameStateEnum.EndGame;
             return;
         }

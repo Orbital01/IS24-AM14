@@ -34,16 +34,10 @@ public class ResourceCondition implements Condition {
     @Override
     public boolean isSatisfied(GameArea board) {
         ArrayList<CornerEnum.ResourceEnum> toFind = new ArrayList<>(listResource);
-        System.out.println("To find:");
-        for (CornerEnum.ResourceEnum clause : listResource) {
-            System.out.println(clause);
-        }
-        System.out.println("Removing:");
 
         //  for each card on the board
         for (Map.Entry<Coordinates, Card> entry : board.getBoard().entrySet())
         {
-            System.out.println("ROW: " + entry.getKey().getRow() + "COL: " + entry.getKey().getColumn());
             for (CornerEnum cornerEnum : entry.getValue().getCornerEnums()) {
                 System.out.println(cornerEnum);
                 toFind.remove(cornerEnum);

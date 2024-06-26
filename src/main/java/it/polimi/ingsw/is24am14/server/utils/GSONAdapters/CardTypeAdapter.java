@@ -27,7 +27,6 @@ public class CardTypeAdapter implements JsonSerializer<Card>, JsonDeserializer<C
         }
 
         if ("GoldCard".equals(cardType)) {
-            System.out.println("Des gold card");
             ArrayList<Corner> frontCorners = new ArrayList<>(Arrays.asList(jsonDeserializationContext.deserialize(jsonObject.get("frontCorners"), Corner[].class)));
             return new GoldCard(
                     jsonDeserializationContext.deserialize(jsonObject.get("points"), Integer.class),
@@ -58,7 +57,6 @@ public class CardTypeAdapter implements JsonSerializer<Card>, JsonDeserializer<C
                     jsonObject.get("frontImage").getAsString(),
                     jsonObject.get("backImage").getAsString());
         }
-
-        return null;
+        throw new RuntimeException("Error while deserializing card");
     }
 }

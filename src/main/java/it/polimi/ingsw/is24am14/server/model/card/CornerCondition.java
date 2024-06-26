@@ -18,7 +18,6 @@ public class CornerCondition implements Condition {
         Coordinates coordinates = getCoordinates(board);
 
         if (coordinates == null) throw new IllegalArgumentException("Corner condition null");
-        System.out.println("x: " + coordinates.getRow() + " y: " + coordinates.getColumn());
         //  top left
         tmpCoordinates = Coordinates.newCoordinates(coordinates, 0);
         if (board.getCard(tmpCoordinates) != null && board.getCard(tmpCoordinates).getCorners().get(3).isOverlapped()) {

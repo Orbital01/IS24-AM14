@@ -47,6 +47,6 @@ public class PlayableCardAdapter implements JsonSerializer<PlayableCard>, JsonDe
                     jsonObject.get("frontImage").getAsString(),
                     jsonObject.get("backImage").getAsString());
         }
-        return null;
+        throw new RuntimeException("Error when deserializing playable card");
     }
 }

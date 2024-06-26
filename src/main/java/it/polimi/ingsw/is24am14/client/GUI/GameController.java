@@ -139,6 +139,7 @@ public class GameController {
                     //printScore();
                     break;
                 case Draw:
+                case LastDraw:
                     System.out.println("Draw stage");
                     makeDraw();
                     createPointBoard();
