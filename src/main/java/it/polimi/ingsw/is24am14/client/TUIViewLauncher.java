@@ -7,6 +7,7 @@ import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
 import it.polimi.ingsw.is24am14.server.model.card.StarterCard;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 import it.polimi.ingsw.is24am14.server.network.ClientInterface;
+import it.polimi.ingsw.is24am14.server.network.NotYourColorTurnException;
 import it.polimi.ingsw.is24am14.server.network.RMIClient;
 import it.polimi.ingsw.is24am14.server.network.SocketClient;
 
@@ -99,7 +100,6 @@ public class TUIViewLauncher {
                     System.out.println("Initializing");
 
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.ChoosingColor) {
-
                     String clientUsername;
                     try {
                         clientUsername = client.getUsername();
@@ -109,11 +109,13 @@ public class TUIViewLauncher {
                     }
 
                     int myIndex = client.getGameContext().getGame().getPlayers().indexOf(client.getGameContext().getGame().getPlayer(clientUsername));
+                    myTurn = true;
+
+                    for (int i = 0; i < myIndex; i++) {
+                        if (client.getGameContext().getGame().getPlayers().get(i).getColour() == null) myTurn = false;
+                    }
 
                     if (myIndex == -1) {throw new RuntimeException("Player not found");}
-
-                        myTurn = client.getGameContext().getGame().getActivePlayer().getPlayerNickname().equals(username);
-
                     if (myTurn && client.getGameContext().getGame().getPlayers().get(myIndex).getColour() == null) {
                         try {
                             tui.printColors(client.getGameContext().getColors());
@@ -251,7 +253,7 @@ public class TUIViewLauncher {
                     tui.printScore(client.getGameContext().getGame().getPlayer(username).getScore());
 
 
-                } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.ChoosingStarterCard) {
+                } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.ChoosingStarterCard && client.getGameContext().getGame().getPlayer(client.getUsername()).getPlayerBoard().getBoard().isEmpty()) {
                     StarterCard starterCard = client.getGameContext().getGame().getPlayer(username).getStarterCard();
                     System.out.println("Your starter card:");
                     for (String line : starterCard.drawCard()) {

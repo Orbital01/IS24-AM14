@@ -86,6 +86,8 @@ public class GameContext implements Serializable {
     }
 
     public void playersCards() {
+        gameStateEnum = GameStateEnum.ChoosingSecretObjective;
+
         System.out.println("Setting players hand cards");
         for (Player player : game.getPlayers()) {
             player.addCardToHand(game.popResourceDeck());
@@ -107,7 +109,6 @@ public class GameContext implements Serializable {
             objCards.add(game.getObjectiveDeck().removeTop());
             objectiveCardChoices.put(player.getPlayerNickname(), objCards);
         }
-        gameStateEnum = GameStateEnum.ChoosingSecretObjective;
     }
 
     public ArrayList<ObjectiveCard> getObjectiveCardChoices(String playerNickname) {

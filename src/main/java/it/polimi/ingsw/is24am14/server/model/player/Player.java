@@ -158,6 +158,9 @@ public class Player implements Serializable {
      * @param card The card that is going to be added to the player's hand.
      */
     public void addCardToHand(PlayableCard card) {
+        if (this.playerHand.size() >= 3) {
+            throw new RuntimeException("Too many cards in the hand");
+        }
         this.playerHand.add(card);
     }
 
