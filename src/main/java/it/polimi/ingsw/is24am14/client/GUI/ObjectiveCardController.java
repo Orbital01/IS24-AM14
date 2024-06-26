@@ -188,6 +188,7 @@ public class ObjectiveCardController {
             cardLayout.setAlignment(javafx.geometry.Pos.CENTER);
 
             layout.getChildren().add(cardLayout);
+            layout.setAlignment(javafx.geometry.Pos.CENTER);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -13,8 +13,10 @@ import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.network.Message;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
@@ -490,17 +492,37 @@ public class GameController {
         Stage modalStage = new Stage();
         modalStage.initModality(Modality.APPLICATION_MODAL);
         BorderPane modalLayout = new BorderPane();
-        ImageView cardView = (Guifactory.displayCardImage(cardToOverlap));
-        modalLayout.setCenter(cardView);
 
-        TextField cornerInput = new TextField();
-        Label cornerInputLabel = new Label("Inserisci un numero tra 0 e " + (cardToOverlap.getCorners().size()-1));
-        VBox inputBox = new VBox(cornerInputLabel, cornerInput);
-        modalLayout.setBottom(inputBox);
+        StackPane cardStack = new StackPane();
 
-        cornerInput.setOnAction(event -> {
+        AnchorPane anchorPane = new AnchorPane();
+
+        Button corner0 = Guifactory.createButton("0", 50, 50);
+        Button corner1 = Guifactory.createButton("1", 50, 50);
+        Button corner2 = Guifactory.createButton("2", 50, 50);
+        Button corner3 = Guifactory.createButton("3", 50, 50);
+
+        AnchorPane.setTopAnchor(corner0, 0.0);
+        AnchorPane.setLeftAnchor(corner0, 0.0);
+
+        AnchorPane.setTopAnchor(corner1, 0.0);
+        AnchorPane.setRightAnchor(corner1, 0.0);
+
+        AnchorPane.setBottomAnchor(corner2, 0.0);
+        AnchorPane.setLeftAnchor(corner2, 0.0);
+
+        AnchorPane.setBottomAnchor(corner3, 0.0);
+        AnchorPane.setRightAnchor(corner3, 0.0);
+
+        anchorPane.getChildren().addAll(corner0, corner1, corner2, corner3);
+
+        cardStack.getChildren().addAll(Guifactory.displayCardImage(cardToOverlap), anchorPane);
+
+        modalLayout.setCenter(cardStack);
+
+        corner0.setOnAction(event -> {
             // Recupera l'input dell'utente dal TextField e lo converte in un intero
-            int corner = Integer.parseInt(cornerInput.getText());
+            int corner = 0;
             try {
                 context.getClient().putCard(cardIndex, new Coordinates(realRow, realColumn), corner);
 
@@ -525,8 +547,90 @@ public class GameController {
             // Chiudi la finestra modale
             modalStage.close();
         });
+        corner1.setOnAction(event -> {
+            // Recupera l'input dell'utente dal TextField e lo converte in un intero
+            int corner = 1;
+            try {
+                context.getClient().putCard(cardIndex, new Coordinates(realRow, realColumn), corner);
+
+                //aggiungo la carta alla board
+                //questa operazione deve essere fatta solo se la carta è stata effettivamente posizionata
+                Guifactory.addCard(board, playerHand.get(cardIndex), row, column, corner, index);
+                index++;
+
+                System.out.println("Card " +cardIndex + " placed at row " + realRow + ", column " + realColumn + ", corner " + corner);
+                //aggiorno la mano del giocatore
+                makeMove();
+            } catch (Exception e) {
+                //mostro un messaggio di errore
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Mossa non concessa");
+                alert.setHeaderText(null);
+                alert.setContentText("Non puoi piazzare la carta in questa posizione");
+                alert.showAndWait();
+                modalStage.close();
+                throw new RuntimeException(e);
+            }
+            // Chiudi la finestra modale
+            modalStage.close();
+        });
+        corner2.setOnAction(event -> {
+            // Recupera l'input dell'utente dal TextField e lo converte in un intero
+            int corner = 2;
+            try {
+                context.getClient().putCard(cardIndex, new Coordinates(realRow, realColumn), corner);
+
+                //aggiungo la carta alla board
+                //questa operazione deve essere fatta solo se la carta è stata effettivamente posizionata
+                Guifactory.addCard(board, playerHand.get(cardIndex), row, column, corner, index);
+                index++;
+
+                System.out.println("Card " +cardIndex + " placed at row " + realRow + ", column " + realColumn + ", corner " + corner);
+                //aggiorno la mano del giocatore
+                makeMove();
+            } catch (Exception e) {
+                //mostro un messaggio di errore
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Mossa non concessa");
+                alert.setHeaderText(null);
+                alert.setContentText("Non puoi piazzare la carta in questa posizione");
+                alert.showAndWait();
+                modalStage.close();
+                throw new RuntimeException(e);
+            }
+            // Chiudi la finestra modale
+            modalStage.close();
+        });
+        corner3.setOnAction(event -> {
+            // Recupera l'input dell'utente dal TextField e lo converte in un intero
+            int corner = 3;
+            try {
+                context.getClient().putCard(cardIndex, new Coordinates(realRow, realColumn), corner);
+
+                //aggiungo la carta alla board
+                //questa operazione deve essere fatta solo se la carta è stata effettivamente posizionata
+                Guifactory.addCard(board, playerHand.get(cardIndex), row, column, corner, index);
+                index++;
+
+                System.out.println("Card " +cardIndex + " placed at row " + realRow + ", column " + realColumn + ", corner " + corner);
+                //aggiorno la mano del giocatore
+                makeMove();
+            } catch (Exception e) {
+                //mostro un messaggio di errore
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Mossa non concessa");
+                alert.setHeaderText(null);
+                alert.setContentText("Non puoi piazzare la carta in questa posizione");
+                alert.showAndWait();
+                modalStage.close();
+                throw new RuntimeException(e);
+            }
+            // Chiudi la finestra modale
+            modalStage.close();
+        });
+
         //mostro la finestra modale
-        Scene modalScene = new Scene(modalLayout, 500, 500);
+        Scene modalScene = new Scene(modalLayout, 400, 300);
         modalStage.setScene(modalScene);
         modalStage.showAndWait();
     }
