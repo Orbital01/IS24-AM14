@@ -28,6 +28,7 @@ public class TUIViewLauncher {
                 client = new SocketClient();
             } catch (Exception e) {
                 System.out.println("Error while connecting to the server via Socket connection");
+                System.exit(0);
             }
         }
         else {
@@ -35,6 +36,7 @@ public class TUIViewLauncher {
                 client = new RMIClient();
             } catch (Exception e) {
                 System.out.println("Error while connecting to the server via RMI connection");
+                System.exit(0);
             }
         }
 
