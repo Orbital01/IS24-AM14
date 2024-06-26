@@ -36,7 +36,7 @@ public class GameAreaSerializer implements JsonSerializer<GameArea>, JsonDeseria
         for (JsonElement element : jsonArray) {
             JsonObject entryObject = element.getAsJsonObject();
             Coordinates coordinates = context.deserialize(entryObject.get("coordinates"), Coordinates.class);
-            Card card = context.deserialize(entryObject.get("card"), Card.class);
+            Card card = InitGSON.init().fromJson(entryObject.get("card"), Card.class);
             board.put(coordinates, card);
         }
 
