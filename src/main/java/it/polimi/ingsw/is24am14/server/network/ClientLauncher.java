@@ -1,24 +1,35 @@
 package it.polimi.ingsw.is24am14.server.network;
 
+
 import com.google.gson.Gson;
-import it.polimi.ingsw.is24am14.server.controller.GameStateEnum;
-import it.polimi.ingsw.is24am14.server.controller.Lobby;
 import it.polimi.ingsw.is24am14.server.model.card.*;
+import it.polimi.ingsw.is24am14.server.model.game.GameArea;
+import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 import it.polimi.ingsw.is24am14.server.utils.GSONAdapters.InitGSON;
 
-import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
 
 public class ClientLauncher {
     public static void main(String[] args) throws Exception {
-        Gson gson = InitGSON.init();
-        Corner corner = new Corner(CornerEnum.HIDDEN);
+        Coordinates topLeft = new Coordinates(1, -1);
+        Coordinates midLeft = new Coordinates(0, -1);
+        Coordinates bottomMid = new Coordinates(-1, 0);
 
-        String json = gson.toJson(corner);
+        CardCondition redRedGreenL = new CardCondition();
+        redRedGreenL.addClause(topLeft, CornerEnum.ResourceEnum.FUNGI);
+        redRedGreenL.addClause(midLeft, CornerEnum.ResourceEnum.FUNGI);
+        redRedGreenL.addClause(bottomMid, CornerEnum.ResourceEnum.PLANT);
+        ObjectiveCard objectiveCard = new ObjectiveCard(redRedGreenL, "/images/cards/objective_cards/objective_fronts/page_91.png", "/images/cards/resource_cards/objective_backs/page_91.png", 3);
 
-        corner = gson.fromJson(json, Corner.class);
+        String json = InitGSON.init().toJson(objectiveCard);
 
-        System.out.println(corner.getType());
+        ObjectiveCard newObjectiveCard = InitGSON.init().fromJson(json, ObjectiveCard.class);
+
+        ResourceCondition resourceCondition = new ResourceCondition();
+        resourceCondition.addClause(CornerEnum.ResourceEnum.FUNGI);
+
+        String jsonResource = InitGSON.init().toJson(resourceCondition);
+        ResourceCondition newResourceCondition = InitGSON.init().fromJson(jsonResource, ResourceCondition.class);
     }
 }

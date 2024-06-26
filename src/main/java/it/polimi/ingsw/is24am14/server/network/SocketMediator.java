@@ -170,23 +170,37 @@ public class SocketMediator implements ClientHandler {
     }
 
     public void setColor(String color) throws Exception {
-        TokenColour colorValue = TokenColour.valueOf(color);
-        this.lobbyList.getPlayersLobby(username).setColor(username, colorValue);
-        send(new SocketResponse(200, "colorSet"));
+        try {
+            TokenColour colorValue = TokenColour.valueOf(color);
+            this.lobbyList.getPlayersLobby(username).setColor(username, colorValue);
+            send(new SocketResponse(200, "colorSet"));
+        } catch (NotYourColorTurnException notYourColorTurnException) {
+            send(new SocketResponse(409, "notYourColorTurnException"));
+        } catch (Exception e) {
+            send(new SocketResponse(409, "errorSettingColor"));
+        }
     }
 
     public void setStarterCard(StarterCard card) throws Exception {
-        Lobby lobby = this.lobbyList.getPlayersLobby(username);
-        lobby.getGameContext().placeStarterCard(username, card);
-        send(new SocketResponse(200, "starterCardSet"));
+        try {
+            Lobby lobby = this.lobbyList.getPlayersLobby(username);
+            lobby.getGameContext().placeStarterCard(username, card);
+            send(new SocketResponse(200, "starterCardSet"));
+        } catch (Exception e) {
+            send(new SocketResponse(409, "errorSettingStarterCard"));
+        }
     }
 
     public void setObjectiveCard(ObjectiveCard card) throws Exception {
-        Lobby lobby = this.lobbyList.getPlayersLobby(username);
-        Player player = lobby.getGameContext().getGame().getPlayer(username);
+        try {
+            Lobby lobby = this.lobbyList.getPlayersLobby(username);
+            Player player = lobby.getGameContext().getGame().getPlayer(username);
 
-        lobby.getGameContext().setObjectiveCard(player, card);
-        send(new SocketResponse(200, "objectiveCardSet"));
+            lobby.getGameContext().setObjectiveCard(player, card);
+            send(new SocketResponse(200, "objectiveCardSet"));
+        } catch (Exception e) {
+            send(new SocketResponse(409, "errorSettingObjectiveCard"));
+        }
     }
 
     public void flipCard(int index) throws Exception {

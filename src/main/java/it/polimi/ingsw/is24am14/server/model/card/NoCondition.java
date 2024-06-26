@@ -9,7 +9,7 @@ public class NoCondition implements Condition{
     }
     @Override
     public int numSatisfied(GameArea board){
-        return 0;
+        return 1;
     }
 
     @Override

@@ -40,13 +40,13 @@ public class RenderBoard {
 
     private ArrayList<String> drawEmptyCard() {
         ArrayList<String> emptyCard = new ArrayList<>();
-        emptyCard.add("                         ");
-        emptyCard.add("                         ");
-        emptyCard.add("                         ");
-        emptyCard.add("                         ");
-        emptyCard.add("                         ");
-        emptyCard.add("                         ");
-        emptyCard.add("                         ");
+        emptyCard.add("                   ");
+        emptyCard.add("                   ");
+        emptyCard.add("                   ");
+        emptyCard.add("                   ");
+        emptyCard.add("                   ");
+        emptyCard.add("                   ");
+        emptyCard.add("                   ");
         return emptyCard;
     }
 
@@ -60,37 +60,38 @@ public class RenderBoard {
         //per ogni carta nella riga aggiungo tutte le righe della carta
         for(int j=boardMinColumn(); j<=boardMaxColumn(); j++){
 
+            ArrayList<String> cardRow;
             if(board.getCard(new Coordinates(rowNumber, j)) != null){
                 Card card = board.getCard(new Coordinates(rowNumber, j));
-                ArrayList<String> cardRow = card.drawCard();
-
-                int counter=0;
-                for (String s : cardRow) {
-                    row.set(counter, row.get(counter).concat(s));
-                    counter++;
-                }
+                cardRow = card.drawCard();
             } else {
                 //stampo la carta vuota
-                ArrayList<String> emptyCard = drawEmptyCard();
-                int counter=0;
-                for (String s : emptyCard) {
-                    row.set(counter, row.get(counter).concat(s));
-                    counter++;
-                }
+                cardRow = drawEmptyCard();
+            }
 
+            int counter=0;
+            for (String s : cardRow) {
+                // Normalizza la lunghezza delle stringhe prima di concatenarle
+                String normalizedString = s;
+                int maxLength = 20; // Sostituisci con la lunghezza massima desiderata
+                if (s.length() < maxLength) {
+                    normalizedString = String.format("%-" + maxLength + "s", s);
+                }
+                row.set(counter, row.get(counter).concat(normalizedString));
+                counter++;
             }
         }
-    return row;
+        return row;
     }
 
     //il metodo sopra va iterato per tutte le righe della hashmap in un metodo printBoard
     // e poi vanno tutte stampate in ordine
     public void printBoard(){
-        for(int i=boardMaxRow(); i>=boardMinRow(); i--) {
+        for(int i=boardMaxRow(); i>=boardMinRow(); i--){
             ArrayList<String> render = printRow(i);
-                for (String s : render) {
-                    System.out.println(s);
-                }
+            for(String s : render){
+                System.out.println(s);
+            }
         }
     }
 

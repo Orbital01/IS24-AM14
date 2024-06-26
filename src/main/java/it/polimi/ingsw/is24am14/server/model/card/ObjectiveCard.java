@@ -73,7 +73,7 @@ public class ObjectiveCard extends Card {
         }
         else if (this.getCondition().toString().equals("CardCondition")){
             int points = this.getPoints();
-            
+
             EmojiConverter conditionConverter = new EmojiConverter();
             ArrayList<ArrayList<String>> cardCondition = conditionConverter.drawCardCondition(this.getCondition());
 

@@ -1,26 +1,31 @@
 package it.polimi.ingsw.is24am14.client.GUI.GuiHelper;
 
+import it.polimi.ingsw.is24am14.server.model.card.Deck;
+import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
 import it.polimi.ingsw.is24am14.server.model.game.Game;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.network.Message;
-import it.polimi.ingsw.is24am14.server.view.GUIView;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
+import it.polimi.ingsw.is24am14.client.GUIViewLauncher;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * This class provides helper methods for the GUI game controller.
+
+ */
 public class GuiHelper {
 
     private int lastMessageIndex=0;
 
-    private final PointBoardController pointBoardController = new PointBoardController();
-
+    /**
+     * Determines the winner of the game based on the highest score.
+     *
+     * @param game The game to determine the winner of.
+     * @return winner The player with the highest score.
+     */
     public Player getWinner(Game game){
         Player winner = null;
         int max = 0;
@@ -33,11 +38,20 @@ public class GuiHelper {
         return winner;
     }
 
-    public void updateMessages(TextArea messageArea, GUIView context) {
+    /**
+     * Updates the messages in the message area.
+     * it retrieves the messages from the game context and appends them to the message area.
+     * It also updates the lastMessageIndex to keep track of the last message displayed.
+     *
+     * @param messageArea The TextArea to update.
+     * @param context The GUIViewLauncher context.
+     */
+    public void updateMessages(TextArea messageArea, GUIViewLauncher context) {
         ArrayList<Message> messaggi;
-
+        String user;
         try {
             messaggi = context.getClient().getGameContext().getMessages();
+            user = context.getClient().getUsername();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -47,25 +61,51 @@ public class GuiHelper {
             if(message.getReceiver().equals("")){
                 messageArea.appendText(message.getSender() + ": " + message.getMessage() + "\n");
                 this.lastMessageIndex++;
-            }else {
+            }else if (message.getReceiver().equals(user)) {
                 messageArea.appendText("private message from " + message.getSender() + ": " + message.getMessage() + "\n");
                 this.lastMessageIndex++;
             }
         }
     }
 
-    public Pane getPointBoard(Game game){
+    /**
+     * Gets the point board as a StackPane.
+     * it uses the PointBoardController to create the point board.
+     * It retrieves the token images and scores from the game.
+     * It returns the point board as a StackPane.
+     *
+     * @param game The game to get the point board of.
+     * @return The point board as a StackPane.
+     */
+    public StackPane getPointBoard(Game game){
         ArrayList<Image> tokenImages = new ArrayList<>();
         ArrayList<Integer> scores = new ArrayList<>();
+
         for(Player player : game.getPlayers()){
+            //TODO: change URI
             tokenImages.add(new Image("file:src/main/resources/images.tokens/" + player.getColour().toString().toLowerCase() +"_token.png" ));
             scores.add(player.getScore());
         }
+        return PointBoardController.getPointBoardStackPane(tokenImages, scores);
+    }
+
+    /**
+     * Gets the common objectives from the game context.
+     *
+     * @param context The GUIViewLauncher context.
+     * @return The common objectives as an ArrayList.
+     */
+    public ArrayList<ObjectiveCard> getCommonObjectives(GUIViewLauncher context) {
+
+        ArrayList<ObjectiveCard> commonObjectivesList;
+
         try {
-            pointBoardController.createInstance();
-        } catch (IOException e) {
+            commonObjectivesList = context.getClient().getGameContext().getGame().getCommonObjective();
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return pointBoardController.getPointBoardPane(tokenImages, scores);
+
+        return commonObjectivesList;
     }
+
 }

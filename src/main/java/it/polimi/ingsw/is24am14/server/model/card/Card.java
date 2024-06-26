@@ -117,4 +117,8 @@ public abstract class Card implements Serializable {
         return new ArrayList<>();
     }
 
+    public Condition getPointCondition() {
+        return new NoCondition();
+    };
+
 }

@@ -3,6 +3,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import it.polimi.ingsw.is24am14.server.model.card.*;
 import it.polimi.ingsw.is24am14.server.model.game.GameArea;
+import it.polimi.ingsw.is24am14.server.model.player.Player;
 
 public class InitGSON {
     public static Gson init() {

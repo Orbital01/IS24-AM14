@@ -86,6 +86,8 @@ public class GameContext implements Serializable {
     }
 
     public void playersCards() {
+        gameStateEnum = GameStateEnum.ChoosingSecretObjective;
+
         System.out.println("Setting players hand cards");
         for (Player player : game.getPlayers()) {
             player.addCardToHand(game.popResourceDeck());
@@ -93,7 +95,13 @@ public class GameContext implements Serializable {
             player.addCardToHand(game.popGoldDeck());
         }
 
+        System.out.println("Adding common objective");
+
+        game.addCommonObjective(game.getObjectiveDeck().removeTop());
+        game.addCommonObjective(game.getObjectiveDeck().removeTop());
+
         System.out.println("Choosing objective cards");
+
         //  I don't know if it's necessary or not to have 2 for loops (graphical reasons maybe?)
         for (Player player : game.getPlayers()) {
             ArrayList<ObjectiveCard> objCards = new ArrayList<>();
@@ -101,7 +109,6 @@ public class GameContext implements Serializable {
             objCards.add(game.getObjectiveDeck().removeTop());
             objectiveCardChoices.put(player.getPlayerNickname(), objCards);
         }
-        gameStateEnum = GameStateEnum.ChoosingSecretObjective;
     }
 
     public ArrayList<ObjectiveCard> getObjectiveCardChoices(String playerNickname) {
@@ -142,7 +149,7 @@ public class GameContext implements Serializable {
             placementConditionSatisfied = true;
         }
 
-        if (gameStateEnum == GameStateEnum.Move && game.getActivePlayer().getPlayerNickname().equals(username) && placementConditionSatisfied) {
+        if ((gameStateEnum == GameStateEnum.Move || gameStateEnum == GameStateEnum.LastMove) && game.getActivePlayer().getPlayerNickname().equals(username) && placementConditionSatisfied) {
             player.placeCard(cardToOverlap, cardToPlay, cornerIndex);
             lastPlayedCard = cardToPlay;
 
@@ -159,7 +166,7 @@ public class GameContext implements Serializable {
 
     public void drawGoldCard(String username) {
         Player player = game.getPlayer(username);
-        if (gameStateEnum == GameStateEnum.Draw && game.getActivePlayer().getPlayerNickname().equals(username)) {
+        if ((gameStateEnum == GameStateEnum.Draw || gameStateEnum == GameStateEnum.LastDraw) && game.getActivePlayer().getPlayerNickname().equals(username)) {
             player.addCardToHand(game.popGoldDeck());
             this.endTurn();
         }
@@ -167,7 +174,7 @@ public class GameContext implements Serializable {
 
     public void drawResourceCard(String username) {
         Player player = game.getPlayer(username);
-        if (gameStateEnum == GameStateEnum.Draw && game.getActivePlayer().getPlayerNickname().equals(username)) {
+        if ((gameStateEnum == GameStateEnum.Draw || gameStateEnum == GameStateEnum.LastDraw) && game.getActivePlayer().getPlayerNickname().equals(username)) {
             player.addCardToHand(game.popResourceDeck());
             this.endTurn();
         }
@@ -175,7 +182,7 @@ public class GameContext implements Serializable {
 
     public void drawFaceUpCard(String username, int cardIndex) {
         Player player = game.getPlayer(username);
-        if (gameStateEnum == GameStateEnum.Draw && game.getActivePlayer().getPlayerNickname().equals(username)) {
+        if ((gameStateEnum == GameStateEnum.Draw || gameStateEnum == GameStateEnum.LastDraw) && game.getActivePlayer().getPlayerNickname().equals(username)) {
             player.addCardToHand(game.drawFaceUpCard(cardIndex));
             this.endTurn();
         }
@@ -184,7 +191,8 @@ public class GameContext implements Serializable {
     private void endTurn() {
         this.updateScore();
 
-        if (gameStateEnum == GameStateEnum.LastDraw && game.getIndexActivePlayer() == game.getNumPlayers()) {
+        if (gameStateEnum == GameStateEnum.LastDraw && game.getIndexActivePlayer() == game.getNumPlayers() - 1) {
+            System.out.println("Game ended");
             gameStateEnum = GameStateEnum.EndGame;
             return;
         }
@@ -200,7 +208,8 @@ public class GameContext implements Serializable {
 
     private void updateScore() {
             System.out.println("Updating score");
-            int earnedPoints = lastPlayedCard.getPoints() * lastPlayedCard.getPointCondition().numSatisfied(game.getActivePlayer().getPlayerBoard());
+            int earnedPoints = lastPlayedCard.getSide() == EnumSide.FRONT ? lastPlayedCard.getPoints() * lastPlayedCard.getPointCondition().numSatisfied(game.getActivePlayer().getPlayerBoard()) : 0;
+            for (Corner c : lastPlayedCard.getCorners()) System.out.println(c.getType());
             System.out.println("Earned points: " + earnedPoints);
             //Sets player score to his old score + the points given by the satisfied condition on the gold card
             game.getActivePlayer().setScore(game.getActivePlayer().getScore() + earnedPoints);

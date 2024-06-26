@@ -26,6 +26,17 @@ public class StarterCard extends Card {
         return resources;
     }
 
+    public ArrayList<CornerEnum> getCornerEnums() {
+        ArrayList<CornerEnum> items = new ArrayList<>();
+
+        for (int i = 0; i < 4; i++) {
+            if (!getCorners().get(i).isOverlapped()) items.add(getCorners().get(i).getType());
+        }
+
+        if (getSide() == EnumSide.BACK) items.addAll(resources);
+        return items;
+    }
+
     public ArrayList<String> drawCard() {
         if (this.getSide().equals(EnumSide.FRONT)) {
             ArrayList<String> cardString = new ArrayList<>();
@@ -38,7 +49,9 @@ public class StarterCard extends Card {
             //First Row
             cardString.add("|-----|------------|-----|");
             //Second Row
-            cardString.add("| " + corners.get(0) + " |" + "             | " + corners.get(1) + " |");
+            String NW = this.getCorners().get(0).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(0);
+            String NE = this.getCorners().get(1).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(1);
+            cardString.add("| " + NW + " |" + "             | " + NE + " |");
             //Third Row
             cardString.add("|-----|		       |-----|");
             //Fourth Row
@@ -47,7 +60,9 @@ public class StarterCard extends Card {
             //Fifth Row
             cardString.add("|-----|		       |-----|");
             //Sixth Row
-            cardString.add("| " + corners.get(2) + " |" + "             | " + corners.get(3) + " |");
+            String SW = this.getCorners().get(2).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(2);
+            String SE = this.getCorners().get(3).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(3);
+            cardString.add("| " + SW + " |" + "             | " + SE + " |");
             //Seventh Row
             cardString.add("|-----|------------|-----|");
 
@@ -64,7 +79,9 @@ public class StarterCard extends Card {
             //First Row
             cardString.add("|-----|------------|-----|");
             //Second Row
-            cardString.add("| " + corners.get(0) + " |" + "             | " + corners.get(1) + " |");
+            String NW = this.getCorners().get(0).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(0);
+            String NE = this.getCorners().get(1).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(1);
+            cardString.add("| " + NW + " |" + "             | " + NE + " |");
             //Third Row
             cardString.add("|-----|		       |-----|");
             //Fourth Row
@@ -76,7 +93,9 @@ public class StarterCard extends Card {
             //Fifth Row
             cardString.add("|-----|		       |-----|");
             //Sixth Row
-            cardString.add("| " + corners.get(2) + " |" + "             | " + corners.get(3) + " |");
+            String SW = this.getCorners().get(2).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(2);
+            String SE = this.getCorners().get(3).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(3);
+            cardString.add("| " + SW + " |" + "             | " + SE + " |");
             //Seventh Row
             cardString.add("|-----|------------|-----|");
 

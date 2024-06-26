@@ -1,8 +1,8 @@
 package it.polimi.ingsw.is24am14.client.GUI;
 
+import it.polimi.ingsw.is24am14.client.GUIViewLauncher;
 import it.polimi.ingsw.is24am14.server.controller.GameStateEnum;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
-import it.polimi.ingsw.is24am14.server.view.GUIView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,15 +15,18 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This class is the controller for the MenuTokenChoice.fxml file.
+ * It manages the choice of the token colour by the player.
+ */
 public class MenuTokenController {
 
-    private GUIView context;
+    private GUIViewLauncher context;
     private Scene scene;
 
     @FXML
@@ -53,6 +56,10 @@ public class MenuTokenController {
     private boolean myTurn = false;
     int myIndex;
 
+    /**
+     * This method is called when the FXML file is loaded.
+     * It initializes the buttons and the scheduled executor services.
+     */
     public void initialize() {
         blueTokenButton.setOnAction(this::handleBlueTokenButton);
         yellowTokenButton.setOnAction(this::handleYellowTokenButton);
@@ -76,7 +83,13 @@ public class MenuTokenController {
 
     }
 
-    public MenuTokenController(GUIView context){
+    /**
+     * This constructor initializes the controller with the GUIViewLauncher context.
+     * It also loads the FXML file and sets the controller.
+     * It also initializes the scheduled executor services.
+     * @param context the GUIViewLauncher context
+     */
+    public MenuTokenController(GUIViewLauncher context){
         this.context = context;
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("MenuTokenChoice.fxml"));
         loader.setController(this);
@@ -98,12 +111,18 @@ public class MenuTokenController {
 
     }
 
+    /**
+     * This method shows the scene.
+     */
     public void showScene() {
         Stage stage = context.getStage();
         stage.setScene(scene);
         stage.show();
     }
 
+    /**
+     * this method updates the available colours.
+     */
     private void checkAvailableColors() {
         try {
             List<TokenColour> availableColors = context.getClient().getGameContext().getColors();
@@ -113,6 +132,9 @@ public class MenuTokenController {
         }
     }
 
+    /**
+     * this method updates the visibility of the buttons based on the available colours.
+     */
     private void updateButtonVisibility(List<TokenColour> availableColors) {
         blueTokenButton.setVisible(availableColors.contains(TokenColour.BLUE));
         yellowTokenButton.setVisible(availableColors.contains(TokenColour.YELLOW));
@@ -120,6 +142,11 @@ public class MenuTokenController {
         greenTokenButton.setVisible(availableColors.contains(TokenColour.GREEN));
     }
 
+    /**
+     * This method handles the click on the blue token button.
+     * It sends the choice to the server.
+     * @param actionEvent the action event
+     */
     private void handleBlueTokenButton(ActionEvent actionEvent) {
         try {
             context.getClient().pickColor(TokenColour.BLUE);
@@ -131,6 +158,11 @@ public class MenuTokenController {
         }
     }
 
+    /**
+     * This method handles the click on the yellow token button.
+     * It sends the choice to the server.
+     * @param actionEvent the action event
+     */
     private void handleYellowTokenButton(ActionEvent actionEvent) {
         try {
             context.getClient().pickColor(TokenColour.YELLOW);
@@ -142,6 +174,11 @@ public class MenuTokenController {
         }
     }
 
+    /**
+     * This method handles the click on the red token button.
+     * It sends the choice to the server.
+     * @param actionEvent the action event
+     */
     private void handleRedTokenButton(ActionEvent actionEvent) {
         try {
             context.getClient().pickColor(TokenColour.RED);
@@ -153,6 +190,11 @@ public class MenuTokenController {
         }
     }
 
+    /**
+     * This method handles the click on the green token button.
+     * It sends the choice to the server.
+     * @param actionEvent the action event
+     */
     private void handleGreenTokenButton(ActionEvent actionEvent) {
         try {
             context.getClient().pickColor(TokenColour.GREEN);
@@ -164,6 +206,9 @@ public class MenuTokenController {
         }
     }
 
+    /**
+     * This method goes to the starter card selection scene.
+     */
     private void goToStarterCard() {
         //devo terminare l'esecuzione dei thread di aggiornamento di questa fase
         this.colorExecutorService.shutdown();
@@ -174,6 +219,9 @@ public class MenuTokenController {
         starterCardController.showScene();
     }
 
+    /**
+     * This method checks the game status.
+     */
     private void checkGameStatus() {
         System.out.println("Checking game status");
         try {
@@ -190,6 +238,9 @@ public class MenuTokenController {
         }
     }
 
+    /**
+     * This method updates the scene based on the game state.
+     */
     private void updateSceneBasedOnGameState() {
         if(previousGameState == GameStateEnum.ChoosingStarterCard) {
             //passo alla scelta della carta iniziale
@@ -198,6 +249,9 @@ public class MenuTokenController {
         }
     }
 
+    /**
+     * This method checks if it's the player's turn.
+     */
     private void checkTurn(){
         for (int i = 0; i < myIndex; i++) {
             try {

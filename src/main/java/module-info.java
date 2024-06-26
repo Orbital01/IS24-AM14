@@ -28,7 +28,6 @@ module it.polimi.ingsw.is24am14 {
     opens it.polimi.ingsw.is24am14.server.controller to com.google.gson;
   
     opens it.polimi.ingsw.is24am14.server.model.card to com.google.gson;
-    exports it.polimi.ingsw.is24am14.server.view;
     exports it.polimi.ingsw.is24am14.server.utils to java.rmi;
   
     opens it.polimi.ingsw.is24am14.server.utils to com.google.gson, java.rmi;
@@ -39,4 +38,7 @@ module it.polimi.ingsw.is24am14 {
     exports it.polimi.ingsw.is24am14.client.GUI;
     exports it.polimi.ingsw.is24am14.client.GUI.GuiHelper;
     opens it.polimi.ingsw.is24am14.client.GUI.GuiHelper to javafx.fxml;
+    exports it.polimi.ingsw.is24am14.client.TUIFactory;
+    exports it.polimi.ingsw.is24am14.client;
+    opens it.polimi.ingsw.is24am14.client to javafx.fxml;
 }

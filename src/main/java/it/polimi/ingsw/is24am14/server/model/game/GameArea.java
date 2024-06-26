@@ -93,12 +93,42 @@ public class GameArea implements Serializable {
 
         //  Cannot put a card on a hidden corner
         if (playedCardCorners.get(cornerIndex).getType() == CornerEnum.HIDDEN) throw new IllegalStateException("Illegal move. Cannot put a card on a hidden corner");
+        if (overlapOtherHiddenCorners(newCardCoordinates)) throw new IllegalStateException("Illegal move. Cannot put a card on a hidden corner");
 
         //  Cannot put a card on another card
         if (getCard(newCardCoordinates) != null) throw new IllegalStateException("Illegal move. Cannot put a card on another card");
 
         board.put(newCardCoordinates, newCard);
-        overlapCorners(playedCard);
+        overlapCorners(newCard);
+    }
+
+    private boolean overlapOtherHiddenCorners(Coordinates coordinates) {
+        Coordinates tmpCoordinates;
+
+        tmpCoordinates = Coordinates.newCoordinates(coordinates, 0);
+        if (getCard(tmpCoordinates) != null && getCard(tmpCoordinates).getCorners().get(3).getType() == CornerEnum.HIDDEN) {
+            return true;
+        }
+
+        //  top right
+        tmpCoordinates = Coordinates.newCoordinates(coordinates, 1);
+        if (getCard(tmpCoordinates) != null && getCard(tmpCoordinates).getCorners().get(2).getType() == CornerEnum.HIDDEN) {
+            return true;
+        }
+
+        //  bottom left
+        tmpCoordinates = Coordinates.newCoordinates(coordinates, 2);
+        if (getCard(tmpCoordinates) != null && getCard(tmpCoordinates).getCorners().get(1).getType() == CornerEnum.HIDDEN) {
+            return true;
+        }
+
+        //  bottom right
+        tmpCoordinates = Coordinates.newCoordinates(coordinates, 3);
+        if (getCard(tmpCoordinates) != null && getCard(tmpCoordinates).getCorners().get(0).getType() == CornerEnum.HIDDEN) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -119,10 +149,10 @@ public class GameArea implements Serializable {
         int Row = cardCoordinates.getRow();
         int Column = cardCoordinates.getColumn();
 
-        Coordinates TopLeftCard = new Coordinates (Row++, Column--);
-        Coordinates TopRightCard = new Coordinates(Row++, Column++);
-        Coordinates BottomLeftCard = new Coordinates(Row--, Column--);
-        Coordinates BottomRightCard = new Coordinates(Row--, Column++);
+        Coordinates TopLeftCard = new Coordinates (Row + 1, Column - 1);
+        Coordinates TopRightCard = new Coordinates(Row + 1, Column + 1);
+        Coordinates BottomLeftCard = new Coordinates(Row - 1, Column - 1);
+        Coordinates BottomRightCard = new Coordinates(Row - 1, Column + 1);
 
         if(getCard(TopLeftCard)!=null)
             getCard(TopLeftCard).getCorners().get(CornerIndex.BOTTOM_RIGHT).overlap();

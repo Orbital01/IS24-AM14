@@ -5,6 +5,7 @@ import it.polimi.ingsw.is24am14.server.model.card.*;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CardTypeAdapter implements JsonSerializer<Card>, JsonDeserializer<Card> {
     @Override
@@ -26,31 +27,36 @@ public class CardTypeAdapter implements JsonSerializer<Card>, JsonDeserializer<C
         }
 
         if ("GoldCard".equals(cardType)) {
+            ArrayList<Corner> frontCorners = new ArrayList<>(Arrays.asList(jsonDeserializationContext.deserialize(jsonObject.get("frontCorners"), Corner[].class)));
             return new GoldCard(
                     jsonDeserializationContext.deserialize(jsonObject.get("points"), Integer.class),
                     jsonDeserializationContext.deserialize(jsonObject.get("pointCondition"), Condition.class),
                     jsonDeserializationContext.deserialize(jsonObject.get("resource"), CornerEnum.class),
                     jsonDeserializationContext.deserialize(jsonObject.get("placementCondition"), Condition.class),
-                    jsonDeserializationContext.deserialize(jsonObject.get("frontCorners"), ArrayList.class),
+                    frontCorners,
                     jsonObject.get("frontImage").getAsString(),
                     jsonObject.get("backImage").getAsString());
         } else if ("ResourceCard".equals(cardType)) {
+            ArrayList<Corner> frontCorners = new ArrayList<>(Arrays.asList(jsonDeserializationContext.deserialize(jsonObject.get("frontCorners"), Corner[].class)));
+            ArrayList<Corner> backCorners = new ArrayList<>(Arrays.asList(jsonDeserializationContext.deserialize(jsonObject.get("backCorners"), Corner[].class)));
             return new ResourceCard(
                     jsonDeserializationContext.deserialize(jsonObject.get("points"), Integer.class),
                     jsonDeserializationContext.deserialize(jsonObject.get("resource"), CornerEnum.class),
-                    jsonDeserializationContext.deserialize(jsonObject.get("frontCorners"), ArrayList.class),
-                    jsonDeserializationContext.deserialize(jsonObject.get("backCorners"), ArrayList.class),
+                    frontCorners,
+                    backCorners,
                     jsonObject.get("frontImage").getAsString(),
                     jsonObject.get("backImage").getAsString());
         } else if ("StarterCard".equals(cardType)) {
+            ArrayList<Corner> frontCorners = new ArrayList<>(Arrays.asList(jsonDeserializationContext.deserialize(jsonObject.get("frontCorners"), Corner[].class)));
+            ArrayList<Corner> backCorners = new ArrayList<>(Arrays.asList(jsonDeserializationContext.deserialize(jsonObject.get("backCorners"), Corner[].class)));
+            ArrayList<CornerEnum.ResourceEnum> resource = new ArrayList<>(Arrays.asList(jsonDeserializationContext.deserialize(jsonObject.get("resources"), CornerEnum.ResourceEnum[].class)));
             return new StarterCard(
-                    jsonDeserializationContext.deserialize(jsonObject.get("frontCorners"), ArrayList.class),
-                    jsonDeserializationContext.deserialize(jsonObject.get("backCorners"), ArrayList.class),
-                    jsonDeserializationContext.deserialize(jsonObject.get("resources"), ArrayList.class),
+                    frontCorners,
+                    backCorners,
+                    resource,
                     jsonObject.get("frontImage").getAsString(),
                     jsonObject.get("backImage").getAsString());
         }
-
-        return null;
+        throw new RuntimeException("Error while deserializing card");
     }
 }

@@ -1,36 +1,33 @@
 package it.polimi.ingsw.is24am14.client.GUI;
 
 import it.polimi.ingsw.is24am14.client.GUI.GUIFactory.Guifactory;
+import it.polimi.ingsw.is24am14.client.GUIViewLauncher;
 import it.polimi.ingsw.is24am14.server.network.ClientInterface;
 import it.polimi.ingsw.is24am14.server.network.RMIClient;
 import it.polimi.ingsw.is24am14.server.network.SocketClient;
-import it.polimi.ingsw.is24am14.server.view.GUIView;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class MenuConnectionController {
 
-    private GUIView context;
+    private GUIViewLauncher context;
     private Scene scene;
     private ClientInterface client;
     private BorderPane layout = new BorderPane();
 
-    public MenuConnectionController(GUIView context){
+    /**
+     * Constructor for the MenuConnectionController class.
+     * It initializes the GUI elements and sets up the event handlers.
+     *
+     * @param context The GUIViewLauncher context.
+     */
+    public MenuConnectionController(GUIViewLauncher context){
         this.context = context;
         scene = new Scene(layout, 1920, 1080);
         Guifactory.setAutomaticBackground(layout);
@@ -57,6 +54,12 @@ public class MenuConnectionController {
         layout.setCenter(container);
     }
 
+    /**
+     * Handles the action of the RMI button.
+     * It tries to establish an RMI connection and handles any exceptions that might occur.
+     *
+     * @param event The ActionEvent object.
+     */
     private void handleRmiButtonAction(ActionEvent event) {
         //avvio la connessione RMI
         System.out.println("Connessione RMI");
@@ -77,6 +80,12 @@ public class MenuConnectionController {
         }
     }
 
+    /**
+     * Handles the action of the TCP button.
+     * It tries to establish a TCP connection and handles any exceptions that might occur.
+     *
+     * @param event The ActionEvent object.
+     */
     private void handleTcpButtonAction(ActionEvent event) {
         System.out.println("Connessione TCP");
         try {
@@ -96,12 +105,18 @@ public class MenuConnectionController {
         }
     }
 
+    /**
+     * Passes to the nickname selection scene.
+     */
     public void GoToUsername(){
         //passo alla scena di selezione del nickname
-        MenuNicknameController nicknameController = new MenuNicknameController(context);
+        MenuNicknameController nicknameController = new MenuNicknameController(context, 0);
         nicknameController.showScene();
     }
 
+    /**
+     * Shows the scene.
+     */
     public void showScene() {
         Stage stage = context.getStage();
         stage.setScene(scene);
