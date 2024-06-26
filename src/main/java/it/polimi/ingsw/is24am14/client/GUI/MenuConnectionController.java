@@ -110,7 +110,7 @@ public class MenuConnectionController {
      */
     public void GoToUsername(){
         //passo alla scena di selezione del nickname
-        MenuNicknameController nicknameController = new MenuNicknameController(context);
+        MenuNicknameController nicknameController = new MenuNicknameController(context, 0);
         nicknameController.showScene();
     }
 

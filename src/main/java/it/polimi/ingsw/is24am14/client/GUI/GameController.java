@@ -74,7 +74,7 @@ public class GameController {
         Guifactory.setAutomaticBackground(layout);
         layout.setLeft(leftLayout);
         createChatInterface();
-        printObjectives();
+        addObjButton();
         gameStatusExecutorService = Executors.newSingleThreadScheduledExecutor();
         gameStatusExecutorService.scheduleAtFixedRate(this::checkGameStatus, 0, 1, TimeUnit.SECONDS);
 
@@ -242,7 +242,7 @@ public class GameController {
     }
 
     /**
-     * Prints the objectives under the point board on the left side of the layout.
+     * Prints the objectives in a modal window.
      */
     private void printObjectives(){
 
@@ -252,35 +252,63 @@ public class GameController {
         //recupero gli obbiettivi comuni
         commonObj = GuiHelper.getCommonObjectives(context);
 
-        //aggiungo l'obbiettivo privato
-        VBox objectives = new VBox();
-        try{
+        //recupero l'obbiettivo privato
+        try {
             privateObj = context.getClient().getGameContext().getGame().getPlayer(context.getClient().getUsername()).getSecretObjective();
-            //aggiungo l'obbiettivo privato a una HBox
-            ImageView privateObjView = Guifactory.displayCardImage(privateObj);
-            privateObjView.setPreserveRatio(true);
-            privateObjView.setFitWidth(150);
-            objectives.getChildren().add(privateObjView);
-        }catch(Exception e){
-            System.out.println("Errore nel recupero degli obbiettivi");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
+        //mostro gli obbiettivi in una finestra modale
+        Stage modalStage = new Stage();
+        modalStage.initModality(Modality.APPLICATION_MODAL);
+        BorderPane modalLayout = new BorderPane();
 
+        VBox objectivesContainer = new VBox();
+        objectivesContainer.setAlignment(Pos.CENTER);
+        objectivesContainer.setSpacing(10);
 
-        //aggiungo le common alla HBox
-        HBox commonObjectives = new HBox();
-        for(ObjectiveCard card : commonObj){
-            ImageView cardView = Guifactory.displayCardImage(card);
-            cardView.setPreserveRatio(true);
-            cardView.setFitWidth(150);
-            commonObjectives.getChildren().add(cardView);
-            commonObjectives.setSpacing(10);
+        //aggiungo gli obbiettivi privati
+        Label title1 = Guifactory.printLabel("Private Objective", 10);
+        title1.setAlignment(Pos.CENTER);
+        objectivesContainer.getChildren().add(title1);
+
+        ImageView privateObjImage = Guifactory.displayCardImage(privateObj);
+        privateObjImage.setPreserveRatio(true);
+        privateObjImage.setFitWidth(200);
+        objectivesContainer.getChildren().add(privateObjImage);
+
+        HBox commonObjContainer = new HBox();
+        //aggiungo gli obbiettivi comuni
+        Label title2 = Guifactory.printLabel("Common Objectives", 10);
+        title2.setAlignment(Pos.CENTER);
+        objectivesContainer.getChildren().add(title2);
+        for (ObjectiveCard obj : commonObj) {
+            ImageView objImage = Guifactory.displayCardImage(obj);
+            objImage.setPreserveRatio(true);
+            objImage.setFitWidth(200);
+            commonObjContainer.getChildren().add(objImage);
         }
 
-        //aggiungo le carte alla view
-        objectives.getChildren().add(commonObjectives);
-        Platform.runLater(() -> leftLayout.setBottom(objectives));
+        commonObjContainer.setAlignment(Pos.CENTER);
+        commonObjContainer.setSpacing(10);
+        objectivesContainer.getChildren().add(commonObjContainer);
 
+        modalLayout.setCenter(objectivesContainer);
+        //mostro la finestra modale
+        Scene modalScene = new Scene(modalLayout, 600, 600);
+        modalStage.setScene(modalScene);
+        modalStage.showAndWait();
+
+    }
+
+    /**
+     * Adds a button to the left layout that displays the objectives if clicked.
+     */
+    private void addObjButton(){
+        Button objButton = Guifactory.createButton("Objectives", 100, 50);
+        objButton.setOnAction(event -> printObjectives());
+        leftLayout.setBottom(objButton);
     }
 
     /**
@@ -591,7 +619,7 @@ public class GameController {
             });
 
             //mostro la finestra modale
-            Scene modalScene = new Scene(modalLayout, 600, 500);
+            Scene modalScene = new Scene(modalLayout, 850, 600);
             modalStage.setScene(modalScene);
             modalStage.showAndWait();
         }
@@ -619,8 +647,11 @@ public class GameController {
             modalStage.close();
             System.exit(0);
         });
+
         modalLayout.setCenter(label);
         modalLayout.setBottom(closeButton);
+        modalStage.setScene(new Scene(modalLayout, 300, 300));
+        modalStage.showAndWait();
     }
 
     /**

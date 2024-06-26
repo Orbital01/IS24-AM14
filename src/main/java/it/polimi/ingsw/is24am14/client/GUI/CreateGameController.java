@@ -56,6 +56,8 @@ public class CreateGameController {
         numPlayers.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
                 numPlayers.setText(newValue.replaceAll("[^\\d]", ""));
+            } else if (!newValue.isEmpty() && Integer.parseInt(newValue) > 4) {
+                numPlayers.setText(oldValue);
             }
         });
 

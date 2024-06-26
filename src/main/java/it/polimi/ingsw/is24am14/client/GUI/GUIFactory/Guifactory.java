@@ -372,6 +372,7 @@ public class Guifactory {
             gridPane.add(cardImage, i, 0);
             i++;
         }
+        gridPane.setHgap(10);
         return gridPane;
     }
 
