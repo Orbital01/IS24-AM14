@@ -26,5 +26,10 @@ public class ClientLauncher {
 
         ObjectiveCard newObjectiveCard = InitGSON.init().fromJson(json, ObjectiveCard.class);
 
+        ResourceCondition resourceCondition = new ResourceCondition();
+        resourceCondition.addClause(CornerEnum.ResourceEnum.FUNGI);
+
+        String jsonResource = InitGSON.init().toJson(resourceCondition);
+        ResourceCondition newResourceCondition = InitGSON.init().fromJson(jsonResource, ResourceCondition.class);
     }
 }
