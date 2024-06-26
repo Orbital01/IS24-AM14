@@ -32,7 +32,7 @@ public class MenuNicknameController {
      * It initializes the scene and the layout of the menu.
      * @param context The context of the GUI view.
      */
-    public MenuNicknameController(GUIViewLauncher context){
+    public MenuNicknameController(GUIViewLauncher context, int tries){
         this.context = context;
         scene = new Scene(layout, 1920, 1080);
         Guifactory.setAutomaticBackground(layout);
@@ -44,8 +44,13 @@ public class MenuNicknameController {
         container.getChildren().add(Guifactory.displayLogo());
 
         //aggiungo una etichetta sopra il campo di inserimento
-        Label label = Guifactory.printLabel("Inserisci il tuo username", 20);
-        container.getChildren().add(label);
+        if(tries==0) {
+            Label label = Guifactory.printLabel("Inserisci il tuo username", 20);
+            container.getChildren().add(label);
+        }else{
+            Label label = Guifactory.printLabel("Username non valido, riprova", 20);
+            container.getChildren().add(label);
+        }
 
         //metto il campo per l'inserimento dell'username
         usernameField = new TextField();
@@ -97,8 +102,7 @@ public class MenuNicknameController {
                     //vado alla decisione sulla lobby
                     goToLobbyChoice();
                 } catch (Exception e) {
-                    e.printStackTrace();
-                    MenuNicknameController menuNicknameController = new MenuNicknameController(context);
+                    MenuNicknameController menuNicknameController = new MenuNicknameController(context, 1);
                     menuNicknameController.showScene();
                 }
             }
