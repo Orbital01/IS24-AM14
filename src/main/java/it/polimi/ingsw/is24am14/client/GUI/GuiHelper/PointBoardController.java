@@ -36,6 +36,9 @@ public class PointBoardController {
         setFixedSizes();
     }
 
+    /**
+     * Sets sizes of the PointBoard fxml file and binds them together
+     */
     private void setFixedSizes() {
         double maxWidth = 250;
         double aspectRatio = 493.0 / 250.0;
@@ -58,6 +61,9 @@ public class PointBoardController {
         pointBoardPane.prefHeightProperty().addListener((obs, oldVal, newVal) -> updateTokenPositions(tokenImages, scores));
     }
 
+    /**
+     * Sets the 30 score positions onto the PointBoard map, in relation to the width and height of the image so they adapt to resizes
+     */
     public void initializePointBoard() {
         positionsMap = new HashMap<>();
         positionsMap.put(0, new double[]{0.27, 0.92});
@@ -92,6 +98,11 @@ public class PointBoardController {
         positionsMap.put(29, new double[]{0.50, 0.2});
     }
 
+    /**
+     * Adds the given tokens to the PointBoard in the slots matching the player scores
+     * @param tokenImages The png files for the tokens of each player
+     * @param scores Each player's score
+     */
     private void updateTokenPositions(ArrayList<Image> tokenImages, ArrayList<Integer> scores) {
         pointBoardPane.getChildren().clear();
 
@@ -130,17 +141,30 @@ public class PointBoardController {
         }
     }
 
+    /**
+     * Sets tokenImages and scores and then updates their position on the board
+     * @param tokenImages Each player's token png
+     * @param scores Each player's score
+     */
     public void setTokenData(ArrayList<Image> tokenImages, ArrayList<Integer> scores) {
         this.tokenImages = tokenImages;
         this.scores = scores;
         updateTokenPositions(tokenImages, scores);
     }
 
-    public void setStageDimensions(Stage stage) {
-        stage.setMinWidth(pointBoardStackPane.getPrefWidth());
-        stage.setMinHeight(pointBoardStackPane.getPrefHeight());
-    }
 
+//    public void setStageDimensions(Stage stage) {
+//        stage.setMinWidth(pointBoardStackPane.getPrefWidth());
+//        stage.setMinHeight(pointBoardStackPane.getPrefHeight());
+//    }
+
+
+    /**
+     * Returns the PointBoard StackPane so that other controllers can use it to display it
+     * @param tokenImages Each player's token png
+     * @param scores Each player's score
+     * @return the StackPane or null if exception is caught
+     */
     public static StackPane getPointBoardStackPane(ArrayList<Image> tokenImages, ArrayList<Integer> scores) {
         try {
             FXMLLoader loader = new FXMLLoader(PointBoardController.class.getClassLoader().getResource("PointBoard.fxml"));
