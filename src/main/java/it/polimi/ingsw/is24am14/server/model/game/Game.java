@@ -141,8 +141,8 @@ public class Game implements Serializable {
         if (indexCard < 0 || indexCard >= faceUpCards.size()) throw new IndexOutOfBoundsException();
         PlayableCard card = faceUpCards.remove(indexCard);
 
-        if (indexCard < 2 ) faceUpCards.add(popGoldDeck());
-        else faceUpCards.add(popResourceDeck());
+        if (indexCard < 2 ) faceUpCards.add(popResourceDeck());
+        else faceUpCards.add(popGoldDeck());
 
         return card;
     }
