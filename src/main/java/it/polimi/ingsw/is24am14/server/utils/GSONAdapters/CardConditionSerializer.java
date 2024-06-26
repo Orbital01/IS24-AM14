@@ -12,7 +12,7 @@ public class CardConditionSerializer implements JsonSerializer<CardCondition>, J
     @Override
     public JsonElement serialize(CardCondition cardCondition, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("CLASSNAME", cardCondition.getClass().getName());
+        jsonObject.addProperty("CLASSNAME", cardCondition.getClass().getSimpleName());
         jsonObject.add("DATA", jsonSerializationContext.serialize(cardCondition.getListCard()));
 
         return jsonObject;
@@ -23,7 +23,7 @@ public class CardConditionSerializer implements JsonSerializer<CardCondition>, J
         JsonObject jsonObject = jsonElement.getAsJsonObject();
         CardCondition cardCondition = new CardCondition();
 
-        for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+        for (Map.Entry<String, JsonElement> entry : jsonObject.get("DATA").getAsJsonObject().entrySet()) {
             JsonArray array = (JsonArray) JsonParser.parseString(entry.getKey());;
             Coordinates coordinates = new Coordinates(array.get(0).getAsInt(), array.get(1).getAsInt());
             cardCondition.addClause(coordinates, CornerEnum.ResourceEnum.valueOf(entry.getValue().getAsString()));

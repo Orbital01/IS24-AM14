@@ -12,62 +12,19 @@ import java.util.ArrayList;
 
 public class ClientLauncher {
     public static void main(String[] args) throws Exception {
-        Gson gson = InitGSON.init();
-        ArrayList<Corner> funFunHidEmp = new ArrayList<>();
-        funFunHidEmp.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
-        funFunHidEmp.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
-        funFunHidEmp.add(new Corner(CornerEnum.HIDDEN));
-        funFunHidEmp.add(new Corner(CornerEnum.EMPTY));
-        ArrayList<Corner> backCorners = new ArrayList<>();
-        CornerEnum.ResourceEnum resource = CornerEnum.ResourceEnum.FUNGI;
-        backCorners.add(new Corner(CornerEnum.EMPTY));
-        backCorners.add(new Corner(CornerEnum.EMPTY));
-        backCorners.add(new Corner(CornerEnum.EMPTY));
-        backCorners.add(new Corner(CornerEnum.EMPTY));
+        Coordinates topLeft = new Coordinates(1, -1);
+        Coordinates midLeft = new Coordinates(0, -1);
+        Coordinates bottomMid = new Coordinates(-1, 0);
 
-        ResourceCard resourceCard = new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, funFunHidEmp, backCorners, "/images/cards/resource_cards/red_fronts/page_2.png", "/images/cards/resource_cards/red_backs/page_2.png");
+        CardCondition redRedGreenL = new CardCondition();
+        redRedGreenL.addClause(topLeft, CornerEnum.ResourceEnum.FUNGI);
+        redRedGreenL.addClause(midLeft, CornerEnum.ResourceEnum.FUNGI);
+        redRedGreenL.addClause(bottomMid, CornerEnum.ResourceEnum.PLANT);
+        ObjectiveCard objectiveCard = new ObjectiveCard(redRedGreenL, "/images/cards/objective_cards/objective_fronts/page_91.png", "/images/cards/resource_cards/objective_backs/page_91.png", 3);
 
-        ArrayList<Corner> hidEmpEmpQui = new ArrayList<>();
-        ObjectCondition quillCondition = new ObjectCondition();
-        quillCondition.addClause(CornerEnum.ObjectEnum.QUILL);
-        hidEmpEmpQui.add(new Corner(CornerEnum.HIDDEN));
-        hidEmpEmpQui.add(new Corner(CornerEnum.EMPTY));
-        hidEmpEmpQui.add(new Corner(CornerEnum.EMPTY));
-        hidEmpEmpQui.add(new Corner(CornerEnum.ObjectEnum.QUILL));
-        ResourceCondition twoFungiOneAnimal = new ResourceCondition();
-        twoFungiOneAnimal.addClause(CornerEnum.ResourceEnum.FUNGI);
-        twoFungiOneAnimal.addClause(CornerEnum.ResourceEnum.FUNGI);
-        twoFungiOneAnimal.addClause(CornerEnum.ResourceEnum.ANIMAL);
-        GoldCard goldCard = new GoldCard(1, quillCondition, CornerEnum.ResourceEnum.FUNGI, twoFungiOneAnimal, hidEmpEmpQui, "/images/cards/gold_cards/red_fronts/page_41.png", "/images/cards/gold_cards/red_backs/page_41.png");
+        String json = InitGSON.init().toJson(objectiveCard);
 
-        ArrayList<Corner> empEmpEmpEmp = new ArrayList<>();
-        empEmpEmpEmp.add(new Corner(CornerEnum.EMPTY));
-        empEmpEmpEmp.add(new Corner(CornerEnum.EMPTY));
-        empEmpEmpEmp.add(new Corner(CornerEnum.EMPTY));
-        empEmpEmpEmp.add(new Corner(CornerEnum.EMPTY));
-        ArrayList<Corner> insAniFunPlan = new ArrayList<>();
-        insAniFunPlan.add(new Corner(CornerEnum.ResourceEnum.INSECT));
-        insAniFunPlan.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
-        insAniFunPlan.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
-        insAniFunPlan.add(new Corner(CornerEnum.ResourceEnum.PLANT));
+        ObjectiveCard newObjectiveCard = InitGSON.init().fromJson(json, ObjectiveCard.class);
 
-        ArrayList<CornerEnum.ResourceEnum> plaFun = new ArrayList<>();
-        plaFun.add(CornerEnum.ResourceEnum.PLANT);
-        plaFun.add(CornerEnum.ResourceEnum.FUNGI);
-        StarterCard starterCard = new StarterCard(insAniFunPlan, empEmpEmpEmp, plaFun, "/images/cards/starter_cards/starter_backs/page_83.png", "/images/cards/starter_cards/starter_fronts/page_83.png");
-
-
-        Player player = new Player("boh");
-        player.setFirstPlayer(true);
-        player.setScore(2);
-        player.setColour(TokenColour.BLUE);
-        player.addCardToHand(goldCard);
-        player.addCardToHand(resourceCard);
-
-        String goldCardJson = gson.toJson(goldCard);
-        String playerJson = gson.toJson(player);
-        System.out.println(playerJson);
-
-        Player newPlayer = gson.fromJson(playerJson, Player.class);
     }
 }
