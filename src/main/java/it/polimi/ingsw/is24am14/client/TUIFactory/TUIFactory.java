@@ -274,7 +274,7 @@ public class TUIFactory {
                 "\n3 to see the chat. \n4 to send a message. \n5 punteggi. \n6 board degli altri player \n7 see all the objective cards");
 
         choice = in.nextInt();
-        while (choice < 0 || choice > 6) {
+        while (choice < 0 || choice > 7) {
             System.out.println("Invalid choice. Try again.");
             choice = in.nextInt();
         }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.is24am14.client;
 import it.polimi.ingsw.is24am14.client.TUIFactory.TUIFactory;
+import it.polimi.ingsw.is24am14.server.controller.GameContext;
 import it.polimi.ingsw.is24am14.server.controller.GameStateEnum;
 import it.polimi.ingsw.is24am14.server.model.card.Coordinates;
 import it.polimi.ingsw.is24am14.server.model.card.ObjectiveCard;
@@ -20,13 +21,21 @@ public class TUIViewLauncher {
         tui.startScreen();
 
         //Let the client choose the type of connection
-        ClientInterface client;
+        ClientInterface client = null;
         int connectionIndex = tui.connectionIndex();
         if (connectionIndex == 0){
-            client = new SocketClient();
+            try {
+                client = new SocketClient();
+            } catch (Exception e) {
+                System.out.println("Error while connecting to the server via Socket connection");
+            }
         }
         else {
-            client = new RMIClient();
+            try {
+                client = new RMIClient();
+            } catch (Exception e) {
+                System.out.println("Error while connecting to the server via RMI connection");
+            }
         }
 
         String username, host;
@@ -34,31 +43,39 @@ public class TUIViewLauncher {
 
         //Ask for username & connect
         username = tui.askForUsername();
-        client.connect(username);
+        try{
+            client.connect(username);
+        } catch (Exception e){
+            System.out.println("Error while connecting to the server");
+        }
 
         //Ask for the option
         int option;
         option = tui.getLobbyOption();
-        if (option == 0){
-            //Show available lobbies
-            tui.printLobbyOption(client.getLobbyList());
-            //Get Lobby index and join it
-            int lobbbyIndex = tui.getLobbyIndex(client.getLobbyList());
-            System.out.println("Players in lobby: " + client.getLobbyClients(client.getLobbyList().get(lobbbyIndex)));
-            tui.printPlayersInLobby(client.getLobbyClients(client.getLobbyList().get(lobbbyIndex)));
-            client.joinLobby(client.getLobbyList().get(lobbbyIndex));
-        }
-        else{
-            //Create a new lobby and start the game
-            int numPlayers = tui.getLobbyNumPlayers();
-            client.createLobby(numPlayers);
-            client.updateGameContext();
-            while (client.getLobbyClients(username).size() < numPlayers) {
-                System.out.println("Waiting for players to join...");
-                TimeUnit.SECONDS.sleep(4);
-                client.updateGameContext();
+        try {
+            if (option == 0){
+                //Show available lobbies
+                tui.printLobbyOption(client.getLobbyList());
+                //Get Lobby index and join it
+                int lobbbyIndex = tui.getLobbyIndex(client.getLobbyList());
+                System.out.println("Players in lobby: " + client.getLobbyClients(client.getLobbyList().get(lobbbyIndex)));
+                tui.printPlayersInLobby(client.getLobbyClients(client.getLobbyList().get(lobbbyIndex)));
+                client.joinLobby(client.getLobbyList().get(lobbbyIndex));
             }
-            client.startGame();
+            else{
+                //Create a new lobby and start the game
+                int numPlayers = tui.getLobbyNumPlayers();
+                client.createLobby(numPlayers);
+                client.updateGameContext();
+                while (client.getLobbyClients(username).size() < numPlayers) {
+                    System.out.println("Waiting for players to join...");
+                    TimeUnit.SECONDS.sleep(4);
+                    client.updateGameContext();
+                }
+                client.startGame();
+            }
+        } catch (Exception e) {
+            System.out.println("Error while arranging the game");
         }
 
         //Game loop
@@ -70,6 +87,7 @@ public class TUIViewLauncher {
 
         while (true) {
             client.updateGameContext();
+
             if (client.getGameContext() != null) {
 
                 boolean myTurn = client.getGameContext().getGame().getActivePlayer().getPlayerNickname().equals(username);
@@ -80,24 +98,28 @@ public class TUIViewLauncher {
 
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.ChoosingColor) {
 
-                    int myIndex = client.getGameContext().getGame().getPlayers().indexOf(client.getGameContext().getGame().getPlayer(client.getUsername()));
+                    String clientUsername;
+                    try {
+                        clientUsername = client.getUsername();
+                    } catch (Exception e) {
+                        System.out.println("Error while getting the username");
+                        break;
+                    }
+
+                    int myIndex = client.getGameContext().getGame().getPlayers().indexOf(client.getGameContext().getGame().getPlayer(clientUsername));
 
                     if (myIndex == -1) {throw new RuntimeException("Player not found");}
 
                         myTurn = client.getGameContext().getGame().getActivePlayer().getPlayerNickname().equals(username);
 
-//                    boolean myTurn = true;
-//                    for (int i = 0; i < myIndex; i++) {
-//                        if (client.getGameContext().getGame().getPlayers().get(i).getColour() == null) {
-//                            myTurn = false;
-//                        }
-//                    }
-
                     if (myTurn && client.getGameContext().getGame().getPlayers().get(myIndex).getColour() == null) {
-
-                        tui.printColors(client.getGameContext().getColors());
-                        TokenColour colorChoice = tui.chooseColor(client.getGameContext().getColors());
-                        client.pickColor(colorChoice);
+                        try {
+                            tui.printColors(client.getGameContext().getColors());
+                            TokenColour colorChoice = tui.chooseColor(client.getGameContext().getColors());
+                            client.pickColor(colorChoice);
+                        } catch (Exception e) {
+                            System.out.println("Invalid color choice");
+                        }
                     }
 
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.ChoosingSecretObjective && client.getGameContext().getGame().getPlayer(username).getSecretObjective() == null) {
@@ -107,7 +129,11 @@ public class TUIViewLauncher {
                     ObjectiveCard secondObjective = client.getGameContext().getObjectiveCardChoices(username).get(1);
                     tui.printSecretObjective(firstObjective, secondObjective);
                     int objectiveChoice = Integer.parseInt(tui.chooseSecretObjective(firstObjective, secondObjective));
-                    client.pickObjectiveCard(client.getGameContext().getObjectiveCardChoices(username).get(objectiveChoice));
+                    try {
+                        client.pickObjectiveCard(client.getGameContext().getObjectiveCardChoices(username).get(objectiveChoice));
+                    } catch (Exception e) {
+                        System.out.println("Invalid objective choice");
+                    }
 
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.Move) {
                     //flush the terminal
@@ -135,7 +161,11 @@ public class TUIViewLauncher {
                         if (moveChoice == 0){
 
                             int cardToFlip = tui.chooseCardToFlip(client.getGameContext().getGame().getPlayer(username).getPlayerHand());
-                            client.flipCard(cardToFlip);
+                            try {
+                                client.flipCard(cardToFlip);
+                            } catch (Exception e) {
+                                System.out.println("Error while flipping the card");
+                            }
 
                         } else if(moveChoice == 1){
 
@@ -162,11 +192,26 @@ public class TUIViewLauncher {
                             //lancio la chat
                             lastMessageIndex = tui.printChat(client, lastMessageIndex);
                         } else if (moveChoice == 4) {
-                            tui.askForMessage(client);
+                            try {
+                                tui.askForMessage(client);
+                            } catch (Exception e) {
+                                System.out.println("Error while sending the message");
+                            }
                         } else if (moveChoice == 5){
-                            tui.getScores(client);
+                            try {
+                                tui.getScores(client);
+                            } catch (Exception e) {
+                                System.out.println("Error while getting the scores");
+                            }
                         } else if (moveChoice == 6){
-                            tui.getOtherBoard(client);
+                            try {
+                                tui.getOtherBoard(client);
+                            } catch (Exception e) {
+                                System.out.println("Error while getting the other player's board");
+                            }
+                        } else if (moveChoice == 7){
+                            //Get all the objective cards
+                            tui.getObjectiveCards(client);
                         }
 
                     } else {
@@ -177,14 +222,26 @@ public class TUIViewLauncher {
                     if (myTurn) {
                         int drawChoice = tui.pickChoices(client.getGameContext().getGame().getGoldDeck(), client.getGameContext().getGame().getResourceDeck(), client.getGameContext().getGame().getFaceUpCards());
                         if (drawChoice == 0) { //draw from GoldDeck
-                            client.drawGoldCard();
+                            try {
+                                client.drawGoldCard();
+                            } catch (Exception e) {
+                                System.out.println("Error while drawing the gold card");
+                            }
                         } else if (drawChoice == 1) { //draw from ResourceDeck
-                            client.drawResourceCard();
+                            try {
+                                client.drawResourceCard();
+                            } catch (Exception e) {
+                                System.out.println("Error while drawing the resource card");
+                            }
                         } else { //draw from FaceUpCards
                             System.out.println("Face up cards:");
                             tui.showFaceUpCards(client.getGameContext().getGame().getFaceUpCards());
                             int faceUpChoice = tui.chooseFaceUpCard(client.getGameContext().getGame().getFaceUpCards());
-                            client.drawFaceUpCard(faceUpChoice);
+                            try {
+                                client.drawFaceUpCard(faceUpChoice);
+                            } catch (Exception e) {
+                                System.out.println("Error while drawing the face up card");
+                            }
                         }
                     }
 
@@ -198,41 +255,61 @@ public class TUIViewLauncher {
                     for (String line : starterCard.drawCard()) {
                         System.out.println(line);
                     }
+
                     System.out.println("What side of the starter card would you like to use?");
-                    System.out.println("Digit: \n 0 for the front side \n 1 for the back side");
+                    System.out.println("Digit: \n 0 to keep this side \n 1 to flip the card");
 
-                    //TODO: implementare la possibilità di vedere la carta iniziale da entrambi i lati prima di sceglierla
-
+                    //Let the player choose the side of the starter card
                     int side = scanner.nextInt();
-                    if (side == 1){
+                    while (side != 0){
                         starterCard.flipSide();
+                        for (String line : starterCard.drawCard()) {
+                                System.out.println(line);
+                            }
+                        System.out.println("Digit: \n 0 to keep this side \n 1 to flip the card");
+                        side = scanner.nextInt();
                     }
 
-
-                    client.setStarterCard(starterCard);
+                    try {
+                        client.setStarterCard(starterCard);
+                    } catch (Exception e) {
+                        System.out.println("Error while setting the starter card");
+                    }
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.EndGame) {
-                    String winner = tui.getWinner(client);
-                    tui.printWinner(winner);
-                    System.exit(0);
+                    try {
+                        String winner = tui.getWinner(client);
+                        tui.printWinner(winner);
+                        System.exit(0);
+                    } catch (Exception e) {
+                        System.out.println("Error while getting the winner");
+                    }
 
                 } else if (client.getGameContext().getGameStateEnum() == GameStateEnum.LastMove){
                     System.out.println("Last move:");
                     if (client.getGameContext().getGame().getActivePlayer().getPlayerNickname().equals(username)) {
                         int moveChoice = tui.moveChoice();
                         if (moveChoice == 0){
-                            System.out.println("Your hand:");
-                            tui.printHand(client.getGameContext().getGame().getPlayer(username).getPlayerHand());
-                            int cardToFlip = tui.chooseCardToFlip(client.getGameContext().getGame().getPlayer(username).getPlayerHand());
-                            client.flipCard(cardToFlip);
+                            try {
+                                System.out.println("Your hand:");
+                                tui.printHand(client.getGameContext().getGame().getPlayer(username).getPlayerHand());
+                                int cardToFlip = tui.chooseCardToFlip(client.getGameContext().getGame().getPlayer(username).getPlayerHand());
+                                client.flipCard(cardToFlip);
+                            } catch (Exception e) {
+                                System.out.println("Invalid move");
+                            }
                         }
                         else{
-                            System.out.println("Your hand:");
-                            tui.printHand(client.getGameContext().getGame().getPlayer(username).getPlayerHand());
-                            int cardToPlay = tui.chooseCardToPlay(client.getGameContext().getGame().getPlayer(username).getPlayerHand());
-                            Coordinates cardToOverlap = tui.chooseCardToOverlap(client.getGameContext().getGame().getPlayer(username).getPlayerBoard());
-                            int cornerIndex = tui.chooseCornerIndex(client.getGameContext().getGame().getPlayer(username).getPlayerBoard());
-                            client.putCard(cardToPlay, cardToOverlap, cornerIndex);
-                            tui.printBoard(client.getGameContext().getGame().getPlayer(username).getPlayerBoard());
+                            try {
+                                System.out.println("Your hand:");
+                                tui.printHand(client.getGameContext().getGame().getPlayer(username).getPlayerHand());
+                                int cardToPlay = tui.chooseCardToPlay(client.getGameContext().getGame().getPlayer(username).getPlayerHand());
+                                Coordinates cardToOverlap = tui.chooseCardToOverlap(client.getGameContext().getGame().getPlayer(username).getPlayerBoard());
+                                int cornerIndex = tui.chooseCornerIndex(client.getGameContext().getGame().getPlayer(username).getPlayerBoard());
+                                client.putCard(cardToPlay, cardToOverlap, cornerIndex);
+                                tui.printBoard(client.getGameContext().getGame().getPlayer(username).getPlayerBoard());
+                            } catch (Exception e) {
+                                System.out.println("Invalid move");
+                            }
                         }
 
                         //Show points
@@ -243,7 +320,11 @@ public class TUIViewLauncher {
 
                 }
             }
-            TimeUnit.SECONDS.sleep(1);
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                System.out.println("Error in thread execution");
+            }
         }
 
 
