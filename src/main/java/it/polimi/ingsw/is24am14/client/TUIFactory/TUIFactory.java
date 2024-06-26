@@ -257,6 +257,7 @@ public class TUIFactory {
     public void printHand(ArrayList<PlayableCard> hand) {
         System.out.println("Your hand:");
         for (PlayableCard card : hand) {
+            System.out.println(card.getSide());
             for (String s : card.drawCard()) {
                 System.out.println(s);
             }

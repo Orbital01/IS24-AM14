@@ -36,8 +36,8 @@ public class ObjectiveCardDeckCreator {
 
 
         CardCondition greenDiag = new CardCondition();
-        greenDiag.addClause(topLeft, CornerEnum.ResourceEnum.PLANT);
         greenDiag.addClause(centre, CornerEnum.ResourceEnum.PLANT);
+        greenDiag.addClause(topLeft, CornerEnum.ResourceEnum.PLANT);
         greenDiag.addClause(bottomRight, CornerEnum.ResourceEnum.PLANT);
 
         content.add(new ObjectiveCard(greenDiag, "/images/cards/objective_cards/objective_fronts/page_88.png", "/images/cards/resource_cards/objective_backs/page_88.png", 2));

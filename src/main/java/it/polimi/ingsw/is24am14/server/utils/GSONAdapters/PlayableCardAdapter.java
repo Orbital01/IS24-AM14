@@ -28,7 +28,7 @@ public class PlayableCardAdapter implements JsonSerializer<PlayableCard>, JsonDe
 
         if ("GoldCard".equals(cardType)) {
             ArrayList<Corner> frontCorners = new ArrayList<>(Arrays.asList(jsonDeserializationContext.deserialize(jsonObject.get("frontCorners"), Corner[].class)));
-            return new GoldCard(
+            GoldCard goldCard = new GoldCard(
                     jsonDeserializationContext.deserialize(jsonObject.get("points"), Integer.class),
                     jsonDeserializationContext.deserialize(jsonObject.get("pointCondition"), Condition.class),
                     jsonDeserializationContext.deserialize(jsonObject.get("resource"), CornerEnum.class),
@@ -36,16 +36,20 @@ public class PlayableCardAdapter implements JsonSerializer<PlayableCard>, JsonDe
                     frontCorners,
                     jsonObject.get("frontImage").getAsString(),
                     jsonObject.get("backImage").getAsString());
+            if (jsonObject.get("enumSide").getAsString().equals("BACK")) goldCard.flipSide();
+            return goldCard;
         } else if ("ResourceCard".equals(cardType)) {
             ArrayList<Corner> frontCorners = new ArrayList<>(Arrays.asList(jsonDeserializationContext.deserialize(jsonObject.get("frontCorners"), Corner[].class)));
             ArrayList<Corner> backCorners = new ArrayList<>(Arrays.asList(jsonDeserializationContext.deserialize(jsonObject.get("backCorners"), Corner[].class)));
-            return new ResourceCard(
+            ResourceCard resourceCard = new ResourceCard(
                     jsonDeserializationContext.deserialize(jsonObject.get("points"), Integer.class),
                     jsonDeserializationContext.deserialize(jsonObject.get("resource"), CornerEnum.class),
                     frontCorners,
                     backCorners,
                     jsonObject.get("frontImage").getAsString(),
                     jsonObject.get("backImage").getAsString());
+            if (jsonObject.get("enumSide").getAsString().equals("BACK")) resourceCard.flipSide();
+            return resourceCard;
         }
         throw new RuntimeException("Error when deserializing playable card");
     }

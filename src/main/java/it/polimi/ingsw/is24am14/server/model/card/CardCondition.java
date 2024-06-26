@@ -34,23 +34,24 @@ public class CardCondition implements Condition {
     //  Not working
     @Override
     public boolean isSatisfied(GameArea board) {
-        int listCardIndex = 0;
+        int listCardIndex;
+        boolean satisfied;
+        ArrayList<Coordinates> listCardCoordinates = new ArrayList<>(listCard.keySet());
+        ArrayList<CornerEnum.ResourceEnum> listCardResources = new ArrayList<>(listCard.values());
 
+        //  for each card on the board
         for (Map.Entry<Coordinates, Card> entry : board.getBoard().entrySet()) {
-            //  if the board-card type is the same as the listCard type
-            //  look at the next card of the condition
-            CornerEnum.ResourceEnum type = new ArrayList<>(listCard.values()).get(listCardIndex);
-            Card cardToCheck = entry.getValue();
-            Coordinates coordinates;
-            /*
-            while (listCardIndex < listCard.size() && isSameType(entry.getValue(), type) && cardToCheck != null) {
-                coordinates = new ArrayList<>(listCard.keySet()).get(listCardIndex);
-                cardToCheck = board.getBoard().get(Coordinates.add(entry.getKey(), coordinates));
-                listCardIndex = listCardIndex + 1;
-            }
-            */
+            listCardIndex = 0;
+            satisfied = true;
 
-            if (listCardIndex == listCard.size()) return true;
+            Coordinates coordinatesImOn = entry.getKey();
+            while (listCardIndex < listCard.size() && satisfied) {
+                Coordinates toCheck = Coordinates.add(coordinatesImOn, listCardCoordinates.get(listCardIndex));
+
+                if (board.getCard(toCheck) == null || board.getCard(toCheck).getResource() == null || !board.getCard(toCheck).getResource().equals(listCardResources.get(listCardIndex))) satisfied = false;
+                listCardIndex++;
+            }
+            if (satisfied) return true;
         }
 
         return false;
@@ -58,7 +59,7 @@ public class CardCondition implements Condition {
 
     @Override
     public int numSatisfied(GameArea board) {
-        return 0;
+        return isSatisfied(board) ? 1 : 0;
     }
 
     /**

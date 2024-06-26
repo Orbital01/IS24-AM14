@@ -209,7 +209,6 @@ public class GameContext implements Serializable {
     private void updateScore() {
             System.out.println("Updating score");
             int earnedPoints = lastPlayedCard.getSide() == EnumSide.FRONT ? lastPlayedCard.getPoints() * lastPlayedCard.getPointCondition().numSatisfied(game.getActivePlayer().getPlayerBoard()) : 0;
-            for (Corner c : lastPlayedCard.getCorners()) System.out.println(c.getType());
             System.out.println("Earned points: " + earnedPoints);
             //Sets player score to his old score + the points given by the satisfied condition on the gold card
             game.getActivePlayer().setScore(game.getActivePlayer().getScore() + earnedPoints);
@@ -221,6 +220,17 @@ public class GameContext implements Serializable {
             if (player.getScore() >= 20) return true;
         }
         return false;
+    }
+
+    private void finalUpdateScore() {
+        System.out.println("Updating score for the last time");
+        for (Player player : game.getPlayers()) {
+            int score = player.getScore();
+            score += player.getSecretObjective().getCondition().numSatisfied(player.getPlayerBoard()) * player.getSecretObjective().getPoints();
+            score += game.getCommonObjective().getFirst().getCondition().numSatisfied(player.getPlayerBoard()) * game.getCommonObjective().getFirst().getPoints();
+            score += game.getCommonObjective().get(1).getCondition().numSatisfied(player.getPlayerBoard()) * game.getCommonObjective().get(1).getPoints();
+            player.setScore(score);
+        }
     }
 
     public void addMessage(String sender, String receiver, String message) {
