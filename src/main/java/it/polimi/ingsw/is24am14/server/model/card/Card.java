@@ -16,6 +16,7 @@ public abstract class Card implements Serializable {
     private final ArrayList<Corner> frontCorners;
     private final ArrayList<Corner> backCorners;
     private EnumSide enumSide;
+    private final CornerEnum.ResourceEnum resource;
     private final String frontImage;
     private final String backImage;
 
@@ -24,9 +25,8 @@ public abstract class Card implements Serializable {
      * Constructor
      *
      * @param frontCorners the corners of the front side of the card
+     *
      * @param backCorners  the corners of the back side of the card
-     * @param frontImage   the image of the front side of the card
-     * @param backImage    the image of the back side of the card
      * @throws IllegalArgumentException if the number of corners is greater than 4
      * it is always created in the front side
      */
@@ -44,6 +44,7 @@ public abstract class Card implements Serializable {
         this.frontImage = frontImage;
         this.backImage = backImage;
 
+        this.resource = null;
     }
 
     /**
@@ -61,15 +62,6 @@ public abstract class Card implements Serializable {
     }
 
     /**
-     * Retrieves the type of resource associated with the type of the card.
-     *
-     * @return the type of resource as a {@link CornerEnum.ResourceEnum}, or {@code null} if no type is specified
-     */
-    public CornerEnum.ResourceEnum getCardType() {
-        return null;
-    }
-
-    /**
      * This method returns the side of the card
      *
      * @return the side of the card
@@ -78,6 +70,9 @@ public abstract class Card implements Serializable {
         return enumSide;
     }
 
+    public CornerEnum.ResourceEnum getResource() {
+        return resource;
+    }
 
     /**
      * This method returns the image of the card
@@ -104,11 +99,6 @@ public abstract class Card implements Serializable {
         }
     }
 
-    /**
-     * This method returns the types of the corners of the card
-     *
-     * @return the types of the corners of the card
-     */
     public ArrayList<CornerEnum> getCornerEnums() {
         ArrayList<CornerEnum> items = new ArrayList<>();
         ArrayList<Corner> corners = getCorners();
@@ -120,45 +110,21 @@ public abstract class Card implements Serializable {
     }
 
     /**
-     * Retrieves the corners of the front side of the card.
-     *
-     * @return an {@code ArrayList} of {@link Corner} objects representing the corners of the front side
+     * these methods are implemented in order to be able to serialize the card
+     * they should not be used in the model or controller
      */
+    //getters
     public ArrayList<Corner> getFrontCorners() {return frontCorners;}
-
-    /**
-     * Retrieves the corners of the back side of the card.
-     *
-     * @return an {@code ArrayList} of {@link Corner} objects representing the corners of the back side
-     */
     public ArrayList<Corner> getBackCorners() {return backCorners;}
-
-    /**
-     * Retrieves the image associated with the front side of the card.
-     *
-     * @return a {@code String} representing the image file path or identifier of the front side image
-     */
     public String getFrontImage() {return frontImage;}
-
-    /**
-     * Retrieves the image associated with the back side of the card.
-     *
-     * @return a {@code String} representing the image file path or identifier of the back side image
-     */
     public String getBackImage() {return backImage;}
-
 
     public ArrayList<String> drawCard() {
         return new ArrayList<>();
     }
 
-    /**
-     * Retrieves the point condition associated with the card.
-     *
-     * @return a {@link Condition} representing the point condition, defaulting to {@link NoCondition} if none is specified
-     */
     public Condition getPointCondition() {
         return new NoCondition();
-    }
+    };
 
 }

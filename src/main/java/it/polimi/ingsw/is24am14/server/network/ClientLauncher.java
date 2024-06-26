@@ -7,32 +7,27 @@ import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 import it.polimi.ingsw.is24am14.server.model.player.Player;
 import it.polimi.ingsw.is24am14.server.model.player.TokenColour;
 import it.polimi.ingsw.is24am14.server.utils.GSONAdapters.InitGSON;
-import it.polimi.ingsw.is24am14.server.utils.ObjectiveCardDeckCreator;
 
 import java.util.ArrayList;
 
 public class ClientLauncher {
     public static void main(String[] args) throws Exception {
-        ObjectiveCardDeckCreator creator = new ObjectiveCardDeckCreator();
-        Deck<ObjectiveCard> deck = creator.createObjectiveCardDeck();
+        Coordinates topMid = new Coordinates(2, 0);
+        Coordinates centre = new Coordinates(0, 0);
+        Coordinates bottomRight = new Coordinates(-1, 1);
 
-        GameArea board = new GameArea();
-        StarterCard starterCard = createStarterCard();
-        board.placeStarterCard(starterCard);
 
-        Card card1 = createResourceCard(CornerEnum.ResourceEnum.FUNGI);
-        Card card2 = createResourceCard(CornerEnum.ResourceEnum.FUNGI);
-        Card card3 = createResourceCard(CornerEnum.ResourceEnum.FUNGI);
+        // The four diagonal card conditions
 
-        board.addCard(starterCard, card1, 1);
-        board.addCard(card1, card2, 1);
-        board.addCard(card2, card3, 1);
+        CardCondition redRedGreenL = new CardCondition();
+        redRedGreenL.addClause(centre, CornerEnum.ResourceEnum.FUNGI);
+        redRedGreenL.addClause(topMid, CornerEnum.ResourceEnum.FUNGI);
+        redRedGreenL.addClause(bottomRight, CornerEnum.ResourceEnum.PLANT);
+        ObjectiveCard objectiveCard = new ObjectiveCard(redRedGreenL, "/images/cards/objective_cards/objective_fronts/page_91.png", "/images/cards/resource_cards/objective_backs/page_91.png", 3);
+        Condition condition = objectiveCard.getCondition();
 
-        ObjectiveCard objectiveCard = deck.removeTop();
-        objectiveCard.getCondition().isSatisfied(board);
-    }
 
-    public static StarterCard createStarterCard() {
+
         ArrayList<Corner> empEmpEmpEmp = new ArrayList<>();
         empEmpEmpEmp.add(new Corner(CornerEnum.EMPTY));
         empEmpEmpEmp.add(new Corner(CornerEnum.EMPTY));
@@ -47,23 +42,32 @@ public class ClientLauncher {
         ArrayList<CornerEnum.ResourceEnum> plaFun = new ArrayList<>();
         plaFun.add(CornerEnum.ResourceEnum.PLANT);
         plaFun.add(CornerEnum.ResourceEnum.FUNGI);
-        return new StarterCard(insAniFunPlan, empEmpEmpEmp, plaFun, "/images/cards/starter_cards/starter_backs/page_83.png", "/images/cards/starter_cards/starter_fronts/page_83.png");
-    }
+        StarterCard starterCard = new StarterCard(insAniFunPlan, empEmpEmpEmp, plaFun, "/images/cards/starter_cards/starter_backs/page_83.png", "/images/cards/starter_cards/starter_fronts/page_83.png");
 
-    public static ResourceCard createResourceCard(CornerEnum.ResourceEnum resource) {
-        ArrayList<Corner> backCorners = new ArrayList<>();
-        backCorners.add(new Corner(CornerEnum.EMPTY));
-        backCorners.add(new Corner(CornerEnum.EMPTY));
-        backCorners.add(new Corner(CornerEnum.EMPTY));
-        backCorners.add(new Corner(CornerEnum.EMPTY));
 
         ArrayList<Corner> funEmpFunHid = new ArrayList<>();
         funEmpFunHid.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
         funEmpFunHid.add(new Corner(CornerEnum.EMPTY));
         funEmpFunHid.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
-        funEmpFunHid.add(new Corner(CornerEnum.HIDDEN));
+        funEmpFunHid.add(new Corner(CornerEnum.EMPTY));
+        ArrayList<Corner> backCorners = new ArrayList<>();
+        CornerEnum.ResourceEnum resource = CornerEnum.ResourceEnum.FUNGI;
+        backCorners.add(new Corner(CornerEnum.EMPTY));
+        backCorners.add(new Corner(CornerEnum.EMPTY));
+        backCorners.add(new Corner(CornerEnum.EMPTY));
+        backCorners.add(new Corner(CornerEnum.EMPTY));
 
-        return new ResourceCard(0, resource, funEmpFunHid, backCorners, "/images/cards/resource_cards/red_fronts/page_1.png", "/images/cards/resource_cards/red_backs/page_1.png");
+        ResourceCard resourceCard1 = new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, funEmpFunHid, backCorners, "/images/cards/resource_cards/red_fronts/page_1.png", "/images/cards/resource_cards/red_backs/page_1.png");
+        ResourceCard resourceCard2 = new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, funEmpFunHid, backCorners, "/images/cards/resource_cards/red_fronts/page_1.png", "/images/cards/resource_cards/red_backs/page_1.png");
+        ResourceCard resourceCard3 = new ResourceCard(0, CornerEnum.ResourceEnum.PLANT, funEmpFunHid, backCorners, "/images/cards/resource_cards/red_fronts/page_1.png", "/images/cards/resource_cards/red_backs/page_1.png");
 
+
+        GameArea gameArea = new GameArea();
+        gameArea.placeStarterCard(starterCard);
+        gameArea.addCard(starterCard, resourceCard1, 3);
+        gameArea.addCard(starterCard, resourceCard2, 1);
+        //gameArea.addCard(resourceCard1, resourceCard3, 3);
+
+        System.out.println(condition.isSatisfied(gameArea));
     }
 }
