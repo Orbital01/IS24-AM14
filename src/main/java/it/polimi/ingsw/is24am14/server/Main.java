@@ -1,52 +1,66 @@
 package it.polimi.ingsw.is24am14.server;
 
+import it.polimi.ingsw.is24am14.client.TUIViewLauncher;
 import it.polimi.ingsw.is24am14.server.network.NetworkSettings;
 import it.polimi.ingsw.is24am14.client.GUIViewLauncher;
+import it.polimi.ingsw.is24am14.server.network.ServerLauncher;
 
 public class Main {
 
-    public static void main(String[] args) {
-        if (args.length > 1) {
-            if ("client".equals(args[0])) {
-                //chiedo IP e porta del server
-                if(args.length>=3){
-                    NetworkSettings.setServerAddress(args[1]);
-                    NetworkSettings.setPort(Integer.parseInt(args[2]));
-                    if(args.length>3){
-                        if(args[3].equals("GUI")){
-                            GUIViewLauncher.LaunchGUI();
-                        }else if (args[3].equals("CLI")) {
+    private static final String SERVER_ADDRESS = "--address";
+    private static final String SOCKET_PORT = "--socket-port";
+    private static final String RMI_PORT = "--rmi-port";
+    private static final String GUI_CLI = "--mode";
 
-                            try {
-                                //TUIViewLauncher.LaunchCLI();
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
+    private static final String IPV4_REGEX =
+            "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+                    + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+                    + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+                    + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
 
-                        }
-                    }else {
-                        System.out.println("parametri insufficienti");
-                        System.out.println("avvio il client con interfaccia testuale");
-                        //CLIView.LaunchCLI(); //TODO: implementare CLI LAUNCHER
+
+
+    public static void main(String[] args)  {
+        if (args.length!=0){
+            for ( int i = 0; i < args.length; i++ ) {
+
+                if (args[i].equals(SERVER_ADDRESS)){
+                    if (args[i+1].matches(IPV4_REGEX)){
+                        NetworkSettings.setServerAddress(args[i+1]);
                     }
-
-                }else {
-                    System.out.println("parametri insufficienti");
-                    System.exit(0);
+                }
+                if (args[i].equals(SOCKET_PORT)){
+                    if (Integer.parseInt(args[i+1])>1024 && Integer.parseInt(args[i+1])<65535){
+                        NetworkSettings.setPort(Integer.parseInt(args[i+1]));
+                    }
+                }
+                if (args[i].equals(RMI_PORT)){
+                    if (Integer.parseInt(args[i+1])>1024 && Integer.parseInt(args[i+1])<65535){
+                        NetworkSettings.setPort(Integer.parseInt(args[i+1]));
+                    }
+                }
+                if (args[i].equals(GUI_CLI)){
+                    if (args[i+1].equals("0")){
+                        GUIViewLauncher.LaunchGUI();
+                    } else if (args[i+1].equals("1")){
+                        try {
+                            TUIViewLauncher.main(args);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }else if (args[i+1].equals("2")) {
+                        ServerLauncher.main(args);
+                    }
                 }
 
-            } else if ("server".equals(args[0])) {
-                //chiedo la porta del server
-                if(args.length>=2){
-                    NetworkSettings.setPort(Integer.parseInt(args[1]));
-                }
-                //ServerLauncher.start();
-            } else {
-                System.out.println("Argomento non riconosciuto. Usa 'client' o 'server'.");
             }
-        } else {
-            System.out.println("Nessun argomento fornito. Usa 'client' o 'server'.");
+        }else {
+            System.out.println("No arguments provided, using default settings");
+            try {
+                TUIViewLauncher.main(args);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
-
 }

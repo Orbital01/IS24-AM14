@@ -10,7 +10,7 @@ This Java project is a porting of the boardgame *CODEX* by [Cranio Creations](ht
 - Matteo Delogu ([@Orbital01](https://github.com/Orbital01))
 - Vittorio Remigio Pio Cozzoli ([@justvicthor](https://github.com/justvicthor))
 - Stefan Bogdanovic ([@SteBog](https://github.com/SteBog))
-- Niccolò Francesco Basile ([BasicNickPolimi](https://github.com/BasicNickPolimi))
+- Niccolò Francesco Basile ([@BasicNickPolimi](https://github.com/BasicNickPolimi))
 
 ---
 
@@ -18,11 +18,11 @@ This Java project is a porting of the boardgame *CODEX* by [Cranio Creations](ht
 | Functionality | Status | 
 | --- | --- |
 | Basic rules | :white_check_mark: |
-| Complete rules | :construction: |
+| Complete rules | :white_check_mark: |
 | Socket connection | :white_check_mark: |
 | RMI connection | :white_check_mark: |
-| CLI | :construction: |
-| GUI | :construction: |
+| CLI | :white_check_mark: |
+| GUI | :white_check_mark: |
 | Multiple games | :white_check_mark:|
 | Persistence | :x: |
 | Resilience | :x: |
@@ -37,6 +37,63 @@ This Java project is a porting of the boardgame *CODEX* by [Cranio Creations](ht
 | :x: | Not planned to be implemented |
 
 ---
+
+## How to play
+### Requirements
+- Java 21.0.0
+- it is recommended to use a unicode-compatible terminal
+
+### Run the game
+1. Download the latest JAR file from the [releases]
+2. Open a terminal and navigate to the folder where the JAR file is located
+3. You can run the app with the following command:
+    ```shell
+    java -jar IS24-AM14-1.0-jar-with-dependencies.jar
+    ```
+   it will have the following **_default_** parameters:
+    * `CLI` user interface
+    * LoopBack IP address 🔁
+    * 12345 socket port
+    * 12346 RMI port
+   
+
+4. If you want to change the parameters, you can use the following options as **arguments**:
+    * `--address xxx.xxx.xxx.xxx`
+      * where `xxx.xxx.xxx.xxx` is the IP address of the server
+    * `--socket-port xxxxx`
+      * where `xxxxx` is the port of the server
+    * `--rmi-port xxxxx`
+      * where `xxxxx` is the port of the server
+    * `--mode`
+      * 0 for **CLI**
+      * 1 for **GUI**
+      * 2 for **Server**
+
+### Example
+
+-> starting the client
+```shell
+java -jar IS24-AM14-1.0-jar-with-dependencies.jar --address 192.168.0.1 --socket-port 12345 --rmi-port 12346 --mode 1
+```
+-> starting the server
+```shell
+java -jar IS24-AM14-1.0-jar-with-dependencies.jar --address 192.168.0.1 --socket-port 12345 --rmi-port 12346 --mode 2
+```
+
+> :warning: **Note**: The server must be launched in order to play the game
+
+> :warning: **Note**: Both socket and RMI ports must be set to the same value on the server and the client
+
+> :warning: **Note**: If there's only one input missing, the default value will be used for the missing one
+
+> :warning: **Note**: If the address is invalid, the default value will be used 🔁
+
+
+## In Game Screenshots
+![GUI](.github/img/screen1.png)
+![TUI_server](.github/img/server.png)
+![TUI_1](.github/img/TUI_1.png)
+![TUI_board](.github/img/TUI_board.png)
 
 ## Legal
 
