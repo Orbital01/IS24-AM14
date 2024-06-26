@@ -86,6 +86,7 @@ public class GameController {
     public void showScene() {
         Stage stage = context.getStage();
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 
