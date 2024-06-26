@@ -291,6 +291,7 @@ public class GameController {
         }
 
         commonObjContainer.setAlignment(Pos.CENTER);
+        commonObjContainer.setSpacing(10);
         objectivesContainer.getChildren().add(commonObjContainer);
 
         modalLayout.setCenter(objectivesContainer);
@@ -618,7 +619,7 @@ public class GameController {
             });
 
             //mostro la finestra modale
-            Scene modalScene = new Scene(modalLayout, 800, 600);
+            Scene modalScene = new Scene(modalLayout, 850, 600);
             modalStage.setScene(modalScene);
             modalStage.showAndWait();
         }
@@ -646,8 +647,11 @@ public class GameController {
             modalStage.close();
             System.exit(0);
         });
+
         modalLayout.setCenter(label);
         modalLayout.setBottom(closeButton);
+        modalStage.setScene(new Scene(modalLayout, 300, 300));
+        modalStage.showAndWait();
     }
 
     /**
