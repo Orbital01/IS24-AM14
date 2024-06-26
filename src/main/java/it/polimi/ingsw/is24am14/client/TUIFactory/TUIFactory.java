@@ -456,9 +456,11 @@ public class TUIFactory {
 
     public int printChat(ClientInterface client, int index){
         ArrayList<Message> messages;
+        String user;
 
         try {
             messages = client.getGameContext().getMessages();
+            user = client.getUsername();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -470,7 +472,7 @@ public class TUIFactory {
 
             if(message.getReceiver().equals("")){
                 System.out.println(message.getSender() + ": " + message.getMessage());
-            }else {
+            }else if(message.getReceiver().equals(user)) {
                 System.out.println("private message from " + message.getSender() + ": " + message.getMessage());
             }
         }

@@ -48,9 +48,10 @@ public class GuiHelper {
      */
     public void updateMessages(TextArea messageArea, GUIViewLauncher context) {
         ArrayList<Message> messaggi;
-
+        String user;
         try {
             messaggi = context.getClient().getGameContext().getMessages();
+            user = context.getClient().getUsername();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -60,7 +61,7 @@ public class GuiHelper {
             if(message.getReceiver().equals("")){
                 messageArea.appendText(message.getSender() + ": " + message.getMessage() + "\n");
                 this.lastMessageIndex++;
-            }else {
+            }else if (message.getReceiver().equals(user)) {
                 messageArea.appendText("private message from " + message.getSender() + ": " + message.getMessage() + "\n");
                 this.lastMessageIndex++;
             }
