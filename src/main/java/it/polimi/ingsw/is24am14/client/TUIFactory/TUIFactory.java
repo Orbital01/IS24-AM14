@@ -434,8 +434,8 @@ public class TUIFactory {
     public void showFaceUpCards(ArrayList<PlayableCard> faceUpCards) {
         int i = 0;
         for (PlayableCard card : faceUpCards) {
+            System.out.println(i + ")");
             for (String line : card.drawCard()) {
-                System.out.println(i + ")");
                 System.out.println(line);
             }
             i++;
