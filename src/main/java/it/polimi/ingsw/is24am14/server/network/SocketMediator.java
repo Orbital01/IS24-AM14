@@ -218,6 +218,7 @@ public class SocketMediator implements ClientHandler {
             e.printStackTrace();
             message.code = 409;
             message.message = "errorSendingGameContext";
+            message.strings.add(e.getMessage());
         }
         send(message);
     }
