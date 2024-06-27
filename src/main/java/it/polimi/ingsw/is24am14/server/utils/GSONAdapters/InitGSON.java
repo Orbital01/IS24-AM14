@@ -17,6 +17,7 @@ public class InitGSON {
         builder.registerTypeAdapter(ResourceCard.class, new ResourceCardAdapter());
         builder.registerTypeAdapter(StarterCard.class, new StarterCardAdapter());
         builder.registerTypeAdapter(PlayableCard.class, new PlayableCardAdapter());
+        builder.registerTypeAdapter(CornerCondition.class, new CornerConditionAdapter());
         return builder.create();
     }
 }

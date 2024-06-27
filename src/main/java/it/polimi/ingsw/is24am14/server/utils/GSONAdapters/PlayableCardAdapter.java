@@ -28,6 +28,8 @@ public class PlayableCardAdapter implements JsonSerializer<PlayableCard>, JsonDe
 
         if ("GoldCard".equals(cardType)) {
             ArrayList<Corner> frontCorners = new ArrayList<>(Arrays.asList(jsonDeserializationContext.deserialize(jsonObject.get("frontCorners"), Corner[].class)));
+            ArrayList<Corner> backCorners = new ArrayList<>(Arrays.asList(jsonDeserializationContext.deserialize(jsonObject.get("backCorners"), Corner[].class)));
+
             GoldCard goldCard = new GoldCard(
                     jsonDeserializationContext.deserialize(jsonObject.get("points"), Integer.class),
                     jsonDeserializationContext.deserialize(jsonObject.get("pointCondition"), Condition.class),
@@ -36,7 +38,13 @@ public class PlayableCardAdapter implements JsonSerializer<PlayableCard>, JsonDe
                     frontCorners,
                     jsonObject.get("frontImage").getAsString(),
                     jsonObject.get("backImage").getAsString());
+
             if (jsonObject.get("enumSide").getAsString().equals("BACK")) goldCard.flipSide();
+
+            for (int i = 0; i < backCorners.size(); i++) {
+                if (backCorners.get(i).isOverlapped()) goldCard.getBackCorners().get(i).overlap();
+            }
+
             return goldCard;
         } else if ("ResourceCard".equals(cardType)) {
             ArrayList<Corner> frontCorners = new ArrayList<>(Arrays.asList(jsonDeserializationContext.deserialize(jsonObject.get("frontCorners"), Corner[].class)));
@@ -48,7 +56,13 @@ public class PlayableCardAdapter implements JsonSerializer<PlayableCard>, JsonDe
                     backCorners,
                     jsonObject.get("frontImage").getAsString(),
                     jsonObject.get("backImage").getAsString());
+
             if (jsonObject.get("enumSide").getAsString().equals("BACK")) resourceCard.flipSide();
+
+            for (int i = 0; i < backCorners.size(); i++) {
+                if (backCorners.get(i).isOverlapped()) resourceCard.getBackCorners().get(i).overlap();
+            }
+
             return resourceCard;
         }
         throw new RuntimeException("Error when deserializing playable card");
