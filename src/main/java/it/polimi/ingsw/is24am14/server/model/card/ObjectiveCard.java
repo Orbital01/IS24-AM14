@@ -57,7 +57,7 @@ public class ObjectiveCard extends Card {
             //Third Row
             cardString.add("|                        |");
             //Fourth Row
-            cardString.add("|		");
+            cardString.add("|       ");
 //            for (String e : condition) {
 //                cardString.set(3, cardString.get(3) + e);
 //            }
@@ -65,7 +65,7 @@ public class ObjectiveCard extends Card {
             for (String e : condition){
                 cardString.set(3, cardString.get(3) + e);
             }
-            cardString.set(3, cardString.get(3) + "      |");
+            cardString.set(3, cardString.get(3) + "       |");
             //Fifth Row
             cardString.add("|                        |");
             //Sixth Row
@@ -89,19 +89,19 @@ public class ObjectiveCard extends Card {
             for (String e : cardCondition.get(0)) {
                 cardString.set(2, cardString.get(2) + e);
             }
-            cardString.set(2, cardString.get(2) + "		 |");
+            cardString.set(2, cardString.get(2) + "      |");
 
             cardString.add("|         ");
             for (String e : cardCondition.get(1)) {
                 cardString.set(3, cardString.get(3) + e);
             }
-            cardString.set(3, cardString.get(3) + "		 |");
+            cardString.set(3, cardString.get(3) + "      |");
 
             cardString.add("|         ");
             for (String e : cardCondition.get(2)) {
                 cardString.set(4, cardString.get(4) + e);
             }
-            cardString.set(4, cardString.get(4) + "		 |");
+            cardString.set(4, cardString.get(4) + "      |");
 
             cardString.add("|                        |");
             cardString.add("|------------------------|");

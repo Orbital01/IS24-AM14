@@ -30,6 +30,7 @@ public class RenderBoardTest {
         ResourceCard resourceCard2;
         ResourceCard resourceCard3;
         ResourceCard resourceCard4;
+        ResourceCard resourceCard5;
 
         ArrayList<Corner> starterFrontCorners = new ArrayList<>();
         starterFrontCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
@@ -72,7 +73,7 @@ public class RenderBoardTest {
         resourceCard2FrontCorners.add(new Corner(CornerEnum.HIDDEN));
         resourceCard2 = new ResourceCard(1, CornerEnum.ResourceEnum.PLANT , resourceCard2FrontCorners, resourceBackCorners, "", "" );
 
-        gameArea.addCard(resourceCard1, resourceCard2, 0);
+        gameArea.addCard(resourceCard1, resourceCard2, 1);
 
         ArrayList<Corner> resourceCard3FrontCorners = new ArrayList<>();
         resourceCard3FrontCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
@@ -80,7 +81,7 @@ public class RenderBoardTest {
         resourceCard3FrontCorners.add(new Corner(CornerEnum.HIDDEN));
         resourceCard3FrontCorners.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
         resourceCard3 = new ResourceCard(0, CornerEnum.ResourceEnum.PLANT, resourceCard3FrontCorners, resourceBackCorners, "", "");
-        gameArea.addCard(resourceCard2, resourceCard3, 0);
+        gameArea.addCard(resourceCard2, resourceCard3, 1);
 
         ArrayList<Corner> resourceCard4FrontCorners = new ArrayList<>();
         resourceCard4FrontCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
@@ -90,6 +91,15 @@ public class RenderBoardTest {
 
         resourceCard4 = new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, resourceCard4FrontCorners, resourceBackCorners, "", "");
         gameArea.addCard(resourceCard3, resourceCard4, 0);
+
+        ArrayList<Corner> resourceCard5FrontCorners = new ArrayList<>();
+        resourceCard5FrontCorners.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+        resourceCard5FrontCorners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+        resourceCard5FrontCorners.add(new Corner(CornerEnum.ObjectEnum.MANUSCRIPT));
+        resourceCard5FrontCorners.add(new Corner(CornerEnum.EMPTY));
+
+        resourceCard5 = new ResourceCard(0, CornerEnum.ResourceEnum.FUNGI, resourceCard5FrontCorners, resourceBackCorners, "", "");
+        gameArea.addCard(resourceCard3, resourceCard5, 1);
 
         return gameArea;
     }
