@@ -2,6 +2,7 @@ package it.polimi.ingsw.is24am14.client.GUI;
 
 import it.polimi.ingsw.is24am14.client.GUI.GUIFactory.Guifactory;
 import it.polimi.ingsw.is24am14.client.GUIViewLauncher;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -56,7 +57,7 @@ public class CreateGameController {
         numPlayers.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
                 numPlayers.setText(newValue.replaceAll("[^\\d]", ""));
-            } else if (!newValue.isEmpty() && Integer.parseInt(newValue) > 4) {
+            } else if (!newValue.isEmpty() && Integer.parseInt(newValue) > 4 && Integer.parseInt(newValue) < 2) {
                 numPlayers.setText(oldValue);
             }
         });
@@ -89,7 +90,8 @@ public class CreateGameController {
                 context.getClient().createLobby(numPlayersInt);
                 goToLobby();
             } catch (Exception e) {
-                e.printStackTrace();
+                Label errorLabel = Guifactory.printLabel("Error creating lobby", 20);
+                layout.getChildren().add(errorLabel);
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();

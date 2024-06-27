@@ -18,13 +18,32 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * Represents a mediator for handling client-server communication over sockets.
+ * Implements ClientHandler interface to manage client requests and responses.
+ */
 public class SocketMediator implements ClientHandler {
+    /** PrintWriter for sending responses to the client. */
     public PrintWriter socketOut;
+
+    /** BufferedReader for receiving requests from the client. */
     public BufferedReader socketIn;
+
+    /** The username associated with the client. */
     private String username;
+
+    /** The LobbyList containing active lobbies. */
     private final LobbyList lobbyList;
+
+    /** Gson instance for JSON serialization and deserialization. */
     private final Gson gson;
 
+    /**
+     * Constructs a SocketMediator object with the specified socket and lobby list.
+     * Initializes the Gson instance and sets up input/output streams for socket communication.
+     * @param socket the client socket
+     * @param lobbyList the LobbyList containing active lobbies
+     */
     public SocketMediator(Socket socket, LobbyList lobbyList) {
         this.lobbyList = lobbyList;
 
@@ -38,19 +57,39 @@ public class SocketMediator implements ClientHandler {
         }
     }
 
+    /**
+     * Sends a SocketResponse object to the client.
+     * @param message the SocketResponse object to send
+     * @throws Exception if there is an error sending the response
+     */
     public void send(SocketResponse message) throws Exception {
         this.socketOut.println(this.gson.toJson(message));
     }
 
+    /**
+     * Receives a SocketResponse object from the client.
+     * @return the received SocketResponse object
+     * @throws Exception if there is an error receiving the response
+     */
     public SocketResponse receive() throws Exception {
         return this.gson.fromJson(this.socketIn.readLine(), SocketResponse.class);
     }
 
+    /**
+     * Retrieves the username associated with this client.
+     * @return the username of the client
+     * @throws Exception if there is an error retrieving the username
+     */
     @Override
     public String getUsername() throws Exception {
         return username;
     }
 
+    /**
+     * Manages client requests indefinitely.
+     * Interprets incoming messages and invokes corresponding methods to handle them.
+     * @throws Exception if there is an error managing client requests
+     */
     public void manage() throws Exception {
         this.acceptConnection();
         while (true) {
@@ -108,6 +147,12 @@ public class SocketMediator implements ClientHandler {
         }
     }
 
+    /**
+     * Accepts a connection request from the client.
+     * Verifies the username's availability and adds the client handler to the lobby list.
+     * Sends a response indicating the connection status.
+     * @throws Exception if there is an error accepting the connection or sending the response
+     */
     public void acceptConnection() throws Exception {
         String user = receive().strings.getFirst();
         if (lobbyList.getClientHandler(user) != null) {
@@ -122,6 +167,12 @@ public class SocketMediator implements ClientHandler {
         System.out.println("Socket Client connected");
     }
 
+    /**
+     * Creates a new lobby with the specified number of players.
+     * Checks if the client is already in a lobby and sends an appropriate response.
+     * @param numPlayers the number of players for the new lobby
+     * @throws Exception if there is an error creating the lobby or sending the response
+     */
     public void createNewLobby(int numPlayers) throws Exception {
         if (this.lobbyList.getPlayersLobby(username) != null) {
             send(new SocketResponse(409, "you are already in a lobby"));
@@ -133,6 +184,12 @@ public class SocketMediator implements ClientHandler {
         send(new SocketResponse(200, "createdNewLobby"));
     }
 
+    /**
+     * Joins an existing lobby hosted by the specified username.
+     * Checks if the client is already in a lobby and sends an appropriate response.
+     * @param lobbyHost the username of the lobby host to join
+     * @throws Exception if there is an error joining the lobby or sending the response
+     */
     public void joinLobby(String lobbyHost) throws Exception {
         if (this.lobbyList.getPlayersLobby(username) != null) {
             send(new SocketResponse(409, "you are already in a lobby"));
@@ -143,6 +200,12 @@ public class SocketMediator implements ClientHandler {
         send(new SocketResponse(200, "joinedLobby"));
     }
 
+    /**
+     * Sends the current game context to the client.
+     * Retrieves the game context associated with the client's lobby and sends it as JSON.
+     * Sends an error response if the game context retrieval fails.
+     * @throws Exception if there is an error sending the game context
+     */
     public void sendGameContext() throws Exception {
         SocketResponse message = new SocketResponse();
         try {
@@ -150,14 +213,22 @@ public class SocketMediator implements ClientHandler {
             message.code = 200;
             message.message = "gameContext";
             message.strings.add(gson.toJson(context));
-            if (message.strings.isEmpty()) throw new RuntimeException("No game context");
         } catch (Exception e) {
+            System.out.println("Error message: " + e.getMessage());
+            e.printStackTrace();
             message.code = 409;
             message.message = "errorSendingGameContext";
         }
         send(message);
     }
 
+    /**
+     * Starts the game for the client's lobby.
+     * Checks if the lobby has sufficient players to start the game.
+     * Sends a success response upon successfully starting the game.
+     * Sends an error response if there are not enough players in the lobby.
+     * @throws Exception if there is an error starting the game or sending the response
+     */
     public void startGame() throws Exception {
         Lobby lobby = lobbyList.getLobbyByHost(username);
         if (lobby != null && lobby.getPlayers().size() == lobby.getMaxPlayers()) {
@@ -169,6 +240,14 @@ public class SocketMediator implements ClientHandler {
         send(new SocketResponse(412, "missing players"));
     }
 
+    /**
+     * Sets the color for the client's player in the lobby.
+     * Validates the color value and assigns it to the client's player.
+     * Sends a success response upon successfully setting the color.
+     * Sends an error response if the color setting fails due to turn order or other reasons.
+     * @param color the color to set for the client's player
+     * @throws Exception if there is an error setting the color or sending the response
+     */
     public void setColor(String color) throws Exception {
         try {
             TokenColour colorValue = TokenColour.valueOf(color);
@@ -181,6 +260,13 @@ public class SocketMediator implements ClientHandler {
         }
     }
 
+    /**
+     * Places the starter card for the client's player in the game context.
+     * Sends a success response upon successfully setting the starter card.
+     * Sends an error response if setting the starter card fails.
+     * @param card the starter card to set
+     * @throws Exception if there is an error setting the starter card or sending the response
+     */
     public void setStarterCard(StarterCard card) throws Exception {
         try {
             Lobby lobby = this.lobbyList.getPlayersLobby(username);
@@ -191,6 +277,13 @@ public class SocketMediator implements ClientHandler {
         }
     }
 
+    /**
+     * Sets the objective card for the client's player in the game context.
+     * Sends a success response upon successfully setting the objective card.
+     * Sends an error response if setting the objective card fails.
+     * @param card the objective card to set
+     * @throws Exception if there is an error setting the objective card or sending the response
+     */
     public void setObjectiveCard(ObjectiveCard card) throws Exception {
         try {
             Lobby lobby = this.lobbyList.getPlayersLobby(username);
@@ -203,6 +296,13 @@ public class SocketMediator implements ClientHandler {
         }
     }
 
+    /**
+     * Flips the side of the card at the given index in the client's player hand.
+     * Sends a success response upon successfully flipping the card.
+     * Sends an error response if flipping the card fails.
+     * @param index the index of the card to flip
+     * @throws Exception if there is an error flipping the card or sending the response
+     */
     public void flipCard(int index) throws Exception {
         try {
             Lobby lobby = this.lobbyList.getPlayersLobby(username);
@@ -214,6 +314,15 @@ public class SocketMediator implements ClientHandler {
         }
     }
 
+    /**
+     * Places the card from the client's hand onto the specified coordinates on the game board.
+     * Sends a success response upon successfully placing the card.
+     * Sends an error response if placing the card fails.
+     * @param handCardIndex the index of the card in the client's hand
+     * @param cardToOverlap the coordinates where the card will be placed
+     * @param cornerIndex the index of the corner to place the card
+     * @throws Exception if there is an error placing the card or sending the response
+     */
     public void putCard(int handCardIndex, Coordinates cardToOverlap, int cornerIndex) throws Exception {
         try {
             this.lobbyList.getPlayersLobby(username).getGameContext().putCard(username, handCardIndex, cardToOverlap, cornerIndex);
@@ -224,6 +333,12 @@ public class SocketMediator implements ClientHandler {
         }
     }
 
+    /**
+     * Draws a gold card for the client's player from the game context.
+     * Sends a success response upon successfully drawing the gold card.
+     * Sends an error response if drawing the gold card fails.
+     * @throws Exception if there is an error drawing the gold card or sending the response
+     */
     public void drawGoldCard() throws Exception {
         try {
             this.lobbyList.getPlayersLobby(username).getGameContext().drawGoldCard(username);
@@ -234,6 +349,12 @@ public class SocketMediator implements ClientHandler {
         }
     }
 
+    /**
+     * Draws a resource card for the client's player from the game context.
+     * Sends a success response upon successfully drawing the resource card.
+     * Sends an error response if drawing the resource card fails.
+     * @throws Exception if there is an error drawing the resource card or sending the response
+     */
     public void drawResourceCard() throws Exception {
         try {
             this.lobbyList.getPlayersLobby(username).getGameContext().drawResourceCard(username);
@@ -244,6 +365,13 @@ public class SocketMediator implements ClientHandler {
         }
     }
 
+    /**
+     * Draws a face-up card for the client's player from the game context.
+     * Sends a success response upon successfully drawing the face-up card.
+     * Sends an error response if drawing the face-up card fails.
+     * @param index the index of the face-up card to draw
+     * @throws Exception if there is an error drawing the face-up card or sending the response
+     */
     public void faceUpCard(int index) throws Exception {
         try {
             this.lobbyList.getPlayersLobby(username).getGameContext().drawFaceUpCard(username, index);
@@ -254,6 +382,14 @@ public class SocketMediator implements ClientHandler {
         }
     }
 
+    /**
+     * Adds a message from the client to another player in the game context.
+     * Sends a success response upon successfully adding the message.
+     * Sends an error response if adding the message fails.
+     * @param receiver the username of the message receiver
+     * @param message the message content
+     * @throws Exception if there is an error adding the message or sending the response
+     */
     public void addMessage(String receiver, String message) throws Exception {
         try {
             Lobby lobby = this.lobbyList.getPlayersLobby(username);
@@ -265,6 +401,12 @@ public class SocketMediator implements ClientHandler {
         }
     }
 
+    /**
+     * Sends the list of active lobbies to the client.
+     * Retrieves the list of active lobby names and sends it as JSON.
+     * Sends an error response if retrieving the lobby list fails.
+     * @throws Exception if there is an error sending the lobby list or sending the response
+     */
     public void getLobbyList() throws Exception {
         try {
             SocketResponse message = new SocketResponse(200, "getLobbyList");
@@ -277,6 +419,13 @@ public class SocketMediator implements ClientHandler {
 
     }
 
+    /**
+     * Sends the list of clients in a specific lobby to the client.
+     * Retrieves the list of client usernames in the specified lobby and sends it as JSON.
+     * Sends an error response if retrieving the lobby clients fails.
+     * @param lobbyHost the username of the lobby host
+     * @throws Exception if there is an error sending the lobby clients or sending the response
+     */
     public void getLobbyClients(String lobbyHost) throws Exception {
         try {
             ArrayList<String> clients = new ArrayList<>();

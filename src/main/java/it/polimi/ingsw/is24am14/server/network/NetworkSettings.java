@@ -24,9 +24,42 @@ public class NetworkSettings {
      *
      * @param Port The new port.
      */
-    public static void setPort(int Port) {
+    public static void setRmiPort(int Port) {
         NetworkSettings.RMIPort = Port;
     }
 
+    public static void setSocketPort(int Port) {
+        NetworkSettings.socketPort = Port;
+    }
+
+    /**
+     * Prints the current network settings.
+     */
+    public static void printSettings() {
+        System.out.println("Server address: " + serverAddress);
+        System.out.println("RMI port: " + RMIPort);
+        System.out.println("Socket port: " + socketPort);
+    }
+
+    /**
+     * Prints the current server address.
+     */
+    public static void getServerAddress() {
+        System.out.println(serverAddress);
+    }
+
+    /**
+     * Prints the current RMI port.
+     */
+    public static void getRMIPort() {
+        System.out.println(RMIPort);
+    }
+
+    /**
+     * Prints the current socket port.
+     */
+    public static void getSocketPort() {
+        System.out.println(socketPort);
+    }
 
 }

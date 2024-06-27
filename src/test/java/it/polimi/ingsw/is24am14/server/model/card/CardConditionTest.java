@@ -1,6 +1,7 @@
 package it.polimi.ingsw.is24am14.server.model.card;
 
 import it.polimi.ingsw.is24am14.server.model.game.GameArea;
+import it.polimi.ingsw.is24am14.server.utils.ObjectiveCardDeckCreator;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -8,104 +9,113 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CardConditionTest {
+    public static StarterCard createStarterCard() {
+        ArrayList<Corner> empEmpEmpEmp = new ArrayList<>();
+        empEmpEmpEmp.add(new Corner(CornerEnum.EMPTY));
+        empEmpEmpEmp.add(new Corner(CornerEnum.EMPTY));
+        empEmpEmpEmp.add(new Corner(CornerEnum.EMPTY));
+        empEmpEmpEmp.add(new Corner(CornerEnum.EMPTY));
+        ArrayList<Corner> insAniFunPlan = new ArrayList<>();
+        insAniFunPlan.add(new Corner(CornerEnum.ResourceEnum.INSECT));
+        insAniFunPlan.add(new Corner(CornerEnum.ResourceEnum.ANIMAL));
+        insAniFunPlan.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+        insAniFunPlan.add(new Corner(CornerEnum.ResourceEnum.PLANT));
 
-    @Test
-    void addNullNotNullClause() {
-        CardCondition testingCondition = new CardCondition();
-        assertThrows(NullPointerException.class, () -> {
-            testingCondition.addClause(null, CornerEnum.ResourceEnum.PLANT);
-        });
+        ArrayList<CornerEnum.ResourceEnum> plaFun = new ArrayList<>();
+        plaFun.add(CornerEnum.ResourceEnum.PLANT);
+        plaFun.add(CornerEnum.ResourceEnum.FUNGI);
+        return new StarterCard(insAniFunPlan, empEmpEmpEmp, plaFun, "/images/cards/starter_cards/starter_backs/page_83.png", "/images/cards/starter_cards/starter_fronts/page_83.png");
+    }
+
+    public static ResourceCard createResourceCard(CornerEnum.ResourceEnum resource) {
+        ArrayList<Corner> backCorners = new ArrayList<>();
+        backCorners.add(new Corner(CornerEnum.EMPTY));
+        backCorners.add(new Corner(CornerEnum.EMPTY));
+        backCorners.add(new Corner(CornerEnum.EMPTY));
+        backCorners.add(new Corner(CornerEnum.EMPTY));
+
+        ArrayList<Corner> funEmpFunHid = new ArrayList<>();
+        funEmpFunHid.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+        funEmpFunHid.add(new Corner(CornerEnum.EMPTY));
+        funEmpFunHid.add(new Corner(CornerEnum.ResourceEnum.FUNGI));
+        funEmpFunHid.add(new Corner(CornerEnum.EMPTY));
+
+        return new ResourceCard(0, resource, funEmpFunHid, backCorners, "/images/cards/resource_cards/red_fronts/page_1.png", "/images/cards/resource_cards/red_backs/page_1.png");
+
     }
 
     @Test
-    void addNotNullNullClause() {
-        CardCondition testingCondition = new CardCondition();
-        assertThrows(NullPointerException.class, () -> {
-            testingCondition.addClause(new Coordinates(0, 0), null);
-        });
+    public void fungiDiagonalCondition() {
+        ObjectiveCardDeckCreator creator = new ObjectiveCardDeckCreator();
+        Deck<ObjectiveCard> deck = creator.createObjectiveCardDeck();
+        ObjectiveCard objectiveCard = deck.removeTop();
+
+        GameArea board = new GameArea();
+        StarterCard starterCard = createStarterCard();
+        board.placeStarterCard(starterCard);
+
+        Card card1 = createResourceCard(CornerEnum.ResourceEnum.FUNGI);
+        Card card2 = createResourceCard(CornerEnum.ResourceEnum.FUNGI);
+        Card card3 = createResourceCard(CornerEnum.ResourceEnum.FUNGI);
+
+        board.addCard(starterCard, card1, 1);
+        board.addCard(card1, card2, 1);
+
+        assertFalse(objectiveCard.getCondition().isSatisfied(board));
+
+        board.addCard(card2, card3, 1);
+        assertTrue(objectiveCard.getCondition().isSatisfied(board));
     }
 
     @Test
-    void addNullNullClause() {
-        CardCondition testingCondition = new CardCondition();
-        assertThrows(NullPointerException.class, () -> {
-            testingCondition.addClause(null, null);
-        });
+    public void redRedGreenLCondition() {
+        ObjectiveCardDeckCreator creator = new ObjectiveCardDeckCreator();
+        Deck<ObjectiveCard> deck = creator.createObjectiveCardDeck();
+        ObjectiveCard objectiveCard = null;
+
+        for (int i = 0; i < 5; i++) objectiveCard = deck.removeTop();
+
+        GameArea board = new GameArea();
+        StarterCard starterCard = createStarterCard();
+        board.placeStarterCard(starterCard);
+
+        Card card1 = createResourceCard(CornerEnum.ResourceEnum.FUNGI);
+        Card card2 = createResourceCard(CornerEnum.ResourceEnum.FUNGI);
+        Card card3 = createResourceCard(CornerEnum.ResourceEnum.PLANT);
+
+        board.addCard(starterCard, card1, 3);
+        board.addCard(starterCard, card2, 1);
+
+        assertFalse(objectiveCard.getCondition().isSatisfied(board));
+
+        board.addCard(card1, card3, 3);
+
+        assertTrue(objectiveCard.getCondition().isSatisfied(board));
     }
 
     @Test
-    void isSingleCardPatternSingleCardBoardSatisfied() {
-        CardCondition testingCondition = new CardCondition();
-        testingCondition.addClause(new Coordinates(0, 0), CornerEnum.ResourceEnum.PLANT);
-        GameArea gameBoard = new GameArea();
+    public void redBlueBlue() {
+        ObjectiveCardDeckCreator creator = new ObjectiveCardDeckCreator();
+        Deck<ObjectiveCard> deck = creator.createObjectiveCardDeck();
+        ObjectiveCard objectiveCard = null;
 
-        ArrayList<Corner> corners = new ArrayList<>();
-        corners.add(new Corner(CornerEnum.ResourceEnum.INSECT));
-        corners.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
-        corners.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
-        corners.add(new Corner(CornerEnum.HIDDEN));
+        for (int i = 0; i < 7; i++) objectiveCard = deck.removeTop();
 
-        ResourceCard testCard = new ResourceCard(1, CornerEnum.ResourceEnum.PLANT,corners, corners, "front.jpg", "back.jpg");
+        GameArea board = new GameArea();
+        StarterCard starterCard = createStarterCard();
+        board.placeStarterCard(starterCard);
 
-        gameBoard.getBoard().put(new Coordinates(0, 0), testCard);
+        Card card1 = createResourceCard(CornerEnum.ResourceEnum.ANIMAL);
+        Card card2 = createResourceCard(CornerEnum.ResourceEnum.ANIMAL);
+        Card card3 = createResourceCard(CornerEnum.ResourceEnum.FUNGI);
 
-        assertTrue(testingCondition.isSatisfied(gameBoard));
-    }
+        board.addCard(starterCard, card1, 1);
+        board.addCard(card1, card3,1);
 
-    @Test
-    void isSingleCardPatternMultipleCardBoardSatisfied() {
-        CardCondition testingCondition = new CardCondition();
-        testingCondition.addClause(new Coordinates(0, 0), CornerEnum.ResourceEnum.PLANT);
-        GameArea gameBoard = new GameArea();
+        assertFalse(objectiveCard.getCondition().isSatisfied(board));
 
-        ArrayList<Corner> corners1 = new ArrayList<>();
-        corners1.add(new Corner(CornerEnum.ResourceEnum.INSECT));
-        corners1.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
-        corners1.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
-        corners1.add(new Corner(CornerEnum.HIDDEN));
+        board.addCard(starterCard, card2, 3);
 
-        ResourceCard testCard1 = new ResourceCard(1, CornerEnum.ResourceEnum.ANIMAL,corners1, corners1, "front.jpg", "back.jpg");
-
-        ArrayList<Corner> corners2 = new ArrayList<>();
-        corners2.add(new Corner(CornerEnum.ResourceEnum.INSECT));
-        corners2.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
-        corners2.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
-        corners2.add(new Corner(CornerEnum.HIDDEN));
-
-        ResourceCard testCard2 = new ResourceCard(1, CornerEnum.ResourceEnum.PLANT,corners2, corners2, "front.jpg", "back.jpg");
-
-        gameBoard.getBoard().put(new Coordinates(0, 0), testCard1);
-        gameBoard.getBoard().put(new Coordinates(1, 1), testCard2);
-
-        assertTrue(testingCondition.isSatisfied(gameBoard));
-    }
-
-    @Test
-    void isMultipleCardPatternMultipleCardBoardSatisfied() {
-        CardCondition testingCondition = new CardCondition();
-        testingCondition.addClause(new Coordinates(0, 0), CornerEnum.ResourceEnum.PLANT);
-        testingCondition.addClause(new Coordinates(1, 1), CornerEnum.ResourceEnum.PLANT);
-        GameArea gameBoard = new GameArea();
-
-        ArrayList<Corner> corners1 = new ArrayList<>();
-        corners1.add(new Corner(CornerEnum.ResourceEnum.INSECT));
-        corners1.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
-        corners1.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
-        corners1.add(new Corner(CornerEnum.HIDDEN));
-
-        ResourceCard testCard1 = new ResourceCard(1, CornerEnum.ResourceEnum.PLANT,corners1, corners1, "front.jpg", "back.jpg");
-
-        ArrayList<Corner> corners2 = new ArrayList<>();
-        corners2.add(new Corner(CornerEnum.ResourceEnum.INSECT));
-        corners2.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
-        corners2.add(new Corner(CornerEnum.ObjectEnum.INKWELL));
-        corners2.add(new Corner(CornerEnum.HIDDEN));
-
-        ResourceCard testCard2 = new ResourceCard(1, CornerEnum.ResourceEnum.PLANT,corners2, corners2, "front.jpg", "back.jpg");
-
-        gameBoard.getBoard().put(new Coordinates(0, 0), testCard1);
-        gameBoard.getBoard().put(new Coordinates(1, 1), testCard2);
-
-        assertTrue(testingCondition.isSatisfied(gameBoard));
+        assertTrue(objectiveCard.getCondition().isSatisfied(board));
     }
 }

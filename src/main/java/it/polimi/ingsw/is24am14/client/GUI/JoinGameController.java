@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+/**
+ * Controller for the Join Game view.
+ */
 public class JoinGameController {
 
     private GUIViewLauncher context;
@@ -25,6 +28,9 @@ public class JoinGameController {
 
     private ScheduledExecutorService updateLobbyListService;
 
+    /**
+     * Initializes the controller by setting up the lobby list.
+     */
     public void initialize() {
         try {
             ArrayList<String> lobbies = context.getClient().getLobbyList();
@@ -35,7 +41,11 @@ public class JoinGameController {
         }
         joinLobby();//?
     }
-
+    /**
+     * Constructs a new JoinGameController.
+     *
+     * @param context The GUIViewLauncher context.
+     */
     public JoinGameController(GUIViewLauncher context){
         this.context = context;
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("JoinLobby.fxml"));
@@ -50,7 +60,9 @@ public class JoinGameController {
         updateLobbyListService.scheduleAtFixedRate(this::updateLobbyList, 0, 1, java.util.concurrent.TimeUnit.SECONDS);
     }
 
-
+    /**
+     * Shows the scene for this controller.
+     */
     public void showScene() {
         Stage stage = context.getStage();
         stage.setScene(scene);
@@ -60,6 +72,9 @@ public class JoinGameController {
 
     }
 
+    /**
+     * Updates the lobby list.
+     */
     private void updateLobbyList() {
         try {
             ArrayList<String> lobbies = context.getClient().getLobbyList();
@@ -70,6 +85,9 @@ public class JoinGameController {
         }
     }
 
+    /**
+     * Sets up the lobby list to join a lobby on double click.
+     */
     private void joinLobby() {
         lobbyList.setOnMouseClicked(event -> {
             if(event.getClickCount() == 2) { //doppio click per entrare nella lobby
