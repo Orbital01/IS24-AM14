@@ -34,11 +34,13 @@ public class CardCondition implements Condition {
     //  Not working
     @Override
     public boolean isSatisfied(GameArea board) {
+
         int listCardIndex;
         boolean satisfied;
         ArrayList<Coordinates> listCardCoordinates = new ArrayList<>(listCard.keySet());
         ArrayList<CornerEnum.ResourceEnum> listCardResources = new ArrayList<>(listCard.values());
 
+        /*
         //  for each card on the board
         for (Map.Entry<Coordinates, Card> entry : board.getBoard().entrySet()) {
             listCardIndex = 0;
@@ -53,6 +55,8 @@ public class CardCondition implements Condition {
             }
             if (satisfied) return true;
         }
+
+         */
 
         return false;
     }

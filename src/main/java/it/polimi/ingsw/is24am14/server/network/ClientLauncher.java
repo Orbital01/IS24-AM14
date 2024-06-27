@@ -69,5 +69,8 @@ public class ClientLauncher {
         //gameArea.addCard(resourceCard1, resourceCard3, 3);
 
         System.out.println(condition.isSatisfied(gameArea));
+
+        String resourceJson = InitGSON.init().toJson(resourceCard1);
+        System.out.println(resourceJson);
     }
 }
