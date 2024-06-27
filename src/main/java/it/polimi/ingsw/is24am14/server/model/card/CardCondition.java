@@ -67,26 +67,15 @@ public class CardCondition implements Condition {
         return false;
     }
 
-    private CornerEnum.ResourceEnum getResourceByCoordinates(Coordinates coordinates) {
-        for (Map.Entry<Coordinates, CornerEnum.ResourceEnum> entry : listCard.entrySet()) {
-            if (entry.getKey().getRow() == coordinates.getRow() && entry.getKey().getColumn() == coordinates.getColumn()) return entry.getValue();
-        }
-        return null;
-    }
-
+    /**
+     * Calculates the number of times the condition is satisfied on the given game board.
+     *
+     * @param board the {@link GameArea} representing the game board to evaluate
+     * @return {@code 1} if the condition is satisfied on the board, {@code 0} otherwise
+     */
     @Override
     public int numSatisfied(GameArea board) {
         return isSatisfied(board) ? 1 : 0;
-    }
-
-    /**
-     * Checks the type of the card
-     * @param boardCard card to be checked
-     * @param type type to be checked
-     * @return {@code true} if the card is typeof type, otherwise {@code false}
-     */
-    private boolean isSameType (PlayableCard boardCard, CornerEnum.ResourceEnum type) {
-        return boardCard.getResource() == type;
     }
 
     /**
@@ -95,6 +84,7 @@ public class CardCondition implements Condition {
     public HashMap<Coordinates, CornerEnum.ResourceEnum> getListCard() {
         return listCard;
     }
+
     @Override
     public String toString() {
         return "CardCondition";

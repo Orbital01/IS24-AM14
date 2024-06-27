@@ -205,10 +205,10 @@ public class Game implements Serializable {
      * @return the drawn face-up card
      */
     public PlayableCard drawFaceUpCard(int indexCard) {
-        if (indexCard < 0 || indexCard >= faceUpCards.size()) throw new IndexOutOfBoundsException();
+        if ((indexCard < 0 || indexCard >= faceUpCards.size())  && !areDecksEmpty()) throw new IndexOutOfBoundsException();
         PlayableCard card = faceUpCards.remove(indexCard);
 
-        if (indexCard < 2 ) faceUpCards.add(popResourceDeck());
+        if (indexCard < 2 && !areDecksEmpty()) faceUpCards.add(popResourceDeck());
         else faceUpCards.add(popGoldDeck());
 
         return card;
