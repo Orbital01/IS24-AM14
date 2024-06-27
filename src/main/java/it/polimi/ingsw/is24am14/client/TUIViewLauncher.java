@@ -42,10 +42,16 @@ public class TUIViewLauncher {
         }
 
         String username, host;
+
         Scanner scanner = new Scanner(System.in);
 
         //Ask for username & connect
         username = tui.askForUsername();
+        while (username.isEmpty()){
+            System.out.println("Invalid username");
+            username = tui.askForUsername();
+        }
+
         try{
             client.connect(username);
         } catch (Exception e){

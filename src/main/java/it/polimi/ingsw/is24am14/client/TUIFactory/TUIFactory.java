@@ -152,7 +152,7 @@ public class TUIFactory {
      * This method gets the number of players for the lobby
      */
     public int getLobbyNumPlayers() {
-        System.out.println("Enter number of players (must be between 1 and 4)");
+        System.out.println("Enter number of players (must be between 2 and 4)");
         Scanner in = new Scanner(System.in);
         int numPlayers = in.nextInt();
         while (numPlayers < 1 || numPlayers > 4) {
