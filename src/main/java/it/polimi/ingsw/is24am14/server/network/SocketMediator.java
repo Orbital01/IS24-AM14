@@ -214,6 +214,8 @@ public class SocketMediator implements ClientHandler {
             message.message = "gameContext";
             message.strings.add(gson.toJson(context));
         } catch (Exception e) {
+            System.out.println("Error message: " + e.getMessage());
+            e.printStackTrace();
             message.code = 409;
             message.message = "errorSendingGameContext";
         }
