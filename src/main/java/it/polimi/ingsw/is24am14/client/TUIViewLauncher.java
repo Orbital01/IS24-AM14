@@ -68,6 +68,12 @@ public class TUIViewLauncher {
             else{
                 //Create a new lobby and start the game
                 int numPlayers = tui.getLobbyNumPlayers();
+
+                while (numPlayers < 2 || numPlayers > 4){
+                    System.out.println("Invalid number of players");
+                    numPlayers = tui.getLobbyNumPlayers();
+                }
+
                 client.createLobby(numPlayers);
                 client.updateGameContext();
                 while (client.getLobbyClients(username).size() < numPlayers) {
