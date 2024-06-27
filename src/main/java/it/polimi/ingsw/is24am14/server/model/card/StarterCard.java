@@ -36,7 +36,10 @@ public class StarterCard extends Card {
         if (getSide() == EnumSide.BACK) items.addAll(resources);
         return items;
     }
-
+    /**
+     * This method is used to pass an ArrayList strings of the Starter card content to the method that will draw it in the TUI
+     * @return an ArrayList of strings that represent the starter card
+     */
     public ArrayList<String> drawCard() {
         if (this.getSide().equals(EnumSide.FRONT)) {
             ArrayList<String> cardString = new ArrayList<>();

@@ -17,6 +17,16 @@ public class ResourceCard extends PlayableCard {
     private final CornerEnum.ResourceEnum resource;
     private final Condition pointCondition;
 
+    /**
+     * Constructs a new ResourceCard with the given parameters.
+     *
+     * @param points the number of points this card provides
+     * @param resource the resource this card provides
+     * @param frontCorners the corners on the front of the card
+     * @param backCorners the corners on the back of the card
+     * @param frontImage the image on the front of the card
+     * @param backImage the image on the back of the card
+     */
     public ResourceCard(int points, CornerEnum.ResourceEnum resource, ArrayList<Corner> frontCorners, ArrayList<Corner> backCorners,
                         String frontImage, String backImage) {
         super(frontCorners, backCorners, frontImage, backImage);
@@ -25,6 +35,11 @@ public class ResourceCard extends PlayableCard {
         this.pointCondition = new NoCondition();
     }
 
+    /**
+     * Returns the CornerEnum values of the corners of this card.
+     *
+     * @return an ArrayList of CornerEnum values
+     */
     public ArrayList<CornerEnum> getCornerEnums() {
         ArrayList<CornerEnum> items = new ArrayList<>();
         ArrayList<Corner> corners = getCorners();
@@ -37,24 +52,48 @@ public class ResourceCard extends PlayableCard {
         return items;
     }
 
+    /**
+     * Returns the number of points this card provides.
+     *
+     * @return the number of points
+     */
     public int getPoints() {
         return points;
     }
 
+    /**
+     * Returns the resource this card provides.
+     *
+     * @return the resource
+     */
     public CornerEnum.ResourceEnum getResource() {
         return resource;
     }
 
+
+    /**
+     * Returns the condition for the points this card provides.
+     *
+     * @return the point condition
+     */
     @Override
     public Condition getPointCondition() {
         return this.pointCondition;
     }
 
+    /**
+     * Returns the condition for the placement of this card.
+     * @return a NoCondition object
+     */
     @Override
     public Condition getPlacementCondition() {
         return new NoCondition();
     }
 
+    /**
+     * This method is used to pass an ArrayList strings of the Resource content to the method that will draw it in the TUI
+     * @return an ArrayList of strings that represent the resource card
+     */
     public ArrayList<String> drawCard() {
         ArrayList<String> cardString = new ArrayList<>();
 

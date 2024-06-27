@@ -19,6 +19,17 @@ public class GoldCard extends PlayableCard {
 
     private final ResourceCondition placementCondition;
 
+    /**
+     * Constructs a new GoldCard with the given properties.
+     *
+     * @param points The number of points the card gives when the pointCondition is met.
+     * @param pointCondition The condition that needs to be met for the card to give points.
+     * @param resource The resource type of the card.
+     * @param placementCondition The condition that needs to be met for the card to be placed on the board.
+     * @param frontCorners The corners on the front side of the card.
+     * @param frontImage The image on the front side of the card.
+     * @param backImage The image on the back side of the card.
+     */
     public GoldCard(int points, Condition pointCondition, CornerEnum.ResourceEnum resource,
                     ResourceCondition placementCondition, ArrayList<Corner> frontCorners,
                     String frontImage, String backImage) {
@@ -31,6 +42,11 @@ public class GoldCard extends PlayableCard {
 
     }
 
+    /**
+     * Creates the corners for the back side of the card.
+     *
+     * @return An ArrayList of Corners for the back side of the card.
+     */
     public static ArrayList<Corner> createBackCorners() {
         ArrayList<Corner> backCorners = new ArrayList<>();
         backCorners.add(new Corner(CornerEnum.EMPTY));
@@ -39,19 +55,33 @@ public class GoldCard extends PlayableCard {
         backCorners.add(new Corner(CornerEnum.EMPTY));
         return backCorners;
     }
-
+    /**
+     * Returns the points of the card.
+     * @return The points of the card.
+     */
     public int getPoints() {
         return points;
     }
-
+    /**
+     * Returns the point condition of the card.
+     * @return The point condition of the card.
+     */
     public Condition getPointCondition() {
         return pointCondition;
     }
 
+    /**
+     * Returns the resource of the card.
+     * @return The resource of the card.
+     */
     public CornerEnum.ResourceEnum getResource() {
         return resource;
     }
 
+    /**
+     * Returns the CornerEnum values of the card.
+     * @return An ArrayList of CornerEnum values of the card.
+     */
     public ArrayList<CornerEnum> getCornerEnums() {
         ArrayList<CornerEnum> items = new ArrayList<>();
         ArrayList<Corner> corners = getCorners();
@@ -63,11 +93,19 @@ public class GoldCard extends PlayableCard {
         if (getSide() == EnumSide.BACK) items.add(getResource());
         return items;
     }
-
+    /**
+     * Returns the placement condition of the card.
+     *
+     * @return The placement condition of the card.
+     */
     public ResourceCondition getPlacementCondition() {
         return placementCondition;
     }
 
+    /**
+     * This method is used to pass an ArrayList strings of the GoldCard content to the method that will draw it in the TUI
+     * @return an ArrayList of strings that represent the gold card
+     */
     public ArrayList<String> drawCard() {
         ArrayList<String> cardString = new ArrayList<>();
 

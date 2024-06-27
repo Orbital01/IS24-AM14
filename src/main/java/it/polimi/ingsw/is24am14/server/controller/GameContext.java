@@ -10,6 +10,11 @@ import it.polimi.ingsw.is24am14.server.network.NotYourColorTurnException;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * This class is used to manage the game state and the game flow.
+ * It contains all the aspects of one match of the game.
+ * it contains the game, the game state, the colors available, the objective card choices, the last played card and the messages.
+ */
 public class GameContext implements Serializable {
     Game game;
     GameStateEnum gameStateEnum;
@@ -18,6 +23,11 @@ public class GameContext implements Serializable {
     PlayableCard lastPlayedCard;
     ArrayList<Message> messages;
 
+    /**
+     * Constructor of the class
+     * it initializes the game, the colors, the objective card choices and the messages.
+     * @param game the game
+     */
     public GameContext(Game game) {
         this.game = game;
         colors = new ArrayList<>(Arrays.asList(TokenColour.values()));

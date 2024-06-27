@@ -102,6 +102,12 @@ public class GameArea implements Serializable {
         overlapCorners(newCard);
     }
 
+    /**
+     * Checks if any of the 4 overlapped corners would be of HIDDEN type
+     * @param coordinates The coordinates of the card
+     *
+     * @return
+     */
     private boolean overlapOtherHiddenCorners(Coordinates coordinates) {
         Coordinates tmpCoordinates;
 
