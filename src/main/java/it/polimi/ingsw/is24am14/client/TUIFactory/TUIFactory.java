@@ -521,7 +521,6 @@ public class TUIFactory {
         Pattern pattern = Pattern.compile("^-?\\d+$");
 
         do {
-            System.out.println("-> Insert the index of the row");
             input = scanner.nextLine();
             if (!pattern.matcher(input).matches()) {
                 System.out.println("Invalid input: insert an integer value");
