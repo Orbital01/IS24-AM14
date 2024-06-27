@@ -78,10 +78,6 @@ public class GoldCard extends PlayableCard {
         return resource;
     }
 
-    public CornerEnum.ResourceEnum getCardType() {
-        return resource;
-    }
-
     /**
      * Returns the CornerEnum values of the card.
      * @return An ArrayList of CornerEnum values of the card.

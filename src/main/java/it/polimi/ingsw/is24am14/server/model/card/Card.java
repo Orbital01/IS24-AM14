@@ -24,8 +24,9 @@ public abstract class Card implements Serializable {
      * Constructor
      *
      * @param frontCorners the corners of the front side of the card
-     *
      * @param backCorners  the corners of the back side of the card
+     * @param frontImage   the image of the front side of the card
+     * @param backImage    the image of the back side of the card
      * @throws IllegalArgumentException if the number of corners is greater than 4
      * it is always created in the front side
      */
@@ -94,6 +95,11 @@ public abstract class Card implements Serializable {
         }
     }
 
+    /**
+     * This method returns the types of the corners of the card
+     *
+     * @return the types of the corners of the card
+     */
     public ArrayList<CornerEnum> getCornerEnums() {
         ArrayList<CornerEnum> items = new ArrayList<>();
         ArrayList<Corner> corners = getCorners();

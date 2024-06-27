@@ -70,10 +70,6 @@ public class ResourceCard extends PlayableCard {
         return resource;
     }
 
-    public CornerEnum.ResourceEnum getCardType() {
-        return resource;
-    }
-
 
     /**
      * Returns the condition for the points this card provides.
