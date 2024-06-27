@@ -44,8 +44,15 @@ This Java project is a porting of the boardgame *CODEX* by [Cranio Creations](ht
 - it is recommended to use a unicode-compatible terminal
 
 ### Run the game
-1. Download the latest JAR file from the [releases]
-2. Open a terminal and navigate to the folder where the JAR file is located
+1. Clone the repository
+2. Open a terminal and navigate to the folder 
+3. Build the project with the following command:
+    ```shell
+    mvn clean package
+    ```
+    This will create a `.jar` file in the `target` folder
+
+
 3. You can run the app with the following command:
     ```shell
     java -jar IS24-AM14-1.0-jar-with-dependencies.jar
