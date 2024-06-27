@@ -16,7 +16,6 @@ public abstract class Card implements Serializable {
     private final ArrayList<Corner> frontCorners;
     private final ArrayList<Corner> backCorners;
     private EnumSide enumSide;
-    private final CornerEnum.ResourceEnum resource;
     private final String frontImage;
     private final String backImage;
 
@@ -44,7 +43,6 @@ public abstract class Card implements Serializable {
         this.frontImage = frontImage;
         this.backImage = backImage;
 
-        this.resource = null;
     }
 
     /**
@@ -70,9 +68,6 @@ public abstract class Card implements Serializable {
         return enumSide;
     }
 
-    public CornerEnum.ResourceEnum getResource() {
-        return resource;
-    }
 
     /**
      * This method returns the image of the card

@@ -150,7 +150,6 @@ public class SocketMediator implements ClientHandler {
             message.code = 200;
             message.message = "gameContext";
             message.strings.add(gson.toJson(context));
-            if (message.strings.isEmpty()) throw new RuntimeException("No game context");
         } catch (Exception e) {
             message.code = 409;
             message.message = "errorSendingGameContext";
