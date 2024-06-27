@@ -156,7 +156,7 @@ public class TUIViewLauncher {
                     System.out.print("\033[H\033[2J");
                     System.out.flush();
 
-                    //verifico se il giocatore è il primo e gli dico che è il primo
+                    //let the player know if he is the first player
                     while (counter < 1){
                         if (client.getGameContext().getGame().getPlayer(username).isFirstPlayer()){
                             tui.printBlackToken();
@@ -164,12 +164,12 @@ public class TUIViewLauncher {
                         counter++;
                     }
 
-                    //se sono il giocatore attivo, posso giocare
+                    //if i'm the active player i can play
                     if (client.getGameContext().getGame().getActivePlayer().getPlayerNickname().equals(username)) {
 
-                        //stampo la board
+                        //print the board
                         tui.printBoard(client.getGameContext().getGame().getPlayer(username).getPlayerBoard());
-                        //stampo la mano del giocatore
+                        //print the player hand
                         tui.printHand(client.getGameContext().getGame().getPlayer(username).getPlayerHand());
 
 
@@ -195,17 +195,17 @@ public class TUIViewLauncher {
                                 System.out.println("Invalid move");
                             }
 
-                            //mostro la board aggiornata
+                            //print the updated board
                             client.updateGameContext();
                             tui.printBoard(client.getGameContext().getGame().getPlayer(username).getPlayerBoard());
 
                         }else if(moveChoice == 2){
                             tui.printLegend();
                         } else if (moveChoice == 3) {
-                            //pulisco il terminale
+                            //flush the terminal
                             System.out.print("\033[H\033[2J");
                             System.out.flush();
-                            //lancio la chat
+                            //print the chat
                             lastMessageIndex = tui.printChat(client, lastMessageIndex);
                         } else if (moveChoice == 4) {
                             try {

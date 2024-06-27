@@ -30,7 +30,7 @@ public class CardTest {
     }
 
     // this test is to check if the cards corner are correctly set and returned
-    // i used two different arraylists for the front and back corners to test if they are correctly returned when the card is flipped
+    // I used two different arraylists for the front and back corners to test if they are correctly returned when the card is flipped
     @Test
     void testCorrectCorners() {
         ArrayList<Corner> frontCorners = new ArrayList<>();
