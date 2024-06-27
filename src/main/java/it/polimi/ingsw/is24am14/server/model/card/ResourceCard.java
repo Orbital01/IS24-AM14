@@ -116,11 +116,13 @@ public class ResourceCard extends PlayableCard {
             String NE = this.getCorners().get(1).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(1);
             cardString.add("| " + NW + " |      " + points + "      | " + NE + " |");
             //Third Row
-            cardString.add("|-----|		       |-----|");
+            cardString.add("|-----|            |-----|");
             //Fourth Row
-            cardString.add("|		    " + resource.get(0) + "		     |");
+            cardString.add("|           " + resource.get(0) + "          |");
+            //cardString.add("|		");
+            //cardString.set(3, cardString.get(3) + "		         |");
             //Fifth Row
-            cardString.add("|-----|		       |-----|");
+            cardString.add("|-----|            |-----|");
             //Sixth Row
             String SW = this.getCorners().get(2).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(2);
             String SE = this.getCorners().get(3).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(3);
@@ -146,7 +148,9 @@ public class ResourceCard extends PlayableCard {
             //Third Row
             cardString.add("|-----|		       |-----|");
             //Fourth Row
-            cardString.add("|		    " + resource.get(0) + "		     |");
+            cardString.add("|           " + resource.get(0) + "          |");
+            //cardString.add("|		");
+            //cardString.set(3, cardString.get(3) + "		         |");
             //Fifth Row
             cardString.add("|-----|		       |-----|");
             //Sixth Row

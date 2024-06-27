@@ -10,10 +10,8 @@ import it.polimi.ingsw.is24am14.server.network.ClientInterface;
 import it.polimi.ingsw.is24am14.server.network.Message;
 import net.fellbaum.jemoji.Emojis;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * This class is the Text User Interface Factory, it is used to print game assets and to get input from the user
@@ -84,9 +82,16 @@ public class TUIFactory {
      * This method prints the main menu of the game
      */
     public String askForUsername() {
-        System.out.println("Choose a username");
         Scanner in = new Scanner(System.in);
-        return in.nextLine();
+        String username;
+        do {
+            System.out.println("Choose a username");
+            username = in.nextLine();
+            if (username.trim().isEmpty()) {
+                System.out.println("Invalid input. Username cannot be empty. Try again.");
+            }
+        } while (username.trim().isEmpty());
+        return username;
     }
 
     /**
@@ -96,7 +101,18 @@ public class TUIFactory {
         int index;
         Scanner in = new Scanner(System.in);
         System.out.println("Choose a connection method:\n0) Socket\n1) RMI");
-        index = in.nextInt();
+        String input;
+        Pattern pattern = Pattern.compile("^-?\\d+$");
+
+        do {
+            input = in.nextLine();
+            if (!pattern.matcher(input).matches()) {
+                System.out.println("Invalid input: insert an integer value");
+            }
+        } while (!pattern.matcher(input).matches());
+
+        index = Integer.parseInt(input);
+
         while (index < 0 || index > 1) {
             System.out.println("Invalid index. Try again.");
             index = in.nextInt();
@@ -122,7 +138,17 @@ public class TUIFactory {
         Scanner in = new Scanner(System.in);
         System.out.println("Digit:\n0 to join an existing lobby.\n1 to create a new lobby.");
 
-        option = in.nextInt();
+        String input;
+        Pattern pattern = Pattern.compile("^-?\\d+$");
+
+        do {
+            input = in.nextLine();
+            if (!pattern.matcher(input).matches()) {
+                System.out.println("Invalid input: insert an integer value");
+            }
+        } while (!pattern.matcher(input).matches());
+
+        option = Integer.parseInt(input);
         while (option < 0 || option > 1) {
             System.out.println("Invalid option. Try again.");
             option = in.nextInt();
@@ -139,7 +165,17 @@ public class TUIFactory {
         Scanner in = new Scanner(System.in);
         System.out.println("Choose which lobby you would like to join");
 
-        index = in.nextInt();
+        String input;
+        Pattern pattern = Pattern.compile("^-?\\d+$");
+
+        do {
+            input = in.nextLine();
+            if (!pattern.matcher(input).matches()) {
+                System.out.println("Invalid input: insert an integer value");
+            }
+        } while (!pattern.matcher(input).matches());
+
+        index = Integer.parseInt(input);
         while (index < 0 || index > lobbiesNames.size() - 1) {
             System.out.println("Invalid index. Try again.");
             index = in.nextInt();
@@ -154,7 +190,18 @@ public class TUIFactory {
     public int getLobbyNumPlayers() {
         System.out.println("Enter number of players (must be between 2 and 4)");
         Scanner in = new Scanner(System.in);
-        int numPlayers = in.nextInt();
+        int numPlayers;
+        String input;
+        Pattern pattern = Pattern.compile("^-?\\d+$");
+
+        do {
+            input = in.nextLine();
+            if (!pattern.matcher(input).matches()) {
+                System.out.println("Invalid input: insert an integer value");
+            }
+        } while (!pattern.matcher(input).matches());
+
+        numPlayers = Integer.parseInt(input);
         while (numPlayers < 1 || numPlayers > 4) {
             System.out.println("Invalid number. Try again.");
             numPlayers = in.nextInt();
@@ -190,7 +237,18 @@ public class TUIFactory {
         Scanner in = new Scanner(System.in);
         System.out.println("Choose which color would you like to be");
 
-        colorIndex = in.nextInt();
+        String input;
+        Pattern pattern = Pattern.compile("^-?\\d+$");
+
+        do {
+            input = in.nextLine();
+            if (!pattern.matcher(input).matches()) {
+                System.out.println("Invalid input: insert an integer value");
+            }
+        } while (!pattern.matcher(input).matches());
+
+        colorIndex = Integer.parseInt(input);
+
         while (colorIndex < 0 || colorIndex > colors.size() - 1) {
             System.out.println("Invalid index. Try again.");
             colorIndex = in.nextInt();
@@ -222,15 +280,19 @@ public class TUIFactory {
         Scanner in = new Scanner(System.in);
         System.out.println("Choose a secret objective");
 
-        secretObjectiveChoice = in.nextLine();
+        Pattern pattern = Pattern.compile("^-?\\d+$");
+
+        do {
+            secretObjectiveChoice = in.nextLine();
+            if (!pattern.matcher(secretObjectiveChoice).matches()) {
+                System.out.println("Invalid input: insert an integer value");
+            }
+        } while (!pattern.matcher(secretObjectiveChoice).matches());
+
         while (!secretObjectiveChoice.equals("0") && !secretObjectiveChoice.equals("1")) {
             System.out.println("Invalid index. Try again.");
             secretObjectiveChoice = in.nextLine();
         }
-//        while (secretObjectiveChoice < 0 || secretObjectiveChoice > 1) {
-//            System.out.println("Invalid index. Try again.");
-//            secretObjectiveChoice = in.nextInt();
-//        }
 
         return secretObjectiveChoice;
     }
@@ -274,7 +336,18 @@ public class TUIFactory {
         System.out.println("Digit:\n0 to flip a Card in your hand.\n1 to put a card on the board. \n2 to print the legend. " +
                 "\n3 to see the chat. \n4 to send a message. \n5 punteggi. \n6 board degli altri player \n7 see all the objective cards");
 
-        choice = in.nextInt();
+        String input;
+        Pattern pattern = Pattern.compile("^-?\\d+$");
+
+        do {
+            input = in.nextLine();
+            if (!pattern.matcher(input).matches()) {
+                System.out.println("Invalid input: insert an integer value");
+            }
+        } while (!pattern.matcher(input).matches());
+
+        choice = Integer.parseInt(input);
+
         while (choice < 0 || choice > 7) {
             System.out.println("Invalid choice. Try again.");
             choice = in.nextInt();
@@ -318,7 +391,17 @@ public class TUIFactory {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose a card to flip");
 
-        choice = scanner.nextInt();
+        String input;
+        Pattern pattern = Pattern.compile("^-?\\d+$");
+
+        do {
+            input = scanner.nextLine();
+            if (!pattern.matcher(input).matches()) {
+                System.out.println("Invalid input: insert an integer value");
+            }
+        } while (!pattern.matcher(input).matches());
+
+        choice = Integer.parseInt(input);
         while (choice < 0 || choice >= hand.size()) {
             System.out.println("Invalid choice");
             choice = scanner.nextInt();
@@ -331,7 +414,19 @@ public class TUIFactory {
         int choice;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose a card to play");
-        choice = scanner.nextInt();
+
+        String input;
+        Pattern pattern = Pattern.compile("^-?\\d+$");
+
+        do {
+            input = scanner.nextLine();
+            if (!pattern.matcher(input).matches()) {
+                System.out.println("Invalid input: insert an integer value");
+            }
+        } while (!pattern.matcher(input).matches());
+
+        choice = Integer.parseInt(input);
+
         while (choice < 0 || choice >= hand.size()) {
             System.out.println("Invalid choice");
             choice = scanner.nextInt();
@@ -343,9 +438,31 @@ public class TUIFactory {
         int x, y;
         Coordinates coordinates;
         Scanner in = new Scanner(System.in);
-        System.out.println("Choose a card to overlap");
-        x = in.nextInt();
-        y = in.nextInt();
+        System.out.println("Choose a card to overlap:");
+
+        String input;
+        Pattern pattern = Pattern.compile("^-?\\d+$");
+
+        do {
+            System.out.println("-> Insert the index of the row");
+            input = in.nextLine();
+            if (!pattern.matcher(input).matches()) {
+                System.out.println("Invalid input: insert an integer value");
+            }
+        } while (!pattern.matcher(input).matches());
+
+        x = Integer.parseInt(input);
+
+        do {
+            System.out.println("-> Insert the index of the column");
+            input = in.nextLine();
+            if (!pattern.matcher(input).matches()) {
+                System.out.println("Invalid input: insert an integer value");
+            }
+        } while (!pattern.matcher(input).matches());
+
+        y = Integer.parseInt(input);
+
         coordinates = new Coordinates(x, y);
         while (board.getCard(coordinates) == null) {
             System.out.println("Invalid coordinates. Try again.");
@@ -359,8 +476,21 @@ public class TUIFactory {
     public int chooseCornerIndex(GameArea board) {
         int choice;
         Scanner in = new Scanner(System.in);
+
         System.out.println("Choose a corner index");
-        choice = in.nextInt();
+
+        String input;
+        Pattern pattern = Pattern.compile("^-?\\d+$");
+
+        do {
+            input = in.nextLine();
+            if (!pattern.matcher(input).matches()) {
+                System.out.println("Invalid input: insert an integer value");
+            }
+        } while (!pattern.matcher(input).matches());
+
+        choice = Integer.parseInt(input);
+
         while (choice < 0 || choice >= 4) {
             System.out.println("Invalid choice");
             choice = in.nextInt();
@@ -387,7 +517,19 @@ public class TUIFactory {
 
         System.out.println("2) to pick one of the Face Up Cards");
 
-        option = scanner.nextInt();
+        String input;
+        Pattern pattern = Pattern.compile("^-?\\d+$");
+
+        do {
+            System.out.println("-> Insert the index of the row");
+            input = scanner.nextLine();
+            if (!pattern.matcher(input).matches()) {
+                System.out.println("Invalid input: insert an integer value");
+            }
+        } while (!pattern.matcher(input).matches());
+
+        option = Integer.parseInt(input);
+
         while (option < 0 || option >= 3 || (option == 0 && goldDeck.isEmpty()) || (option == 1 && resourceDeck.isEmpty())) {
             System.out.println("Invalid option. Try again.");
             option = scanner.nextInt();
@@ -414,7 +556,19 @@ public class TUIFactory {
 
         System.out.println("2) to pick one of the Face Up Cards");
 
-        option = scanner.nextInt();
+        String input;
+        Pattern pattern = Pattern.compile("^-?\\d+$");
+
+        do {
+            System.out.println("-> Insert the index of the row");
+            input =scanner.nextLine();
+            if (!pattern.matcher(input).matches()) {
+                System.out.println("Invalid input: insert an integer value");
+            }
+        } while (!pattern.matcher(input).matches());
+
+        option = Integer.parseInt(input);
+
         while (option < 0 || option >= 3 || (option == 0 && goldDeckEmpty) || (option == 1 && resourceDeckEmpty)) {
             System.out.println("Invalid option. Try again.");
             option = scanner.nextInt();
@@ -423,8 +577,21 @@ public class TUIFactory {
     }
 
     public int chooseFaceUpCard(ArrayList<PlayableCard> faceUpCards) {
+        int choice;
         Scanner scanner = new Scanner(System.in);
-        int choice = scanner.nextInt();
+        String input;
+        Pattern pattern = Pattern.compile("^-?\\d+$");
+
+        do {
+            System.out.println("-> Insert the index of the row");
+            input = scanner.nextLine();
+            if (!pattern.matcher(input).matches()) {
+                System.out.println("Invalid input: insert an integer value");
+            }
+        } while (!pattern.matcher(input).matches());
+
+        choice = Integer.parseInt(input);
+
         while (choice < 0 || choice >= faceUpCards.size()) {
             System.out.println("Invalid choice. Try again.");
             choice = scanner.nextInt();
@@ -539,9 +706,16 @@ public class TUIFactory {
             System.out.println(counter + " -> " + player.getPlayerNickname());
             counter++;
         }
+
         System.out.println("select the player to see their board");
         Scanner in = new Scanner(System.in);
-        int playerIndex = in.nextInt();
+        int playerIndex;
+        try {
+            playerIndex = in.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input: insert an integer value");
+            playerIndex = in.nextInt();
+        }
         GameArea board = gamePlayers.get(playerIndex-1).getPlayerBoard();
         RenderBoard render = new RenderBoard(board);
         render.printBoard();

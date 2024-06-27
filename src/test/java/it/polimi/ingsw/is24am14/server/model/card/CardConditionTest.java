@@ -44,6 +44,7 @@ class CardConditionTest {
 
     }
 
+    // These tests check all 8 card-placement related conditions
     @Test
     public void fungiDiagonalCondition() {
         ObjectiveCardDeckCreator creator = new ObjectiveCardDeckCreator();
@@ -65,6 +66,82 @@ class CardConditionTest {
 
         board.addCard(card2, card3, 1);
         assertTrue(objectiveCard.getCondition().isSatisfied(board));
+    }
+
+    @Test
+    public void plantDiagonalCondition() {
+        ObjectiveCardDeckCreator creator = new ObjectiveCardDeckCreator();
+        Deck<ObjectiveCard> deck = creator.createObjectiveCardDeck();
+        ObjectiveCard objectiveCard = null;
+
+        for (int i = 0; i < 2; i++) objectiveCard = deck.removeTop();
+
+        GameArea board = new GameArea();
+        StarterCard starterCard = createStarterCard();
+        board.placeStarterCard(starterCard);
+
+        Card card1 = createResourceCard(CornerEnum.ResourceEnum.PLANT);
+        Card card2 = createResourceCard(CornerEnum.ResourceEnum.PLANT);
+        Card card3 = createResourceCard(CornerEnum.ResourceEnum.PLANT);
+
+        board.addCard(starterCard, card1, 0);
+        board.addCard(card1, card2, 0);
+
+        assertFalse(objectiveCard.getCondition().isSatisfied(board));
+
+        board.addCard(card2, card3, 0);
+        assertTrue(objectiveCard.getCondition().isSatisfied(board));
+    }
+
+    @Test
+    public void animalDiagonalCondition(){
+        ObjectiveCardDeckCreator creator = new ObjectiveCardDeckCreator();
+        Deck<ObjectiveCard> deck = creator.createObjectiveCardDeck();
+        ObjectiveCard objectiveCard = null;
+
+        for (int i = 0; i < 3; i++) objectiveCard = deck.removeTop();
+
+        GameArea board = new GameArea();
+        StarterCard starterCard = createStarterCard();
+        board.placeStarterCard(starterCard);
+
+        Card card1 = createResourceCard(CornerEnum.ResourceEnum.ANIMAL);
+        Card card2 = createResourceCard(CornerEnum.ResourceEnum.ANIMAL);
+        Card card3 = createResourceCard(CornerEnum.ResourceEnum.ANIMAL);
+
+        board.addCard(starterCard, card1, 1);
+        board.addCard(card1, card2, 1);
+
+        assertFalse(objectiveCard.getCondition().isSatisfied(board));
+
+        board.addCard(card2, card3, 1);
+        assertTrue(objectiveCard.getCondition().isSatisfied(board));
+    }
+
+    @Test
+    public void insectDiagonalCondition(){
+        ObjectiveCardDeckCreator creator = new ObjectiveCardDeckCreator();
+        Deck<ObjectiveCard> deck = creator.createObjectiveCardDeck();
+        ObjectiveCard objectiveCard = null;
+
+        for (int i = 0; i < 4; i++) objectiveCard = deck.removeTop();
+
+        GameArea board = new GameArea();
+        StarterCard starterCard = createStarterCard();
+        board.placeStarterCard(starterCard);
+
+        Card card1 = createResourceCard(CornerEnum.ResourceEnum.INSECT);
+        Card card2 = createResourceCard(CornerEnum.ResourceEnum.INSECT);
+        Card card3 = createResourceCard(CornerEnum.ResourceEnum.INSECT);
+
+        board.addCard(starterCard, card1, 0);
+        board.addCard(card1, card2, 0);
+
+        assertFalse(objectiveCard.getCondition().isSatisfied(board));
+
+        board.addCard(card2, card3, 0);
+        assertTrue(objectiveCard.getCondition().isSatisfied(board));
+
     }
 
     @Test
@@ -94,6 +171,32 @@ class CardConditionTest {
     }
 
     @Test
+    public void greenGreenPurpleL(){
+        ObjectiveCardDeckCreator creator = new ObjectiveCardDeckCreator();
+        Deck<ObjectiveCard> deck = creator.createObjectiveCardDeck();
+        ObjectiveCard objectiveCard = null;
+
+        for (int i = 0; i < 6; i++) objectiveCard = deck.removeTop();
+
+        GameArea board = new GameArea();
+        StarterCard starterCard = createStarterCard();
+        board.placeStarterCard(starterCard);
+
+        Card card1 = createResourceCard(CornerEnum.ResourceEnum.PLANT);
+        Card card2 = createResourceCard(CornerEnum.ResourceEnum.PLANT);
+        Card card3 = createResourceCard(CornerEnum.ResourceEnum.INSECT);
+
+        board.addCard(starterCard, card1, 3);
+        board.addCard(starterCard, card2, 1);
+
+        assertFalse(objectiveCard.getCondition().isSatisfied(board));
+
+        board.addCard(card1, card3, 2);
+
+        assertTrue(objectiveCard.getCondition().isSatisfied(board));
+    }
+
+    @Test
     public void redBlueBlue() {
         ObjectiveCardDeckCreator creator = new ObjectiveCardDeckCreator();
         Deck<ObjectiveCard> deck = creator.createObjectiveCardDeck();
@@ -115,6 +218,32 @@ class CardConditionTest {
         assertFalse(objectiveCard.getCondition().isSatisfied(board));
 
         board.addCard(starterCard, card2, 3);
+
+        assertTrue(objectiveCard.getCondition().isSatisfied(board));
+    }
+
+    @Test
+    public void purplePurpleBlueL(){
+        ObjectiveCardDeckCreator creator = new ObjectiveCardDeckCreator();
+        Deck<ObjectiveCard> deck = creator.createObjectiveCardDeck();
+        ObjectiveCard objectiveCard = null;
+
+        for (int i = 0; i < 8; i++) objectiveCard = deck.removeTop();
+
+        GameArea board = new GameArea();
+        StarterCard starterCard = createStarterCard();
+        board.placeStarterCard(starterCard);
+
+        Card card1 = createResourceCard(CornerEnum.ResourceEnum.INSECT);
+        Card card2 = createResourceCard(CornerEnum.ResourceEnum.INSECT);
+        Card card3 = createResourceCard(CornerEnum.ResourceEnum.ANIMAL);
+
+        board.addCard(starterCard, card1, 3);
+        board.addCard(starterCard, card2, 1);
+
+        assertFalse(objectiveCard.getCondition().isSatisfied(board));
+
+        board.addCard(card2, card3, 0);
 
         assertTrue(objectiveCard.getCondition().isSatisfied(board));
     }

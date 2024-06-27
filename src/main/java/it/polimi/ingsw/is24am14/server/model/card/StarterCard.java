@@ -56,12 +56,15 @@ public class StarterCard extends Card {
             String NE = this.getCorners().get(1).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(1);
             cardString.add("| " + NW + " |" + "             | " + NE + " |");
             //Third Row
-            cardString.add("|-----|		       |-----|");
+//            cardString.add("|-----|		       |-----|");
+            cardString.add("|-----|            |-----|");
             //Fourth Row
             cardString.add("|		");
-            cardString.set(3, cardString.get(3) + "		         |");
+//            cardString.set(3, cardString.get(3) + "		         |");
+            cardString.set(3, cardString.get(3) + "         |");
             //Fifth Row
-            cardString.add("|-----|		       |-----|");
+            //            cardString.add("|-----|		       |-----|");
+            cardString.add("|-----|            |-----|");
             //Sixth Row
             String SW = this.getCorners().get(2).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(2);
             String SE = this.getCorners().get(3).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(3);
@@ -86,15 +89,15 @@ public class StarterCard extends Card {
             String NE = this.getCorners().get(1).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(1);
             cardString.add("| " + NW + " |" + "             | " + NE + " |");
             //Third Row
-            cardString.add("|-----|		       |-----|");
+            cardString.add("|-----|            |-----|");
             //Fourth Row
             cardString.add("|		  ");
             for (String e : resources) {
                 cardString.set(3, cardString.get(3) + e);
             }
-            cardString.set(3, cardString.get(3) + "		 |");
+            cardString.set(3, cardString.get(3) + "         |");
             //Fifth Row
-            cardString.add("|-----|		       |-----|");
+            cardString.add("|-----|            |-----|");
             //Sixth Row
             String SW = this.getCorners().get(2).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(2);
             String SE = this.getCorners().get(3).isOverlapped() ? Emojis.REPEAT_BUTTON.getEmoji() : corners.get(3);
