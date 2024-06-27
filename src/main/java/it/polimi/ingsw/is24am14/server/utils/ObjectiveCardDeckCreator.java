@@ -16,70 +16,72 @@ public class ObjectiveCardDeckCreator {
 
 
         Coordinates topLeft = new Coordinates(1, -1);
-        Coordinates topMid = new Coordinates(1, 0);
+        Coordinates topMid = new Coordinates(2, 0);
         Coordinates topRight = new Coordinates(1, 1);
-        Coordinates midLeft = new Coordinates(0, -1);
-        Coordinates centre = new Coordinates(0, 0);
-        Coordinates midRight = new Coordinates(0, 1);
-        Coordinates bottomLeft = new Coordinates(-1, -1);
-        Coordinates bottomMid = new Coordinates(-1, 0);
         Coordinates bottomRight = new Coordinates(-1, 1);
+        Coordinates bottomLeft = new Coordinates(-1, -1);
+        Coordinates bottomMid = new Coordinates(-2, 0);
+        Coordinates midLeft = new Coordinates(0, -2);
+        Coordinates centre = new Coordinates(0, 0);
+        Coordinates midRight = new Coordinates(0, 2);
+        Coordinates mostUpperLeft = new Coordinates(2, -2);
+        Coordinates mostUpperRight = new Coordinates(2, 2);
 
 
         // The four diagonal card conditions
 
         CardCondition redDiag = new CardCondition();
-        redDiag.addClause(topRight, CornerEnum.ResourceEnum.FUNGI);
         redDiag.addClause(centre, CornerEnum.ResourceEnum.FUNGI);
-        redDiag.addClause(bottomLeft, CornerEnum.ResourceEnum.FUNGI);
+        redDiag.addClause(topRight, CornerEnum.ResourceEnum.FUNGI);
+        redDiag.addClause(mostUpperRight, CornerEnum.ResourceEnum.FUNGI);
         content.add(new ObjectiveCard(redDiag, "/images/cards/objective_cards/objective_fronts/page_87.png", "/images/cards/resource_cards/objective_backs/page_87.png", 2));
 
 
         CardCondition greenDiag = new CardCondition();
         greenDiag.addClause(centre, CornerEnum.ResourceEnum.PLANT);
         greenDiag.addClause(topLeft, CornerEnum.ResourceEnum.PLANT);
-        greenDiag.addClause(bottomRight, CornerEnum.ResourceEnum.PLANT);
+        greenDiag.addClause(mostUpperLeft, CornerEnum.ResourceEnum.PLANT);
 
         content.add(new ObjectiveCard(greenDiag, "/images/cards/objective_cards/objective_fronts/page_88.png", "/images/cards/resource_cards/objective_backs/page_88.png", 2));
 
 
         CardCondition blueDiag = new CardCondition();
-        blueDiag.addClause(topRight, CornerEnum.ResourceEnum.ANIMAL);
         blueDiag.addClause(centre, CornerEnum.ResourceEnum.ANIMAL);
-        blueDiag.addClause(bottomLeft, CornerEnum.ResourceEnum.ANIMAL);
+        blueDiag.addClause(topRight, CornerEnum.ResourceEnum.ANIMAL);
+        blueDiag.addClause(mostUpperRight, CornerEnum.ResourceEnum.ANIMAL);
         content.add(new ObjectiveCard(blueDiag, "/images/cards/objective_cards/objective_fronts/page_89.png", "/images/cards/resource_cards/objective_backs/page_89.png", 2));
 
 
         CardCondition purpleDiag = new CardCondition();
-        purpleDiag.addClause(topLeft, CornerEnum.ResourceEnum.INSECT);
         purpleDiag.addClause(centre, CornerEnum.ResourceEnum.INSECT);
-        purpleDiag.addClause(bottomRight, CornerEnum.ResourceEnum.INSECT);
+        purpleDiag.addClause(topLeft, CornerEnum.ResourceEnum.INSECT);
+        purpleDiag.addClause(mostUpperLeft, CornerEnum.ResourceEnum.INSECT);
         content.add(new ObjectiveCard(purpleDiag, "/images/cards/objective_cards/objective_fronts/page_90.png", "/images/cards/resource_cards/objective_backs/page_90.png", 2));
 
 
         // The four L-shape card conditions
 
         CardCondition redRedGreenL = new CardCondition();
-        redRedGreenL.addClause(topLeft, CornerEnum.ResourceEnum.FUNGI);
-        redRedGreenL.addClause(midLeft, CornerEnum.ResourceEnum.FUNGI);
-        redRedGreenL.addClause(bottomMid, CornerEnum.ResourceEnum.PLANT);
+        redRedGreenL.addClause(centre, CornerEnum.ResourceEnum.FUNGI);
+        redRedGreenL.addClause(topMid, CornerEnum.ResourceEnum.FUNGI);
+        redRedGreenL.addClause(bottomRight, CornerEnum.ResourceEnum.PLANT);
         content.add(new ObjectiveCard(redRedGreenL, "/images/cards/objective_cards/objective_fronts/page_91.png", "/images/cards/resource_cards/objective_backs/page_91.png", 3));
 
         CardCondition greenGreenPurpleL = new CardCondition();
-        greenGreenPurpleL.addClause(topMid, CornerEnum.ResourceEnum.PLANT);
         greenGreenPurpleL.addClause(centre, CornerEnum.ResourceEnum.PLANT);
+        greenGreenPurpleL.addClause(topMid, CornerEnum.ResourceEnum.PLANT);
         greenGreenPurpleL.addClause(bottomLeft, CornerEnum.ResourceEnum.INSECT);
         content.add(new ObjectiveCard(greenGreenPurpleL, "/images/cards/objective_cards/objective_fronts/page_92.png", "/images/cards/resource_cards/objective_backs/page_92.png", 3));
 
         CardCondition redBlueBlueL = new CardCondition();
-        redBlueBlueL.addClause(topRight, CornerEnum.ResourceEnum.FUNGI);
         redBlueBlueL.addClause(centre, CornerEnum.ResourceEnum.ANIMAL);
+        redBlueBlueL.addClause(topRight, CornerEnum.ResourceEnum.FUNGI);
         redBlueBlueL.addClause(bottomMid, CornerEnum.ResourceEnum.ANIMAL);
         content.add(new ObjectiveCard(redBlueBlueL, "/images/cards/objective_cards/objective_fronts/page_93.png", "/images/cards/resource_cards/objective_backs/page_93.png", 3));
 
         CardCondition bluePurplePurpleL = new CardCondition();
-        bluePurplePurpleL.addClause(topLeft, CornerEnum.ResourceEnum.ANIMAL);
         bluePurplePurpleL.addClause(centre, CornerEnum.ResourceEnum.INSECT);
+        bluePurplePurpleL.addClause(topLeft, CornerEnum.ResourceEnum.ANIMAL);
         bluePurplePurpleL.addClause(bottomMid, CornerEnum.ResourceEnum.INSECT);
         content.add(new ObjectiveCard(bluePurplePurpleL, "/images/cards/objective_cards/objective_fronts/page_94.png", "/images/cards/resource_cards/objective_backs/page_94.png", 3));
 

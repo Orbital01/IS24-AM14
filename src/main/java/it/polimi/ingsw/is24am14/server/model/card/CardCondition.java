@@ -4,6 +4,7 @@ import it.polimi.ingsw.is24am14.server.model.game.GameArea;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -11,14 +12,14 @@ import java.util.Map;
  *  Implements the {@link Condition} interface.
  */
 public class CardCondition implements Condition {
-    private final HashMap<Coordinates, CornerEnum.ResourceEnum> listCard;
+    private final LinkedHashMap<Coordinates, CornerEnum.ResourceEnum> listCard;
 
     /**
      * Constructor for CardCondition class.
      * Initializes the listCard map.
      */
     public CardCondition() {
-        listCard = new HashMap<>();
+        listCard = new LinkedHashMap<>();
     }
 
     /**
@@ -46,7 +47,6 @@ public class CardCondition implements Condition {
         ArrayList<Coordinates> listCardCoordinates = new ArrayList<>(listCard.keySet());
         ArrayList<CornerEnum.ResourceEnum> listCardResources = new ArrayList<>(listCard.values());
 
-        /*
         //  for each card on the board
         for (Map.Entry<Coordinates, Card> entry : board.getBoard().entrySet()) {
             listCardIndex = 0;
@@ -55,16 +55,23 @@ public class CardCondition implements Condition {
             Coordinates coordinatesImOn = entry.getKey();
             while (listCardIndex < listCard.size() && satisfied) {
                 Coordinates toCheck = Coordinates.add(coordinatesImOn, listCardCoordinates.get(listCardIndex));
+                CornerEnum.ResourceEnum toCheckResource = listCardResources.get(listCardIndex);
 
-                if (board.getCard(toCheck) == null || board.getCard(toCheck).getResource() == null || !board.getCard(toCheck).getResource().equals(listCardResources.get(listCardIndex))) satisfied = false;
+                if (board.getCard(toCheck) == null || board.getCard(toCheck).getCardType() == null || !board.getCard(toCheck).getCardType().equals(toCheckResource)) satisfied = false;
                 listCardIndex++;
             }
             if (satisfied) return true;
         }
 
-         */
 
         return false;
+    }
+
+    private CornerEnum.ResourceEnum getResourceByCoordinates(Coordinates coordinates) {
+        for (Map.Entry<Coordinates, CornerEnum.ResourceEnum> entry : listCard.entrySet()) {
+            if (entry.getKey().getRow() == coordinates.getRow() && entry.getKey().getColumn() == coordinates.getColumn()) return entry.getValue();
+        }
+        return null;
     }
 
     @Override
