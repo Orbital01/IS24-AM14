@@ -13,13 +13,19 @@ import java.util.Map;
 public class CardCondition implements Condition {
     private final HashMap<Coordinates, CornerEnum.ResourceEnum> listCard;
 
+    /**
+     * Constructor for CardCondition class.
+     * Initializes the listCard map.
+     */
     public CardCondition() {
         listCard = new HashMap<>();
     }
 
     /**
+     * Adds a clause to the condition.
      * @param clauseCoordinates the position of the card in the pattern.
      * @param clauseResource the type of the card in the pattern.
+     * @throws NullPointerException if clauseCoordinates or clauseResource is null
      */
     public void addClause(Coordinates clauseCoordinates, CornerEnum.ResourceEnum clauseResource) throws NullPointerException {
         if (clauseCoordinates == null || clauseResource == null) throw new NullPointerException();

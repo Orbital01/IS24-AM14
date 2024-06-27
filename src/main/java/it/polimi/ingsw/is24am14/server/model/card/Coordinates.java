@@ -85,6 +85,15 @@ public class Coordinates implements Serializable, Comparable<Coordinates> {
         return new Coordinates(baseRow+addedRow, baseColumn+addedColumn);
     }
 
+    /**
+     * Compares this Coordinates object with the specified Coordinates object for order.
+     * Returns a negative integer, zero, or a positive integer as this object is less than,
+     * equal to, or greater than the specified object.
+     * The comparison is based on the distance of the coordinates from the origin (0,0).
+     * @param o the Coordinates object to be compared.
+     * @return a negative integer, zero, or a positive integer as this object is less than,
+     * equal to, or greater than the specified object.
+     */
     @Override
     public int compareTo(Coordinates o) {
         if (this.row == o.row && this.column == o.column) {
@@ -95,10 +104,19 @@ public class Coordinates implements Serializable, Comparable<Coordinates> {
         return -1;
     }
 
+    /**
+     * Calculates the distance of the coordinates from the origin (0,0).
+     * @param coordinates the Coordinates object for which the distance is to be calculated.
+     * @return the distance of the coordinates from the origin.
+     */
     private double distance(Coordinates coordinates) {
         return Math.sqrt(this.row * this.row + this.column * this.column);
     }
 
+    /**
+     * Returns a string representation of the Coordinates object.
+     * @return a string representation of the Coordinates object.
+     */
     @Override
     public String toString() {
         return "[" + row + ", " + column + "]";

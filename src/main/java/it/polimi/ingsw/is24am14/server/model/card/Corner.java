@@ -21,15 +21,20 @@ public class Corner implements Serializable {
      * Returns the type of the corner.
      * @return the type of the corner
      */
-
     public CornerEnum getType() {
         return type;
     }
 
+    /**
+     * Marks the corner as overlapped.
+     */
     public void overlap() {
         isOverlapped = true;
     }
-
+    /**
+     * Checks if the corner is overlapped.
+     * @return {@code true} if the corner is overlapped, otherwise {@code false}
+     */
     public boolean isOverlapped() {
         return isOverlapped;
     }

@@ -35,6 +35,10 @@ public class ObjectiveCard extends Card {
 
     public int getPoints() {return points;}
 
+    /**
+     * This method is used to pass an ArrayList strings of the ObjectiveCard content to the method that will draw it in the TUI
+     * @return an ArrayList of strings that represent the objective card
+     */
     public ArrayList<String> drawCard() {
         ArrayList<String> cardString = new ArrayList<>();
         if (this.getCondition().toString().equals("ObjectCondition") || this.getCondition().toString().equals("ResourceCondition")){
