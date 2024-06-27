@@ -43,4 +43,13 @@ class ConditionAdapterTest {
         assertEquals(cornerCondition.getClass(), restored.getClass());
         assertInstanceOf(CornerCondition.class, restored);
     }
+
+    @Test
+    void noCondition() {
+        Condition noCondition = new NoCondition();
+        String json = gson.toJson(noCondition);
+        Condition restored = gson.fromJson(json, Condition.class);
+        assertEquals(noCondition.getClass(), restored.getClass());
+        assertInstanceOf(NoCondition.class, restored);
+    }
 }
