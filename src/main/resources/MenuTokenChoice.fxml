@@ -98,34 +98,53 @@
          </font>
       </Text>
 
+
+
       <ImageView fitHeight="194.0" fitWidth="787.0" layoutX="579.0" layoutY="609.0" pickOnBounds="true">
          <image>
             <Image url="@images.tokens/token_selection_background.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="207.0" fitWidth="113.0" layoutX="676.0" layoutY="645.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images.tokens/blue_token.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="blueTokenButton" layoutX="675.0" layoutY="645.0" mnemonicParsing="false" prefHeight="114.0" prefWidth="114.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: transparent;" />
-      <ImageView fitHeight="207.0" fitWidth="113.0" layoutX="1159.0" layoutY="645.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images.tokens/red_token.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="redTokenButton" layoutX="1162.0" layoutY="647.0" mnemonicParsing="false" prefHeight="111.0" prefWidth="109.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: transparent;" />
-      <ImageView fitHeight="207.0" fitWidth="113.0" layoutX="1004.0" layoutY="644.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images.tokens/yellow_token.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="yellowTokenButton" layoutX="1007.0" layoutY="644.0" mnemonicParsing="false" prefHeight="114.0" prefWidth="107.0" style="-fx-background-color: transparent; -fx-text-fill: transparent; -fx-border-color: transparent;" />
-      <ImageView fitHeight="207.0" fitWidth="113.0" layoutX="837.0" layoutY="645.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images.tokens/green_token.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="greenTokenButton" layoutX="838.0" layoutY="649.0" mnemonicParsing="false" prefHeight="107.0" prefWidth="112.0" style="-fx-background-color: transparent; -fx-text-fill: transparent; -fx-border-color: transparent;" />
+
+      <Button fx:id="blueTokenButton" layoutX="675.0" layoutY="645.0" mnemonicParsing="false" prefHeight="114.0" prefWidth="114.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: transparent;">
+         <graphic>
+            <ImageView fitHeight="114.0" fitWidth="114.0" preserveRatio="true">
+               <image>
+                  <Image url="@images.tokens/blue_token.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+
+      <Button fx:id="redTokenButton" layoutX="1162.0" layoutY="647.0" mnemonicParsing="false" prefHeight="111.0" prefWidth="109.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: transparent;">
+         <graphic>
+            <ImageView fitHeight="111.0" fitWidth="109.0" preserveRatio="true">
+               <image>
+                  <Image url="@images.tokens/red_token.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+
+      <Button fx:id="yellowTokenButton" layoutX="1007.0" layoutY="644.0" mnemonicParsing="false" prefHeight="114.0" prefWidth="107.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: transparent;">
+         <graphic>
+            <ImageView fitHeight="114.0" fitWidth="107.0" preserveRatio="true">
+               <image>
+                  <Image url="@images.tokens/yellow_token.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+
+      <Button fx:id="greenTokenButton" layoutX="838.0" layoutY="649.0" mnemonicParsing="false" prefHeight="107.0" prefWidth="112.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: transparent;">
+         <graphic>
+            <ImageView fitHeight="107.0" fitWidth="112.0" preserveRatio="true">
+               <image>
+                  <Image url="@images.tokens/green_token.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+
    </children>
 </AnchorPane>
