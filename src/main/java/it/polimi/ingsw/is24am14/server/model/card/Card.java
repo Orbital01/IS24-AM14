@@ -60,6 +60,10 @@ public abstract class Card implements Serializable {
         }
     }
 
+    public CornerEnum.ResourceEnum getCardType() {
+        return null;
+    }
+
     /**
      * This method returns the side of the card
      *
