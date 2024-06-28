@@ -3,7 +3,7 @@ name: JavaDoc Release Generator
 on:
   push:
     tags:
-      - 'v*..'
+      - 'v*.*.*'
 permissions:
   contents: write
 jobs:
