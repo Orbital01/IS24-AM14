@@ -109,7 +109,7 @@ public class TUIFactory {
             if (!pattern.matcher(input).matches()) {
                 System.out.println("Invalid input: insert an integer value");
             }
-        } while (!pattern.matcher(input).matches());
+        } while (!pattern.matcher(input).matches() || Integer.parseInt(input) < 0 || Integer.parseInt(input) > 1);
 
         index = Integer.parseInt(input);
 
@@ -139,7 +139,7 @@ public class TUIFactory {
         System.out.println("Digit:\n0 to join an existing lobby.\n1 to create a new lobby.");
 
         String input;
-        Pattern pattern = Pattern.compile("^-?\\d+$");
+        Pattern pattern = Pattern.compile("^0(\\.\\d+)?|1(\\.0+)?$");
 
         do {
             input = in.nextLine();
@@ -173,13 +173,9 @@ public class TUIFactory {
             if (!pattern.matcher(input).matches()) {
                 System.out.println("Invalid input: insert an integer value");
             }
-        } while (!pattern.matcher(input).matches());
+        } while (!pattern.matcher(input).matches() || Integer.parseInt(input) < 0 || Integer.parseInt(input) > lobbiesNames.size() - 1);
 
         index = Integer.parseInt(input);
-        while (index < 0 || index > lobbiesNames.size() - 1) {
-            System.out.println("Invalid index. Try again.");
-            index = in.nextInt();
-        }
 
         return index;
     }
@@ -192,7 +188,7 @@ public class TUIFactory {
         Scanner in = new Scanner(System.in);
         int numPlayers;
         String input;
-        Pattern pattern = Pattern.compile("^-?\\d+$");
+        Pattern pattern = Pattern.compile("^[234]$");
 
         do {
             input = in.nextLine();
@@ -245,7 +241,7 @@ public class TUIFactory {
             if (!pattern.matcher(input).matches()) {
                 System.out.println("Invalid input: insert an integer value");
             }
-        } while (!pattern.matcher(input).matches());
+        } while (!pattern.matcher(input).matches() || Integer.parseInt(input) < 0 || Integer.parseInt(input) > colors.size() - 1);
 
         colorIndex = Integer.parseInt(input);
 
@@ -344,7 +340,7 @@ public class TUIFactory {
             if (!pattern.matcher(input).matches()) {
                 System.out.println("Invalid input: insert an integer value");
             }
-        } while (!pattern.matcher(input).matches());
+        } while (!pattern.matcher(input).matches() || Integer.parseInt(input) < 0 || Integer.parseInt(input) > 7);
 
         choice = Integer.parseInt(input);
 
@@ -399,9 +395,10 @@ public class TUIFactory {
             if (!pattern.matcher(input).matches()) {
                 System.out.println("Invalid input: insert an integer value");
             }
-        } while (!pattern.matcher(input).matches());
+        } while (!pattern.matcher(input).matches() || Integer.parseInt(input) < 0 || Integer.parseInt(input) >= hand.size());
 
         choice = Integer.parseInt(input);
+
         while (choice < 0 || choice >= hand.size()) {
             System.out.println("Invalid choice");
             choice = scanner.nextInt();
@@ -423,7 +420,7 @@ public class TUIFactory {
             if (!pattern.matcher(input).matches()) {
                 System.out.println("Invalid input: insert an integer value");
             }
-        } while (!pattern.matcher(input).matches());
+        } while (!pattern.matcher(input).matches() || Integer.parseInt(input) < 0 || Integer.parseInt(input) >= hand.size());
 
         choice = Integer.parseInt(input);
 
@@ -487,7 +484,7 @@ public class TUIFactory {
             if (!pattern.matcher(input).matches()) {
                 System.out.println("Invalid input: insert an integer value");
             }
-        } while (!pattern.matcher(input).matches());
+        } while (!pattern.matcher(input).matches() || Integer.parseInt(input) < 0 || Integer.parseInt(input) >= 4);
 
         choice = Integer.parseInt(input);
 
@@ -525,7 +522,7 @@ public class TUIFactory {
             if (!pattern.matcher(input).matches()) {
                 System.out.println("Invalid input: insert an integer value");
             }
-        } while (!pattern.matcher(input).matches());
+        } while (!pattern.matcher(input).matches() || Integer.parseInt(input) < 0 || Integer.parseInt(input) >= 3 || (Integer.parseInt(input) == 0 && goldDeck.isEmpty()) || (Integer.parseInt(input) == 1 && resourceDeck.isEmpty()));
 
         option = Integer.parseInt(input);
 
@@ -559,7 +556,6 @@ public class TUIFactory {
         Pattern pattern = Pattern.compile("^-?\\d+$");
 
         do {
-            System.out.println("-> Insert the index of the row");
             input =scanner.nextLine();
             if (!pattern.matcher(input).matches()) {
                 System.out.println("Invalid input: insert an integer value");
@@ -582,12 +578,11 @@ public class TUIFactory {
         Pattern pattern = Pattern.compile("^-?\\d+$");
 
         do {
-            System.out.println("-> Insert the index of the row");
             input = scanner.nextLine();
             if (!pattern.matcher(input).matches()) {
                 System.out.println("Invalid input: insert an integer value");
             }
-        } while (!pattern.matcher(input).matches());
+        } while (!pattern.matcher(input).matches() || Integer.parseInt(input) < 0 || Integer.parseInt(input) >= faceUpCards.size());
 
         choice = Integer.parseInt(input);
 
