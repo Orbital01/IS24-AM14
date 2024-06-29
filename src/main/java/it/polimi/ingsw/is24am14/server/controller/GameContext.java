@@ -343,7 +343,7 @@ public class GameContext implements Serializable {
 
         this.game.changeActivePlayer();
 
-        if ((someoneHas20points() || game.areDecksEmpty()) && game.getIndexActivePlayer() == 0) {
+        if (((someoneHas20points() || game.areDecksEmpty()) && game.getIndexActivePlayer() == 0) || gameStateEnum == GameStateEnum.LastDraw) {
             this.gameStateEnum = GameStateEnum.LastMove;
         } else {
             this.gameStateEnum = GameStateEnum.Move;
