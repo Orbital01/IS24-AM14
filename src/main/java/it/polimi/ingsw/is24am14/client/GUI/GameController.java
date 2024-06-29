@@ -741,7 +741,7 @@ public class GameController {
 
         Label label;
         try {
-             label = new Label("Il giocatore " + GuiHelper.getWinner(context.getClient().getGameContext().getGame()) + " ha vinto!");
+             label = new Label("Il giocatore " + GuiHelper.getWinner(context.getClient().getGameContext().getGame()).getPlayerNickname() + " ha vinto!");
         } catch (Exception e) {
              label = new Label("Errore nel recupero del vincitore");
             throw new RuntimeException(e);
