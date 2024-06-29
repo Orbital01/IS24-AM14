@@ -82,8 +82,9 @@ public class GuiHelper {
         ArrayList<Integer> scores = new ArrayList<>();
 
         for(Player player : game.getPlayers()){
-            //TODO: change URI
-            tokenImages.add(new Image("file:src/main/resources/images.tokens/" + player.getColour().toString().toLowerCase() +"_token.png" ));
+
+            Image image = new Image(PointBoardController.class.getResource("/images.tokens/" + player.getColour().toString().toLowerCase() +"_token.png").toExternalForm());
+            tokenImages.add(image);
             scores.add(player.getScore());
         }
         return PointBoardController.getPointBoardStackPane(tokenImages, scores);
