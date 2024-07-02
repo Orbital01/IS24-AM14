@@ -198,10 +198,7 @@ public class TUIFactory {
         } while (!pattern.matcher(input).matches());
 
         numPlayers = Integer.parseInt(input);
-        while (numPlayers < 1 || numPlayers > 4) {
-            System.out.println("Invalid number. Try again.");
-            numPlayers = in.nextInt();
-        }
+
         return numPlayers;
     }
 
@@ -432,41 +429,41 @@ public class TUIFactory {
     }
 
     public Coordinates chooseCardToOverlap(GameArea board) {
-        int x, y;
+
         Coordinates coordinates;
-        Scanner in = new Scanner(System.in);
-        System.out.println("Choose a card to overlap:");
-
-        String input;
-        Pattern pattern = Pattern.compile("^-?\\d+$");
 
         do {
-            System.out.println("-> Insert the index of the row");
-            input = in.nextLine();
-            if (!pattern.matcher(input).matches()) {
-                System.out.println("Invalid input: insert an integer value");
-            }
-        } while (!pattern.matcher(input).matches());
+            int x, y;
+            Scanner in = new Scanner(System.in);
+            System.out.println("Choose a card to overlap:");
 
-        x = Integer.parseInt(input);
+            String input;
+            Pattern pattern = Pattern.compile("^-?\\d+$");
 
-        do {
-            System.out.println("-> Insert the index of the column");
-            input = in.nextLine();
-            if (!pattern.matcher(input).matches()) {
-                System.out.println("Invalid input: insert an integer value");
-            }
-        } while (!pattern.matcher(input).matches());
+            do {
+                System.out.println("-> Insert the index of the row");
+                input = in.nextLine();
+                if (!pattern.matcher(input).matches()) {
+                    System.out.println("Invalid input: insert an integer value");
+                }
+            } while (!pattern.matcher(input).matches());
 
-        y = Integer.parseInt(input);
+            x = Integer.parseInt(input);
 
-        coordinates = new Coordinates(x, y);
-        while (board.getCard(coordinates) == null) {
-            System.out.println("Invalid coordinates. Try again.");
-            x = in.nextInt();
-            y = in.nextInt();
+            do {
+                System.out.println("-> Insert the index of the column");
+                input = in.nextLine();
+                if (!pattern.matcher(input).matches()) {
+                    System.out.println("Invalid input: insert an integer value");
+                }
+            } while (!pattern.matcher(input).matches());
+
+            y = Integer.parseInt(input);
+
             coordinates = new Coordinates(x, y);
-        }
+
+        } while (board.getCard(coordinates) == null);
+
         return coordinates;
     }
 

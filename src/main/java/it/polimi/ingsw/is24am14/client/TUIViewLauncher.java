@@ -56,6 +56,7 @@ public class TUIViewLauncher {
             client.connect(username);
         } catch (Exception e){
             System.out.println("Error while connecting to the server");
+            System.exit(0);
         }
 
         //Ask for the option
