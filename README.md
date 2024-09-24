@@ -8,7 +8,7 @@ This Java project is a porting of the boardgame *CODEX* by [Cranio Creations](ht
 ### The team
 **Group 14 (Prof. Alessandro Margara)**
 - Matteo Delogu ([@Orbital01](https://github.com/Orbital01))
-- Vittorio Remigio Pio Cozzoli ([@justvicthor](https://github.com/justvicthor))
+- Vittorio Pio Remigio Cozzoli ([@justvicthor](https://github.com/justvicthor))
 - Stefan Bogdanovic ([@SteBog](https://github.com/SteBog))
 - Niccolò Francesco Basile ([@BasicNickPolimi](https://github.com/BasicNickPolimi))
 
