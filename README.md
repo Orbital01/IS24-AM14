@@ -72,8 +72,8 @@ This Java project is a porting of the boardgame *CODEX* by [Cranio Creations](ht
     * `--rmi-port xxxxx`
       * where `xxxxx` is the port of the server
     * `--mode`
-      * 0 for **CLI**
-      * 1 for **GUI**
+      * 0 for **GUI**
+      * 1 for **CLI**
       * 2 for **Server**
 
 ### Example
